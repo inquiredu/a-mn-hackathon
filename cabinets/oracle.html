@@ -80,9 +80,9 @@ const PROPHECIES = [
   .orb {
     position: relative;
     overflow: hidden;
-    width: 200px;
-    height: 200px;
-    margin: 28px auto 12px;
+    width: 180px;
+    height: 180px;
+    margin: 24px auto 14px;
     border-radius: 50%;
     background: radial-gradient(circle at 50% 55%, var(--glow), #4b2a8a 60%, #120a26);
     box-shadow: 0 0 40px var(--glow), inset 0 0 30px #00000099;
@@ -111,7 +111,7 @@ const PROPHECIES = [
   @keyframes swirl  { to { transform: rotate(360deg); } }
   @keyframes wobble { from { transform: scale(.98) rotate(-2deg); } to { transform: scale(1.03) rotate(2deg); } }
 
-  .status { min-height: 1.5em; margin: 0 0 16px; font-style: italic; opacity: .85; }
+  .status { min-height: 1.5em; margin: 0; font-style: italic; opacity: .85; }
 
   form { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
   label { width: 100%; }
@@ -138,10 +138,10 @@ const PROPHECIES = [
   button:disabled { opacity: .6; cursor: wait; }
   input:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
-  .asked { min-height: 1.4em; margin: 24px 0 0; font-style: italic; opacity: .8; }
+  .asked { min-height: 1.4em; margin: 0; font-style: italic; opacity: .8; }
   .prophecy {
-    min-height: 4.5em;
-    margin: 8px 0 0;
+    min-height: 2.9em;
+    margin: 6px 0 20px;
     font-size: 1.3rem;
     line-height: 1.45;
     color: var(--gold);
@@ -150,6 +150,13 @@ const PROPHECIES = [
     transition: opacity .8s, transform .8s;
   }
   .prophecy.revealed { opacity: 1; transform: none; }
+
+  /* Short screens: shrink the orb so the prophecy stays in view */
+  @media (max-height: 640px) {
+    body { padding-top: 12px; padding-bottom: 12px; }
+    h1 { font-size: 1.5rem; }
+    .orb { width: 120px; height: 120px; margin: 14px auto 10px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .swirl, .orb.thinking { animation: none; }
@@ -162,16 +169,16 @@ const PROPHECIES = [
   <p class="tagline">Ask anything. The Oracle sees all. (Mostly the copier.)</p>
 
   <div class="orb" id="orb" aria-hidden="true"><div class="swirl"></div></div>
+
   <p class="status" id="status"></p>
+  <p class="asked" id="asked"></p>
+  <p class="prophecy" id="prophecy" aria-live="polite"></p>
 
   <form id="ask">
     <label for="question">What do you wish to know?</label>
     <input id="question" placeholder="Will the copier work today?" autocomplete="off">
     <button id="go" type="submit">Consult the Oracle</button>
   </form>
-
-  <p class="asked" id="asked"></p>
-  <p class="prophecy" id="prophecy" aria-live="polite"></p>
 </main>
 
 <script>
@@ -242,7 +249,7 @@ document.getElementById("ask").addEventListener("submit", (event) => {
   setTimeout(() => {
     clearInterval(mutter);
     orb.classList.remove("thinking");
-    statusLine.textContent = "The Oracle has spoken.";
+    statusLine.textContent = "";
 
     let prophecy = pick(PROPHECIES);
     while (PROPHECIES.length > 1 && prophecy === lastProphecy) prophecy = pick(PROPHECIES);
@@ -250,6 +257,7 @@ document.getElementById("ask").addEventListener("submit", (event) => {
 
     prophecyLine.textContent = prophecy;
     prophecyLine.classList.add("revealed");
+    prophecyLine.scrollIntoView({ block: "nearest" });
     if (SOUND_ON) gong();
     button.disabled = false;
   }, SPIN_SECONDS * 1000);

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Teacher's Lounge Oracle</title>
+<script>
+/* ------------------------------------------------------------
+   PART 1: THE KNOBS. Change these to make the Oracle yours.
+   ------------------------------------------------------------ */
+
+const SPIN_SECONDS = 3;   // how long the orb spins before it speaks
+const SOUND_ON = true;    // change to false for a silent Oracle
+
+// What the Oracle mutters while it thinks
+const THINKING = [
+  "Consulting the faculty handbook...",
+  "Reading the coffee grounds in a lounge mug...",
+  "Asking the copier. It will not answer...",
+  "Searching the shared drive...",
+  "Waiting for the Wi-Fi...",
+  "Checking the sub calendar..."
+];
+
+// The prophecies. Add your own: put it in quotes and end it with a comma.
+const PROPHECIES = [
+  "The copier shall jam at the very moment of your greatest need. It was always thus.",
+  "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
+  "Your lanyard is not lost. It is in the staff fridge, next to someone's yogurt.",
+  "Indoor recess approaches. Gather your strength. And the good markers.",
+  "The line at Caribou shall be long. Accept this. Good pizza awaits you later.",
+  "A student will ask, 'Is this graded?' The Oracle's answer is always yes.",
+  "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell.",
+  "Your password shall expire on the busiest day of the quarter. Every day is the busiest day.",
+  "The hotdish at the next potluck will contain tater tots. This is certain.",
+  "A mug in the lounge sink has become self-aware. Approach it with kindness.",
+  "Snow shall fall before Halloween. Someone will say, 'Well, it's Minnesota.' They will be right.",
+  "The Wi-Fi will drop during your best lesson of the year. They will remember the lesson anyway.",
+  "You will find the perfect parking spot. Savor it. It will not happen again until May.",
+  "A fire drill shall arrive at the exact moment everyone is finally focused.",
+  "Your sub plans will be three pages long. The sub will read one. It will be fine.",
+  "Ope. The Oracle just bumped into your future. Sorry, I'll just sneak past ya.",
+  "What you seek is in the shared drive, in a folder called 'New Folder (7).'",
+  "Your class will laugh at your joke today. Not the one you planned. A better one.",
+  "The laminator will be warm and waiting. This is a rare and holy sign."
+];
+</script>
+<style>
+  /* Colors: change these to make it yours */
+  :root {
+    --night: #1a1033;   /* the background */
+    --glow: #b48cff;    /* the orb's glow */
+    --gold: #ffd36e;    /* the prophecy */
+    --text: #f4eefe;    /* everything else */
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--text);
+    background:
+      radial-gradient(2px 2px at 20% 30%, #ffffff88, transparent),
+      radial-gradient(2px 2px at 72% 18%, #ffffff66, transparent),
+      radial-gradient(1.5px 1.5px at 40% 82%, #ffffff77, transparent),
+      radial-gradient(1.5px 1.5px at 86% 64%, #ffffff55, transparent),
+      radial-gradient(ellipse at top, #2d1b5c, var(--night) 70%);
+  }
+
+  main { width: 100%; max-width: 34rem; text-align: center; }
+  h1 { font-size: clamp(1.6rem, 5vw, 2.3rem); margin: 0 0 4px; }
+  .tagline { margin: 0; font-style: italic; opacity: .85; }
+
+  /* The crystal ball */
+  .orb {
+    position: relative;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    margin: 28px auto 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 55%, var(--glow), #4b2a8a 60%, #120a26);
+    box-shadow: 0 0 40px var(--glow), inset 0 0 30px #00000099;
+  }
+  .orb::after { /* the shine */
+    content: "";
+    position: absolute;
+    top: 14%; left: 22%;
+    width: 28%; height: 18%;
+    border-radius: 50%;
+    background: #ffffff55;
+    filter: blur(4px);
+  }
+  .swirl {
+    position: absolute;
+    inset: -25%;
+    background: conic-gradient(transparent, #ffffff30, transparent 30%, #ffd36e30, transparent 65%);
+    animation: swirl 10s linear infinite;
+  }
+  .orb.thinking {
+    box-shadow: 0 0 90px 20px var(--glow), inset 0 0 30px #00000099;
+    animation: wobble .25s ease-in-out infinite alternate;
+  }
+  .orb.thinking .swirl { animation-duration: .5s; }
+
+  @keyframes swirl  { to { transform: rotate(360deg); } }
+  @keyframes wobble { from { transform: scale(.98) rotate(-2deg); } to { transform: scale(1.03) rotate(2deg); } }
+
+  .status { min-height: 1.5em; margin: 0 0 16px; font-style: italic; opacity: .85; }
+
+  form { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  label { width: 100%; }
+  input {
+    flex: 1 1 16rem;
+    padding: 12px 16px;
+    font: inherit;
+    border: 2px solid #ffffff40;
+    border-radius: 999px;
+    background: #ffffff14;
+    color: var(--text);
+  }
+  input::placeholder { color: #f4eefeaa; }
+  button {
+    padding: 12px 22px;
+    font: inherit;
+    font-weight: bold;
+    border: none;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #2a1a00;
+    cursor: pointer;
+  }
+  button:disabled { opacity: .6; cursor: wait; }
+  input:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+  .asked { min-height: 1.4em; margin: 24px 0 0; font-style: italic; opacity: .8; }
+  .prophecy {
+    min-height: 4.5em;
+    margin: 8px 0 0;
+    font-size: 1.3rem;
+    line-height: 1.45;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .8s, transform .8s;
+  }
+  .prophecy.revealed { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .swirl, .orb.thinking { animation: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>The Teacher's Lounge Oracle</h1>
+  <p class="tagline">Ask anything. The Oracle sees all. (Mostly the copier.)</p>
+
+  <div class="orb" id="orb" aria-hidden="true"><div class="swirl"></div></div>
+  <p class="status" id="status"></p>
+
+  <form id="ask">
+    <label for="question">What do you wish to know?</label>
+    <input id="question" placeholder="Will the copier work today?" autocomplete="off">
+    <button id="go" type="submit">Consult the Oracle</button>
+  </form>
+
+  <p class="asked" id="asked"></p>
+  <p class="prophecy" id="prophecy" aria-live="polite"></p>
+</main>
+
+<script>
+/* ------------------------------------------------------------
+   PART 2: SOUND EFFECTS. Made from math, so no sound files.
+   ------------------------------------------------------------ */
+
+let audio; // the browser's sound engine, started on the first click
+
+function tone(pitch, startIn, seconds, volume) {
+  const start = audio.currentTime + startIn;
+  const osc = audio.createOscillator();
+  const gain = audio.createGain();
+  osc.frequency.value = pitch;
+  gain.gain.setValueAtTime(volume, start);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + seconds);
+  osc.connect(gain).connect(audio.destination);
+  osc.start(start);
+  osc.stop(start + seconds);
+}
+
+function shimmer() { // sparkly notes while the orb spins
+  for (let i = 0; i < SPIN_SECONDS * 6; i++) {
+    tone(900 + Math.random() * 1100, i / 6, 0.25, 0.04);
+  }
+}
+
+function gong() { // a big BONG when the prophecy arrives
+  tone(98, 0, 4, 0.35);
+  tone(147, 0, 3, 0.15);
+  tone(271, 0, 2.5, 0.1);
+  tone(529, 0, 1.5, 0.06);
+}
+
+
+/* ------------------------------------------------------------
+   PART 3: WHAT HAPPENS WHEN YOU ASK
+   ------------------------------------------------------------ */
+
+const orb = document.getElementById("orb");
+const statusLine = document.getElementById("status");
+const askedLine = document.getElementById("asked");
+const prophecyLine = document.getElementById("prophecy");
+const question = document.getElementById("question");
+const button = document.getElementById("go");
+let lastProphecy = "";
+
+function pick(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+document.getElementById("ask").addEventListener("submit", (event) => {
+  event.preventDefault();
+  button.disabled = true;
+  prophecyLine.classList.remove("revealed");
+  askedLine.textContent = question.value ? `You asked: "${question.value}"` : "";
+  orb.classList.add("thinking");
+
+  if (SOUND_ON) {
+    audio = audio || new AudioContext();
+    shimmer();
+  }
+
+  // Mutter something new every 0.7 seconds while thinking
+  statusLine.textContent = pick(THINKING);
+  const mutter = setInterval(() => { statusLine.textContent = pick(THINKING); }, 700);
+
+  setTimeout(() => {
+    clearInterval(mutter);
+    orb.classList.remove("thinking");
+    statusLine.textContent = "The Oracle has spoken.";
+
+    let prophecy = pick(PROPHECIES);
+    while (PROPHECIES.length > 1 && prophecy === lastProphecy) prophecy = pick(PROPHECIES);
+    lastProphecy = prophecy;
+
+    prophecyLine.textContent = prophecy;
+    prophecyLine.classList.add("revealed");
+    if (SOUND_ON) gong();
+    button.disabled = false;
+  }, SPIN_SECONDS * 1000);
+});
+</script>
+</body>
+</html>

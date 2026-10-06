@@ -22,27 +22,164 @@ const THINKING = [
   "Checking the sub calendar..."
 ];
 
-// The prophecies. Add your own: put it in quotes and end it with a comma.
+// TOPICS: when your question uses one of these words, the Oracle answers on that topic.
+// To add a topic, copy one block, change the words it listens for, and write new prophecies.
+const TOPICS = [
+  {
+    listensFor: ["copier", "copies", "copy", "print", "printer", "laminator"],
+    prophecies: [
+      "The copier shall jam at the very moment of your greatest need. It was always thus.",
+      "Tray 2 is empty. It has always been empty. It will always be empty.",
+      "The copier works today, but only for people who don't need it.",
+      "The laminator will be warm and waiting. This is a rare and holy sign."
+    ]
+  },
+  {
+    listensFor: ["kid", "kids", "student", "students", "homework", "class", "children"],
+    prophecies: [
+      "The kids are alright. The homework is in a backpack, under a banana.",
+      "Three of them did the homework. One did it twice. One made a diorama nobody asked for.",
+      "Your students learned more than they'll admit. They'll tell you in ten years.",
+      "A student will ask, 'Is this graded?' The Oracle's answer is always yes."
+    ]
+  },
+  {
+    listensFor: ["snow", "weather", "cold", "winter", "recess", "rain", "storm"],
+    prophecies: [
+      "Snow shall fall before Halloween. Someone will say, 'Well, it's Minnesota.' They will be right.",
+      "Indoor recess approaches. Gather your strength. And the good markers.",
+      "The Oracle sees a snow day. The Oracle also sees an e-learning day. Brace yourself."
+    ]
+  },
+  {
+    listensFor: ["coffee", "caribou", "tea", "lunch", "lounge", "potluck", "food", "pizza", "hotdish", "snacks"],
+    prophecies: [
+      "The line at Caribou shall be long. Accept this. Good pizza awaits you later.",
+      "The hotdish at the next potluck will contain tater tots. This is certain.",
+      "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell.",
+      "A mug in the lounge sink has become self-aware. Approach it with kindness."
+    ]
+  },
+  {
+    listensFor: ["email", "emails", "parent", "parents", "meeting", "meetings", "principal", "boss"],
+    prophecies: [
+      "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
+      "The meeting will run long. The snacks will run short.",
+      "A parent will email just to say thank you. Print it. Keep it in a drawer for a hard day."
+    ]
+  },
+  {
+    listensFor: ["wifi", "wi-fi", "internet", "password", "computer", "laptop", "chromebook", "tech", "technology", "ai", "robots"],
+    prophecies: [
+      "Your password shall expire on the busiest day of the quarter. Every day is the busiest day.",
+      "The Wi-Fi will drop during your best lesson of the year. They will remember the lesson anyway.",
+      "Have you tried turning it off and on again? The Oracle has. It helped.",
+      "The AI will write a beautiful paragraph. It will be about the wrong book.",
+      "The AI can write the lesson. Only you know which kid needs the extra minute today."
+    ]
+  },
+  {
+    listensFor: ["sub", "subs", "substitute", "sick", "absent"],
+    prophecies: [
+      "Your sub plans will be three pages long. The sub will read one. It will be fine.",
+      "The sub will leave a note that says 'They were great!' Do not ask follow-up questions."
+    ]
+  },
+  {
+    listensFor: ["friday", "weekend", "break", "vacation", "summer", "holiday"],
+    prophecies: [
+      "Friday is coming. The Oracle can feel it in its glass.",
+      "This Friday? Glorious. Something will break on purpose, and everyone will cheer.",
+      "You will spend the first day of break doing laundry. The second day will be glorious.",
+      "Winter break is closer than it looks. Not much closer. But closer."
+    ]
+  },
+  {
+    listensFor: ["grade", "grades", "grading", "test", "tests", "quiz", "assessment", "rubric"],
+    prophecies: [
+      "The stack of grading will shrink. Then it will grow back, like a hydra.",
+      "The test will measure something. Whether it's the thing that matters, even the Oracle wonders.",
+      "Somewhere, a rubric is being revised. It will be revised again."
+    ]
+  }
+];
+
+// QUESTION KINDS: if no topic matches, the Oracle answers the kind of question you asked,
+// judging by the first few words.
+const QUESTION_KINDS = [
+  {
+    firstWords: ["will", "is", "are", "am", "can", "could", "should", "would", "do", "does", "did", "has", "have", "may", "might", "shall"],
+    answers: [
+      "The signs say yes. The copier says no. Trust the signs.",
+      "Yes. But only after a fire drill.",
+      "The mists are cloudy. Ask again after coffee.",
+      "Absolutely. Write that down before you forget.",
+      "No. But something better is on its way.",
+      "The Oracle nods slowly. That means yes."
+    ]
+  },
+  {
+    firstWords: ["when"],
+    answers: [
+      "Right after the next fire drill.",
+      "Thursday. It's always Thursday.",
+      "Sooner than the next snow day. Later than you'd like."
+    ]
+  },
+  {
+    firstWords: ["who"],
+    answers: [
+      "The one holding the good stapler.",
+      "Someone in the lounge. They know what they did.",
+      "You. It was always you."
+    ]
+  },
+  {
+    firstWords: ["why"],
+    answers: [
+      "Because the copier willed it.",
+      "The Oracle has wondered the same thing since 1997. Still no answer.",
+      "For the same reason the laminator is always warm: mystery."
+    ]
+  },
+  {
+    firstWords: ["how"],
+    answers: [
+      "Slowly, then all at once.",
+      "With a lot of sticky notes.",
+      "The same way you do everything: better than you think."
+    ]
+  },
+  {
+    firstWords: ["where"],
+    answers: [
+      "In the shared drive, in a folder called 'New Folder (7).'",
+      "In the staff fridge, next to someone's yogurt.",
+      "Exactly where you left it, which is the last place you'll look."
+    ]
+  },
+  {
+    firstWords: ["what", "which"],
+    answers: [
+      "The answer is in the faculty handbook, page 47. There is no page 47.",
+      "The thing you already suspected. Trust your gut.",
+      "Whatever it is, it's probably in the shared drive."
+    ]
+  }
+];
+
+// CLASSIC PROPHECIES: for everything else. Add your own: put it in quotes and end it with a comma.
 const PROPHECIES = [
-  "The copier shall jam at the very moment of your greatest need. It was always thus.",
-  "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
   "Your lanyard is not lost. It is in the staff fridge, next to someone's yogurt.",
-  "Indoor recess approaches. Gather your strength. And the good markers.",
-  "The line at Caribou shall be long. Accept this. Good pizza awaits you later.",
-  "A student will ask, 'Is this graded?' The Oracle's answer is always yes.",
-  "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell.",
-  "Your password shall expire on the busiest day of the quarter. Every day is the busiest day.",
-  "The hotdish at the next potluck will contain tater tots. This is certain.",
-  "A mug in the lounge sink has become self-aware. Approach it with kindness.",
-  "Snow shall fall before Halloween. Someone will say, 'Well, it's Minnesota.' They will be right.",
-  "The Wi-Fi will drop during your best lesson of the year. They will remember the lesson anyway.",
   "You will find the perfect parking spot. Savor it. It will not happen again until May.",
   "A fire drill shall arrive at the exact moment everyone is finally focused.",
-  "Your sub plans will be three pages long. The sub will read one. It will be fine.",
   "Ope. The Oracle just bumped into your future. Sorry, I'll just sneak past ya.",
-  "What you seek is in the shared drive, in a folder called 'New Folder (7).'",
   "Your class will laugh at your joke today. Not the one you planned. A better one.",
-  "The laminator will be warm and waiting. This is a rare and holy sign."
+  "The laminator will be warm and waiting. This is a rare and holy sign.",
+  "The copier shall jam at the very moment of your greatest need. It was always thus.",
+  "Indoor recess approaches. Gather your strength. And the good markers.",
+  "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
+  "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell."
 ];
 </script>
 <style>
@@ -230,6 +367,25 @@ function pick(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
+// The Oracle reads your question and decides how to answer
+function answer(questionText) {
+  const words = questionText.toLowerCase().match(/[a-z'-]+/g) || [];
+
+  // 1. Does the question use a word from one of the TOPICS?
+  for (const topic of TOPICS) {
+    if (topic.listensFor.some((word) => words.includes(word))) return pick(topic.prophecies);
+  }
+
+  // 2. What kind of question is it? (Reads the first three words, in order.)
+  for (const word of words.slice(0, 3)) {
+    const kind = QUESTION_KINDS.find((k) => k.firstWords.includes(word));
+    if (kind) return pick(kind.answers);
+  }
+
+  // 3. Neither? A classic prophecy.
+  return pick(PROPHECIES);
+}
+
 document.getElementById("ask").addEventListener("submit", (event) => {
   event.preventDefault();
   button.disabled = true;
@@ -251,8 +407,8 @@ document.getElementById("ask").addEventListener("submit", (event) => {
     orb.classList.remove("thinking");
     statusLine.textContent = "";
 
-    let prophecy = pick(PROPHECIES);
-    while (PROPHECIES.length > 1 && prophecy === lastProphecy) prophecy = pick(PROPHECIES);
+    let prophecy = answer(question.value);
+    for (let tries = 0; prophecy === lastProphecy && tries < 10; tries++) prophecy = answer(question.value);
     lastProphecy = prophecy;
 
     prophecyLine.textContent = prophecy;

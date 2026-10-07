@@ -1,14 +1,8 @@
 // Hands On: A Friday Hackathon
 
-// ---------- Settings to fill in before Friday ----------
-
-// Links to the shared Google Slides. Until they're filled in, the page says so.
-const LINKS = {
-  gallery: "",  // the gallery wall
-  wonder: ""    // the wonder and worry wall
-};
-
-const EVENT_DAY = "2026-10-09";   // the "Now" bar only runs on this day (Central time)
+// Links, times, and the day all come from the session file (assets/session.js).
+const LINKS = SESSION.links;
+const EVENT_DAY = SESSION.day;
 
 const MACHINES = {
   timer: { name: "The Meeting Timer", file: "cabinets/meeting-timer.html" },
@@ -23,6 +17,30 @@ const MACHINES = {
 // Reads the times from the Today list. Add ?now=10:50 to the address to preview any moment.
 
 const nowLine = document.getElementById("now");
+
+// Build the Today list from the session file
+document.getElementById("timeline").append(...SESSION.segments.map((s) => {
+  const li = document.createElement("li");
+  li.dataset.start = s.start;
+  li.dataset.end = s.end;
+  li.dataset.link = s.link;
+  const time = document.createElement("time");
+  time.textContent = s.start;
+  const body = document.createElement("div");
+  const title = document.createElement("strong");
+  title.textContent = s.title;
+  const hint = document.createElement("span");
+  hint.textContent = s.hint;
+  body.append(title, hint);
+  if (s.linkLabel) {
+    const a = document.createElement("a");
+    a.href = s.link;
+    a.textContent = s.linkLabel;
+    body.append(" ", a);
+  }
+  li.append(time, body);
+  return li;
+}));
 const agenda = [...document.querySelectorAll("#timeline li")].map((item) => ({
   item,
   start: toMinutes(item.dataset.start),
@@ -113,7 +131,7 @@ function updateNow() {
   });
 
   if (day !== EVENT_DAY) {
-    setNow("", "Friday, October 9 · 10:00 to noon Central");
+    setNow("", SESSION.dateLabel);
     lastSegment = "another day";
     return;
   }
@@ -162,7 +180,7 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
     a.rel = "noopener";
     slot.append(a);
   } else {
-    slot.append(span("pending", "The link appears here on Friday."));
+    slot.append(span("pending", slot.dataset.pending || "The link appears here on Friday."));
   }
 });
 

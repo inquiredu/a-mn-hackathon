@@ -67,32 +67,15 @@
   <section id="today" class="section">
     <div class="wrap">
       <h2>Today</h2>
-      <ol class="timeline" id="timeline">
-        <li data-start="10:00" data-end="10:08" data-link="#today">
-          <time>10:00</time>
-          <div><strong>Welcome</strong><span>Drop a wish in the chat: "I wish I had a thing that…"</span></div>
-        </li>
-        <li data-start="10:08" data-end="10:20" data-link="#today">
-          <time>10:08</time>
-          <div><strong>Watch one get built</strong><span>One wish from the chat, built live, broken on purpose, and fixed.</span></div>
-        </li>
-        <li data-start="10:20" data-end="10:45" data-link="#arcade">
-          <time>10:20</time>
-          <div><strong>The Remix Arcade</strong><span>In breakout rooms of four. Pick a starter and make it yours.</span> <a href="#arcade">Go to the arcade</a></div>
-        </li>
-        <li data-start="10:45" data-end="11:20" data-link="#wish">
-          <time>10:45</time>
-          <div><strong>Grant a wish</strong><span>Same room. Build something from scratch, your wish or someone else's.</span> <a href="#wish">How to start</a></div>
-        </li>
-        <li data-start="11:20" data-end="11:42" data-link="#cheer">
-          <time>11:20</time>
-          <div><strong>Show &amp; Cheer</strong><span>Back in the main room. Applause first.</span> <a href="#cheer">The awards</a></div>
-        </li>
-        <li data-start="11:42" data-end="11:55" data-link="#close">
-          <time>11:42</time>
-          <div><strong>What did we just do?</strong><span>One wonder, one worry, one word.</span> <a href="#close">The close</a></div>
-        </li>
-      </ol>
+      <ol class="timeline" id="timeline"></ol>
+      <div class="shared">
+        <h3>Shared spaces today</h3>
+        <p class="shared-links">
+          <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: link on Friday"></span>
+          <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: link on Friday"></span>
+          <span class="link-slot" data-link="wonder" data-label="Wonder and worry wall" data-pending="Wonder and worry wall: link on Friday"></span>
+        </p>
+      </div>
     </div>
   </section>
 
@@ -101,6 +84,11 @@
     <div class="wrap">
       <h2>The Remix Arcade</h2>
       <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours.</p>
+
+      <div class="first">
+        <p><strong>First, join your team.</strong> Open the Teams doc and add your name next to your room number.</p>
+        <p class="link-slot" data-link="teams" data-label="Open the Teams doc"></p>
+      </div>
 
       <ol class="steps">
         <li><span class="num hex">1</span><strong>Play it.</strong> <span>Pick a starter and give it a try.</span></li>
@@ -480,6 +468,7 @@
 
 <p id="toast" class="toast" role="status" aria-live="polite"></p>
 
+<script src="assets/session.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

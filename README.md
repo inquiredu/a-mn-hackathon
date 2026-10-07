@@ -21,7 +21,10 @@ One host stays in the main room the whole time, building wishes live for latecom
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The page. The Today list's times also drive the "Now" bar. |
+| `assets/session.js` | **The session file.** Times, links, presenter screens, host checklists and chat messages. Edit this to change the morning, or copy it to run a new session. |
+| `index.html` | The participant page: the one link everyone gets |
+| `present.html` | The presenter view for the main room. Arrow keys or a clicker to move, F for full screen, N to jump to now. |
+| `assets/present.css`, `assets/present.js` | How the presenter view looks and works |
 | `assets/site.css` | The look, taken from the MNGAIA mark |
 | `assets/site.js` | The "Now" bar, the copy buttons, and the machine room |
 | `assets/mngaia-mark.png` | The hexagon mark, cut from the MNGAIA banner |
@@ -36,7 +39,8 @@ Each machine is a single HTML file with nothing outside it, so it pastes cleanly
 
 ## Before Friday
 
-- Make the gallery slide and the wonder/worry slide, and paste their links into `LINKS` at the top of `assets/site.js`.
+- Make the gallery slide and the wonder/worry slide, and paste their links into `links` in `assets/session.js`.
+- Share the Teams doc so people outside your district can edit it, ideally Friday morning.
 - Paste the Oracle into Gemini on a district Google account with Canvas on. Does it run, and does the gong play? Then the same in Claude and ChatGPT.
 - Try the Copy buttons from the live link on a Chromebook, a district laptop, and Safari.
 
@@ -48,4 +52,4 @@ From this folder, on Windows or Mac:
 node scripts/serve.js
 ```
 
-Then open http://localhost:4178. Add `?now=10:50` to the address to see the page as it will look at any moment on Friday.
+Then open http://localhost:4178 (participants) or http://localhost:4178/present.html (presenter). Add `?now=10:50` to either address to see it as it will look at any moment on Friday.

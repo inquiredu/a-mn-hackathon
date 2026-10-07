@@ -232,6 +232,15 @@ html { scroll-padding-top: 76px; }
   font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
 }
 
+/* Shared spaces and the join-your-team callout */
+.shared { margin-top: 22px; }
+.shared h3 { margin-bottom: 8px; font-size: 1rem; }
+.shared-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.shared-links .pending { padding: 8px 14px; border: 1.5px dashed var(--control); border-radius: 999px; color: var(--muted); font-style: normal; font-size: .95rem; }
+.first { margin-top: 22px; padding: 14px 18px; background: var(--surface); border: 2px solid var(--link); border-radius: 14px; }
+.first p { margin: 0; }
+.first .link-slot { margin-top: 10px; }
+
 /* Steps and path */
 .steps { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px 16px; }

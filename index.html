@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hands On: A Friday Hackathon</title>
-<meta name="description" content="Two hours to play, build, and break things with AI, together. MNGAIA · AI4MN, Friday, October 9.">
+<title>Hands On</title>
+<meta name="description" content="A hackathon to play, build, and break things with AI, together. MNGAIA · AI4MN.">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,8 +64,8 @@
       <div class="hero-text">
         <p class="kicker">MNGAIA · AI4MN</p>
         <h1>Hands On</h1>
-        <p class="ribbon">A Friday Hackathon · October 9 · 10:00 to noon</p>
-        <p class="hero-lede">A month into the school year, a morning to play. Two hours to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
+        <p class="ribbon" data-fill>{subtitle} · {date} · {start} to {end}</p>
+        <p class="hero-lede" data-fill>A month into the school year, a morning to play. {Length} to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
         <p class="hero-actions"><a class="button primary" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
       </div>
     </div>
@@ -87,7 +87,7 @@
   <!-- AFTER: keep building -->
   <section class="section keepsake" data-show="after" aria-labelledby="keepsake-title">
     <div class="wrap">
-      <p class="kicker-dark">MNGAIA · AI4MN · October 9</p>
+      <p class="kicker-dark" data-fill>{org} · {date}</p>
       <h1 id="keepsake-title">Thank you for building with us</h1>
       <p class="section-lede">Everything here stays open. Keep building, and show one person what you made.</p>
       <div class="keep-grid">
@@ -95,7 +95,7 @@
           <h2>Show one person</h2>
           <p>Show it on your screen, then send them this so they can build their own:</p>
           <div class="copybox">
-            <p id="ripple-note">On Friday I built a small tool with AI in about 20 minutes. You can make your own here: https://inquiredu.org/a-mn-hackathon</p>
+            <p id="ripple-note" data-fill>On {weekday} I built a small tool with AI in about 20 minutes. You can make your own here: https://inquiredu.org/a-mn-hackathon</p>
             <button data-copy-from="ripple-note">Copy</button>
           </div>
         </div>
@@ -120,9 +120,9 @@
       <div class="shared" id="shared">
         <h3>Shared spaces</h3>
         <p class="shared-links">
-          <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: link on Friday"></span>
-          <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: link on Friday"></span>
-          <span class="link-slot" data-link="wonder" data-label="Wonder and worry wall" data-pending="Wonder and worry wall: link on Friday"></span>
+          <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: link on {weekday}"></span>
+          <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: link on {weekday}"></span>
+          <span class="link-slot" data-link="wonder" data-label="Wonder and worry wall" data-pending="Wonder and worry wall: link on {weekday}"></span>
         </p>
       </div>
     </div>
@@ -134,12 +134,12 @@
       <h2>Before you come</h2>
       <ul class="checks">
         <li><strong>A laptop or Chromebook.</strong> Building needs a keyboard. On a phone, you can watch and cheer.</li>
-        <li><strong>An AI tool you can log in to.</strong> Gemini with your school Google account, Claude, or ChatGPT. Check that you can open it before Friday.</li>
+        <li data-fill><strong>An AI tool you can log in to.</strong> Gemini with your school Google account, Claude, or ChatGPT. Check that you can open it before {weekday}.</li>
         <li><strong>A wish.</strong> Something small you wish existed for your work. No wish? We have a jar of them.</li>
       </ul>
       <h2 class="subhead-2">The shape of the morning</h2>
       <ul class="shape">
-        <li><strong>2</strong><span>hours, start to finish</span></li>
+        <li data-fill><strong>{length:number}</strong><span>{length:unit}, start to finish</span></li>
         <li><strong>4</strong><span>starters for real work, plus one just for fun</span></li>
         <li><strong>4</strong><span>people at most in each breakout room</span></li>
         <li><strong>1</strong><span>gallery wall for everything we make</span></li>
@@ -151,7 +151,7 @@
   <section id="cheer" class="section band" data-show="during">
     <div class="wrap">
       <h2>Show &amp; Cheer</h2>
-      <p class="section-lede">A few builders share their screens for two or three minutes each. Applause first, emoji welcome. Then one question for each builder: who would you show this to?</p>
+      <p class="section-lede" data-fill>A few builders share their screens for {share} each. Applause first, emoji welcome. Then one question for each builder: who would you show this to?</p>
       <ul class="awards">
         <li><span class="award-icon hex" aria-hidden="true">💥</span><strong>Most Delightfully Broken</strong><span>For the most glorious error message of the morning.</span></li>
         <li><span class="award-icon hex" aria-hidden="true">🛟</span><strong>Best Rescue</strong><span>For the save that made the room cheer.</span></li>
@@ -225,6 +225,7 @@
 <p id="toast" class="toast" role="status" aria-live="polite"></p>
 
 <script src="assets/session.js"></script>
+<script src="assets/timing.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

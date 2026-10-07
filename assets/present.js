@@ -140,7 +140,7 @@ function show(i) {
   history.replaceState(null, "", location.search + "#" + index);
 
   const seg = screen.segment;
-  document.getElementById("rail-segment").textContent = seg.title + " · " + seg.start + " to " + seg.end + " · " + seg.where;
+  document.getElementById("rail-segment").textContent = seg.title + " · " + TIMES.clock(seg.start) + " to " + TIMES.clock(seg.end) + " · " + seg.where;
   document.getElementById("rail-count").textContent = (index + 1) + " / " + screens.length;
   document.getElementById("status").textContent =
     "Screen " + (index + 1) + " of " + screens.length + ": " + (screen.heading || screen.text || "");

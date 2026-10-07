@@ -20,6 +20,7 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 | Path | What it is |
 | --- | --- |
 | `assets/session.js` | The session file |
+| `assets/timing.js` | The clock: lays out the parts and fills in every `{time}` on the site from the session file |
 | `assets/site.js`, `assets/site.css` | The participant pages and the Hosts page |
 | `assets/hosts.js` | The run of show and the room calculator |
 | `assets/sources-data.js`, `assets/sources.js` | The sources as data (add one entry to add a source), and the page that filters them |

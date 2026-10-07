@@ -1,5 +1,6 @@
 // Hands On: the script shared by Home, Starters, Grant a wish, and Hosts.
-// Times, links, and the day all come from the session file (assets/session.js).
+// Times, links, and the day all come from the session file (assets/session.js),
+// read through the clock in assets/timing.js: TIMES.clock() to show a time, TIMES.fill() for {braces}.
 // Each part below checks that its pieces are on the page before it runs.
 
 const $ = (id) => document.getElementById(id);
@@ -90,7 +91,7 @@ if (timeline) {
     title.append(s.state);
     body.append(title, el("span", "", s.hint));
     if (s.linkLabel) body.append(" ", linkTo(s.link, s.linkLabel));
-    li.append(el("time", "", s.start), body);
+    li.append(el("time", "", TIMES.clock(s.start)), body);
     s.item = li;
     timeline.append(li);
   });
@@ -118,7 +119,7 @@ function endWith(title) {
 function showCue(segment) {
   const cue = $("cue");
   if (!cue) return;
-  const lead = el("strong", "", "It's " + segment.start + ": " + endWith(segment.title) + " ");
+  const lead = el("strong", "", "It's " + TIMES.clock(segment.start) + ": " + endWith(segment.title) + " ");
   cue.hidden = false;
   $("cue-text").replaceChildren(lead, segment.hint);
   $("cue-go").href = segment.link;
@@ -147,7 +148,7 @@ function update() {
   });
 
   if (now.mode === "before") {
-    setNow(now.today ? "Soon" : "", now.today ? "We start at " + segments[0].start + " Central. " : SESSION.dateLabel);
+    setNow(now.today ? "Soon" : "", now.today ? TIMES.fill("We start at {start} {zone}. ") : SESSION.dateLabel);
     if (now.today && nowLine) nowLine.append(linkTo("index.html#today", "See the plan"));
     lastSegment = "before";
     return;
@@ -176,7 +177,7 @@ function update() {
   }
 
   const pieces = [linkTo(current.link, current.title)];
-  if (next) pieces.push(el("span", "upnext", " · Next at " + next.start + ": " + next.title));
+  if (next) pieces.push(el("span", "upnext", " · Next at " + TIMES.clock(next.start) + ": " + next.title));
   setNow("Now", ...pieces);
 
   // The big card on Home
@@ -187,7 +188,7 @@ function update() {
     const go = $("nowcard-go");
     go.hidden = !current.linkLabel;
     if (current.linkLabel) { go.href = current.link; go.textContent = current.linkLabel; }
-    $("nowcard-next").textContent = next ? "Next at " + next.start + ": " + next.title : "Last part of the morning.";
+    $("nowcard-next").textContent = next ? "Next at " + TIMES.clock(next.start) + ": " + next.title : "Last part of the morning.";
   }
 
   if (lastSegment !== null && lastSegment !== now.index) showCue(current);
@@ -209,7 +210,7 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
     a.rel = "noopener";
     slot.append(a);
   } else {
-    slot.append(el("span", "pending", slot.dataset.pending || "The link appears here on Friday."));
+    slot.append(el("span", "pending", TIMES.fill(slot.dataset.pending || "The link appears here on {weekday}.")));
   }
 });
 

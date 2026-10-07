@@ -52,6 +52,7 @@
 </main>
 
 <script src="assets/session.js"></script>
+<script src="assets/timing.js"></script>
 <script>
 // The speaker notes follow the stage, and its buttons (or arrow keys) move the stage too.
 const screens = [];
@@ -80,7 +81,7 @@ function render() {
   const next = screens[index + 1];
   const seg = screen.segment;
   $("count").textContent = "Screen " + (index + 1) + " of " + screens.length;
-  $("segment").textContent = seg.title + " · " + seg.start + " to " + seg.end + " · " + seg.where;
+  $("segment").textContent = seg.title + " · " + TIMES.clock(seg.start) + " to " + TIMES.clock(seg.end) + " · " + seg.where;
   $("heading").textContent = screen.heading || screen.text;
   $("note").textContent = screen.note || "No note for this screen.";
   $("next").replaceChildren();
@@ -102,7 +103,7 @@ function tick() {
   const end = toSeconds(screens[index].segment.end);
   const start = toSeconds(screens[index].segment.start);
   const left = Math.ceil((end - now) / 60);
-  $("left").textContent = now < start ? " · starts at " + screens[index].segment.start
+  $("left").textContent = now < start ? " · starts at " + TIMES.clock(screens[index].segment.start)
     : left > 0 ? " · " + left + " min left in this part" : " · time to move on";
 }
 setInterval(tick, 1000);

@@ -47,23 +47,23 @@
     <div class="wrap">
       <p class="kicker-dark">For hosts, co-hosts, and anchors</p>
       <h1 class="page-title">Running the morning</h1>
-      <p class="section-lede hosts-intro">Two hours, about an hour of it building in breakout rooms of four. The participant pages, the stage, and this guide all read from one session file, so what you see here is what everyone else sees.</p>
+      <p class="section-lede hosts-intro" data-fill>{Length}, {building} of it building in breakout rooms of four. The participant pages, the stage, and this guide all read from one session file, so what you see here is what everyone else sees.</p>
 
       <h2 class="subhead-2">Materials</h2>
       <p class="materials">
         <a class="button primary" href="present.html">Present the stage</a>
         <a class="button" href="notes.html">Speaker notes</a>
         <a class="button" href="index.html">The participant page</a>
-        <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: link on Friday"></span>
-        <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: link on Friday"></span>
-        <span class="link-slot" data-link="wonder" data-label="Wonder and worry wall" data-pending="Wonder and worry wall: link on Friday"></span>
+        <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: link on {weekday}"></span>
+        <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: link on {weekday}"></span>
+        <span class="link-slot" data-link="wonder" data-label="Wonder and worry wall" data-pending="Wonder and worry wall: link on {weekday}"></span>
       </p>
 
       <ul class="shape">
-        <li><strong>2</strong><span>hours, 10:00 to noon Central</span></li>
-        <li><strong>60</strong><span>minutes of building in breakout rooms</span></li>
+        <li data-fill><strong>{length:number}</strong><span>{length:unit}, {start} to {end} {zone}</span></li>
+        <li data-fill><strong>{building:number}</strong><span>{building:unit} of building in breakout rooms</span></li>
         <li><strong>4</strong><span>people at most in each room, one anchor each</span></li>
-        <li><strong>6</strong><span>parts, each with a stage, a checklist, and messages</span></li>
+        <li data-fill><strong>{parts}</strong><span>parts, each with a stage, a checklist, and messages</span></li>
       </ul>
     </div>
   </section>
@@ -72,9 +72,9 @@
     <div class="wrap">
       <h2 id="teams-title">Forming teams of four</h2>
       <ol class="checks">
-        <li><strong>10:00 to 10:05, main room.</strong> Anyone who has built something interactive with AI, even once, adds their name to the first table in the Teams doc. They're the anchors.</li>
-        <li><strong>10:08 to 10:18, while the live build runs.</strong> The co-host counts the builders, opens Breakout rooms with the number below, presses Shuffle, then drags one anchor into each room and fills in the Room column for the anchors.</li>
-        <li><strong>10:20.</strong> Open the rooms. Everyone adds their name to their room's row in the Teams doc. That's how we know the teams.</li>
+        <li data-fill><strong>{welcome.start} to {welcome.start + anchors}, main room.</strong> Anyone who has built something interactive with AI, even once, adds their name to the first table in the Teams doc. They're the anchors.</li>
+        <li data-fill><strong>{watch.start} to {remix.start - roomsReady}, while the live build runs.</strong> The co-host counts the builders, opens Breakout rooms with the number below, presses Shuffle, then drags one anchor into each room and fills in the Room column for the anchors.</li>
+        <li data-fill><strong>{remix.start}.</strong> Open the rooms. Everyone adds their name to their room's row in the Teams doc. That's how we know the teams.</li>
         <li><strong>Latecomers.</strong> Add them to the room with the fewest people, and add their name to that room's row.</li>
       </ol>
       <div class="card">
@@ -101,10 +101,10 @@
       <h2 id="guide-title">Before, during, and after</h2>
       <div class="host-grid">
         <div class="card">
-          <h3>Before Friday</h3>
+          <h3 data-fill>Before {weekday}</h3>
           <ul>
             <li>Make the gallery slide and the wonder and worry slide, and add their links to the session file.</li>
-            <li>Share the Teams doc so anyone with the link can edit. Friday morning is a good time.</li>
+            <li data-fill>Share the Teams doc so anyone with the link can edit. {Weekday} morning is a good time.</li>
             <li>Paste a starter into Gemini on a district account (choose Canvas first), and check that it runs. ChatGPT now previews code with a Preview switch instead of Canvas.</li>
             <li>Name the co-host who will set up the breakout rooms.</li>
             <li>Rehearse with the stage in one window and the speaker notes in another.</li>
@@ -113,10 +113,10 @@
         <div class="card">
           <h3>In the rooms</h3>
           <ul>
-            <li>The anchor shares their screen for the first five minutes. Everyone builds along, then builds their own.</li>
+            <li data-fill>The anchor shares their screen for the first {buildAlong}. Everyone builds along, then builds their own.</li>
             <li>Breakout chats start empty: paste the page link when you visit a room.</li>
             <li>People press <em>Ask for help</em> in Meet to call a host.</li>
-            <li>At 11:10: ten minutes left, pin something to the wall, even if it's half-built.</li>
+            <li data-fill>At {wish.end - nudge}: {nudge} left, pin something to the wall, even if it's half-built.</li>
           </ul>
         </div>
         <div class="card">
@@ -166,6 +166,7 @@
 <p id="toast" class="toast" role="status" aria-live="polite"></p>
 
 <script src="assets/session.js"></script>
+<script src="assets/timing.js"></script>
 <script src="assets/site.js"></script>
 <script src="assets/hosts.js"></script>
 </body>

@@ -6,6 +6,7 @@ One file describes a whole session, and every view reads it. To run a new sessio
 
 | View | File | Uses |
 | --- | --- | --- |
+| Every page | `assets/timing.js` | Lays out the parts and fills in every time, date, and length |
 | Participant pages | `index.html`, `starters.html`, `wish.html` with `assets/site.js` | The day, the parts of the morning, the links |
 | Hosts page | `hosts.html` with `assets/hosts.js` | Everything, including checklists, messages, and speaker notes |
 | Presenter view | `present.html` with `assets/present.js` | The screens |
@@ -18,9 +19,11 @@ const SESSION = {
   title, subtitle, org,             // names shown on pages and the stage
   day: "2026-10-09",                // clock-driven features run on this day
   timeZone: "America/Chicago",
-  dateLabel,                        // shown in the bar on other days
+  start: "10:00", end: "12:00",     // the advertised start and end, 24-hour
+  dateLabel,                        // shown in the bar on other days, written with {braces}
   url: "inquiredu.org/a-mn-hackathon",
-  links: { teams, gallery, wonder },  // leave one empty and the page says "link on Friday"
+  links: { teams, gallery, wonder },  // leave one empty and the page says "link on" the day
+  pace: { nudge: 10, ... },         // cues inside the parts, in minutes
   segments: [ ... ]                 // the parts of the session, in order
 };
 ```
@@ -29,13 +32,36 @@ Each segment:
 
 | Field | What it's for |
 | --- | --- |
-| `start`, `end` | 24-hour times in the session's time zone |
+| `id` | A short name to use in braces: `{wish.end}` |
+| `minutes` | How long it runs. The parts run end to end from `start`, so changing one moves every part after it |
 | `title`, `where` | Its name, and "Main room" or "Breakout rooms" |
 | `hint` | One line for participants |
 | `link`, `linkLabel` | The page to send people to, and the button's words |
 | `screens` | What the stage shows, in order |
 | `host` | A checklist for hosts |
 | `messages` | Ready-to-paste chat messages: `{ to, text }` |
+
+## Times live only in the session file
+
+No page or message types out a time, date, or length. Write it in braces instead, in any text in the session file or in a page element marked `data-fill`, and `assets/timing.js` fills it in:
+
+| Write | Reads (for this session) | What it is |
+| --- | --- | --- |
+| `{start}`, `{end}` | 10:00, noon | The session's start and end |
+| `{wish.start}`, `{wish.end}` | 10:45, 11:20 | When a part starts or ends, by its `id` |
+| `{wish.end - nudge}` | 11:10 | A time moved by some minutes, or by a `pace` value |
+| `{length}`, `{wish.length}` | two hours, 35 minutes | How long the session or a part runs |
+| `{building}` | 60 minutes | All the time in breakout rooms |
+| `{nudge}`, `{share}` | ten minutes, two or three minutes | A `pace` value (a pair like `[2, 3]` reads as a range) |
+| `{weekday}`, `{date}`, `{zone}` | Friday, October 9, Central | From `day` and `timeZone` |
+| `{parts}` | 6 | How many parts |
+| `{title}`, `{subtitle}`, `{org}` | Hands On, ... | The session's names |
+
+Add `:number` or `:unit` to split a length for big numerals (`{length:number}` is "2", `{length:unit}` is "hours"). Start with a capital letter to capitalize: `{Length}` reads "Two hours".
+
+A mistyped name stays on the page in braces and shows an error in the browser console. Parts that run past `end` show a warning there too.
+
+In a page, mark the element that holds the braces: `<p data-fill>Back at {wish.end}</p>`. The page's link preview text (`<title>` and the description) can't be filled in, because previews don't run the page's code, so keep times out of those.
 
 ## Kinds of screen
 
@@ -48,9 +74,9 @@ Every screen has a `kind` and an optional `note` (shown only in the speaker note
 | `steps` | `heading`, `steps` (list), `foot` | Instructions before breakout rooms |
 | `link` | `heading`, `body` | Putting the site address on screen |
 | `embed` | `heading`, `src`, `caption` | Running something live on stage |
-| `countdown` | `heading`, `until` ("11:20"), `body` | Time left, for anyone watching in the main room |
+| `countdown` | `heading`, `until` (`"{wish.end}"`), `body` | Time left, for anyone watching in the main room |
 | `awards` | `heading`, `awards` (`icon`, `name`, `why`) | Show & Cheer |
-| `code` | `heading`, `code`, `caption` | Showing a few lines of code |
+| `code` | `heading`, `code`, `caption` | Showing a few lines of code (braces here are left alone) |
 | `quote` | `text` | One line, said and left to sit |
 | `pair` | `heading`, `cards` (`heading`, `body`), `foot` | Two side-by-side prompts |
 

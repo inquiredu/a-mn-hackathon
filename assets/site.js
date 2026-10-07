@@ -11,6 +11,10 @@ const LINKS = {
 const EVENT_DAY = "2026-10-09";   // the "Now" bar only runs on this day (Central time)
 
 const MACHINES = {
+  timer: { name: "The Meeting Timer", file: "cabinets/meeting-timer.html" },
+  groups: { name: "The Group Maker", file: "cabinets/group-maker.html" },
+  feedback: { name: "The Feedback Builder", file: "cabinets/feedback-builder.html" },
+  calendar: { name: "The Calendar Explorer", file: "cabinets/calendar-explorer.html" },
   oracle: { name: "The Teacher's Lounge Oracle", file: "cabinets/oracle.html" }
 };
 

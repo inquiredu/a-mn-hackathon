@@ -29,9 +29,10 @@
   --bar-accent: #66C1E7;
 
   --oracle: #6A44C9;
-  --sound: #C2551B;
-  --catch: #2E8555;
-  --slider: #2C6289;
+  --timer: #0B6E6E;
+  --groups: #B8430F;
+  --feedback: #2E7D4F;
+  --calendar: #2C6289;
 
   --focus: #10345A;
   --control: #6E8CA6;
@@ -61,9 +62,10 @@
     --bar-ink: #EAF6FC;
     --bar-accent: #66C1E7;
     --oracle: #B79CFF;
-    --sound: #FF9E6B;
-    --catch: #7FD7A0;
-    --slider: #8FD3F0;
+    --timer: #5FD0C8;
+    --groups: #FF9E6B;
+    --feedback: #7FD7A0;
+    --calendar: #8FD3F0;
     --focus: #66C1E7;
     --control: #6E8CA6;
     --shadow: none;
@@ -91,9 +93,10 @@
   --bar-ink: #EAF6FC;
   --bar-accent: #66C1E7;
   --oracle: #B79CFF;
-  --sound: #FF9E6B;
-  --catch: #7FD7A0;
-  --slider: #8FD3F0;
+  --timer: #5FD0C8;
+  --groups: #FF9E6B;
+  --feedback: #7FD7A0;
+  --calendar: #8FD3F0;
   --focus: #66C1E7;
   --control: #6E8CA6;
   --shadow: none;
@@ -276,6 +279,8 @@ button:hover, .button:hover { border-color: var(--link); }
   background: color-mix(in srgb, var(--c) 20%, transparent); font-size: 1.5rem;
 }
 .cabinet h4 { font-size: 1.15rem; }
+.cabinet .for { margin: 0 0 2px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.cabinet .monday { margin: -6px 0 14px; padding: 8px 12px; border-radius: 10px; background: var(--tint); font-size: .95rem; }
 .cabinet > p { margin: 6px 0 14px; color: var(--muted); }
 .cabinet.soon { box-shadow: none; border-top-style: dashed; }
 .cabinet.soon .badge { opacity: .6; }

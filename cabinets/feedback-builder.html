@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Feedback Builder</title>
+<script>
+/* ------------------------------------------------------------
+   PART 1: THE KNOBS. Change these to make the Feedback Builder yours.
+   ------------------------------------------------------------ */
+
+const ASSIGNMENT = "Argument essay";
+
+const LEVELS = ["Beginning", "Developing", "Proficient", "Advanced"];
+
+// Your rubric: each part, with one comment for each level (in the same order as LEVELS)
+const RUBRIC = [
+  {
+    criterion: "Claim",
+    comments: [
+      "Your position is still forming. Try finishing this sentence: \"I believe ___ because ___.\"",
+      "You have a claim. Now sharpen it so a reader knows exactly where you stand.",
+      "Your claim is clear and arguable. A reader knows where you stand from the start.",
+      "Your claim is precise and takes a real risk. It sets up everything that follows."
+    ]
+  },
+  {
+    criterion: "Evidence",
+    comments: [
+      "Find one fact, quote, or example that supports your claim, and add it.",
+      "You have evidence. Choose your strongest piece and say where it came from.",
+      "Your evidence is well chosen and supports your claim.",
+      "Your evidence is varied and convincing, and you weigh it against the other side."
+    ]
+  },
+  {
+    criterion: "Reasoning",
+    comments: [
+      "Tell the reader how your evidence proves your claim. Try starting with \"This shows...\"",
+      "Some of your evidence is explained. Connect each piece back to your claim.",
+      "You explain clearly how your evidence supports your claim.",
+      "Your reasoning answers the other side before it can object. That's persuasive."
+    ]
+  },
+  {
+    criterion: "Organization",
+    comments: [
+      "Try grouping your ideas into paragraphs, each with one main point.",
+      "Your paragraphs have main ideas. Add transitions so a reader can follow your path.",
+      "Your writing is organized and easy to follow from start to finish.",
+      "Your structure builds momentum. Each part sets up the next."
+    ]
+  }
+];
+
+// How the feedback opens and closes
+const TONES = {
+  Warm:   { opener: "Thank you for the thinking you put into this.", closer: "I can't wait to see where you take it next." },
+  Direct: { opener: "Here's where this draft stands.", closer: "Revise with these points in mind." },
+  Coach:  { opener: "Let's look at what's working and what's next.", closer: "You've got this. Pick one next step and go." }
+};
+
+// What's chosen when the page opens (a level number for each part: 0 = first level)
+const STARTING_CHOICES = [2, 1, 1, 2];
+</script>
+<style>
+  /* Colors: change these to make it yours */
+  :root {
+    --accent: #2E7D4F;   /* chosen levels and buttons */
+    --page: #F5F9F6;
+    --card: #FFFFFF;
+    --ink: #152218;
+    --muted: #4B5D50;
+    --line: #CFDDD3;
+    --edge: #6F8576;     /* button and box borders */
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 32px; }
+  h1 { margin: 0; font-size: 1.7rem; }
+  .lede { margin: 4px 0 0; color: var(--muted); }
+
+  .layout { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 16px; align-items: start; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+
+  fieldset { margin: 0 0 14px; padding: 0; border: 0; }
+  legend { margin-bottom: 6px; padding: 0; font-weight: 700; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pills input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .pills label {
+    padding: 6px 14px; cursor: pointer; font-size: .95rem;
+    border: 2px solid var(--edge); border-radius: 999px; background: var(--card);
+  }
+  .pills input:checked + label { background: var(--accent); border-color: var(--accent); color: #FFFFFF; font-weight: 600; }
+  .pills input:focus-visible + label { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+  .note-label { display: block; margin: 4px 0 6px; font-weight: 700; }
+  .hint { font-weight: 400; color: var(--muted); }
+  textarea {
+    width: 100%; padding: 8px 10px; font: inherit;
+    border: 2px solid var(--edge); border-radius: 10px; background: var(--card); color: var(--ink);
+  }
+
+  h2 { margin: 0 0 10px; font-size: 1.2rem; }
+  .feedback { min-height: 12em; margin: 0; padding: 14px; white-space: pre-wrap; border-radius: 12px; background: var(--page); font-size: 1.02rem; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  button {
+    padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer;
+    border: 2px solid var(--edge); border-radius: 999px; background: var(--card); color: var(--ink);
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+  button:focus-visible, textarea:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .status { min-height: 1.5em; margin: 8px 0 0; font-weight: 600; }
+  .copy-box { margin-top: 10px; height: 140px; }
+  .copy-box[hidden] { display: none; }
+  .foot { margin: 16px 0 0; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The Feedback Builder</h1>
+  <p class="lede">Assignment: <span id="assignment"></span>. Choose a level for each part, and the feedback comes together.</p>
+
+  <div class="layout">
+    <form class="card" id="choices">
+      <div id="criteria"></div>
+      <fieldset>
+        <legend>Tone</legend>
+        <div class="pills" id="tones"></div>
+      </fieldset>
+      <label class="note-label" for="note">A personal note <span class="hint">(optional, no names)</span></label>
+      <textarea id="note" rows="3"></textarea>
+    </form>
+
+    <section class="card" aria-labelledby="feedback-title">
+      <h2 id="feedback-title">Feedback</h2>
+      <p class="feedback" id="feedback"></p>
+      <div class="tools">
+        <button class="primary" id="copy" type="button">Copy feedback</button>
+        <button id="clear" type="button">Start over</button>
+      </div>
+      <p class="status" id="status" aria-live="polite"></p>
+      <textarea class="copy-box" id="copy-box" readonly hidden aria-label="The feedback as text, ready to copy"></textarea>
+    </section>
+  </div>
+
+  <p class="foot">Feedback, not a score. Everything you choose stays on this page.</p>
+</div>
+
+<script>
+/* ------------------------------------------------------------
+   PART 2: HOW THE FEEDBACK COMES TOGETHER
+   ------------------------------------------------------------ */
+
+const $ = (id) => document.getElementById(id);
+
+// Build a row of choices (radio buttons that look like pills)
+function pillRow(name, options, checkedIndex) {
+  const row = document.createElement("div");
+  row.className = "pills";
+  options.forEach((option, i) => {
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.id = name + "-" + i;
+    input.value = String(i);
+    input.checked = i === checkedIndex;
+    const label = document.createElement("label");
+    label.htmlFor = input.id;
+    label.textContent = option;
+    row.append(input, label);
+  });
+  return row;
+}
+
+// One set of level choices for each part of the rubric
+RUBRIC.forEach((part, i) => {
+  const set = document.createElement("fieldset");
+  const legend = document.createElement("legend");
+  legend.textContent = part.criterion;
+  set.append(legend, pillRow("part" + i, LEVELS, STARTING_CHOICES[i] ?? -1));
+  $("criteria").append(set);
+});
+$("tones").append(...pillRow("tone", Object.keys(TONES), 0).childNodes);
+
+function chosen(name) {
+  const picked = document.querySelector('input[name="' + name + '"]:checked');
+  return picked ? Number(picked.value) : -1;
+}
+
+function buildFeedback() {
+  const tone = TONES[Object.keys(TONES)[Math.max(0, chosen("tone"))]];
+  const lines = [tone.opener, ""];
+  const picks = [];
+  RUBRIC.forEach((part, i) => {
+    const level = chosen("part" + i);
+    if (level >= 0) {
+      lines.push(part.criterion + ": " + part.comments[level]);
+      picks.push({ part, level });
+    }
+  });
+  if (!picks.length) return "Choose a level for at least one part of the rubric.";
+
+  // One next step: the part with the lowest level
+  const lowest = picks.reduce((a, b) => (b.level < a.level ? b : a));
+  if (lowest.level < LEVELS.length - 1) {
+    lines.push("", "One next step: put your energy into " + lowest.part.criterion.toLowerCase() + " first.");
+  }
+  const note = $("note").value.trim();
+  if (note) lines.push("", note);
+  lines.push("", tone.closer);
+  return lines.join("\n");
+}
+
+function update() {
+  $("feedback").textContent = buildFeedback();
+  $("status").textContent = "";
+  $("copy-box").hidden = true;
+}
+
+$("choices").addEventListener("change", update);
+$("note").addEventListener("input", update);
+
+$("clear").addEventListener("click", () => {
+  document.querySelectorAll('#criteria input').forEach((input) => { input.checked = false; });
+  $("note").value = "";
+  update();
+});
+
+// Copy the feedback: try the clipboard, or show it in a box to copy by hand
+$("copy").addEventListener("click", async () => {
+  const text = buildFeedback();
+  try {
+    await navigator.clipboard.writeText(text);
+    $("status").textContent = "Copied. Paste it wherever you give feedback.";
+  } catch {
+    const box = $("copy-box");
+    box.value = text;
+    box.hidden = false;
+    box.focus();
+    box.select();
+    $("status").textContent = "Copy the feedback from the box below.";
+  }
+});
+
+// Get started
+$("assignment").textContent = ASSIGNMENT;
+update();
+</script>
+</body>
+</html>

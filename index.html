@@ -78,7 +78,7 @@
         </li>
         <li data-start="10:20" data-end="10:45" data-link="#arcade">
           <time>10:20</time>
-          <div><strong>The Remix Arcade</strong><span>In breakout rooms. Pick a machine and make it yours.</span> <a href="#arcade">Go to the arcade</a></div>
+          <div><strong>The Remix Arcade</strong><span>In breakout rooms of four. Pick a starter and make it yours.</span> <a href="#arcade">Go to the arcade</a></div>
         </li>
         <li data-start="10:45" data-end="11:20" data-link="#wish">
           <time>10:45</time>
@@ -100,79 +100,192 @@
   <section id="arcade" class="section band">
     <div class="wrap">
       <h2>The Remix Arcade</h2>
-      <p class="section-lede">Every machine here already works. Play one, hand it to your AI, then make it yours.</p>
+      <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours.</p>
 
       <ol class="steps">
-        <li><span class="num hex">1</span><strong>Play it.</strong> <span>Pick a machine and give it a try.</span></li>
+        <li><span class="num hex">1</span><strong>Play it.</strong> <span>Pick a starter and give it a try.</span></li>
         <li><span class="num hex">2</span><strong>Hand it to your AI.</strong> <span>Press <em>Copy for my AI</em>, then paste into Gemini, Claude, or ChatGPT.</span></li>
         <li><span class="num hex">3</span><strong>Remix it.</strong> <span>Copy a change from the remix menu, paste it in the same chat, and see what happens.</span></li>
         <li><span class="num hex">4</span><strong>Pin it to the wall.</strong> <span>Screenshot your version onto the <a href="#wall">gallery wall</a>.</span></li>
       </ol>
 
-      <h3 class="subhead">The machines</h3>
+      <h3 class="subhead">The starters</h3>
       <div class="machines">
+
+        <article class="cabinet" style="--c: var(--timer)">
+          <div class="badge hex" aria-hidden="true">⏱️</div>
+          <p class="for">For anyone who runs a meeting</p>
+          <h4>The Meeting Timer</h4>
+          <p>Your agenda on screen with a big countdown, a gentle chime when it's time to move on, and a parking lot.</p>
+          <p class="monday"><strong>Monday:</strong> run your next PLC with it on the screen.</p>
+          <div class="actions">
+            <button class="primary" data-play="timer">Play</button>
+            <button data-copy-machine="timer">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it yours</h5>
+            <ul>
+              <li><span>Change the agenda to my meeting: ___ (10 minutes), ___ (15 minutes), ___ (5 minutes).</span></li>
+              <li><span>Show our team norms along the bottom: ___.</span></li>
+              <li><span>Use our school colors: ___ and ___.</span></li>
+            </ul>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Add a protocol mode: 5 minutes of silent writing, then 10 minutes of discussion, with a different chime for each.</span></li>
+              <li><span>Add a spinner that picks who takes notes and who keeps time.</span></li>
+              <li><span>Add a button that copies the parking lot as a list I can paste into our notes.</span></li>
+            </ul>
+            <h5>Make it fun</h5>
+            <ul>
+              <li><span>When time runs out, play a game-show buzzer instead of the chime.</span></li>
+              <li><span>If we finish the agenda early, celebrate with confetti.</span></li>
+            </ul>
+            <h5>Look inside (no AI needed)</h5>
+            <ul>
+              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>AGENDA</code>, change the minutes for one item, and press <strong>Run my changes</strong>.</li>
+            </ul>
+          </details>
+        </article>
+
+        <article class="cabinet" style="--c: var(--groups)">
+          <div class="badge hex" aria-hidden="true">🎲</div>
+          <p class="for">For teachers, coaches, and anyone leading a workshop</p>
+          <h4>The Group Maker</h4>
+          <p>Paste names, pick a size, and shuffle. It spreads your helpers out and keeps apart anyone who shouldn't be together.</p>
+          <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
+          <div class="actions">
+            <button class="primary" data-play="groups">Play</button>
+            <button data-copy-machine="groups">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it yours</h5>
+            <ul>
+              <li><span>Use these group names instead: ___.</span></li>
+              <li><span>Make the group cards big enough to read on a projector from the back of the room.</span></li>
+            </ul>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Add a box where I can type pairs who should be kept apart.</span></li>
+              <li><span>Give each group roles: facilitator, recorder, timekeeper, and reporter.</span></li>
+              <li><span>Let me save a list of names in this browser so I don't paste it every time.</span></li>
+            </ul>
+            <h5>Make it fun</h5>
+            <ul>
+              <li><span>Make the shuffle dramatic: names spin and land one at a time, with a drumroll.</span></li>
+            </ul>
+            <h5>Look inside (no AI needed)</h5>
+            <ul>
+              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>GROUP_NAMES</code>, change them to your school's mascots, and press <strong>Run my changes</strong>.</li>
+              <li class="do"><strong>About names:</strong> names typed into the running tool stay on your computer. Names pasted into an AI chat go to that company. Today, stick with the made-up ones.</li>
+            </ul>
+          </details>
+        </article>
+
+        <article class="cabinet" style="--c: var(--feedback)">
+          <div class="badge hex" aria-hidden="true">💬</div>
+          <p class="for">For teachers and faculty</p>
+          <h4>The Feedback Builder</h4>
+          <p>Choose a level for each part of a rubric, and warm, specific feedback comes together, with one clear next step.</p>
+          <p class="monday"><strong>Monday:</strong> load your own rubric and give faster, kinder feedback.</p>
+          <div class="actions">
+            <button class="primary" data-play="feedback">Play</button>
+            <button data-copy-machine="feedback">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it yours</h5>
+            <ul>
+              <li><span>Replace the rubric with mine: ___.</span></li>
+              <li><span>Rewrite every comment in my voice: shorter, and a little funnier.</span></li>
+              <li><span>Add a button that switches the comments to Spanish.</span></li>
+            </ul>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Add a "glow and grow" format: one thing that's working and one thing to try.</span></li>
+              <li><span>Let me save rubrics for different assignments and switch between them.</span></li>
+            </ul>
+            <h5>Make it fun</h5>
+            <ul>
+              <li><span>Show a sticker for the strongest part of the work.</span></li>
+            </ul>
+            <h5>Look inside (no AI needed)</h5>
+            <ul>
+              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>TONES</code>, write your own opener and closer, and press <strong>Run my changes</strong>.</li>
+            </ul>
+          </details>
+        </article>
+
+        <article class="cabinet" style="--c: var(--calendar)">
+          <div class="badge hex" aria-hidden="true">🗓️</div>
+          <p class="for">For leaders and anyone who juggles calendars</p>
+          <h4>The Calendar Explorer</h4>
+          <p>Every calendar in one view you can filter and search, with busy days and double-booked rooms flagged.</p>
+          <p class="monday"><strong>Monday:</strong> spot next month's collisions before they happen.</p>
+          <div class="actions">
+            <button class="primary" data-play="calendar">Play</button>
+            <button data-copy-machine="calendar">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it yours</h5>
+            <ul>
+              <li><span>Change the calendars to our buildings and programs: ___.</span></li>
+              <li><span>Use these events instead: ___. (Paste public events only.)</span></li>
+            </ul>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Add a month grid view with a colored dot for each event.</span></li>
+              <li><span>Add a button that copies one week as a list for the staff bulletin.</span></li>
+              <li><span>Flag any evening with more than two events for the same families.</span></li>
+            </ul>
+            <h5>Make it fun</h5>
+            <ul>
+              <li><span>Add a quiet-day finder that celebrates days with nothing scheduled.</span></li>
+            </ul>
+            <h5>Look inside (no AI needed)</h5>
+            <ul>
+              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>EVENTS</code>, add one for something on your own calendar, and press <strong>Run my changes</strong>.</li>
+            </ul>
+          </details>
+        </article>
 
         <article class="cabinet" style="--c: var(--oracle)">
           <div class="badge hex" aria-hidden="true">🔮</div>
+          <p class="for">Just for fun</p>
           <h4>The Teacher's Lounge Oracle</h4>
           <p>Ask a question. Get a dramatic, slightly ridiculous prophecy, with a gong.</p>
+          <p class="monday"><strong>Monday:</strong> a vocabulary oracle or a discussion-question picker, if you remix it.</p>
           <div class="actions">
             <button class="primary" data-play="oracle">Play</button>
             <button data-copy-machine="oracle">Copy for my AI</button>
           </div>
           <details class="remix">
             <summary>Remix menu</summary>
-
             <h5>Make it silly</h5>
             <ul>
               <li><span>Make the Oracle talk like an over-excited game-show host.</span></li>
               <li><span>Add a drumroll before the gong, and confetti when the prophecy appears.</span></li>
               <li><span>Write 10 new prophecies about my school, ___. Keep them kind.</span></li>
             </ul>
-
             <h5>Make it yours</h5>
             <ul>
               <li><span>Change the colors to my school colors: ___ and ___.</span></li>
               <li><span>Add a button that reads the prophecy out loud.</span></li>
-              <li><span>Add a button that switches everything to Spanish.</span></li>
               <li><span>Teach the Oracle a new topic: when I ask about ___, it should answer with prophecies about ___.</span></li>
             </ul>
-
             <h5>Make it useful</h5>
             <ul>
               <li><span>Turn it into a vocabulary oracle. Each spin reveals one of these words and what it means: ___.</span></li>
               <li><span>Turn it into a discussion-question picker for my class on ___.</span></li>
-              <li><span>Turn it into a name picker for my class. I'll type in made-up names.<span class="note">Why made-up? Whatever you paste into an AI tool goes to that company. Real student names stay out.</span></span></li>
             </ul>
-
             <h5>Look inside (no AI needed)</h5>
             <ul>
               <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>SPIN_SECONDS</code>, change the 3 to a 10, and press <strong>Run my changes</strong>.</li>
               <li class="do">In the code, find the coffee topic under <code>TOPICS</code>. Add your own prophecy in quotes, end it with a comma, press <strong>Run my changes</strong>, and ask about coffee.</li>
-              <li class="do">Break it on purpose: delete one <code>}</code> and press <strong>Run my changes</strong>. Then copy the broken code to your AI and ask, "I broke it. Can you find and fix it?"</li>
             </ul>
           </details>
-        </article>
-
-        <article class="cabinet soon" style="--c: var(--sound)">
-          <div class="badge hex" aria-hidden="true">🥁</div>
-          <h4>The Classroom Soundboard</h4>
-          <p>Drumrolls, applause, and a sad trombone, one tap each.</p>
-          <span class="soon-tag">Coming soon</span>
-        </article>
-
-        <article class="cabinet soon" style="--c: var(--catch)">
-          <div class="badge hex" aria-hidden="true">🍎</div>
-          <h4>Catch!</h4>
-          <p>A tiny game: catch the falling apples. Then make them falling spelling words.</p>
-          <span class="soon-tag">Coming soon</span>
-        </article>
-
-        <article class="cabinet soon" style="--c: var(--slider)">
-          <div class="badge hex" aria-hidden="true">🎚️</div>
-          <h4>The Slider Lab</h4>
-          <p>Drag a slider and watch something you teach change live.</p>
-          <span class="soon-tag">Coming soon</span>
         </article>
 
       </div>

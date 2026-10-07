@@ -25,10 +25,12 @@ One host stays in the main room the whole time, building wishes live for latecom
 | `assets/site.css` | The look, taken from the MNGAIA mark |
 | `assets/site.js` | The "Now" bar, the copy buttons, and the machine room |
 | `assets/mngaia-mark.png` | The hexagon mark, cut from the MNGAIA banner |
-| `cabinets/oracle.html` | The Teacher's Lounge Oracle (working) |
+| `cabinets/meeting-timer.html` | Starter: the Meeting Timer (anyone who runs a meeting) |
+| `cabinets/group-maker.html` | Starter: the Group Maker (teachers, coaches, workshop leads) |
+| `cabinets/feedback-builder.html` | Starter: the Feedback Builder (teachers and faculty) |
+| `cabinets/calendar-explorer.html` | Starter: the Calendar Explorer (leaders) |
+| `cabinets/oracle.html` | Just for fun: the Teacher's Lounge Oracle |
 | `scripts/serve.js` | A small local server for previewing |
-
-The Soundboard, Catch!, and the Slider Lab are placeholders.
 
 Each machine is a single HTML file with nothing outside it, so it pastes cleanly into any AI tool. The settings worth changing sit at the very top of each file, so a first-timer who opens the code sees them first.
 

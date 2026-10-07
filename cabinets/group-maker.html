@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Group Maker</title>
+<script>
+/* ------------------------------------------------------------
+   PART 1: THE KNOBS. Change these to make the Group Maker yours.
+   ------------------------------------------------------------ */
+
+const GROUP_SIZE = 4;   // people per group
+
+// Made-up names for practice. Names typed into the running tool stay on your
+// computer; names pasted into an AI chat go to that company.
+const SAMPLE_NAMES = [
+  "Avery", "Beto", "Chloe", "Deka", "Elan", "Farhiya", "Gus", "Hnub",
+  "Isabel", "Jalen", "Kaia", "Lars", "Mai", "Nasra", "Oskar", "Paj",
+  "Rosa", "Samir", "Tova", "Uriel", "Wren", "Yer", "Yusuf", "Zoe"
+];
+
+// Pairs who should always land in different groups
+const KEEP_APART = [
+  ["Gus", "Lars"]
+];
+
+// Group names, used in order
+const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", "Bison", "Cardinals", "Foxes", "Herons"];
+</script>
+<style>
+  /* Colors: change these to make it yours */
+  :root {
+    --accent: #B8430F;   /* buttons and group headers */
+    --page: #FBF8F4;
+    --card: #FFFFFF;
+    --ink: #1F1A17;
+    --muted: #5B524B;
+    --line: #DDD3C8;
+    --edge: #857A70;     /* button and box borders */
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 32px; }
+  h1 { margin: 0; font-size: 1.7rem; }
+  .lede { margin: 4px 0 0; color: var(--muted); }
+
+  .layout { display: grid; gap: 16px; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); margin-top: 16px; align-items: start; }
+  @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+
+  label { display: block; margin: 14px 0 6px; font-weight: 600; }
+  label:first-child { margin-top: 0; }
+  .hint { font-weight: 400; color: var(--muted); }
+  textarea, input {
+    width: 100%; padding: 8px 10px; font: inherit;
+    border: 2px solid var(--edge); border-radius: 10px; background: var(--card); color: var(--ink);
+  }
+  input[type="number"] { width: 6em; }
+
+  button {
+    padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer;
+    border: 2px solid var(--edge); border-radius: 999px; background: var(--card); color: var(--ink);
+  }
+  button.primary { margin-top: 16px; background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+  button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+  .results-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+  h2 { margin: 0; font-size: 1.2rem; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; }
+  .summary { margin: 8px 0 0; color: var(--muted); }
+  .status { min-height: 1.5em; margin: 4px 0 0; font-weight: 600; }
+
+  .groups { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); margin-top: 12px; }
+  .group { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; animation: land .35s ease-out both; }
+  .group h3 { margin: 0; padding: 8px 14px; font-size: 1.05rem; background: var(--accent); color: #FFFFFF; }
+  .group ul { margin: 0; padding: 10px 14px 12px 32px; }
+  .group li { margin: 2px 0; }
+  .helper { color: var(--muted); font-size: .9rem; }
+  @keyframes land { from { opacity: 0; transform: translateY(10px) scale(.97); } }
+
+  .copy-box { margin-top: 12px; height: 160px; }
+  .copy-box[hidden] { display: none; }
+
+  @media (prefers-reduced-motion: reduce) { .group { animation: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The Group Maker</h1>
+  <p class="lede">Paste names, pick a size, and shuffle.</p>
+
+  <div class="layout">
+    <form class="card" id="setup">
+      <label for="names">Names, one per line <span class="hint">(made-up for today)</span></label>
+      <textarea id="names" rows="12" spellcheck="false"></textarea>
+
+      <label for="size">People per group</label>
+      <input id="size" type="number" min="2" max="10">
+
+      <label for="helpers">Spread these people out, one per group <span class="hint">(optional: hosts or helpers)</span></label>
+      <textarea id="helpers" rows="3" spellcheck="false" placeholder="One name per line"></textarea>
+
+      <button class="primary" type="submit">Make groups</button>
+    </form>
+
+    <section aria-labelledby="results-title">
+      <div class="results-head">
+        <h2 id="results-title">Groups</h2>
+        <div class="tools">
+          <button id="again" type="button">Shuffle again</button>
+          <button id="copy" type="button">Copy groups</button>
+        </div>
+      </div>
+      <p class="summary" id="summary" aria-live="polite"></p>
+      <p class="status" id="status" aria-live="polite"></p>
+      <div class="groups" id="groups"></div>
+      <textarea class="copy-box" id="copy-box" readonly hidden aria-label="The groups as text, ready to copy"></textarea>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ------------------------------------------------------------
+   PART 2: HOW THE GROUPS GET MADE
+   ------------------------------------------------------------ */
+
+const $ = (id) => document.getElementById(id);
+let lastGroups = [];
+
+// Turn a box of text into a list of names (one per line, or separated by commas)
+function listFrom(text) {
+  return text.split(/[\n,]+/).map((name) => name.trim()).filter(Boolean);
+}
+
+// Mix up a list, like shuffling cards
+function shuffle(list) {
+  const cards = [...list];
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  return cards;
+}
+
+// Deal everyone into groups: helpers first, one per group, then everyone else
+// goes to whichever group is smallest, so group sizes never differ by more than one.
+function deal(people, helpers, size) {
+  const everyone = [...new Set([...helpers, ...people])];
+  const count = Math.max(1, Math.ceil(everyone.length / size));
+  const groups = Array.from({ length: count }, () => []);
+  shuffle(helpers).forEach((helper, i) => groups[i % count].push(helper));
+  shuffle(everyone.filter((p) => !helpers.includes(p))).forEach((person) => {
+    const smallest = groups.reduce((a, b) => (b.length < a.length ? b : a));
+    smallest.push(person);
+  });
+  return groups;
+}
+
+function breaksKeepApart(groups) {
+  return groups.some((group) => KEEP_APART.some(([a, b]) => group.includes(a) && group.includes(b)));
+}
+
+function makeGroups() {
+  const people = listFrom($("names").value);
+  const helpers = listFrom($("helpers").value);
+  const size = Math.max(2, Number($("size").value) || GROUP_SIZE);
+  if (!people.length && !helpers.length) {
+    $("summary").textContent = "Add some names first.";
+    return;
+  }
+  let groups = deal(people, helpers, size);
+  for (let tries = 0; tries < 200 && breaksKeepApart(groups); tries++) groups = deal(people, helpers, size);
+  show(groups, helpers);
+}
+
+function describeSizes(sizes) {
+  const counts = {};
+  sizes.forEach((s) => { counts[s] = (counts[s] || 0) + 1; });
+  return Object.keys(counts).sort((a, b) => b - a).map((s) => counts[s] + " of " + s).join(", ");
+}
+
+function show(groups, helpers) {
+  lastGroups = groups.map((members, i) => ({ name: GROUP_NAMES[i] || "Group " + (i + 1), members }));
+  $("groups").replaceChildren(...lastGroups.map((group, i) => {
+    const card = document.createElement("article");
+    card.className = "group";
+    card.style.animationDelay = i * 70 + "ms";
+    const heading = document.createElement("h3");
+    heading.textContent = group.name + " (" + group.members.length + ")";
+    const list = document.createElement("ul");
+    group.members.forEach((member) => {
+      const li = document.createElement("li");
+      li.textContent = member;
+      if (helpers.includes(member)) {
+        const tag = document.createElement("span");
+        tag.className = "helper";
+        tag.textContent = " ★ helper";
+        li.append(tag);
+      }
+      list.append(li);
+    });
+    card.append(heading, list);
+    return card;
+  }));
+  const sizes = groups.map((g) => g.length);
+  const total = sizes.reduce((a, b) => a + b, 0);
+  $("summary").textContent = total + " people, " + groups.length + " groups (" + describeSizes(sizes) + ").";
+  $("status").textContent = "";
+  $("copy-box").hidden = true;
+}
+
+// Copy the groups as text: try the clipboard, or show them in a box to copy by hand
+$("copy").addEventListener("click", async () => {
+  if (!lastGroups.length) return;
+  const text = lastGroups.map((g) => g.name + ": " + g.members.join(", ")).join("\n");
+  try {
+    await navigator.clipboard.writeText(text);
+    $("status").textContent = "Copied the groups.";
+  } catch {
+    const box = $("copy-box");
+    box.value = text;
+    box.hidden = false;
+    box.focus();
+    box.select();
+    $("status").textContent = "Copy the groups from the box below.";
+  }
+});
+
+$("setup").addEventListener("submit", (event) => { event.preventDefault(); makeGroups(); });
+$("again").addEventListener("click", makeGroups);
+
+// Get started
+$("names").value = SAMPLE_NAMES.join("\n");
+$("size").value = GROUP_SIZE;
+makeGroups();
+</script>
+</body>
+</html>

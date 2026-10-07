@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Meeting Timer</title>
+<script>
+/* ------------------------------------------------------------
+   PART 1: THE KNOBS. Change these to make the timer yours.
+   ------------------------------------------------------------ */
+
+const MEETING_NAME = "Grade 7 PLC";
+
+// The agenda: what you'll talk about, and for how many minutes.
+const AGENDA = [
+  { item: "Celebrations", minutes: 5 },
+  { item: "Look at student work", minutes: 20 },
+  { item: "Plan next week's common assessment", minutes: 15 },
+  { item: "Action items: who does what by when", minutes: 5 }
+];
+
+// Your team's norms, shown along the bottom.
+const NORMS = ["Start and end on time", "Assume good intent", "Keep students at the center"];
+
+const HEADS_UP_SECONDS = 60;  // a soft ping this many seconds before an item ends
+const SOUND_ON = true;        // change to false to start with the sound off
+</script>
+<style>
+  /* Colors: change these to make it yours */
+  :root {
+    --accent: #0B6E6E;   /* buttons and the progress bar */
+    --page: #F6F8FB;     /* the background */
+    --card: #FFFFFF;
+    --ink: #14243B;      /* text */
+    --muted: #4A5B70;
+    --line: #C9D3DF;
+    --edge: #6E7F94;     /* button and box borders */
+    --soon: #9A4D00;     /* the clock in its last minute */
+    --over: #B42318;     /* the clock when time is up */
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 20px 16px 32px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+  h1 { margin: 0; font-size: 1.6rem; }
+  .ends { margin: 0; color: var(--muted); }
+
+  .layout { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); margin-top: 16px; }
+  @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+
+  .label { margin: 0; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .current { margin: 4px 0 0; font-size: clamp(1.4rem, 4vw, 2rem); }
+  .clock { margin: 8px 0; font-size: clamp(4rem, 16vw, 7.5rem); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  .clock.soon { color: var(--soon); }
+  .clock.over { color: var(--over); }
+  .note { min-height: 1.5em; margin: 0 0 12px; color: var(--muted); }
+  .bar { height: 12px; border-radius: 999px; background: #E3E9F0; overflow: hidden; }
+  .bar div { width: 0; height: 100%; background: var(--accent); transition: width .25s linear; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  button {
+    padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer;
+    border: 2px solid var(--edge); border-radius: 999px; background: var(--card); color: var(--ink);
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+  h2 { margin: 0 0 10px; font-size: 1.1rem; }
+  .agenda { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 6px; }
+  .agenda li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; }
+  .agenda li.now { border: 2px solid var(--accent); font-weight: 700; }
+  .agenda li.done { color: var(--muted); text-decoration: line-through; }
+  .agenda .mins { color: var(--muted); font-weight: 400; white-space: nowrap; }
+
+  .park { display: flex; gap: 8px; }
+  .park input { flex: 1; min-width: 0; padding: 8px 12px; font: inherit; border: 2px solid var(--edge); border-radius: 10px; }
+  .parked { margin: 10px 0 0; padding-left: 20px; }
+  .parked li { margin: 4px 0; }
+  .parked button { margin-left: 8px; padding: 0 10px; font-size: .85rem; }
+
+  .norms { margin-top: 16px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--muted); }
+  .norms strong { color: var(--ink); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (prefers-reduced-motion: reduce) { .bar div { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1 id="meeting-name">Meeting</h1>
+      <p class="ends" id="ends"></p>
+    </div>
+    <button id="sound" type="button" aria-pressed="true"><span aria-hidden="true">🔔</span> Chime</button>
+  </header>
+
+  <div class="layout">
+    <section class="card" aria-labelledby="now-label">
+      <p class="label" id="now-label">Now</p>
+      <h2 class="current" id="current"></h2>
+      <p class="clock" id="clock">0:00</p>
+      <p class="note" id="note"></p>
+      <div class="bar" aria-hidden="true"><div id="progress"></div></div>
+      <div class="controls">
+        <button class="primary" id="start" type="button">Start</button>
+        <button id="next" type="button">Next item</button>
+        <button id="more" type="button">+1 minute</button>
+        <button id="back" type="button">Back</button>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h2>Agenda</h2>
+      <ol class="agenda" id="agenda"></ol>
+      <h2 id="park-label">Parking lot</h2>
+      <form class="park" id="park-form">
+        <input id="park-input" aria-labelledby="park-label" placeholder="An idea for later" autocomplete="off">
+        <button type="submit">Add</button>
+      </form>
+      <ul class="parked" id="parked"></ul>
+    </aside>
+  </div>
+
+  <p class="norms" id="norms"></p>
+  <p class="sr-only" id="announce" aria-live="polite"></p>
+</div>
+
+<script>
+/* ------------------------------------------------------------
+   PART 2: SOUNDS. Made from math, so no sound files.
+   ------------------------------------------------------------ */
+
+let audio; // the browser's sound engine, started on the first click
+
+function tone(pitch, startIn, seconds, volume) {
+  const start = audio.currentTime + startIn;
+  const osc = audio.createOscillator();
+  const gain = audio.createGain();
+  osc.frequency.value = pitch;
+  gain.gain.setValueAtTime(volume, start);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + seconds);
+  osc.connect(gain).connect(audio.destination);
+  osc.start(start);
+  osc.stop(start + seconds);
+}
+
+function chime() { tone(659, 0, 1.2, 0.25); tone(880, 0.25, 1.6, 0.2); }  // time's up
+function ping() { tone(523, 0, 0.6, 0.15); }                              // heads up
+
+
+/* ------------------------------------------------------------
+   PART 3: HOW THE TIMER WORKS
+   ------------------------------------------------------------ */
+
+const $ = (id) => document.getElementById(id);
+let index = 0;          // which agenda item we're on
+let secondsLeft = 0;    // goes below zero when an item runs over
+let plannedSeconds = 0;
+let running = false;
+let endsAt = 0;         // the moment the current item's time runs out
+let pinged = false;
+let chimed = false;
+let finished = false;
+let soundOn = SOUND_ON;
+
+function format(seconds) {
+  const sign = seconds < 0 ? "+" : "";
+  const s = Math.abs(seconds);
+  return sign + Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+}
+
+function announce(message) { $("announce").textContent = message; }
+
+function loadItem(i) {
+  index = i;
+  finished = false;
+  plannedSeconds = AGENDA[index].minutes * 60;
+  secondsLeft = plannedSeconds;
+  pinged = false;
+  chimed = false;
+  if (running) endsAt = Date.now() + secondsLeft * 1000;
+  showAgenda();
+  showClock();
+}
+
+function showClock() {
+  const clock = $("clock");
+  if (finished) {
+    $("current").textContent = "That's the agenda.";
+    clock.textContent = "Done";
+    clock.className = "clock";
+    $("note").textContent = "Nice work. Check the parking lot before you go.";
+    $("progress").style.width = "100%";
+  } else {
+    $("current").textContent = AGENDA[index].item;
+    clock.textContent = format(secondsLeft);
+    clock.className = "clock" + (secondsLeft <= 0 ? " over" : secondsLeft <= HEADS_UP_SECONDS ? " soon" : "");
+    $("note").textContent = secondsLeft <= 0 ? "Time's up. Move on when you're ready." : "";
+    const used = plannedSeconds - Math.max(secondsLeft, 0);
+    $("progress").style.width = Math.min(100, (used / plannedSeconds) * 100) + "%";
+  }
+  $("start").textContent = running ? "Pause" : finished ? "Start over" : "Start";
+
+  // When will the meeting end, at this pace?
+  let remaining = finished ? 0 : Math.max(secondsLeft, 0);
+  for (let i = index + 1; i < AGENDA.length && !finished; i++) remaining += AGENDA[i].minutes * 60;
+  const end = new Date(Date.now() + remaining * 1000);
+  $("ends").textContent = "Ends about " + end.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+}
+
+function showAgenda() {
+  $("agenda").replaceChildren(...AGENDA.map((a, i) => {
+    const li = document.createElement("li");
+    const name = document.createElement("span");
+    const mins = document.createElement("span");
+    name.textContent = a.item;
+    mins.className = "mins";
+    mins.textContent = a.minutes + " min";
+    if (finished || i < index) {
+      li.className = "done";
+      name.textContent += " ";
+      const done = document.createElement("span");
+      done.className = "sr-only";
+      done.textContent = "(done)";
+      name.append(done);
+    } else if (i === index) {
+      li.className = "now";
+      li.setAttribute("aria-current", "step");
+    }
+    li.append(name, mins);
+    return li;
+  }));
+}
+
+// Check the time four times a second
+setInterval(() => {
+  if (!running || finished) return;
+  secondsLeft = Math.round((endsAt - Date.now()) / 1000);
+  if (!pinged && secondsLeft <= HEADS_UP_SECONDS && secondsLeft > 0) {
+    pinged = true;
+    if (soundOn) ping();
+    announce("Heads up: " + AGENDA[index].item + " is almost out of time.");
+  }
+  if (!chimed && secondsLeft <= 0) {
+    chimed = true;
+    if (soundOn) chime();
+    announce("Time's up: " + AGENDA[index].item + ".");
+  }
+  showClock();
+}, 250);
+
+$("start").addEventListener("click", () => {
+  audio = audio || new AudioContext();
+  if (finished) { running = false; loadItem(0); return; }
+  if (running) {
+    secondsLeft = Math.round((endsAt - Date.now()) / 1000);
+    running = false;
+  } else {
+    endsAt = Date.now() + secondsLeft * 1000;
+    running = true;
+  }
+  showClock();
+});
+
+$("next").addEventListener("click", () => {
+  if (finished) return;
+  if (index < AGENDA.length - 1) {
+    loadItem(index + 1);
+    announce("Now: " + AGENDA[index].item + ".");
+  } else {
+    finished = true;
+    running = false;
+    showAgenda();
+    showClock();
+    announce("That's the agenda.");
+  }
+});
+
+$("back").addEventListener("click", () => {
+  if (finished) { finished = false; loadItem(AGENDA.length - 1); }
+  else if (index > 0) loadItem(index - 1);
+});
+
+$("more").addEventListener("click", () => {
+  if (finished) return;
+  secondsLeft += 60;
+  plannedSeconds += 60;
+  if (running) endsAt += 60000;
+  if (secondsLeft > HEADS_UP_SECONDS) pinged = false;
+  if (secondsLeft > 0) chimed = false;
+  showClock();
+});
+
+// The sound switch
+function showSound() {
+  $("sound").setAttribute("aria-pressed", String(soundOn));
+  $("sound").firstElementChild.textContent = soundOn ? "🔔" : "🔕";
+}
+$("sound").addEventListener("click", () => { soundOn = !soundOn; showSound(); });
+
+// The parking lot
+$("park-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const text = $("park-input").value.trim();
+  if (!text) return;
+  const li = document.createElement("li");
+  const remove = document.createElement("button");
+  remove.type = "button";
+  remove.textContent = "Remove";
+  remove.setAttribute("aria-label", "Remove: " + text);
+  remove.addEventListener("click", () => li.remove());
+  li.append(text, remove);
+  $("parked").append(li);
+  $("park-input").value = "";
+});
+
+// Get started
+$("meeting-name").textContent = MEETING_NAME;
+const normsLabel = document.createElement("strong");
+normsLabel.textContent = "Our norms: ";
+$("norms").append(normsLabel, NORMS.join(" · "));
+showSound();
+loadItem(0);
+</script>
+</body>
+</html>

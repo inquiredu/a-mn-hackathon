@@ -16,9 +16,9 @@ const MACHINES = {
 
 // The AI tools people paste into, for the "next step" panel
 const AI_TOOLS = [
-  { id: "gemini", name: "Gemini", url: "https://gemini.google.com/app", tip: "Turn on Canvas in the prompt bar, then paste." },
-  { id: "claude", name: "Claude", url: "https://claude.ai/new", tip: "Paste. The tool appears beside the chat." },
-  { id: "chatgpt", name: "ChatGPT", url: "https://chatgpt.com/", tip: "Choose Canvas from the tools, paste, then press Preview." }
+  { id: "gemini", name: "Gemini", url: "https://gemini.google.com/app", tip: "Choose Canvas in the prompt bar (look in the + menu), then paste." },
+  { id: "claude", name: "Claude", url: "https://claude.ai/new", tip: "Paste. It appears beside the chat; if not, turn on artifacts in Settings › Capabilities." },
+  { id: "chatgpt", name: "ChatGPT", url: "https://chatgpt.com/", tip: "Paste, then switch on Preview on the code block." }
 ];
 
 
@@ -328,7 +328,7 @@ if (document.querySelector("[data-play], [data-copy-machine]")) {
 
 function promptFor(id, code) {
   return 'Here is the code for a small web app called "' + MACHINES[id].name + '". ' +
-    "Please run it as a live preview I can play with (in Canvas, or as an artifact). " +
+    "Please run it as a live preview I can play with (in Canvas, as an artifact, or with Preview). " +
     "Don't change anything yet. I'll ask for changes next.\n\n" +
     "```html\n" + code + "\n```";
 }

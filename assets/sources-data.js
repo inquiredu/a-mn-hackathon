@@ -9,7 +9,7 @@
 //   type       one of the TYPES below; peer: true if peer-reviewed
 //   says       what it says, in a sentence or three
 //   take       the takeaway, with takeLabel ("For Friday", "The habit", ...)
-//   asks       which questions it answers (keys of ASKS below)
+//   asks       its topics (keys from ASK_GROUPS below)
 
 const SOURCE_SECTIONS = {
   moves: { title: "Learn the moves", blurb: "How to build in the tools you have, what the code actually is, and what \"vibe coding\" means, from the people who named it." },
@@ -27,19 +27,14 @@ const TYPES = {
   book: "Books"
 };
 
-const ASKS = {
-  tools: "How do I build in my AI tool?",
-  code: "What is the code, anyway?",
-  sharing: "How do I share what I make?",
-  privacy: "Is it safe with student data?",
-  security: "Is the code it writes safe?",
-  access: "Can everyone use what I share?",
-  minnesota: "What applies in Minnesota?",
-  learning: "Does AI help or hurt learning?",
-  thinking: "Does learning to code help thinking?",
-  starting: "How should beginners start?",
-  assessment: "What does this mean for assessment?"
-};
+// The topics in the "I want to know about..." list, in three groups. Each label also tags the
+// cards. Shareable links use the keys (sources.html?ask=privacy), so keep a key when renaming its label.
+const ASK_GROUPS = [
+  { title: "Building", asks: { tools: "Your AI tool", code: "The code", sharing: "Sharing" } },
+  { title: "Taking care", asks: { privacy: "Student data", security: "Code safety", access: "Accessibility" } },
+  { title: "Teaching and learning", asks: { starting: "Teaching beginners", learning: "AI and learning", thinking: "Coding and thinking", assessment: "Assessment" } }
+];
+const ASKS = Object.assign({}, ...ASK_GROUPS.map((group) => group.asks));   // every topic: key → label
 
 const PATHS = {
   firsttime: { title: "Never built anything?", blurb: "What code is, how to start in your tool, and the habits that make it work.", ids: ["mdn", "gemini-canvas", "chatgpt-preview", "willison-habits"] },
@@ -217,7 +212,7 @@ const SOURCES = [
     who: "Minnesota Office of the Revisor of Statutes", venue: "Minnesota Statutes", when: "amended 2022", type: "policy",
     says: "The 2022 amendments say educational data held by a technology provider isn't the provider's property, can't be used commercially, and must be returned or destroyed within 90 days after a contract ends. Schools must tell parents which providers have access within 30 days of the start of the school year. The law defines technology providers around contracts for school-issued devices, so whether it reaches a particular AI tool is a question for your district.",
     takeLabel: "The habit", take: "Ask your district's data practices contact before any tool touches real student records.",
-    asks: ["privacy", "minnesota"]
+    asks: ["privacy"]
   },
   {
     id: "mde", section: "care", group: "Student data",
@@ -226,7 +221,7 @@ const SOURCES = [
     who: "Minnesota Department of Education", venue: "education.mn.gov", when: "as of October 2026", type: "policy",
     says: "Asks educators how data is collected and used and whether a tool meets data practices standards, names over-reliance as a challenge, and names designing and innovating with AI as an opportunity.",
     takeLabel: "The habit", take: "Run your tool idea through MDE's questions before you share it.",
-    asks: ["privacy", "minnesota", "learning"]
+    asks: ["privacy", "learning"]
   },
   {
     id: "ada-rule", section: "care", group: "Accessibility of what you share",
@@ -235,7 +230,7 @@ const SOURCES = [
     who: "U.S. Department of Justice", venue: "ADA.gov", when: "rule 2024, dates extended April 2026", type: "policy",
     says: "State and local governments, including school districts, must meet WCAG 2.1 Level AA for their web content and apps. An interim final rule on April 20, 2026 moved the compliance dates to April 26, 2027 for entities serving 50,000 people or more, and April 26, 2028 for smaller ones and special districts. A lawsuit challenging the extension was filed in May 2026, according to a law firm's summary; we found no ruling as of October 7.",
     takeLabel: "The habit", take: "Before a tool goes on a public district page, check that it works by keyboard, has readable contrast, and labels its controls.",
-    asks: ["access", "sharing", "minnesota"]
+    asks: ["access", "sharing"]
   },
   {
     id: "w3c-easy-checks", section: "care", group: "Accessibility of what you share",
@@ -395,18 +390,3 @@ const SOURCES = [
     asks: ["learning", "thinking", "assessment"]
   }
 ];
-
-// Short labels for the topic tags on each card (one per question above)
-const ASK_TAGS = {
-  tools: "Building",
-  code: "The code",
-  sharing: "Sharing",
-  privacy: "Student data",
-  security: "Security",
-  access: "Accessibility",
-  minnesota: "Minnesota",
-  learning: "Learning",
-  thinking: "Thinking",
-  starting: "Getting started",
-  assessment: "Assessment"
-};

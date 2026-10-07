@@ -1,9 +1,9 @@
-// The Sources page: paths, section tabs, questions, kinds, search, and shareable links.
-// Reads SOURCES, SOURCE_SECTIONS, TYPES, ASKS, ASK_TAGS, and PATHS from sources-data.js.
+// The Sources page: paths, section tabs, topics, kinds, search, and shareable links.
+// Reads SOURCES, SOURCE_SECTIONS, TYPES, ASK_GROUPS, ASKS, and PATHS from sources-data.js.
 // Uses el(), linkTo(), copyText(), and say() from site.js.
 //
 // Every view has its own address, so a host can paste it into a chat:
-//   sources.html?ask=privacy          one question
+//   sources.html?ask=privacy          one topic
 //   sources.html?section=care         one section
 //   sources.html?type=research,policy  kinds of source
 //   sources.html?q=gemini             a search
@@ -45,7 +45,8 @@ function matches(s, skip = "") {
   if (skip !== "ask" && state.ask && !s.asks.includes(state.ask)) return false;
   if (skip !== "type" && state.types.size && !state.types.has(s.type)) return false;
   if (state.q) {
-    const text = [s.title, s.who, s.venue, s.when, s.group, s.says, s.take, TYPES[s.type]].concat(s.asks.map((a) => ASK_TAGS[a])).join(" ").toLowerCase();
+    // Each topic's key counts too, so "security" finds every source on code safety
+    const text = [s.title, s.who, s.venue, s.when, s.group, s.says, s.take, TYPES[s.type]].concat(s.asks.flatMap((a) => [ASKS[a], a])).join(" ").toLowerCase();
     if (!state.q.toLowerCase().split(/\s+/).filter(Boolean).every((word) => text.includes(word))) return false;
   }
   return true;
@@ -79,7 +80,7 @@ Object.entries(PATHS).forEach(([key, path]) => {
 });
 
 
-// ---------- Section tabs, questions, and kinds ----------
+// ---------- Section tabs, topics, and kinds ----------
 
 function choice(type, name, value, label, checked) {
   const id = name + "-" + (value || "all");
@@ -108,12 +109,20 @@ const tabButtons = {};
   $("tabs").append(button);
 });
 
+// The topics: "Anything", then each group under its own small heading
 const askInputs = {};
-[["", "Anything"]].concat(Object.entries(ASKS)).forEach(([key, label]) => {
+function askChoice(key, label, parent) {
   const c = choice("radio", "ask", key, label, key === state.ask);
   c.input.addEventListener("change", () => { state.ask = key; state.path = ""; render(); });
   askInputs[key] = c;
-  $("asks").append(c.row);
+  parent.append(c.row);
+}
+askChoice("", "Anything", $("asks"));
+ASK_GROUPS.forEach((group) => {
+  const set = el("fieldset", "ask-group");
+  set.append(el("legend", "", group.title));
+  Object.entries(group.asks).forEach(([key, label]) => askChoice(key, label, set));
+  $("asks").append(set);
 });
 
 const kindInputs = {};
@@ -206,9 +215,9 @@ function card(s, headingLevel, position) {
   const tags = el("p", "src-tags");
   tags.append(el("span", "sr-only", "Topics: "));
   s.asks.forEach((a) => {
-    const tag = el("button", "tag-chip" + (a === state.ask ? " on" : ""), ASK_TAGS[a]);
+    const tag = el("button", "tag-chip" + (a === state.ask ? " on" : ""), ASKS[a]);
     tag.type = "button";
-    tag.setAttribute("aria-label", "Show sources on " + ASK_TAGS[a].toLowerCase());
+    tag.setAttribute("aria-label", "Show sources on: " + ASKS[a]);
     tag.addEventListener("click", () => {
       Object.assign(state, { ask: a, path: "", section: "all" });
       render();
@@ -240,7 +249,7 @@ function render() {
     button.querySelector(".facet-count").textContent = state.path ? "" : n;
     button.setAttribute("aria-pressed", String(!state.path && state.section === key));
   });
-  // Questions and their counts
+  // Topics and their counts
   Object.entries(askInputs).forEach(([key, c]) => {
     c.input.checked = !state.path && key === state.ask;
     const n = SOURCES.filter((s) => (!key || s.asks.includes(key)) && matches(s, "ask")).length;

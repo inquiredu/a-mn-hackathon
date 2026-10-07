@@ -567,7 +567,15 @@ dialog::backdrop { background: rgb(7 27 49 / .75); }
 .tab[aria-pressed="true"] .facet-count { color: inherit; }
 
 .browse-layout { display: grid; gap: 24px; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); align-items: start; }
-.finder { position: sticky; top: 16px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+/* Taller than the window, the filters scroll on their own beside the sources */
+.finder {
+  position: sticky; top: 16px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+}
+@media (max-height: 500px) {
+  .finder { position: static; max-height: none; overflow: visible; }
+}
 .finder-toggle { display: none; }
 .finder-label { display: block; margin-bottom: 4px; font-weight: 700; }
 .finder input[type="search"] {
@@ -615,7 +623,7 @@ dialog::backdrop { background: rgb(7 27 49 / .75); }
 
 @media (max-width: 900px) {
   .browse-layout { grid-template-columns: 1fr; }
-  .finder { position: static; }
+  .finder { position: static; max-height: none; overflow: visible; }
   .finder-toggle { display: inline-flex; }
   .finder-panel:not(.open) { display: none; }
   .finder-panel.open { margin-top: 12px; }

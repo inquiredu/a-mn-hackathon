@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speaker notes · Hands On</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* The speaker notes: for the presenter's eyes only. Keep this window out of the shared screen. */
+  :root { --navy: #10345A; --sky: #66C1E7; --ink: #10345A; --muted: #4A6580; --line: #D5E7F2; --tint: #E8F5FC; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #F6FAFD; color: var(--ink); font: 18px/1.5 "Lexend", system-ui, sans-serif; }
+  .wrap { padding: 18px 20px 28px; display: grid; gap: 14px; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; color: var(--muted); font-size: .95rem; }
+  .clock { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .segment { padding: 10px 14px; border-radius: 12px; background: var(--tint); }
+  .segment strong { display: block; }
+  .left { font-weight: 700; color: var(--navy); }
+  .label { margin: 0; font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  h1 { margin: 2px 0 0; font-size: 1.6rem; line-height: 1.2; }
+  .note { margin: 0; padding: 16px 18px; border-left: 6px solid var(--sky); border-radius: 0 14px 14px 0; background: #FFFFFF; font-size: 1.3rem; line-height: 1.45; }
+  .next { color: var(--muted); }
+  .next strong { color: var(--ink); }
+  .buttons { display: flex; gap: 8px; }
+  button {
+    flex: 1; padding: 12px; font: inherit; font-weight: 700; cursor: pointer;
+    border-radius: 999px; border: 2px solid var(--navy); background: #FFFFFF; color: var(--navy);
+  }
+  button.primary { background: var(--navy); color: #FFFFFF; }
+  button:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+  .status { margin: 0; font-size: .9rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="top"><span id="count"></span><span class="clock" id="clock"></span></p>
+  <div class="segment"><strong id="segment"></strong><span class="left" id="left"></span></div>
+  <div>
+    <p class="label">On the stage</p>
+    <h1 id="heading"></h1>
+  </div>
+  <p class="note" id="note"></p>
+  <p class="next" id="next"></p>
+  <div class="buttons">
+    <button id="prev" type="button">← Back</button>
+    <button class="primary" id="forward" type="button">Next →</button>
+  </div>
+  <p class="status" id="status" aria-live="polite"></p>
+</main>
+
+<script src="assets/session.js"></script>
+<script>
+// The speaker notes follow the stage, and its buttons (or arrow keys) move the stage too.
+const screens = [];
+SESSION.segments.forEach((segment) => segment.screens.forEach((screen) => screens.push({ ...screen, segment })));
+const $ = (id) => document.getElementById(id);
+const channel = "BroadcastChannel" in window ? new BroadcastChannel("hands-on-stage") : null;
+let index = 0;
+let connected = false;
+
+function toSeconds(time) {
+  const [h, m] = time.split(":").map(Number);
+  return h * 3600 + m * 60;
+}
+
+function sessionNow() {
+  const override = new URLSearchParams(location.search).get("now");
+  if (override && /^\d{1,2}:\d{2}$/.test(override)) return toSeconds(override);
+  const parts = {};
+  new Intl.DateTimeFormat("en-US", { timeZone: SESSION.timeZone, hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" })
+    .formatToParts(new Date()).forEach((p) => { parts[p.type] = p.value; });
+  return Number(parts.hour) * 3600 + Number(parts.minute) * 60 + Number(parts.second);
+}
+
+function render() {
+  const screen = screens[index];
+  const next = screens[index + 1];
+  const seg = screen.segment;
+  $("count").textContent = "Screen " + (index + 1) + " of " + screens.length;
+  $("segment").textContent = seg.title + " · " + seg.start + " to " + seg.end + " · " + seg.where;
+  $("heading").textContent = screen.heading || screen.text;
+  $("note").textContent = screen.note || "No note for this screen.";
+  $("next").replaceChildren();
+  if (next) {
+    const label = document.createElement("strong");
+    label.textContent = "Next: ";
+    $("next").append(label, next.heading || next.text);
+  } else {
+    $("next").textContent = "That's the last screen.";
+  }
+  tick();
+}
+
+function tick() {
+  const now = sessionNow();
+  const h = Math.floor(now / 3600);
+  const m = Math.floor(now / 60) % 60;
+  $("clock").textContent = (h % 12 || 12) + ":" + String(m).padStart(2, "0");
+  const end = toSeconds(screens[index].segment.end);
+  const start = toSeconds(screens[index].segment.start);
+  const left = Math.ceil((end - now) / 60);
+  $("left").textContent = now < start ? " · starts at " + screens[index].segment.start
+    : left > 0 ? " · " + left + " min left in this part" : " · time to move on";
+}
+setInterval(tick, 1000);
+
+function go(i) {
+  const target = Math.min(Math.max(0, i), screens.length - 1);
+  if (channel && connected) {
+    channel.postMessage({ go: target });   // the stage moves, then tells us where it is
+  } else {
+    index = target;                         // no stage open: just read the notes
+    render();
+  }
+}
+
+if (channel) {
+  channel.onmessage = (event) => {
+    const message = event.data || {};
+    if (typeof message.index === "number") {
+      connected = true;
+      index = message.index;
+      $("status").textContent = "Following the stage.";
+      render();
+    }
+  };
+  channel.postMessage({ hello: true });
+}
+$("status").textContent = "Open the stage (present.html) in another window and these notes will follow it.";
+
+$("prev").addEventListener("click", () => go(index - 1));
+$("forward").addEventListener("click", () => go(index + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.target.tagName === "BUTTON" && (event.key === " " || event.key === "Enter")) return;
+  if (event.key === "ArrowRight" || event.key === "PageDown") { event.preventDefault(); go(index + 1); }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") { event.preventDefault(); go(index - 1); }
+});
+
+render();
+</script>
+</body>
+</html>

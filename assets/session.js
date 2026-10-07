@@ -22,20 +22,21 @@ const SESSION = {
   //   start, end   clock times (24-hour)
   //   where        "Main room" or "Breakout rooms"
   //   hint         one line for participants
-  //   link         where on the participant page to send people
-  //   screens      what the presenter view shows, in order
+  //   link         which page (and place) to send people to; linkLabel names the button
+  //   screens      what the presenter view shows, in order (note: what the presenter says or does,
+//                shown only in the speaker-notes window)
   //   host         a checklist for hosts
   //   messages     ready-to-paste chat messages for hosts
   segments: [
     {
       start: "10:00", end: "10:08", title: "Welcome", where: "Main room",
       hint: "Drop a wish in the chat: \"I wish I had a thing that...\"",
-      link: "#today",
+      link: "index.html#today",
       screens: [
-        { kind: "title", kicker: "MNGAIA · AI4MN", heading: "Hands On", sub: "A Friday Hackathon. Two hours to play, build, and break things with AI, together." },
-        { kind: "prompt", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
-        { kind: "embed", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
-        { kind: "prompt", heading: "Have you built something interactive with code?", body: "Even once, with any AI tool? Open the page, press Teams doc, and add your name. You'll anchor a team of four.", url: true }
+        { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", kicker: "MNGAIA · AI4MN", heading: "Hands On", sub: "A Friday Hackathon. Two hours to play, build, and break things with AI, together." },
+        { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Teams doc keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
+        { kind: "embed", note: "Share this tab with its sound on. Ask the Oracle two or three questions from the chat. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
+        { kind: "prompt", note: "Ask anyone who has built something interactive with AI, even once, to add their name. A raised hand works too. Your co-host watches the Teams doc.", heading: "Have you built something interactive with code?", body: "Even once, with any AI tool? Open the page, press Teams doc, and add your name. You'll anchor a team of four.", url: true }
       ],
       host: [
         "Pin the page link in the main chat.",
@@ -50,9 +51,9 @@ const SESSION = {
     {
       start: "10:08", end: "10:20", title: "Watch one get built", where: "Main room",
       hint: "One wish from the chat, built live, broken on purpose, and fixed.",
-      link: "#today",
+      link: "index.html#today",
       screens: [
-        { kind: "prompt", heading: "Watch one get built", body: "One wish from the chat. Built live, broken on purpose, and fixed." }
+        { kind: "prompt", note: "Switch your share to your AI tab. Build one wish from the chat and say what you type as you go. Break it on purpose, then fix it. Your co-host sets up the rooms now.", heading: "Watch one get built", body: "One wish from the chat. Built live, broken on purpose, and fixed." }
       ],
       host: [
         "Co-host: open Breakout rooms. Rooms = builders ÷ 4, rounded up.",
@@ -65,16 +66,16 @@ const SESSION = {
     {
       start: "10:20", end: "10:45", title: "The Remix Arcade", where: "Breakout rooms",
       hint: "In breakout rooms of four. Pick a starter and make it yours.",
-      link: "#arcade", linkLabel: "Go to the arcade",
+      link: "starters.html", linkLabel: "Open the starters",
       screens: [
-        { kind: "steps", heading: "Off to your room", steps: [
+        { kind: "steps", note: "Walk the four steps. Anchors share their screen first. Then open the rooms.", heading: "Off to your room", steps: [
           "Add your name to your team in the Teams doc.",
           "Your anchor shares their screen. Build along for five minutes.",
           "Pick a starter and make it yours.",
           "Stuck? Press Ask for help in Meet."
         ], foot: "Back in the main room at 11:20" },
-        { kind: "link", heading: "Everything is here", body: "The starters, the Teams doc, and the gallery wall." },
-        { kind: "countdown", heading: "Rooms are building", until: "11:20", body: "Rather watch? Stay here. We're building wishes live in the main room." }
+        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the Teams doc, and the gallery wall." },
+        { kind: "countdown", note: "For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", until: "11:20", body: "Rather watch? Stay here. We're building wishes live in the main room." }
       ],
       host: [
         "Open the rooms.",
@@ -88,9 +89,9 @@ const SESSION = {
     {
       start: "10:45", end: "11:20", title: "Grant a wish", where: "Breakout rooms",
       hint: "Same room. Build something from scratch, your wish or someone else's.",
-      link: "#wish", linkLabel: "How to start",
+      link: "wish.html", linkLabel: "How to start",
       screens: [
-        { kind: "countdown", heading: "Grant a wish", until: "11:20", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before 11:20." }
+        { kind: "countdown", note: "Keep building in the main room. At 11:10, hosts visit each room with the ten-minute nudge.", heading: "Grant a wish", until: "11:20", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before 11:20." }
       ],
       host: [
         "At 11:10, visit each room: ten minutes left, pin something to the wall.",
@@ -103,10 +104,10 @@ const SESSION = {
     {
       start: "11:20", end: "11:42", title: "Show & Cheer", where: "Main room",
       hint: "Back in the main room. Applause first.",
-      link: "#cheer", linkLabel: "The awards",
+      link: "index.html#cheer", linkLabel: "The awards",
       screens: [
-        { kind: "prompt", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?" },
-        { kind: "awards", heading: "This morning's awards", awards: [
+        { kind: "prompt", note: "Welcome everyone back. Ask for volunteers by raised hand. Applause first, then one question: who would you show this to?", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?" },
+        { kind: "awards", note: "Name the builds that earned each award.", heading: "This morning's awards", awards: [
           { icon: "💥", name: "Most Delightfully Broken", why: "For the most glorious error message of the morning." },
           { icon: "🛟", name: "Best Rescue", why: "For the save that made the room cheer." },
           { icon: "🗓️", name: "Most Likely to Actually Get Used", why: "For the one somebody will really open next week." }
@@ -123,15 +124,15 @@ const SESSION = {
     {
       start: "11:42", end: "11:55", title: "What did we just do?", where: "Main room",
       hint: "One wonder, one worry, one word.",
-      link: "#close", linkLabel: "The close",
+      link: "index.html#close", linkLabel: "The close",
       screens: [
-        { kind: "code", heading: "How did the Oracle know?", code: "listensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou shall be long. Accept this.\",\n  \"The hotdish will contain tater tots. This is certain.\"\n]", caption: "A list of words a person chose. Every machine today started with a person, passed through an AI, and came back to a person." },
-        { kind: "quote", text: "Everything you made today, a seventh grader can make tonight." },
-        { kind: "pair", heading: "Before you go", cards: [
+        { kind: "code", note: "Show the list of words. The Oracle didn't know anything: a person chose what it listens for.", heading: "How did the Oracle know?", code: "listensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou shall be long. Accept this.\",\n  \"The hotdish will contain tater tots. This is certain.\"\n]", caption: "A list of words a person chose. Every machine today started with a person, passed through an AI, and came back to a person." },
+        { kind: "quote", note: "Say it, then let it sit for a moment.", text: "Everything you made today, a seventh grader can make tonight." },
+        { kind: "pair", note: "Post the wonder and worry link in the chat. Give it two minutes.", heading: "Before you go", cards: [
           { heading: "I wonder...", body: "What did today make you curious about?" },
           { heading: "I worry...", body: "What did today make you uneasy about?" }
         ], foot: "Add yours to the wall. Then one word in the chat for how you're leaving." },
-        { kind: "prompt", heading: "Next month", body: "We turn to assessment: what our practices have measured, who they have served, and who they may have held back.", foot: "Thank you for building with us." }
+        { kind: "prompt", note: "Ask for one word in the chat. Thank the anchors by name. Point to next month.", heading: "Next month", body: "We turn to assessment: what our practices have measured, who they have served, and who they may have held back.", foot: "Thank you for building with us." }
       ],
       host: [
         "Post the wonder and worry link in the chat.",

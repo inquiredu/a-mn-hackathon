@@ -418,3 +418,110 @@ dialog::backdrop { background: rgb(7 27 49 / .75); }
   .room-body.with-code iframe { min-height: 260px; }
   .code-pane textarea { min-height: 10em; }
 }
+
+/* ---------- Site header and navigation (every page) ---------- */
+.site-head { background: var(--surface); border-bottom: 1px solid var(--line); }
+.site-head-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; padding-top: 10px; padding-bottom: 10px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 800; font-size: 1.15rem; letter-spacing: .02em; }
+.brand img { width: 44px; height: auto; }
+.site-nav { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.site-nav a { display: block; padding: 6px 12px; border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 500; }
+.site-nav a:hover { background: var(--tint); }
+.site-nav a[aria-current="page"] { background: var(--tint); font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--control); }
+.site-nav .present-link { background: var(--button); color: var(--button-ink); font-weight: 600; }
+.site-nav .present-link:hover { background: var(--button); }
+.page-title { font-size: clamp(1.9rem, 4.5vw, 2.6rem); font-weight: 800; letter-spacing: -.01em; }
+[hidden] { display: none !important; }
+
+/* ---------- Home: the invitation ---------- */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; }
+.hero-actions .button:not(.primary) { background: transparent; border-color: currentColor; color: inherit; }
+
+/* ---------- Home: happening now ---------- */
+.nowcard-wrap { padding-bottom: 8px; }
+.nowcard { padding: clamp(20px, 4vw, 36px); border-radius: 22px; background: var(--hero-bg); color: var(--hero-ink); }
+.nowcard-label { margin: 0; font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.nowcard-title { margin: 6px 0 0; font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 800; line-height: 1.05; text-shadow: .05em .05em 0 var(--hero-shadow); }
+.nowcard-hint { margin: 12px 0 0; max-width: 36rem; font-size: 1.25rem; }
+.nowcard-action { margin: 18px 0 0; }
+.nowcard-action .button { font-size: 1.1rem; padding: 12px 24px; }
+.nowcard .button.primary { background: var(--ribbon-bg); border-color: var(--ribbon-bg); color: var(--ribbon-ink); }
+.nowcard-next { margin: 14px 0 0; font-weight: 600; }
+
+/* ---------- Home: before you come, the shape of the morning, also on the site ---------- */
+.checks { margin: 16px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: 46rem; }
+.subhead-2 { margin-top: 40px; }
+.shape { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)); }
+.shape li { padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.shape strong { display: block; font-size: 2.6rem; line-height: 1; color: var(--link); }
+.shape span { color: var(--muted); }
+.also { display: grid; gap: 12px; margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+.also-card {
+  display: flex; flex-direction: column; gap: 6px; padding: 18px;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px;
+  color: var(--ink); text-decoration: none;
+}
+.also-card:hover { border-color: var(--control); }
+.also-card strong { font-size: 1.15rem; }
+.also-card span { color: var(--muted); }
+.also-card .go { margin-top: auto; padding-top: 6px; color: var(--link); font-weight: 700; }
+
+/* ---------- Home: after ---------- */
+.kicker-dark { margin: 0 0 6px; font-size: .85rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.keepsake h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
+.keep-grid { display: grid; gap: 14px; margin-top: 22px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
+.keep-grid .card h2 { font-size: 1.25rem; }
+.keep-grid .card p { color: var(--ink); }
+.card-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Grant a wish: the wish builder ---------- */
+.builder { display: grid; gap: 4px; margin-top: 12px; max-width: 40rem; }
+.builder label { margin-top: 8px; font-weight: 600; color: var(--ink); }
+.builder input {
+  padding: 9px 12px; font: inherit; border: 1.5px solid var(--control); border-radius: 10px;
+  background: var(--bg); color: var(--ink);
+}
+.builder-label { margin: 14px 0 0 !important; font-size: .9rem; font-weight: 700; color: var(--muted); }
+.builder-out { margin: 4px 0 10px !important; padding: 12px 14px; border-radius: 12px; background: var(--tint); border: 1px dashed var(--control); color: var(--ink) !important; }
+.builder .primary { justify-self: start; }
+
+/* ---------- The next step, after copying ---------- */
+.next-step {
+  position: fixed; left: 50%; bottom: 16px; z-index: 70; transform: translateX(-50%);
+  width: min(760px, calc(100% - 24px));
+  background: var(--surface); color: var(--ink); border: 2px solid var(--link); border-radius: 18px;
+  box-shadow: 0 12px 40px rgb(0 0 0 / .25);
+}
+.next-step-inner { padding: 14px 16px; display: grid; gap: 10px; }
+.next-step-lead { margin: 0; font-weight: 700; }
+.next-step-tools { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.next-step-tool { display: grid; gap: 4px; }
+.next-step-tool span { font-size: .85rem; color: var(--muted); }
+.next-step-close { justify-self: end; }
+
+/* ---------- Hosts ---------- */
+.hosts-intro { max-width: 46rem; }
+.materials { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.runofshow { display: grid; gap: 14px; margin-top: 18px; }
+.segment { padding: 18px; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--link); border-radius: 0 16px 16px 0; }
+.segment.rooms { border-left-color: var(--sky); }
+.segment-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.segment-head time { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--link); }
+.segment-head h3 { font-size: 1.2rem; }
+.segment .where { padding: 1px 10px; border-radius: 999px; background: var(--tint); font-size: .85rem; font-weight: 600; }
+.segment h4 { margin: 14px 0 6px; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.segment .participants { margin: 8px 0 0; color: var(--muted); }
+.stage-list { margin: 0; padding-left: 22px; }
+.stage-list a { font-weight: 600; }
+.stage-list .note { display: block; color: var(--muted); font-size: .92rem; }
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.checklist label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.checklist input { width: 18px; height: 18px; margin-top: 4px; accent-color: var(--link); flex: none; }
+.message { margin-top: 8px; padding: 12px 14px; border-radius: 12px; background: var(--tint); }
+.message .to { margin: 0 0 4px; font-size: .85rem; font-weight: 700; color: var(--muted); }
+.message pre { margin: 0 0 8px; white-space: pre-wrap; font: inherit; }
+.calc { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
+.calc input { width: 6em; padding: 8px 10px; font: inherit; border: 1.5px solid var(--control); border-radius: 10px; background: var(--bg); color: var(--ink); }
+.calc-out { margin: 10px 0 0; font-size: 1.15rem; font-weight: 700; }
+.host-grid { display: grid; gap: 14px; margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
+.host-grid .card ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }

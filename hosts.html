@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hosts · Hands On</title>
+<meta name="description" content="Running the morning: the run of show, forming teams of four, ready-to-paste messages, and safe play.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the main content</a>
+<header class="site-head">
+  <div class="wrap site-head-inner">
+    <a class="brand" href="index.html"><img src="assets/mngaia-mark.png" alt="" width="44" height="38"><span>Hands On</span></a>
+    <nav aria-label="Site">
+      <ul class="site-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="starters.html">Starters</a></li>
+        <li><a href="wish.html">Grant a wish</a></li>
+        <li><a href="hosts.html" aria-current="page">Hosts</a></li>
+        <li><a href="sources.html">Sources</a></li>
+        <li><a href="present.html" class="present-link">Present</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="nowbar" role="region" aria-label="What's happening now">
+  <div class="wrap nowbar-inner">
+    <p class="now" id="now"></p>
+  </div>
+  <div class="cue" id="cue" hidden>
+    <div class="wrap cue-inner">
+      <p class="cue-text" id="cue-text" role="status"></p>
+      <a class="button primary" id="cue-go" href="#runofshow">Take me there</a>
+      <button class="cue-close" id="cue-close" aria-label="Dismiss this notice">Got it</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <section class="section">
+    <div class="wrap">
+      <p class="kicker-dark">For hosts, co-hosts, and anchors</p>
+      <h1 class="page-title">Running the morning</h1>
+      <p class="section-lede hosts-intro">Two hours, about an hour of it building in breakout rooms of four. The participant pages, the stage, and this guide all read from one session file, so what you see here is what everyone else sees.</p>
+
+      <h2 class="subhead-2">Materials</h2>
+      <p class="materials">
+        <a class="button primary" href="present.html">Present the stage</a>
+        <a class="button" href="notes.html">Speaker notes</a>
+        <a class="button" href="index.html">The participant page</a>
+        <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: link on Friday"></span>
+        <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: link on Friday"></span>
+        <span class="link-slot" data-link="wonder" data-label="Wonder and worry wall" data-pending="Wonder and worry wall: link on Friday"></span>
+      </p>
+
+      <ul class="shape">
+        <li><strong>2</strong><span>hours, 10:00 to noon Central</span></li>
+        <li><strong>60</strong><span>minutes of building in breakout rooms</span></li>
+        <li><strong>4</strong><span>people at most in each room, one anchor each</span></li>
+        <li><strong>6</strong><span>parts, each with a stage, a checklist, and messages</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section band" aria-labelledby="teams-title">
+    <div class="wrap">
+      <h2 id="teams-title">Forming teams of four</h2>
+      <ol class="checks">
+        <li><strong>10:00 to 10:05, main room.</strong> Anyone who has built something interactive with AI, even once, adds their name to the first table in the Teams doc. They're the anchors.</li>
+        <li><strong>10:08 to 10:18, while the live build runs.</strong> The co-host counts the builders, opens Breakout rooms with the number below, presses Shuffle, then drags one anchor into each room and fills in the Room column for the anchors.</li>
+        <li><strong>10:20.</strong> Open the rooms. Everyone adds their name to their room's row in the Teams doc. That's how we know the teams.</li>
+        <li><strong>Latecomers.</strong> Add them to the room with the fewest people, and add their name to that room's row.</li>
+      </ol>
+      <div class="card">
+        <h3>How many rooms?</h3>
+        <div class="calc">
+          <label for="builders">People building (not counting anyone who'd rather watch)</label>
+          <input id="builders" type="number" min="1" max="200" value="30">
+        </div>
+        <p class="calc-out" id="calc-out" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="runofshow" aria-labelledby="ros-title">
+    <div class="wrap">
+      <h2 id="ros-title">Run of show</h2>
+      <p class="section-lede">Each part lists what's on the stage (with links that open the presenter view at that screen), a checklist for hosts, and messages ready to paste. Checklist ticks are saved in this browser only.</p>
+      <div class="runofshow" id="ros"></div>
+    </div>
+  </section>
+
+  <section class="section band" aria-labelledby="guide-title">
+    <div class="wrap">
+      <h2 id="guide-title">Before, during, and after</h2>
+      <div class="host-grid">
+        <div class="card">
+          <h3>Before Friday</h3>
+          <ul>
+            <li>Make the gallery slide and the wonder and worry slide, and add their links to the session file.</li>
+            <li>Share the Teams doc so anyone with the link can edit. Friday morning is a good time.</li>
+            <li>Paste a starter into Gemini on a district account with Canvas on, and check that it runs.</li>
+            <li>Name the co-host who will set up the breakout rooms.</li>
+            <li>Rehearse with the stage in one window and the speaker notes in another.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>In the rooms</h3>
+          <ul>
+            <li>The anchor shares their screen for the first five minutes. Everyone builds along, then builds their own.</li>
+            <li>Breakout chats start empty: paste the page link when you visit a room.</li>
+            <li>People press <em>Ask for help</em> in Meet to call a host.</li>
+            <li>At 11:10: ten minutes left, pin something to the wall, even if it's half-built.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Safe play</h3>
+          <ul>
+            <li>Made-up names and made-up data only. Nothing about real students goes into an AI.</li>
+            <li>Names typed into a running tool stay on that computer. Names pasted into an AI chat go to that company.</li>
+            <li>Public events only in the Calendar Explorer.</li>
+            <li>Before anyone shares a tool beyond their team, check it with a keyboard, for contrast, and for labels.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Show &amp; Cheer and after</h3>
+          <ul>
+            <li>Builders share with <em>Present now</em>, then <em>A tab</em>, so their tab's sound comes through.</li>
+            <li>If sharing fails, show their screenshot from the gallery wall.</li>
+            <li>People keep their own work. We don't collect it, and the wall stays inside the group.</li>
+            <li>The follow-up points to this site and to next month's session on assessment.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <img src="assets/mngaia-mark.png" alt="" width="64" height="55">
+    <div>
+      <p><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
+      <p class="small"><strong>Safe play:</strong> use made-up names and made-up data. Nothing about real students goes into an AI today.</p>
+    </div>
+  </div>
+</footer>
+
+<dialog id="fallback" aria-labelledby="fallback-title">
+  <div class="fallback-inner">
+    <h2 id="fallback-title">Copy this by hand</h2>
+    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
+    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
+    <div><button class="primary" id="fallback-close">Done</button></div>
+  </div>
+</dialog>
+<p id="toast" class="toast" role="status" aria-live="polite"></p>
+
+<script src="assets/session.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/hosts.js"></script>
+</body>
+</html>

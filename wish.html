@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grant a wish · Hands On</title>
+<meta name="description" content="Build something from nothing: a wish builder, a jar of wishes, and three moves for when you're stuck.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the main content</a>
+<header class="site-head">
+  <div class="wrap site-head-inner">
+    <a class="brand" href="index.html"><img src="assets/mngaia-mark.png" alt="" width="44" height="38"><span>Hands On</span></a>
+    <nav aria-label="Site">
+      <ul class="site-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="starters.html">Starters</a></li>
+        <li><a href="wish.html" aria-current="page">Grant a wish</a></li>
+        <li><a href="hosts.html">Hosts</a></li>
+        <li><a href="sources.html">Sources</a></li>
+        <li><a href="present.html" class="present-link">Present</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="nowbar" role="region" aria-label="What's happening now">
+  <div class="wrap nowbar-inner">
+    <p class="now" id="now"></p>
+  </div>
+  <div class="cue" id="cue" hidden>
+    <div class="wrap cue-inner">
+      <p class="cue-text" id="cue-text" role="status"></p>
+      <a class="button primary" id="cue-go" href="index.html">Take me there</a>
+      <button class="cue-close" id="cue-close" aria-label="Dismiss this notice">Got it</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- GRANT A WISH -->
+  <section id="wish" class="section">
+    <div class="wrap">
+      <h1 class="page-title">Grant a wish</h1>
+      <p class="section-lede">Now build something from nothing. It's the same loop you just used, minus the training wheels. It starts with you, the AI does the heavy lifting, and it comes back to you.</p>
+
+      <ol class="path">
+        <li>
+          <span class="num hex">1</span>
+          <h3>Say what you wish for</h3>
+          <p>Fill in three short answers. The wish writes itself.</p>
+          <div class="builder">
+            <label for="wb-what">What is it?</label>
+            <input id="wb-what" autocomplete="off" placeholder="a countdown timer">
+            <label for="wb-who">Who is it for?</label>
+            <input id="wb-who" autocomplete="off" placeholder="my fourth graders">
+            <label for="wb-does">What should it do?</label>
+            <input id="wb-does" autocomplete="off" placeholder="count down to recess and play a sound at the end">
+            <p class="builder-label" id="wb-label">Your wish, ready to paste:</p>
+            <p class="builder-out" id="wb-out" aria-labelledby="wb-label"></p>
+            <button class="primary" id="wb-copy" type="button">Copy my wish</button>
+          </div>
+        </li>
+        <li>
+          <span class="num hex">2</span>
+          <h3>Hand it to your AI</h3>
+          <p>Paste it into Gemini with Canvas on, Claude, or ChatGPT with Canvas. A first version usually shows up in under a minute.</p>
+        </li>
+        <li>
+          <span class="num hex">3</span>
+          <h3>Make it yours</h3>
+          <p>Ask for one change at a time. "Make the buttons bigger." "Add a sound when I win." "Use our school colors."</p>
+        </li>
+        <li>
+          <span class="num hex">4</span>
+          <h3>Break it, fix it</h3>
+          <p>Something will go sideways. Tell the AI exactly what you see: "When I press Start, nothing happens."</p>
+        </li>
+        <li>
+          <span class="num hex">5</span>
+          <h3>Peek under the hood</h3>
+          <div class="copybox">
+            <p id="peek-prompt">Explain three lines of this code to me like I've never coded before. Pick the three most interesting ones.</p>
+            <button data-copy-from="peek-prompt">Copy</button>
+          </div>
+        </li>
+        <li>
+          <span class="num hex">6</span>
+          <h3>Back to you</h3>
+          <p>Is it what you wished for? Who would you show it to? Pin it to the <a href="#wall">wall</a>.</p>
+        </li>
+      </ol>
+
+      <h3 class="subhead">No wish yet? Take one from the jar.</h3>
+      <p class="hint" id="jar-hint">Choose one to copy it, then paste it into your AI.</p>
+      <ul class="jar">
+        <li><button data-wish="a countdown to winter break, with snow that falls harder as the day gets closer">Winter break countdown, with snow that falls harder each day</button></li>
+        <li><button data-wish="a spinner that picks whose turn it is to bring treats to the staff meeting">A spinner for whose turn it is to bring treats</button></li>
+        <li><button data-wish="a clock for my bell schedule that shows how many minutes are left in this period">A bell-schedule clock: minutes left this period</button></li>
+        <li><button data-wish="a pizza you can slice into fractions with a slider, showing the fraction as you go">A pizza you slice into fractions with a slider</button></li>
+        <li><button data-wish="staff-meeting bingo, with a fresh card every time I press a button">Staff-meeting bingo, new card every time</button></li>
+        <li><button data-wish="a brain-break picker that chooses an activity and starts a big countdown timer">A brain-break picker with a big timer</button></li>
+        <li><button data-wish="a choose-your-path story for a novel my class is reading, with three choices at each step">A choose-your-path story for a class novel</button></li>
+        <li><button data-wish="a playful 'Which Minnesota lake are you?' personality quiz">"Which Minnesota lake are you?" quiz</button></li>
+        <li><button data-wish="a visual timer that ends with a rocket launch">A visual timer that ends in a rocket launch</button></li>
+        <li><button data-wish="an office-hours helper that answers student questions from a made-up course syllabus">An office-hours helper for a made-up syllabus</button></li>
+        <li><button data-wish="a color-coded calendar explorer for made-up district events across several calendars, with filters">A color-coded explorer for made-up district calendars</button></li>
+        <li><button data-wish="a soundboard of ridiculous sound effects for team meetings">A soundboard of ridiculous meeting sound effects</button></li>
+      </ul>
+
+      <div class="stuck">
+        <h3>Stuck? Three moves.</h3>
+        <ul>
+          <li><strong>Describe it.</strong> Tell the AI exactly what you see and what you expected instead.</li>
+          <li><strong>Rewind.</strong> "Go back to the version before that one."</li>
+          <li><strong>Ask for help.</strong> In your breakout room, press Meet's <em>Ask for help</em> button. A host gets the message and will pop into your room.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- THE GALLERY WALL -->
+  <section id="wall" class="section">
+    <div class="wrap">
+      <div class="wall-card">
+        <h2>The gallery wall</h2>
+        <p>Got something working, even halfway? Screenshot it onto the wall. Leaving early? Pin it first, and your work stays up for Show &amp; Cheer.</p>
+        <p class="link-slot" data-link="gallery" data-label="Open the gallery wall"></p>
+        <p class="small">The wall stays inside this group. Half-built and in-progress work is welcome here, which is the whole idea.</p>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <img src="assets/mngaia-mark.png" alt="" width="64" height="55">
+    <div>
+      <p><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
+      <p class="small"><strong>Safe play:</strong> use made-up names and made-up data. Nothing about real students goes into an AI today.</p>
+    </div>
+  </div>
+</footer>
+
+<dialog id="fallback" aria-labelledby="fallback-title">
+  <div class="fallback-inner">
+    <h2 id="fallback-title">Copy this by hand</h2>
+    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
+    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
+    <div><button class="primary" id="fallback-close">Done</button></div>
+  </div>
+</dialog>
+
+
+<p id="toast" class="toast" role="status" aria-live="polite"></p>
+
+<script src="assets/session.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

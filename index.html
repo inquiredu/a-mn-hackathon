@@ -12,9 +12,39 @@
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<a class="skip" href="#today">Skip to today's plan</a>
+<a class="skip" href="#main">Skip to the main content</a>
+<header class="site-head">
+  <div class="wrap site-head-inner">
+    <a class="brand" href="index.html"><img src="assets/mngaia-mark.png" alt="" width="44" height="38"><span>Hands On</span></a>
+    <nav aria-label="Site">
+      <ul class="site-nav">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="starters.html">Starters</a></li>
+        <li><a href="wish.html">Grant a wish</a></li>
+        <li><a href="hosts.html">Hosts</a></li>
+        <li><a href="sources.html">Sources</a></li>
+        <li><a href="present.html" class="present-link">Present</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="nowbar" role="region" aria-label="What's happening now">
+  <div class="wrap nowbar-inner">
+    <p class="now" id="now"></p>
+  </div>
+  <div class="cue" id="cue" hidden>
+    <div class="wrap cue-inner">
+      <p class="cue-text" id="cue-text" role="status"></p>
+      <a class="button primary" id="cue-go" href="index.html">Take me there</a>
+      <button class="cue-close" id="cue-close" aria-label="Dismiss this notice">Got it</button>
+    </div>
+  </div>
+</div>
 
-<header class="hero">
+<main id="main">
+
+  <!-- BEFORE: the invitation -->
+  <section class="hero" data-show="before">
   <svg class="sparkles" aria-hidden="true" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
     <defs>
       <path id="star" d="M0,-10 C1,-2 2,-1 10,0 C2,1 1,2 0,10 C-1,2 -2,1 -10,0 C-2,-1 -1,-2 0,-10Z"/>
@@ -29,47 +59,66 @@
     <use href="#star" class="s2" transform="translate(1110 300) scale(1.1)"/>
     <use href="#star" class="s1" transform="translate(1020 350) scale(1.6)"/>
   </svg>
-  <div class="wrap hero-inner">
-    <img class="mark" src="assets/mngaia-mark.png" alt="MNGAIA, AI4MN" width="470" height="406">
-    <div class="hero-text">
-      <p class="kicker">MNGAIA · AI4MN</p>
-      <h1>Hands On</h1>
-      <p class="ribbon">A Friday Hackathon · October 9 · 10:00 to noon</p>
-      <p class="hero-lede">Two hours to play, build, and break things with AI, together. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
+    <div class="wrap hero-inner">
+      <img class="mark" src="assets/mngaia-mark.png" alt="MNGAIA, AI4MN" width="470" height="406">
+      <div class="hero-text">
+        <p class="kicker">MNGAIA · AI4MN</p>
+        <h1>Hands On</h1>
+        <p class="ribbon">A Friday Hackathon · October 9 · 10:00 to noon</p>
+        <p class="hero-lede">A month into the school year, a morning to play. Two hours to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
+        <p class="hero-actions"><a class="button primary" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
+      </div>
     </div>
-  </div>
-</header>
+  </section>
 
-<nav class="nowbar" aria-label="Today's sections">
-  <div class="wrap nowbar-inner">
-    <p class="now" id="now"></p>
-    <ul class="jump">
-      <li><a href="#today">Today</a></li>
-      <li><a href="#arcade">Arcade</a></li>
-      <li><a href="#wish">Wish</a></li>
-      <li><a href="#wall">Wall</a></li>
-      <li><a href="#cheer">Cheer</a></li>
-      <li><a href="#close">Close</a></li>
-    </ul>
-  </div>
-  <div class="cue" id="cue" hidden>
-    <div class="wrap cue-inner">
-      <p class="cue-text" id="cue-text" role="status"></p>
-      <a class="button primary" id="cue-go" href="#today">Take me there</a>
-      <button class="cue-close" id="cue-close" aria-label="Dismiss this notice">Got it</button>
-    </div>
-  </div>
-</nav>
-
-<main>
-
-  <!-- TODAY: the times here also drive the "Now" bar -->
-  <section id="today" class="section">
+  <!-- DURING: do this now -->
+  <section class="section nowcard-wrap" data-show="during" aria-labelledby="nowcard-title">
     <div class="wrap">
-      <h2>Today</h2>
+      <div class="nowcard">
+        <p class="nowcard-label">Happening now <span id="nowcard-where"></span></p>
+        <h1 class="nowcard-title" id="nowcard-title"></h1>
+        <p class="nowcard-hint" id="nowcard-hint"></p>
+        <p class="nowcard-action"><a class="button primary" id="nowcard-go" href="#today" hidden></a></p>
+        <p class="nowcard-next" id="nowcard-next"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTER: keep building -->
+  <section class="section keepsake" data-show="after" aria-labelledby="keepsake-title">
+    <div class="wrap">
+      <p class="kicker-dark">MNGAIA · AI4MN · October 9</p>
+      <h1 id="keepsake-title">Thank you for building with us</h1>
+      <p class="section-lede">Everything here stays open. Keep building, and show one person what you made.</p>
+      <div class="keep-grid">
+        <div class="card">
+          <h2>Show one person</h2>
+          <p>Show it on your screen, then send them this so they can build their own:</p>
+          <div class="copybox">
+            <p id="ripple-note">On Friday I built a small tool with AI in about 20 minutes. You can make your own here: https://inquiredu.org/a-mn-hackathon</p>
+            <button data-copy-from="ripple-note">Copy</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Keep building</h2>
+          <p>The starters and the build path are still here, for you or for anyone you send.</p>
+          <p class="card-actions"><a class="button primary" href="starters.html">The starters</a> <a class="button" href="wish.html">Grant a wish</a></p>
+        </div>
+      </div>
+      <div class="next">
+        <h3>Next month</h3>
+        <p>We turn to assessment: what our practices have measured, who they have served, and who they may have held back.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TODAY: built from the session file -->
+  <section id="today" class="section" data-show="before during">
+    <div class="wrap">
+      <h2>The morning</h2>
       <ol class="timeline" id="timeline"></ol>
-      <div class="shared">
-        <h3>Shared spaces today</h3>
+      <div class="shared" id="shared">
+        <h3>Shared spaces</h3>
         <p class="shared-links">
           <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: link on Friday"></span>
           <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: link on Friday"></span>
@@ -79,311 +128,27 @@
     </div>
   </section>
 
-  <!-- THE REMIX ARCADE -->
-  <section id="arcade" class="section band">
+  <!-- BEFORE: what to bring, the shape of the morning, ways in -->
+  <section class="section band" data-show="before">
     <div class="wrap">
-      <h2>The Remix Arcade</h2>
-      <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours.</p>
-
-      <div class="first">
-        <p><strong>First, join your team.</strong> Open the Teams doc and add your name next to your room number.</p>
-        <p class="link-slot" data-link="teams" data-label="Open the Teams doc"></p>
-      </div>
-
-      <ol class="steps">
-        <li><span class="num hex">1</span><strong>Play it.</strong> <span>Pick a starter and give it a try.</span></li>
-        <li><span class="num hex">2</span><strong>Hand it to your AI.</strong> <span>Press <em>Copy for my AI</em>, then paste into Gemini, Claude, or ChatGPT.</span></li>
-        <li><span class="num hex">3</span><strong>Remix it.</strong> <span>Copy a change from the remix menu, paste it in the same chat, and see what happens.</span></li>
-        <li><span class="num hex">4</span><strong>Pin it to the wall.</strong> <span>Screenshot your version onto the <a href="#wall">gallery wall</a>.</span></li>
-      </ol>
-
-      <h3 class="subhead">The starters</h3>
-      <div class="machines">
-
-        <article class="cabinet" style="--c: var(--timer)">
-          <div class="badge hex" aria-hidden="true">⏱️</div>
-          <p class="for">For anyone who runs a meeting</p>
-          <h4>The Meeting Timer</h4>
-          <p>Your agenda on screen with a big countdown, a gentle chime when it's time to move on, and a parking lot.</p>
-          <p class="monday"><strong>Monday:</strong> run your next PLC with it on the screen.</p>
-          <div class="actions">
-            <button class="primary" data-play="timer">Play</button>
-            <button data-copy-machine="timer">Copy for my AI</button>
-          </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Change the agenda to my meeting: ___ (10 minutes), ___ (15 minutes), ___ (5 minutes).</span></li>
-              <li><span>Show our team norms along the bottom: ___.</span></li>
-              <li><span>Use our school colors: ___ and ___.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a protocol mode: 5 minutes of silent writing, then 10 minutes of discussion, with a different chime for each.</span></li>
-              <li><span>Add a spinner that picks who takes notes and who keeps time.</span></li>
-              <li><span>Add a button that copies the parking lot as a list I can paste into our notes.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>When time runs out, play a game-show buzzer instead of the chime.</span></li>
-              <li><span>If we finish the agenda early, celebrate with confetti.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>AGENDA</code>, change the minutes for one item, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
-        </article>
-
-        <article class="cabinet" style="--c: var(--groups)">
-          <div class="badge hex" aria-hidden="true">🎲</div>
-          <p class="for">For teachers, coaches, and anyone leading a workshop</p>
-          <h4>The Group Maker</h4>
-          <p>Paste names, pick a size, and shuffle. It spreads your helpers out and keeps apart anyone who shouldn't be together.</p>
-          <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
-          <div class="actions">
-            <button class="primary" data-play="groups">Play</button>
-            <button data-copy-machine="groups">Copy for my AI</button>
-          </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Use these group names instead: ___.</span></li>
-              <li><span>Make the group cards big enough to read on a projector from the back of the room.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a box where I can type pairs who should be kept apart.</span></li>
-              <li><span>Give each group roles: facilitator, recorder, timekeeper, and reporter.</span></li>
-              <li><span>Let me save a list of names in this browser so I don't paste it every time.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>Make the shuffle dramatic: names spin and land one at a time, with a drumroll.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>GROUP_NAMES</code>, change them to your school's mascots, and press <strong>Run my changes</strong>.</li>
-              <li class="do"><strong>About names:</strong> names typed into the running tool stay on your computer. Names pasted into an AI chat go to that company. Today, stick with the made-up ones.</li>
-            </ul>
-          </details>
-        </article>
-
-        <article class="cabinet" style="--c: var(--feedback)">
-          <div class="badge hex" aria-hidden="true">💬</div>
-          <p class="for">For teachers and faculty</p>
-          <h4>The Feedback Builder</h4>
-          <p>Choose a level for each part of a rubric, and warm, specific feedback comes together, with one clear next step.</p>
-          <p class="monday"><strong>Monday:</strong> load your own rubric and give faster, kinder feedback.</p>
-          <div class="actions">
-            <button class="primary" data-play="feedback">Play</button>
-            <button data-copy-machine="feedback">Copy for my AI</button>
-          </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Replace the rubric with mine: ___.</span></li>
-              <li><span>Rewrite every comment in my voice: shorter, and a little funnier.</span></li>
-              <li><span>Add a button that switches the comments to Spanish.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a "glow and grow" format: one thing that's working and one thing to try.</span></li>
-              <li><span>Let me save rubrics for different assignments and switch between them.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>Show a sticker for the strongest part of the work.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>TONES</code>, write your own opener and closer, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
-        </article>
-
-        <article class="cabinet" style="--c: var(--calendar)">
-          <div class="badge hex" aria-hidden="true">🗓️</div>
-          <p class="for">For leaders and anyone who juggles calendars</p>
-          <h4>The Calendar Explorer</h4>
-          <p>Every calendar in one view you can filter and search, with busy days and double-booked rooms flagged.</p>
-          <p class="monday"><strong>Monday:</strong> spot next month's collisions before they happen.</p>
-          <div class="actions">
-            <button class="primary" data-play="calendar">Play</button>
-            <button data-copy-machine="calendar">Copy for my AI</button>
-          </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Change the calendars to our buildings and programs: ___.</span></li>
-              <li><span>Use these events instead: ___. (Paste public events only.)</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a month grid view with a colored dot for each event.</span></li>
-              <li><span>Add a button that copies one week as a list for the staff bulletin.</span></li>
-              <li><span>Flag any evening with more than two events for the same families.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>Add a quiet-day finder that celebrates days with nothing scheduled.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>EVENTS</code>, add one for something on your own calendar, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
-        </article>
-
-        <article class="cabinet" style="--c: var(--oracle)">
-          <div class="badge hex" aria-hidden="true">🔮</div>
-          <p class="for">Just for fun</p>
-          <h4>The Teacher's Lounge Oracle</h4>
-          <p>Ask a question. Get a dramatic, slightly ridiculous prophecy, with a gong.</p>
-          <p class="monday"><strong>Monday:</strong> a vocabulary oracle or a discussion-question picker, if you remix it.</p>
-          <div class="actions">
-            <button class="primary" data-play="oracle">Play</button>
-            <button data-copy-machine="oracle">Copy for my AI</button>
-          </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it silly</h5>
-            <ul>
-              <li><span>Make the Oracle talk like an over-excited game-show host.</span></li>
-              <li><span>Add a drumroll before the gong, and confetti when the prophecy appears.</span></li>
-              <li><span>Write 10 new prophecies about my school, ___. Keep them kind.</span></li>
-            </ul>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Change the colors to my school colors: ___ and ___.</span></li>
-              <li><span>Add a button that reads the prophecy out loud.</span></li>
-              <li><span>Teach the Oracle a new topic: when I ask about ___, it should answer with prophecies about ___.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Turn it into a vocabulary oracle. Each spin reveals one of these words and what it means: ___.</span></li>
-              <li><span>Turn it into a discussion-question picker for my class on ___.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>SPIN_SECONDS</code>, change the 3 to a 10, and press <strong>Run my changes</strong>.</li>
-              <li class="do">In the code, find the coffee topic under <code>TOPICS</code>. Add your own prophecy in quotes, end it with a comma, press <strong>Run my changes</strong>, and ask about coffee.</li>
-            </ul>
-          </details>
-        </article>
-
-      </div>
-
-      <h3 class="subhead" id="where">Where do I paste it?</h3>
-      <div class="tips">
-        <div>
-          <h4>Gemini</h4>
-          <p>Open gemini.google.com. Turn on <strong>Canvas</strong> in the prompt bar (it may be under Tools), then paste.</p>
-        </div>
-        <div>
-          <h4>Claude</h4>
-          <p>Open claude.ai and paste. The machine appears beside the chat as an artifact.</p>
-        </div>
-        <div>
-          <h4>ChatGPT</h4>
-          <p>Open chatgpt.com, choose <strong>Canvas</strong> from the tools, paste, then press <strong>Preview</strong>.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GRANT A WISH -->
-  <section id="wish" class="section">
-    <div class="wrap">
-      <h2>Grant a wish</h2>
-      <p class="section-lede">Now build something from nothing. It's the same loop you just used, minus the training wheels. It starts with you, the AI does the heavy lifting, and it comes back to you.</p>
-
-      <ol class="path">
-        <li>
-          <span class="num hex">1</span>
-          <h3>Say what you wish for</h3>
-          <p>One or two sentences. Who is it for, and what should it do? Fill in the blanks:</p>
-          <div class="copybox">
-            <p id="wish-template">Build me a small web app: [what it is] for [who it's for]. It should [what it does]. Make it simple, colorful, and fun to use. Use made-up data.</p>
-            <button data-copy-from="wish-template">Copy</button>
-          </div>
-        </li>
-        <li>
-          <span class="num hex">2</span>
-          <h3>Hand it to your AI</h3>
-          <p>Paste it into Gemini with Canvas on, Claude, or ChatGPT with Canvas. A first version usually shows up in under a minute.</p>
-        </li>
-        <li>
-          <span class="num hex">3</span>
-          <h3>Make it yours</h3>
-          <p>Ask for one change at a time. "Make the buttons bigger." "Add a sound when I win." "Use our school colors."</p>
-        </li>
-        <li>
-          <span class="num hex">4</span>
-          <h3>Break it, fix it</h3>
-          <p>Something will go sideways. Tell the AI exactly what you see: "When I press Start, nothing happens."</p>
-        </li>
-        <li>
-          <span class="num hex">5</span>
-          <h3>Peek under the hood</h3>
-          <div class="copybox">
-            <p id="peek-prompt">Explain three lines of this code to me like I've never coded before. Pick the three most interesting ones.</p>
-            <button data-copy-from="peek-prompt">Copy</button>
-          </div>
-        </li>
-        <li>
-          <span class="num hex">6</span>
-          <h3>Back to you</h3>
-          <p>Is it what you wished for? Who would you show it to? Pin it to the <a href="#wall">wall</a>.</p>
-        </li>
-      </ol>
-
-      <h3 class="subhead">No wish yet? Take one from the jar.</h3>
-      <p class="hint" id="jar-hint">Choose one to copy it, then paste it into your AI.</p>
-      <ul class="jar">
-        <li><button data-wish="a countdown to winter break, with snow that falls harder as the day gets closer">Winter break countdown, with snow that falls harder each day</button></li>
-        <li><button data-wish="a spinner that picks whose turn it is to bring treats to the staff meeting">A spinner for whose turn it is to bring treats</button></li>
-        <li><button data-wish="a clock for my bell schedule that shows how many minutes are left in this period">A bell-schedule clock: minutes left this period</button></li>
-        <li><button data-wish="a pizza you can slice into fractions with a slider, showing the fraction as you go">A pizza you slice into fractions with a slider</button></li>
-        <li><button data-wish="staff-meeting bingo, with a fresh card every time I press a button">Staff-meeting bingo, new card every time</button></li>
-        <li><button data-wish="a brain-break picker that chooses an activity and starts a big countdown timer">A brain-break picker with a big timer</button></li>
-        <li><button data-wish="a choose-your-path story for a novel my class is reading, with three choices at each step">A choose-your-path story for a class novel</button></li>
-        <li><button data-wish="a playful 'Which Minnesota lake are you?' personality quiz">"Which Minnesota lake are you?" quiz</button></li>
-        <li><button data-wish="a visual timer that ends with a rocket launch">A visual timer that ends in a rocket launch</button></li>
-        <li><button data-wish="an office-hours helper that answers student questions from a made-up course syllabus">An office-hours helper for a made-up syllabus</button></li>
-        <li><button data-wish="a color-coded calendar explorer for made-up district events across several calendars, with filters">A color-coded explorer for made-up district calendars</button></li>
-        <li><button data-wish="a soundboard of ridiculous sound effects for team meetings">A soundboard of ridiculous meeting sound effects</button></li>
+      <h2>Before you come</h2>
+      <ul class="checks">
+        <li><strong>A laptop or Chromebook.</strong> Building needs a keyboard. On a phone, you can watch and cheer.</li>
+        <li><strong>An AI tool you can log in to.</strong> Gemini with your school Google account, Claude, or ChatGPT. Check that you can open it before Friday.</li>
+        <li><strong>A wish.</strong> Something small you wish existed for your work. No wish? We have a jar of them.</li>
       </ul>
-
-      <div class="stuck">
-        <h3>Stuck? Three moves.</h3>
-        <ul>
-          <li><strong>Describe it.</strong> Tell the AI exactly what you see and what you expected instead.</li>
-          <li><strong>Rewind.</strong> "Go back to the version before that one."</li>
-          <li><strong>Ask for help.</strong> In your breakout room, press Meet's <em>Ask for help</em> button. A host gets the message and will pop into your room.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE GALLERY WALL -->
-  <section id="wall" class="section">
-    <div class="wrap">
-      <div class="wall-card">
-        <h2>The gallery wall</h2>
-        <p>Got something working, even halfway? Screenshot it onto the wall. Leaving early? Pin it first, and your work stays up for Show &amp; Cheer.</p>
-        <p class="link-slot" data-link="gallery" data-label="Open the gallery wall"></p>
-        <p class="small">The wall stays inside this group. Half-built and in-progress work is welcome here, which is the whole idea.</p>
-      </div>
+      <h2 class="subhead-2">The shape of the morning</h2>
+      <ul class="shape">
+        <li><strong>2</strong><span>hours, start to finish</span></li>
+        <li><strong>4</strong><span>starters for real work, plus one just for fun</span></li>
+        <li><strong>4</strong><span>people at most in each breakout room</span></li>
+        <li><strong>1</strong><span>gallery wall for everything we make</span></li>
+      </ul>
     </div>
   </section>
 
   <!-- SHOW & CHEER -->
-  <section id="cheer" class="section band">
+  <section id="cheer" class="section band" data-show="during">
     <div class="wrap">
       <h2>Show &amp; Cheer</h2>
       <p class="section-lede">A few builders share their screens for two or three minutes each. Applause first, emoji welcome. Then one question for each builder: who would you show this to?</p>
@@ -395,8 +160,9 @@
     </div>
   </section>
 
+
   <!-- THE CLOSE -->
-  <section id="close" class="section">
+  <section id="close" class="section" data-show="during">
     <div class="wrap">
       <h2>What did we just do?</h2>
       <p class="section-lede">Every machine today started with a person, passed through an AI, and came back to a person who decided whether it was any good.</p>
@@ -419,6 +185,21 @@
     </div>
   </section>
 
+
+  <!-- Everything else on the site -->
+  <section class="section" data-show="before after">
+    <div class="wrap">
+      <h2>Also on the site</h2>
+      <div class="also">
+        <a class="also-card" href="starters.html"><strong>Starters</strong><span>Five small tools that already work. Play one, hand it to your AI, make it yours.</span><span class="go">Open</span></a>
+        <a class="also-card" href="wish.html"><strong>Grant a wish</strong><span>Build something from nothing: a wish builder, a jar of wishes, and three moves for when you're stuck.</span><span class="go">Open</span></a>
+        <a class="also-card" href="hosts.html"><strong>Hosts</strong><span>Running the morning: the run of show, forming teams, ready-to-paste messages, and safe play.</span><span class="go">Open</span></a>
+        <a class="also-card" href="sources.html"><strong>Sources</strong><span>How-tos that take the mystery out of code, cautions worth knowing, and what research says about coding and thinking.</span><span class="go">Open</span></a>
+        <a class="also-card" href="present.html"><strong>Present</strong><span>The main-room stage: full screen, one idea at a time, with speaker notes in a second window.</span><span class="go">Open</span></a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="footer">
@@ -431,32 +212,6 @@
   </div>
 </footer>
 
-<!-- The machine room: play it, look inside, change it -->
-<dialog id="room" aria-labelledby="room-title">
-  <div class="room">
-    <div class="room-head">
-      <h2 id="room-title">Machine</h2>
-      <div class="room-tools">
-        <button id="toggle-code" aria-expanded="false" aria-controls="code-pane">Show the code</button>
-        <button id="room-copy">Copy for my AI</button>
-        <button id="room-close">Close</button>
-      </div>
-    </div>
-    <div class="room-body" id="room-body">
-      <iframe id="screen" title="The machine, running" sandbox="allow-scripts allow-forms allow-modals"></iframe>
-      <div class="code-pane" id="code-pane" hidden>
-        <label for="code">This is the whole machine. Change something, then press Run my changes.</label>
-        <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
-        <div class="code-actions">
-          <button class="primary" id="run">Run my changes</button>
-          <button id="reset">Start over</button>
-        </div>
-      </div>
-    </div>
-    <p class="toast" role="status" aria-live="polite"></p>
-  </div>
-</dialog>
-
 <dialog id="fallback" aria-labelledby="fallback-title">
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
@@ -465,6 +220,7 @@
     <div><button class="primary" id="fallback-close">Done</button></div>
   </div>
 </dialog>
+
 
 <p id="toast" class="toast" role="status" aria-live="polite"></p>
 

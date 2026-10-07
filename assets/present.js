@@ -1,5 +1,6 @@
 // The presenter view: one big idea per screen, read from the session file.
-// Keys: → / Space / Page Down = next, ← / Page Up = back, F = full screen, N = jump to now.
+// Keys: → / Space / Page Down = next, ← / Page Up = back, F = full screen, N = jump to now,
+// S = speaker notes in a second window.
 // Add ?now=10:50 to the address to preview the clock-driven parts at any moment.
 
 const screens = [];
@@ -112,6 +113,23 @@ const KINDS = {
 };
 
 
+// ---------- Speaker notes, in a second window that follows along ----------
+// The stage and the notes window talk over a BroadcastChannel (same computer, same browser).
+
+const channel = "BroadcastChannel" in window ? new BroadcastChannel("hands-on-stage") : null;
+if (channel) {
+  channel.onmessage = (event) => {
+    const message = event.data || {};
+    if (message.hello) channel.postMessage({ index });
+    if (typeof message.go === "number") show(message.go);
+  };
+}
+
+function openNotes() {
+  window.open("notes.html", "hands-on-notes", "width=560,height=780");
+}
+
+
 // ---------- Showing a screen ----------
 
 function show(i) {
@@ -126,6 +144,7 @@ function show(i) {
   document.getElementById("rail-count").textContent = (index + 1) + " / " + screens.length;
   document.getElementById("status").textContent =
     "Screen " + (index + 1) + " of " + screens.length + ": " + (screen.heading || screen.text || "");
+  if (channel) channel.postMessage({ index });
   tick();
 }
 
@@ -164,6 +183,7 @@ document.addEventListener("keydown", (event) => {
   else if (key === "ArrowLeft" || key === "PageUp") { event.preventDefault(); show(index - 1); }
   else if (key === "f" || key === "F") toggleFullScreen();
   else if (key === "n" || key === "N") jumpToNow();
+  else if (key === "s" || key === "S") openNotes();
   else if (key === "Home") show(0);
   else if (key === "End") show(screens.length - 1);
 });
@@ -177,5 +197,6 @@ document.getElementById("next").addEventListener("click", () => show(index + 1))
 document.getElementById("prev").addEventListener("click", () => show(index - 1));
 document.getElementById("full").addEventListener("click", toggleFullScreen);
 document.getElementById("now-button").addEventListener("click", jumpToNow);
+document.getElementById("notes-button").addEventListener("click", openNotes);
 
 show(index);

@@ -1,48 +1,36 @@
 # Hands On: A Friday Hackathon
 
-This page is the whole Friday session, October 9, 10:00 to noon Central, hosted by MNGAIA · AI4MN. Everyone gets the one link. It holds the plan for the morning, the Remix Arcade, the path for building a wish from scratch, the gallery wall, Show & Cheer, and the close. A bar at the top follows the clock on Friday, so anyone who arrives late can see what's happening and jump in.
+A one-link site for a two-hour virtual hackathon hosted by MNGAIA · AI4MN on Friday, October 9, 2026, 10:00 to noon Central. Educators build small tools with AI that are worth opening on Monday, in teams of four, and show one person what they made. It lives at inquiredu.org/a-mn-hackathon.
 
-It will live at inquiredu.org/a-mn-hackathon, next to What We Talk About.
+## The pages
 
-## How Friday fits together
-
-| Time | Where | What happens |
+| Page | For | What it does |
 | --- | --- | --- |
-| 10:00 | Main room | Welcome. Wishes go in the Meet chat: "I wish I had a thing that..." |
-| 10:08 | Main room | One wish is built live, broken on purpose, and fixed. |
-| 10:20 | Breakout rooms | The Remix Arcade: play a machine, hand it to your AI, remix it. |
-| 10:45 | Same rooms | Grant a wish: build something from scratch. |
-| 11:20 | Main room | Show & Cheer, drawn from the gallery wall. |
-| 11:42 | Main room | The close: one wonder, one worry, one word. Done by 11:55. |
+| [Home](index.html) | Everyone | Changes with the clock: the invitation before, "Happening now" during, a keepsake after |
+| [Starters](starters.html) | Builders | Five starters that already work, to play, copy into an AI tool, and remix |
+| [Grant a wish](wish.html) | Builders | Build something from nothing: a wish builder, a jar of wishes, three moves for when you're stuck |
+| [Hosts](hosts.html) | Hosts and anchors | Forming teams, a room calculator, the run of show, before, during, and after |
+| [Sources](sources.html) | Anyone curious | How-tos, cautions, and research on learning to code |
+| [Present](present.html) | The presenter | The main-room stage; press S for speaker notes in a second window |
 
-One host stays in the main room the whole time, building wishes live for latecomers and anyone who'd rather watch.
+## How it's built
 
-## What's here
+Everything about the morning lives in one session file, `assets/session.js`: the times, the links, the presenter's screens and notes, the hosts' checklists, and ready-to-paste messages. Every page reads it. Plain HTML, CSS, and JavaScript, with no build step and no tracking.
 
-| File | What it is |
+| Path | What it is |
 | --- | --- |
-| `assets/session.js` | **The session file.** Times, links, presenter screens, host checklists and chat messages. Edit this to change the morning, or copy it to run a new session. |
-| `index.html` | The participant page: the one link everyone gets |
-| `present.html` | The presenter view for the main room. Arrow keys or a clicker to move, F for full screen, N to jump to now. |
-| `assets/present.css`, `assets/present.js` | How the presenter view looks and works |
-| `assets/site.css` | The look, taken from the MNGAIA mark |
-| `assets/site.js` | The "Now" bar, the copy buttons, and the machine room |
-| `assets/mngaia-mark.png` | The hexagon mark, cut from the MNGAIA banner |
-| `cabinets/meeting-timer.html` | Starter: the Meeting Timer (anyone who runs a meeting) |
-| `cabinets/group-maker.html` | Starter: the Group Maker (teachers, coaches, workshop leads) |
-| `cabinets/feedback-builder.html` | Starter: the Feedback Builder (teachers and faculty) |
-| `cabinets/calendar-explorer.html` | Starter: the Calendar Explorer (leaders) |
-| `cabinets/oracle.html` | Just for fun: the Teacher's Lounge Oracle |
+| `assets/session.js` | The session file |
+| `assets/site.js`, `assets/site.css` | The participant pages and the Hosts page |
+| `assets/hosts.js` | The run of show and the room calculator |
+| `assets/present.js`, `assets/present.css`, `notes.html` | The stage and the speaker notes |
+| `cabinets/` | The starters, each a single HTML file that pastes cleanly into any AI tool |
 | `scripts/serve.js` | A small local server for previewing |
 
-Each machine is a single HTML file with nothing outside it, so it pastes cleanly into any AI tool. The settings worth changing sit at the very top of each file, so a first-timer who opens the code sees them first.
+## Docs
 
-## Before Friday
-
-- Make the gallery slide and the wonder/worry slide, and paste their links into `links` in `assets/session.js`.
-- Share the Teams doc so people outside your district can edit it, ideally Friday morning.
-- Paste the Oracle into Gemini on a district Google account with Canvas on. Does it run, and does the gong play? Then the same in Claude and ChatGPT.
-- Try the Copy buttons from the live link on a Chromebook, a district laptop, and Safari.
+- [Handoff](docs/HANDOFF.md): decisions, what exists, what's left, and a starter prompt for a new chat or another computer
+- [The session kit](docs/SESSION-KIT.md): how the session file works, and how to run a new session
+- [Accessibility](docs/ACCESSIBILITY.md): what was checked, what was fixed, what still needs a person
 
 ## Preview it
 
@@ -52,4 +40,4 @@ From this folder, on Windows or Mac:
 node scripts/serve.js
 ```
 
-Then open http://localhost:4178 (participants) or http://localhost:4178/present.html (presenter). Add `?now=10:50` to either address to see it as it will look at any moment on Friday.
+Then open http://localhost:4178. Add `?now=10:50` to any page's address to see it as it will look at that moment on Friday.

@@ -584,6 +584,8 @@ dialog::backdrop { background: rgb(7 27 49 / .75); }
 }
 .finder fieldset { margin: 18px 0 0; padding: 0; border: 0; }
 .finder legend { margin-bottom: 6px; padding: 0; font-weight: 700; }
+.finder .ask-group { margin-top: 12px; }
+.finder .ask-group > legend { margin-bottom: 2px; font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .choice { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
 .choice input { width: 18px; height: 18px; margin: 0; flex: none; accent-color: var(--link); }
 .choice label { flex: 1; display: flex; justify-content: space-between; gap: 8px; cursor: pointer; font-size: .95rem; }

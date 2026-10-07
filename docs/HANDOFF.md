@@ -24,7 +24,7 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 | Starters | `/starters.html` | The five starters with Play, Copy for my AI, and remix menus |
 | Grant a wish | `/wish.html` | The build path, the wish builder, the wish jar, the stuck moves |
 | Hosts | `/hosts.html` | Forming teams, a room calculator, the run of show, before/during/after |
-| Sources | `/sources.html` | 37 sources checked October 7, with start-here paths, section tabs, question and kind filters, search, and a shareable address for every view (for example `?ask=privacy`, `?path=leaders`, `#primm`). The sources live in `assets/sources-data.js`. |
+| Sources | `/sources.html` | 37 sources checked October 7, with start-here paths, section tabs, topic and kind filters (topics grouped under Building, Taking care, and Teaching and learning), search, and a shareable address for every view (for example `?ask=privacy`, `?path=leaders`, `#primm`). The sources live in `assets/sources-data.js`. |
 | Present | `/present.html` | The full-screen stage for the main room (S opens speaker notes) |
 | Speaker notes | `/notes.html` | Follows the stage from a second window, and can move it |
 

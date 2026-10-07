@@ -249,20 +249,27 @@ function render() {
     button.querySelector(".facet-count").textContent = state.path ? "" : n;
     button.setAttribute("aria-pressed", String(!state.path && state.section === key));
   });
-  // Topics and their counts
+  // Topics and their counts. A topic with nothing in this view steps out of the list,
+  // unless it's the one chosen, and a group with no topics left goes with it.
   Object.entries(askInputs).forEach(([key, c]) => {
     c.input.checked = !state.path && key === state.ask;
     const n = SOURCES.filter((s) => (!key || s.asks.includes(key)) && matches(s, "ask")).length;
     c.count.textContent = n;
     c.row.classList.toggle("empty", n === 0);
+    c.row.hidden = Boolean(key) && n === 0 && !c.input.checked;
   });
-  // Kinds and their counts
+  document.querySelectorAll(".ask-group").forEach((set) => {
+    set.hidden = !set.querySelector(".choice:not([hidden])");
+  });
+  // Kinds and their counts, the same way
   Object.entries(kindInputs).forEach(([key, c]) => {
     c.input.checked = !state.path && state.types.has(key);
     const n = SOURCES.filter((s) => s.type === key && matches(s, "type")).length;
     c.count.textContent = n;
     c.row.classList.toggle("empty", n === 0);
+    c.row.hidden = n === 0 && !c.input.checked;
   });
+  $("kinds").closest("fieldset").hidden = !$("kinds").querySelector(".choice:not([hidden])");
   // Paths
   document.querySelectorAll(".path-card").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.path === state.path)));
 

@@ -23,7 +23,7 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 | Starters | `/starters.html` | The five starters with Play, Copy for my AI, and remix menus |
 | Grant a wish | `/wish.html` | The build path, the wish builder, the wish jar, the stuck moves |
 | Hosts | `/hosts.html` | Forming teams, a room calculator, the run of show, before/during/after |
-| Sources | `/sources.html` | How-tos, cautions, and research on coding and thinking |
+| Sources | `/sources.html` | 36 sources checked October 7: how-tos, cautions, and research on coding and thinking |
 | Present | `/present.html` | The full-screen stage for the main room (S opens speaker notes) |
 | Speaker notes | `/notes.html` | Follows the stage from a second window, and can move it |
 
@@ -37,6 +37,7 @@ Shared spaces: the [Teams doc](https://docs.google.com/document/d/1X_kzm4zUjvb5Z
 - Edit the speaker notes in `assets/session.js` into Sean's own words.
 - A manual screen-reader pass (NVDA or ChromeVox, and VoiceOver). See `docs/ACCESSIBILITY.md`.
 - Get planner feedback on the starters.
+- Recheck the AI tools' help pages close to Friday: ChatGPT moved from canvas to a Preview switch in May 2026, and Gemini Canvas sharing depends on each district's Drive settings.
 
 ## Working on it
 

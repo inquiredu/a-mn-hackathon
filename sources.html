@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sources · Hands On</title>
-<meta name="description" content="How-tos that take the mystery out of code, cautions worth knowing, and what research says about learning to code and thinking.">
+<meta name="description" content="How-tos that take the mystery out of building with AI, cautions worth knowing, and what research says about learning to code and thinking.">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,12 +30,319 @@
 </header>
 
 <main id="main">
+
   <section class="section">
     <div class="wrap">
+      <p class="kicker-dark">Sources and research</p>
       <h1 class="page-title">Sources</h1>
-      <p class="section-lede">How-tos that take the mystery out of code, cautions worth knowing, and what research says about learning to code and thinking. Each source is being checked before it goes here; the full list will be ready before Friday.</p>
+      <p class="section-lede">How-tos that take the mystery out of building with AI, cautions worth knowing, and what research says about learning to code. Every source here was opened and checked on October 7, 2026. Product help pages change often, so their dates are noted.</p>
+      <nav class="sources-nav" aria-label="On this page">
+        <a href="#moves">Learn the moves</a>
+        <a href="#care">Proceed with care</a>
+        <a href="#thinking">Coding and thinking</a>
+      </nav>
+
+      <div class="synthesis">
+        <h2>The short version</h2>
+        <p>Learning to code reliably builds coding skill, and a large meta-analysis found moderate links to creative thinking, math, and metacognition, though those links shrink when compared with other active teaching. So "coding makes you smarter" says more than the research does. The research is stronger on how to begin: run something that works, change it, then make your own. Early studies of AI and beginners suggest AI help need not hurt learning when people still change code by hand and read what the AI made before keeping it. The main risks are over-reliance, confident mistakes, and data going places it shouldn't, and each has a simple habit that answers it.</p>
+      </div>
+
+      <div class="card friday-design">
+        <h2>How Friday is built on this</h2>
+        <p>The morning follows a path researchers call Use-Modify-Create (Lee and colleagues, 2011), later developed into PRIMM: predict, run, investigate, modify, make (Sentance and colleagues, 2019). You start with a starter that works, guess what it does, run it, look inside, change it by hand, remix it with AI, and then build your own wish. Brennan and Resnick (2012) name "reusing and remixing" as a core practice of computational thinking, and their suggestions for assessing it lead straight into next month's conversation.</p>
+      </div>
     </div>
   </section>
+
+  <!-- LEARN THE MOVES -->
+  <section class="section band" id="moves" aria-labelledby="moves-title">
+    <div class="wrap">
+      <h2 id="moves-title">Learn the moves</h2>
+      <p class="section-lede">How to build in the tools you have, what the code actually is, and what "vibe coding" means, from the people who named it.</p>
+
+      <h3 class="source-group">Building in the tools you have</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://support.google.com/gemini/answer/16047321?hl=en&amp;co=GENIE.Platform%3DDesktop">Create docs, apps &amp; more with Canvas</a>
+          <p class="meta">Google, Gemini Apps Help · as of October 2026 <span class="type">Official help</span></p>
+          <p>The steps for opening Canvas in Gemini, editing the code directly or asking Gemini for changes, and sharing with a link. It notes that anyone with a public app link can view and edit the app's data.</p>
+          <p class="friday"><strong>For Friday:</strong> the exact steps for most Google districts.</p>
+        </li>
+        <li class="source">
+          <a href="https://workspaceupdates.googleblog.com/2026/04/share-chats-canvases-and-generated-media-from-the-Gemini-app-securely-via-Google-Drive.html">Share chats, canvases, and generated media from the Gemini app securely via Google Drive</a>
+          <p class="meta">Google Workspace Updates · May 2026, with a <a href="https://workspaceupdates.googleblog.com/2026/06/educators-and-students-can-now-share-Gemini-Canvas-creations-directly-to-Google-Classroom.html">June 2026 follow-up on Share to Classroom</a> <span class="type">Official announcement</span></p>
+          <p>Workspace accounts can share canvases with Drive-style sharing that follows the district's own Drive policy, including whether sharing outside the district is allowed. In June, Google added Share to Classroom for Education editions.</p>
+          <p class="friday"><strong>For Friday:</strong> why the Share button may look different for people from different districts.</p>
+        </li>
+        <li class="source">
+          <a href="https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them">What are artifacts and how do I use them?</a>
+          <p class="meta">Anthropic, Claude Help Center · updated September 2026, with <a href="https://support.claude.com/en/articles/9547008-publishing-and-sharing-artifacts">Publishing and sharing artifacts</a> <span class="type">Official help</span></p>
+          <p>Artifacts work on every plan, including free, once code execution and file creation are turned on in Settings, Capabilities. On personal plans, publishing creates a link anyone can open without an account, and unpublishing can't be undone.</p>
+          <p class="friday"><strong>For Friday:</strong> a free account is enough to build something and hand someone a working link, and a published link is public.</p>
+        </li>
+        <li class="source">
+          <a href="https://help.openai.com/en/articles/20001246-working-with-writing-blocks-and-code-blocks-in-chatgpt">Working with writing blocks and code blocks in ChatGPT</a>
+          <p class="meta">OpenAI Help Center · updated October 2026, with the <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT release notes</a> <span class="type">Official help</span></p>
+          <p>A Preview switch on code blocks shows web pages and other code running inside ChatGPT. The release notes for May 28, 2026 say canvas is no longer available in the current GPT-5.5 models.</p>
+          <p class="friday"><strong>For Friday:</strong> in ChatGPT, look for Preview on the code block, not a canvas button.</p>
+        </li>
+        <li class="source">
+          <a href="https://support.microsoft.com/en-us/microsoft-365-copilot/build-lightweight-apps-within-microsoft-365-copilot-pages">Build lightweight apps within Microsoft Copilot Pages</a>
+          <p class="meta">Microsoft Support · April 2026 <span class="type">Official help</span></p>
+          <p>Describe an app and Copilot builds a page you can preview. It works for work or school accounts with SharePoint or OneDrive storage, even without a Microsoft 365 Copilot license.</p>
+          <p class="friday"><strong>For Friday:</strong> a way in for people from Microsoft districts.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">What the code is</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website">Your first website</a>
+          <p class="meta">Mozilla, MDN Web Docs · as of October 2026 <span class="type">Primer</span></p>
+          <p>Plain definitions of the three languages of the web: HTML gives a page its structure, CSS its look, and JavaScript its behavior. It then walks through building and publishing a first page.</p>
+          <p class="friday"><strong>For Friday:</strong> these three languages are in every file the AI writes, including the starters. Open one with "Show the code" and you'll see all three.</p>
+        </li>
+        <li class="source">
+          <a href="https://academy.claude.com/courses/ai-capabilities-and-limitations">AI capabilities and limitations</a>
+          <p class="meta">Anthropic Academy · as of October 2026 <span class="type">Free course</span></p>
+          <p>Thirteen short lessons, about three and a half hours, on how language models produce text, what they know and when, and how to steer them. The stated audience includes educators.</p>
+          <p class="friday"><strong>After Friday:</strong> for anyone who leaves asking how it did that.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">Vibe coding, named and bounded</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://x.com/karpathy/status/1886192184808149383">The post that named "vibe coding"</a>
+          <p class="meta">Andrej Karpathy, on X · February 2, 2025 <span class="type">Primary source</span></p>
+          <p>Karpathy describes giving in to the AI so fully that you stop looking at the code, accepting its changes and pasting errors back in. He calls it fine for throwaway weekend projects.</p>
+          <p class="friday"><strong>For Friday:</strong> names what we'll be doing, and its limits, in the words of the person who coined it.</p>
+        </li>
+        <li class="source">
+          <a href="https://simonwillison.net/2025/Mar/19/vibe-coding/">Not all AI-assisted programming is vibe coding (but vibe coding rocks)</a>
+          <p class="meta">Simon Willison · March 19, 2025 <span class="type">Essay</span></p>
+          <p>Willison separates vibe coding, building without reviewing the code, from AI-assisted programming where you could explain every line. His advice: vibe code low-stakes projects, and ask someone experienced to check anything other people will rely on. He also calls it an eye-opening way for beginners to learn.</p>
+          <p class="friday"><strong>For Friday:</strong> one simple rule for what to build and what to share.</p>
+        </li>
+        <li class="source">
+          <a href="https://simonwillison.net/2025/Mar/11/using-llms-for-code/">Here's how I use LLMs to help me write code</a>
+          <p class="meta">Simon Willison · March 11, 2025 <span class="type">Essay</span></p>
+          <p>Practical habits from an experienced programmer: give the model context, tell it exactly what you want, test everything it writes, and expect several rounds of revision.</p>
+          <p class="friday"><strong>For Friday:</strong> try it, test it, ask again. That's the whole loop.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">Going further</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://ciddl.org/vibe-coding-for-special-educators-building-custom-classroom-tools-without-code/">Vibe coding for special educators: building custom classroom tools without code</a>
+          <p class="meta">Philip Garza, CIDDL · June 30, 2026 <span class="type">Educator resource</span></p>
+          <p>An educator builds four small classroom tools with Google AI Studio and advises starting small and specific. It stresses FERPA and IDEA obligations and reviewing any tool before using it with students who have IEPs or 504 plans. CIDDL says it was developed under a cooperative agreement with the U.S. Department of Education.</p>
+          <p class="friday"><strong>For Friday:</strong> real examples from a colleague, with student-data guardrails built in.</p>
+        </li>
+        <li class="source">
+          <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">What is GitHub Pages?</a>
+          <p class="meta">GitHub Docs · as of October 2026, with a <a href="https://docs.github.com/en/pages/quickstart">quickstart</a> <span class="type">Official help</span></p>
+          <p>Free hosting that turns the HTML, CSS, and JavaScript files in a GitHub repository into a website. This site is published this way.</p>
+          <p class="friday"><strong>After Friday:</strong> for turning a tool you built into a page you own.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROCEED WITH CARE -->
+  <section class="section" id="care" aria-labelledby="care-title">
+    <div class="wrap">
+      <h2 id="care-title">Proceed with care</h2>
+      <p class="section-lede">Each caution comes with a habit that answers it. None of them is a reason not to build. All of them are reasons to build thoughtfully.</p>
+
+      <h3 class="source-group">When AI writes the code</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://arxiv.org/abs/2211.03622">Do users write more insecure code with AI assistants?</a>
+          <p class="meta">Perry, Srivastava, Kumar &amp; Boneh · ACM CCS 2023 <span class="type">Peer-reviewed</span></p>
+          <p>In a study of 47 participants, those using an AI assistant wrote less secure code and were more likely to believe it was secure. Participants who trusted the AI less and reworked their prompts did better.</p>
+          <p class="friday"><strong>The habit:</strong> treat the AI's confidence as a claim to check. Ask it what could go wrong with your tool and where any typed information goes.</p>
+        </li>
+        <li class="source">
+          <a href="https://arxiv.org/abs/2108.09293">Asleep at the keyboard? Assessing the security of GitHub Copilot's code contributions</a>
+          <p class="meta">Pearce, Ahmad, Tan, Dolan-Gavitt &amp; Karri · IEEE Symposium on Security and Privacy 2022 <span class="type">Peer-reviewed</span></p>
+          <p>Across 89 scenarios built around high-risk weaknesses, the researchers judged about 40% of 1,689 generated programs to be vulnerable. They tested a 2021 tool on security-sensitive tasks, so this isn't a general error rate.</p>
+          <p class="friday"><strong>The habit:</strong> keep Friday's tools simple: no logins, no passwords, no storing other people's information.</p>
+        </li>
+        <li class="source">
+          <a href="https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen">We have a package for you! A comprehensive analysis of package hallucinations by code generating LLMs</a>
+          <p class="meta">Spracklen and colleagues · USENIX Security 2025 <span class="type">Peer-reviewed</span></p>
+          <p>Across 16 models and 576,000 code samples, models invented software packages that don't exist, on average at least 5.2% of the time for commercial models and 21.7% for open-source models.</p>
+          <p class="friday"><strong>The habit:</strong> build tools that run right in the AI's preview. If the AI tells you to install something, check with your IT team first.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">Student data</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://studentprivacy.ed.gov/resources/protecting-student-privacy-while-using-online-educational-services-requirements-and-best">Protecting student privacy while using online educational services</a>
+          <p class="meta">U.S. Department of Education, Privacy Technical Assistance Center · 2014 <span class="type">Federal guidance</span></p>
+          <p>As a general rule, schools can't share personal information from education records with a provider without parent consent unless a FERPA exception applies. Clicking "accept" on terms of service is like signing a contract, and free tools should go through the same approval as paid ones. It predates generative AI and is still posted as current guidance.</p>
+          <p class="friday"><strong>The habit:</strong> know your district's approval process before real student information goes into any tool.</p>
+        </li>
+        <li class="source">
+          <a href="https://fpf.org/wp-content/uploads/2024/10/Ed_AI_legal_compliance.pdf_FInal_OCT24.pdf">Vetting generative AI tools for use in schools</a>
+          <p class="meta">David Sallay, Future of Privacy Forum · 2024 <span class="type">Policy brief</span></p>
+          <p>A student ID number or a school email address still counts as personal information under FERPA and many state laws. Schools should ask whether a vendor uses student information to train its models.</p>
+          <p class="friday"><strong>The habit:</strong> use made-up names and made-up data. Initials and ID numbers don't make data anonymous.</p>
+        </li>
+        <li class="source">
+          <a href="https://www.revisor.mn.gov/statutes/cite/13.32">Minnesota Statutes § 13.32, educational data</a>
+          <p class="meta">Minnesota Office of the Revisor of Statutes · amended by <a href="https://www.revisor.mn.gov/laws/2022/0/69/">Laws 2022, chapter 69</a> <span class="type">Law</span></p>
+          <p>The 2022 amendments say educational data held by a technology provider isn't the provider's property, can't be used commercially, and must be returned or destroyed within 90 days after a contract ends. Schools must tell parents which providers have access within 30 days of the start of the school year. The law defines technology providers around contracts for school-issued devices, so whether it reaches a particular AI tool is a question for your district.</p>
+          <p class="friday"><strong>The habit:</strong> ask your district's data practices contact before any tool touches real student records.</p>
+        </li>
+        <li class="source">
+          <a href="https://education.mn.gov/MDE/dse/tech/AI/AIEd/">Artificial intelligence in education</a>
+          <p class="meta">Minnesota Department of Education · as of October 2026 <span class="type">State guidance</span></p>
+          <p>Asks educators how data is collected and used and whether a tool meets data practices standards, names over-reliance as a challenge, and names designing and innovating with AI as an opportunity.</p>
+          <p class="friday"><strong>The habit:</strong> run your tool idea through MDE's questions before you share it.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">Accessibility of what you share</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://www.ada.gov/resources/2024-03-08-web-rule/">Fact sheet: new rule on the accessibility of web content and mobile apps</a>
+          <p class="meta">U.S. Department of Justice, ADA.gov · rule published 2024, dates extended April 2026 <span class="type">Federal rule</span></p>
+          <p>State and local governments, including school districts, must meet WCAG 2.1 Level AA for their web content and apps. An interim final rule on April 20, 2026 moved the compliance dates to April 26, 2027 for entities serving 50,000 people or more, and April 26, 2028 for smaller ones and special districts. A lawsuit challenging the extension was filed in May 2026, according to a law firm's summary; we found no ruling as of October 7.</p>
+          <p class="friday"><strong>The habit:</strong> before a tool goes on a public district page, check that it works by keyboard, has readable contrast, and labels its controls.</p>
+        </li>
+        <li class="source">
+          <a href="https://www.w3.org/WAI/test-evaluate/easy-checks/">Easy checks: a first review of web accessibility</a>
+          <p class="meta">W3C Web Accessibility Initiative, with <a href="https://www.w3.org/TR/WCAG21/">WCAG 2.1</a> · as of October 2026 <span class="type">Standard and checklist</span></p>
+          <p>WCAG is organized around four principles: perceivable, operable, understandable, and robust. Easy Checks is a quick first look, and W3C notes that a page can pass it and still have real barriers.</p>
+          <p class="friday"><strong>The habit:</strong> ask your AI to make the tool meet WCAG 2.1 AA, then run Easy Checks and try it with only a keyboard.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">Learning and over-reliance</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12232635/">Generative AI without guardrails can harm learning: evidence from high school mathematics</a>
+          <p class="meta">Bastani, Bastani, Sungu, Ge, Kabakcı &amp; Mariman · PNAS 2025 <span class="type">Peer-reviewed</span></p>
+          <p>In a field experiment with nearly 1,000 high school students, access to GPT-4 raised practice scores (by 48% with a standard chat, 127% with a tutor version built with guardrails). When access was taken away, the standard-chat group did 17% worse than students who never had it. The guardrails largely prevented that harm.</p>
+          <p class="friday"><strong>The habit:</strong> if you build something for students, have it give hints and questions, not answers.</p>
+        </li>
+        <li class="source">
+          <a href="https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/">The impact of generative AI on critical thinking</a>
+          <p class="meta">Lee, Sarkar, Tankelevitch, Drosos, Rintel, Banks &amp; Wilson · CHI 2025 <span class="type">Peer-reviewed</span></p>
+          <p>In a survey of 319 knowledge workers describing 936 tasks, higher confidence in AI went with less critical thinking. The data are self-reported and show an association, not a cause.</p>
+          <p class="friday"><strong>The habit:</strong> build in a check step. Click every button and confirm every fact your tool shows.</p>
+        </li>
+        <li class="source">
+          <a href="https://arxiv.org/abs/2405.17739">The widening gap: the benefits and harms of generative AI for novice programmers</a>
+          <p class="meta">Prather and colleagues · ICER 2024 <span class="type">Peer-reviewed</span></p>
+          <p>Across 21 lab sessions, students who struggled often believed they had done better than they had, leaving with an illusion of competence.</p>
+          <p class="friday"><strong>The habit:</strong> explain your tool back in your own words. If you can't, ask the AI to walk you through it.</p>
+        </li>
+      </ul>
+      <p class="aside"><strong>A note on a widely shared study:</strong> "Your Brain on ChatGPT" (Kosmyna and colleagues, MIT Media Lab, 2025) is an <a href="https://arxiv.org/abs/2506.08872">arXiv preprint</a> that hadn't been peer-reviewed as of its December 2025 version. It had 54 participants, 18 of whom completed the fourth session. Read it as early and unreviewed.</p>
+    </div>
+  </section>
+
+  <!-- CODING AND THINKING -->
+  <section class="section band" id="thinking" aria-labelledby="thinking-title">
+    <div class="wrap">
+      <h2 id="thinking-title">Coding and thinking</h2>
+      <p class="section-lede">What learning to code does and doesn't do for thinking, where the ideas behind Friday come from, and what early research says about AI and beginners.</p>
+
+      <h3 class="source-group">Does learning to code help thinking?</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://doi.org/10.1037/edu0000314">The cognitive benefits of learning computer programming: a meta-analysis of transfer effects</a>
+          <p class="meta">Scherer, Siddiq &amp; Sánchez Viveros · Journal of Educational Psychology, 2019 <span class="type">Peer-reviewed</span></p>
+          <p>Across 105 studies and 539 effect sizes, learning to program had a moderate overall effect (g = 0.49): strong on programming itself (g = 0.75) and moderate on other thinking skills (g = 0.47). Gains were strongest for creative thinking, math, and metacognition, then spatial skills and reasoning, and smallest for school achievement and literacy. Compared with other active training, the effect was g = 0.16; compared with no training, g = 0.65.</p>
+          <p class="friday"><strong>For Friday:</strong> call it problem-solving practice, not a promise that coding makes people smarter.</p>
+        </li>
+        <li class="source">
+          <a href="https://cacm.acm.org/research/remaining-trouble-spots-with-computational-thinking/">Remaining trouble spots with computational thinking</a>
+          <p class="meta">Peter Denning · Communications of the ACM, 2017 <span class="type">Commentary</span></p>
+          <p>Denning argues that claims of computational thinking helping everyone, beyond people who design computing systems, remain unsupported, and that research hasn't shown general transfer. He wrote before the 2019 meta-analysis above, which found some transfer, though weaker against active comparisons.</p>
+          <p class="friday"><strong>For Friday:</strong> a reason to keep our claims modest.</p>
+        </li>
+        <li class="source">
+          <a href="https://doi.org/10.1016/j.chb.2020.106349">A meta-analysis of teaching and learning computer programming: effective instructional approaches and conditions</a>
+          <p class="meta">Scherer, Siddiq &amp; Sánchez Viveros · Computers in Human Behavior, 2020 <span class="type">Peer-reviewed</span></p>
+          <p>Across 139 interventions, programming instruction had a strong effect (g = 0.81). Teaching approaches differed only a little from each other, with collaboration and visual programming standing out.</p>
+          <p class="friday"><strong>For Friday:</strong> no one method wins, so the design can choose for agency and collaboration: teams of four, an anchor, and building along.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">Where the ideas come from</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://www.cs.cmu.edu/~wing/publications/Wing06.pdf">Computational thinking</a>
+          <p class="meta">Jeannette Wing · Communications of the ACM, 2006 <span class="type">Essay</span></p>
+          <p>Wing argues that computational thinking, built on abstraction and breaking problems down, is a basic skill for everyone. It's about how people conceptualize problems, not about programming, and it's a way humans think, not a way of making people think like computers.</p>
+          <p class="friday"><strong>For Friday:</strong> the thinking stays human, even when AI writes the code.</p>
+        </li>
+        <li class="source">
+          <a href="https://www.hachettebookgroup.com/titles/seymour-a-papert/mindstorms/9781541675124/">Mindstorms: children, computers, and powerful ideas</a>
+          <p class="meta">Seymour Papert · Basic Books, 1980 <span class="type">Book</span></p>
+          <p>Drawing on children's work with the Logo programming language, Papert argues that children can master computers, and that ideas like debugging can change how people learn in general. It's vision and theory rather than controlled evidence; Grover and Pea credit it with pioneering the idea that children build procedural thinking through programming.</p>
+          <p class="friday"><strong>For Friday:</strong> building your own tool comes from this tradition.</p>
+        </li>
+        <li class="source">
+          <a href="https://scratched.gse.harvard.edu/ct/files/AERA2012.pdf">New frameworks for studying and assessing the development of computational thinking</a>
+          <p class="meta">Karen Brennan &amp; Mitchel Resnick · AERA Annual Meeting, 2012 <span class="type">Conference paper</span></p>
+          <p>Computational thinking has three parts: concepts (like loops, events, and conditions), practices (like testing and debugging, and reusing and remixing), and perspectives (like expressing and questioning). For assessing it, they suggest making assessment useful to the learner, including what learners made, showing the process, checking in more than once, valuing different ways of knowing, and including several viewpoints.</p>
+          <p class="friday"><strong>For Friday and November:</strong> remixing is a named practice, and these assessment suggestions lead straight into next month.</p>
+        </li>
+        <li class="source">
+          <a href="https://doi.org/10.3102/0013189X12463051">Computational thinking in K–12: a review of the state of the field</a>
+          <p class="meta">Shuchi Grover &amp; Roy Pea · Educational Researcher, 2013 <span class="type">Peer-reviewed review</span></p>
+          <p>A review recommending tools with a low floor and a high ceiling, plus scaffolding. It flags open questions about transfer to other subjects and how to measure what learners gain.</p>
+          <p class="friday"><strong>For Friday:</strong> the starters are the low floor; granting a wish from scratch is the high ceiling.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">How to start: run, change, make</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://users.soe.ucsc.edu/~linda/pubs/ACMInroads.pdf">Computational thinking for youth in practice</a>
+          <p class="meta">Lee, Martin, Denner, Coulter, Allan, Erickson, Malyn-Smith &amp; Werner · ACM Inroads, 2011 <span class="type">Framework from practice</span></p>
+          <p>Proposes Use-Modify-Create: learners use someone else's program, change it (first how it looks, then how it behaves) until it becomes their own, and then create their own. The authors note that learners move back and forth between stages.</p>
+          <p class="friday"><strong>For Friday:</strong> play a starter, change it, remix it, grant a wish. That's Use-Modify-Create.</p>
+        </li>
+        <li class="source">
+          <a href="https://doi.org/10.1080/08993408.2019.1608781">Teaching computer programming with PRIMM: a sociocultural perspective</a>
+          <p class="meta">Sentance, Waite &amp; Kallia · Computer Science Education, 2019, with a <a href="https://www.raspberrypi.org/app/uploads/2022/08/Teaching_Programming_with_PRIMM-1.pdf">Raspberry Pi Foundation summary</a> <span class="type">Peer-reviewed</span></p>
+          <p>PRIMM stands for predict, run, investigate, modify, make. In 13 schools with 493 students aged 11 to 14, the PRIMM group scored higher on a post-test than a comparison group, in a quasi-experimental design. Its principles include reading code before writing it, talking about code together, and starting from working programs.</p>
+          <p class="friday"><strong>For Friday:</strong> guess what a starter does before you press Play, and talk about the code with your team.</p>
+        </li>
+      </ul>
+
+      <h3 class="source-group">AI and beginners</h3>
+      <ul class="sources">
+        <li class="source">
+          <a href="https://arxiv.org/abs/2302.07427">Studying the effect of AI code generators on supporting novice learners in introductory programming</a>
+          <p class="meta">Kazemitabaar, Chow, Ma, Ericson, Weintrop &amp; Grossman · CHI 2023 <span class="type">Peer-reviewed</span></p>
+          <p>In a controlled study of 69 novices aged 10 to 17, AI access raised code-writing performance (1.15 times the completion, 1.8 times the scores) without hurting later tasks where learners changed code by hand. Learners with more prior knowledge gained most, and in 49% of tasks where they used the AI, they submitted its code unchanged.</p>
+          <p class="friday"><strong>For Friday:</strong> mix AI remixes with changes you make by hand, and read what the AI made before you keep it.</p>
+        </li>
+        <li class="source">
+          <a href="https://arxiv.org/abs/2310.00658">The robots are here: navigating the generative AI revolution in computing education</a>
+          <p class="meta">Prather, Denny, Leinonen, Becker and colleagues · ITiCSE Working Group Reports, 2023 <span class="type">Peer-reviewed report</span></p>
+          <p>Drawing on a review of 71 articles, a survey of 171 students and 57 instructors in 20 countries, and 22 interviews, the authors found over-reliance was the most common concern. Some educators are shifting to assess process: work submitted in stages, reflections, interviews, portfolios, and presentations.</p>
+          <p class="friday"><strong>For November:</strong> a direct bridge to next month's conversation about assessment.</p>
+        </li>
+        <li class="source">
+          <a href="https://cacm.acm.org/research/computing-education-in-the-era-of-generative-ai/">Computing education in the era of generative AI</a>
+          <p class="meta">Denny, Prather, Becker and colleagues · Communications of the ACM, 2024 <span class="type">Peer-reviewed</span></p>
+          <p>AI raises concerns about over-reliance and misuse, and it can also explain code and tailor practice. The authors point to breaking problems down and describing a task precisely as the skills that matter more now, and warn that leaning too hard on code generators may weaken metacognition.</p>
+          <p class="friday"><strong>For Friday:</strong> describing what you want clearly enough for an AI to build it is the thinking skill.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
 </main>
 
 <footer class="footer">
@@ -43,6 +350,7 @@
     <img src="assets/mngaia-mark.png" alt="" width="64" height="55">
     <div>
       <p><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
+      <p class="small">Sources checked October 7, 2026. Help pages for AI tools change often; if a step doesn't match what you see, the tool may have changed.</p>
     </div>
   </div>
 </footer>

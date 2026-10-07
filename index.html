@@ -52,6 +52,13 @@
       <li><a href="#close">Close</a></li>
     </ul>
   </div>
+  <div class="cue" id="cue" hidden>
+    <div class="wrap cue-inner">
+      <p class="cue-text" id="cue-text" role="status"></p>
+      <a class="button primary" id="cue-go" href="#today">Take me there</a>
+      <button class="cue-close" id="cue-close" aria-label="Dismiss this notice">Got it</button>
+    </div>
+  </div>
 </nav>
 
 <main>
@@ -235,7 +242,7 @@
       </ol>
 
       <h3 class="subhead">No wish yet? Take one from the jar.</h3>
-      <p class="hint">Click one to copy it, then paste it into your AI.</p>
+      <p class="hint" id="jar-hint">Choose one to copy it, then paste it into your AI.</p>
       <ul class="jar">
         <li><button data-wish="a countdown to winter break, with snow that falls harder as the day gets closer">Winter break countdown, with snow that falls harder each day</button></li>
         <li><button data-wish="a spinner that picks whose turn it is to bring treats to the staff meeting">A spinner for whose turn it is to bring treats</button></li>
@@ -256,7 +263,7 @@
         <ul>
           <li><strong>Describe it.</strong> Tell the AI exactly what you see and what you expected instead.</li>
           <li><strong>Rewind.</strong> "Go back to the version before that one."</li>
-          <li><strong>Say so.</strong> Post in the chat. Someone has been exactly where you are.</li>
+          <li><strong>Ask for help.</strong> In your breakout room, press Meet's <em>Ask for help</em> button. A host gets the message and will pop into your room.</li>
         </ul>
       </div>
     </div>
@@ -345,6 +352,7 @@
         </div>
       </div>
     </div>
+    <p class="toast" role="status" aria-live="polite"></p>
   </div>
 </dialog>
 
@@ -352,12 +360,12 @@
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
     <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
-    <textarea id="fallback-text" readonly></textarea>
+    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
     <div><button class="primary" id="fallback-close">Done</button></div>
   </div>
 </dialog>
 
-<p id="toast" role="status" aria-live="polite"></p>
+<p id="toast" class="toast" role="status" aria-live="polite"></p>
 
 <script src="assets/site.js"></script>
 </body>

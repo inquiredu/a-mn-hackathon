@@ -24,8 +24,15 @@ const agenda = [...document.querySelectorAll("#timeline li")].map((item) => ({
   start: toMinutes(item.dataset.start),
   end: toMinutes(item.dataset.end),
   title: item.querySelector("strong").textContent,
+  hint: item.querySelector("span").textContent,
   link: item.dataset.link
 }));
+
+// A hidden word for screen readers on each agenda item: "(finished)" or "(happening now)"
+agenda.forEach((a) => {
+  a.state = span("sr-only", "");
+  a.item.querySelector("strong").append(a.state);
+});
 
 function toMinutes(time) {
   const [h, m] = time.split(":").map(Number);
@@ -51,7 +58,7 @@ function setNow(tag, ...pieces) {
     const pill = document.createElement("span");
     pill.className = "tag";
     pill.textContent = tag;
-    nowLine.append(pill);
+    nowLine.append(pill, " ");
   }
   pieces.forEach((piece) => nowLine.append(piece));
 }
@@ -70,43 +77,74 @@ function span(className, text) {
   return s;
 }
 
+function markDone(a) {
+  a.item.classList.add("done");
+  a.state.textContent = " (finished)";
+}
+
+// Meet can't send one message to every breakout room, so the page does it:
+// when the morning moves on while this page is open, a notice slides in.
+let lastSegment = null;
+const cue = document.getElementById("cue");
+const cueText = document.getElementById("cue-text");
+const cueGo = document.getElementById("cue-go");
+
+function showCue(segment) {
+  const end = /[.?!]$/.test(segment.title) ? "" : ".";
+  const lead = document.createElement("strong");
+  lead.textContent = `It's ${segment.item.dataset.start}: ${segment.title}${end} `;
+  cue.hidden = false;
+  cueText.replaceChildren(lead, segment.hint);
+  cueGo.href = segment.link;
+}
+cueGo.addEventListener("click", () => { cue.hidden = true; });
+document.getElementById("cue-close").addEventListener("click", () => { cue.hidden = true; });
+
 function updateNow() {
   const { day, minutes } = centralNow();
-  agenda.forEach(({ item }) => {
-    item.classList.remove("now", "done");
-    item.removeAttribute("aria-current");
+  agenda.forEach((a) => {
+    a.item.classList.remove("now", "done");
+    a.item.removeAttribute("aria-current");
+    a.state.textContent = "";
   });
 
   if (day !== EVENT_DAY) {
     setNow("", "Friday, October 9 · 10:00 to noon Central");
+    lastSegment = "another day";
     return;
   }
   const first = agenda[0];
   const last = agenda[agenda.length - 1];
   if (minutes < first.start) {
     setNow("Soon", "We start at 10:00 Central. ", linkTo("#today", "See the plan"));
+    lastSegment = "before";
     return;
   }
   if (minutes >= last.end) {
-    agenda.forEach(({ item }) => item.classList.add("done"));
+    agenda.forEach(markDone);
     setNow("Done", "That's a wrap. Thank you for building with us.");
+    lastSegment = "after";
     return;
   }
 
   const index = agenda.findIndex((a) => minutes >= a.start && minutes < a.end);
-  agenda.forEach((a, i) => { if (i < index) a.item.classList.add("done"); });
+  agenda.forEach((a, i) => { if (i < index) markDone(a); });
   const current = agenda[index];
   current.item.classList.add("now");
   current.item.setAttribute("aria-current", "step");
+  current.state.textContent = " (happening now)";
 
   const next = agenda[index + 1];
   const pieces = [linkTo(current.link, current.title)];
   if (next) pieces.push(span("upnext", ` · Next at ${next.item.dataset.start}: ${next.title}`));
   setNow("Now", ...pieces);
+
+  if (lastSegment !== null && lastSegment !== index) showCue(current);
+  lastSegment = index;
 }
 
 updateNow();
-setInterval(updateNow, 30000);
+setInterval(updateNow, 15000);
 
 
 // ---------- Shared links ----------
@@ -127,14 +165,25 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
 
 // ---------- Toast messages ----------
 
+// Inside the machine room, messages show in the room; everywhere else, at the bottom of the page.
 const toast = document.getElementById("toast");
-let toastTimer;
 function say(message) {
-  toast.textContent = message;
-  toast.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+  const el = document.querySelector("dialog[open] .toast") || toast;
+  clearTimeout(el.hideTimer);
+  el.textContent = "";   // clear first, so a repeated message is announced again
+  setTimeout(() => {
+    el.textContent = message;
+    el.classList.add("show");
+    el.hideTimer = setTimeout(() => el.classList.remove("show"), 7000);
+  }, 60);
 }
+// Hovering a message keeps it on screen
+document.querySelectorAll(".toast").forEach((el) => {
+  el.addEventListener("mouseenter", () => clearTimeout(el.hideTimer));
+  el.addEventListener("mouseleave", () => {
+    el.hideTimer = setTimeout(() => el.classList.remove("show"), 2500);
+  });
+});
 
 
 // ---------- Copying: the modern way, then the older way, then by hand ----------
@@ -229,9 +278,10 @@ document.querySelectorAll("[data-copy-from]").forEach((button) => {
 });
 
 document.querySelectorAll("[data-wish]").forEach((button) => {
+  button.setAttribute("aria-describedby", "jar-hint");
   button.addEventListener("click", () => {
     const prompt = `Build me a small web app: ${button.dataset.wish}. Make it simple, colorful, and fun to use. Use made-up data.`;
-    copyText(prompt, "Wish copied. Paste it into your AI.");
+    copyText(prompt, `Copied: ${button.textContent}. Paste it into your AI.`);
   });
 });
 
@@ -259,6 +309,7 @@ async function openRoom(id) {
     const code = await loadCode(id);
     currentId = id;
     roomTitle.textContent = MACHINES[id].name;
+    screen.title = MACHINES[id].name + " (running)";
     codeBox.value = code;
     screen.srcdoc = code;
     showCode(false);

@@ -10,7 +10,7 @@
    ------------------------------------------------------------ */
 
 const SPIN_SECONDS = 3;   // how long the orb spins before it speaks
-const SOUND_ON = true;    // change to false for a silent Oracle
+const SOUND_ON = true;    // change to false to start with the sound off
 
 // What the Oracle mutters while it thinks
 const THINKING = [
@@ -237,13 +237,13 @@ const PROPHECIES = [
     position: absolute;
     inset: -25%;
     background: conic-gradient(transparent, #ffffff30, transparent 30%, #ffd36e30, transparent 65%);
-    animation: swirl 10s linear infinite;
   }
+  /* The orb only swirls while it thinks */
   .orb.thinking {
     box-shadow: 0 0 90px 20px var(--glow), inset 0 0 30px #00000099;
     animation: wobble .25s ease-in-out infinite alternate;
   }
-  .orb.thinking .swirl { animation-duration: .5s; }
+  .orb.thinking .swirl { animation: swirl .5s linear infinite; }
 
   @keyframes swirl  { to { transform: rotate(360deg); } }
   @keyframes wobble { from { transform: scale(.98) rotate(-2deg); } to { transform: scale(1.03) rotate(2deg); } }
@@ -256,7 +256,7 @@ const PROPHECIES = [
     flex: 1 1 16rem;
     padding: 12px 16px;
     font: inherit;
-    border: 2px solid #ffffff40;
+    border: 2px solid #ffffff80;
     border-radius: 999px;
     background: #ffffff14;
     color: var(--text);
@@ -274,6 +274,17 @@ const PROPHECIES = [
   }
   button:disabled { opacity: .6; cursor: wait; }
   input:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+  /* The sound switch, top right */
+  .sound {
+    position: fixed; top: 12px; right: 12px;
+    padding: 6px 14px;
+    font-size: .9rem;
+    background: transparent;
+    color: var(--text);
+    border: 2px solid #ffffff80;
+  }
+  .sound[aria-pressed="false"] { opacity: .75; text-decoration: line-through; }
 
   .asked { min-height: 1.4em; margin: 0; font-style: italic; opacity: .8; }
   .prophecy {
@@ -296,11 +307,13 @@ const PROPHECIES = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .swirl, .orb.thinking { animation: none; }
+    .orb.thinking, .orb.thinking .swirl { animation: none; }
+    .prophecy { transition: none; }
   }
 </style>
 </head>
 <body>
+<button class="sound" id="sound" type="button" aria-pressed="true"><span aria-hidden="true">🔊</span> Sound</button>
 <main>
   <h1>The Teacher's Lounge Oracle</h1>
   <p class="tagline">Ask anything. The Oracle sees all. (Mostly the copier.)</p>
@@ -363,6 +376,16 @@ const question = document.getElementById("question");
 const button = document.getElementById("go");
 let lastProphecy = "";
 
+// The sound switch in the corner
+let soundOn = SOUND_ON;
+const soundSwitch = document.getElementById("sound");
+function showSound() {
+  soundSwitch.setAttribute("aria-pressed", String(soundOn));
+  soundSwitch.firstElementChild.textContent = soundOn ? "🔊" : "🔇";
+}
+showSound();
+soundSwitch.addEventListener("click", () => { soundOn = !soundOn; showSound(); });
+
 function pick(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
@@ -393,7 +416,7 @@ document.getElementById("ask").addEventListener("submit", (event) => {
   askedLine.textContent = question.value ? `You asked: "${question.value}"` : "";
   orb.classList.add("thinking");
 
-  if (SOUND_ON) {
+  if (soundOn) {
     audio = audio || new AudioContext();
     shimmer();
   }
@@ -414,7 +437,7 @@ document.getElementById("ask").addEventListener("submit", (event) => {
     prophecyLine.textContent = prophecy;
     prophecyLine.classList.add("revealed");
     prophecyLine.scrollIntoView({ block: "nearest" });
-    if (SOUND_ON) gong();
+    if (soundOn) gong();
     button.disabled = false;
   }, SPIN_SECONDS * 1000);
 });

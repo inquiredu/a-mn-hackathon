@@ -22,6 +22,7 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 | `assets/session.js` | The session file |
 | `assets/site.js`, `assets/site.css` | The participant pages and the Hosts page |
 | `assets/hosts.js` | The run of show and the room calculator |
+| `assets/sources-data.js`, `assets/sources.js` | The sources as data (add one entry to add a source), and the page that filters them |
 | `assets/present.js`, `assets/present.css`, `notes.html` | The stage and the speaker notes |
 | `cabinets/` | The starters, each a single HTML file that pastes cleanly into any AI tool |
 | `scripts/serve.js` | A small local server for previewing |

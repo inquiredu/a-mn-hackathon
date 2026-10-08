@@ -28,11 +28,21 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 | Present | `/present.html` | The full-screen stage for the main room (S opens speaker notes) |
 | Speaker notes | `/notes.html` | Follows the stage from a second window, and can move it |
 
-Shared spaces: the [Teams doc](https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit) (in Sean's personal Google account), plus a gallery wall and a wonder-and-worry wall still to be made.
+Shared spaces and decks, all linked from `links` in `assets/session.js` (none of the pages type out a link):
+
+| Link | What it is | Shown on |
+| --- | --- | --- |
+| `meet` | The [Google Meet](https://meet.google.com/wvq-zzwe-kny) | Home (top of the invitation, and Shared spaces), Hosts |
+| `teams` | The [Teams doc](https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit), in Sean's personal Google account | Home, Hosts |
+| `wonder`, `worry` | One slide each in the walls deck, "Interactive Workshop Walls" | Home, Hosts |
+| `gallery` | Not made yet. Planned as a slide in the walls deck; until it's linked, pages say "coming soon" | Home, Hosts, Starters, Grant a wish |
+| `backup` | The facilitation backup, "Hands On Backup Deck": the stage as Google Slides, if the Present page fails | Hosts only |
+| `companion` | The hands-on backup, "Code companion": every starter's code in the speaker notes | Home, Hosts |
 
 ## Still to do
 
-- Make the gallery and wonder-and-worry slides and add their links to `assets/session.js`.
+- Add a gallery slide to the walls deck and put its link in `links.gallery`.
+- The walls deck has three slides before the wonder and worry slides ("Collaborative Walls Drive Engagement", one with no text, "Best Practices for Wall Facilitation"). The links jump straight to the wall slides, but delete those three if they weren't meant to be there.
 - Share the Teams doc ("anyone with the link can edit"), ideally Friday morning.
 - Test pasting a starter into Gemini (Canvas on) on a district account, and in Claude and ChatGPT.
 - Edit the speaker notes in `assets/session.js` into Sean's own words.

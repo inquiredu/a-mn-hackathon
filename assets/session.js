@@ -17,14 +17,18 @@ const SESSION = {
   dateLabel: "{weekday}, {date} · {start} to {end} {zone}",   // shown in the bar on other days
   url: "inquiredu.org/a-mn-hackathon",
 
-  // Shared spaces. Leave a link empty and the page says it appears on the day.
+  // Shared spaces and decks. A link shows on the site as soon as it's here; leave one empty and the page says it's coming soon.
   links: {
+    meet: "https://meet.google.com/wvq-zzwe-kny",
     teams: "https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit",
+    // The walls deck ("Interactive Workshop Walls"): one slide each, linked straight to the slide.
     gallery: "",
-    wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit?slide=id.h481799e189d257a0_0_144#slide=id.h481799e189d257a0_0_144",
-    worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit?slide=id.h481799e189d257a0_0_86#slide=id.h481799e189d257a0_0_86",
-    slides: "https://docs.google.com/presentation/d/18BmKOht78NXQ2H3AvPgt3uLm9zQGRsD03dB2EBBd020/edit?usp=drive_link",
-    companion: "https://docs.google.com/presentation/d/1L3rwzGa4nrh1HDlExkhGetHYmQeqq_-cMcc8mmovtDM/edit?usp=drive_link"
+    wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_144",
+    worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86",
+    // The facilitation backup ("Hands On Backup Deck"): the stage as Google Slides, for hosts if the Present page fails.
+    backup: "https://docs.google.com/presentation/d/18BmKOht78NXQ2H3AvPgt3uLm9zQGRsD03dB2EBBd020/edit",
+    // The hands-on backup ("Code companion"): every starter's code in the speaker notes, for builders.
+    companion: "https://docs.google.com/presentation/d/1L3rwzGa4nrh1HDlExkhGetHYmQeqq_-cMcc8mmovtDM/edit"
   },
 
   // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.

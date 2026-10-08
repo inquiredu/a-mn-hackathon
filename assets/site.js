@@ -81,6 +81,17 @@ function phase() {
 
 // ---------- The morning, as a list (Home) ----------
 
+// The shared spaces a part uses (the Teams doc, the walls), as links that open in a new tab
+function sharedLinks(segment, className) {
+  return (segment.shared || []).filter((s) => LINKS[s.link]).map((s) => {
+    const a = linkTo(LINKS[s.link], s.label);
+    if (className) a.className = className;
+    a.target = "_blank";
+    a.rel = "noopener";
+    return a;
+  });
+}
+
 const timeline = $("timeline");
 if (timeline) {
   segments.forEach((s) => {
@@ -91,6 +102,7 @@ if (timeline) {
     title.append(s.state);
     body.append(title, el("span", "", s.hint));
     if (s.linkLabel) body.append(" ", linkTo(s.link, s.linkLabel));
+    sharedLinks(s).forEach((a) => body.append(" ", a));
     li.append(el("time", "", TIMES.clock(s.start)), body);
     s.item = li;
     timeline.append(li);
@@ -188,6 +200,7 @@ function update() {
     const go = $("nowcard-go");
     go.hidden = !current.linkLabel;
     if (current.linkLabel) { go.href = current.link; go.textContent = current.linkLabel; }
+    $("nowcard-shared").replaceChildren(...sharedLinks(current, "button"));
     $("nowcard-next").textContent = next ? "Next at " + TIMES.clock(next.start) + ": " + next.title : "Last part of the morning.";
   }
 

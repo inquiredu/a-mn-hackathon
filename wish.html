@@ -23,7 +23,6 @@
         <li><a href="wish.html" aria-current="page">Grant a wish</a></li>
         <li><a href="hosts.html">Hosts</a></li>
         <li><a href="sources.html">Sources</a></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
       </ul>
     </nav>
   </div>
@@ -92,7 +91,7 @@
         <li>
           <span class="num hex">6</span>
           <h3>Back to you</h3>
-          <p>Is it what you wished for? Who would you show it to? Pin it to the <a href="#wall">wall</a>.</p>
+          <p>Is it what you wished for? Who would you show it to? Pin it to the <a href="#wall">gallery wall</a>.</p>
         </li>
       </ol>
 
@@ -125,16 +124,58 @@
     </div>
   </section>
 
-
-  <!-- THE GALLERY WALL -->
-  <section id="wall" class="section">
+  <!-- THE GALLERY WALL: starters.html links here too -->
+  <section id="wall" class="section band" aria-labelledby="wall-title">
     <div class="wrap">
-      <div class="wall-card">
-        <h2>The gallery wall</h2>
-        <p>Got something working, even halfway? Screenshot it onto the wall. Leaving early? Pin it first, and your work stays up for Show &amp; Cheer.</p>
-        <p class="link-slot" data-link="gallery" data-label="Open the gallery wall"></p>
-        <p class="small">The wall stays inside this group. Half-built and in-progress work is welcome here, which is the whole idea.</p>
+      <h2 id="wall-title">Pin it to the gallery wall</h2>
+      <p class="section-lede">Got something working, even halfway? Put a picture of it on the wall, and link the picture to what you made. Half-built counts. Leaving early? Pin it first, and it stays up for Show &amp; Cheer.</p>
+      <p class="link-slot" data-link="gallery" data-label="Open the gallery wall"></p>
+
+      <h3 class="subhead">1. Copy a link to your work</h3>
+      <div class="tips">
+        <div>
+          <h4>Gemini</h4>
+          <p>At the top right of the canvas, choose <strong>Share &amp; export</strong>, then <strong>Share</strong>, then <strong>Copy link</strong>.</p>
+        </div>
+        <div>
+          <h4>Claude</h4>
+          <p>Open the artifact and choose <strong>Publish</strong>, then copy the link. On a school or work plan, choose <strong>Share</strong>, then <strong>Share &amp; copy link</strong>.</p>
+        </div>
+        <div>
+          <h4>ChatGPT</h4>
+          <p>At the top of the chat, choose <strong>Share</strong>, then <strong>Create link</strong> or <strong>Copy link</strong>. The link opens the conversation, code and all.</p>
+        </div>
+        <div>
+          <h4>Microsoft Copilot</h4>
+          <p>On your page, choose <strong>Share</strong> at the top right, then <strong>Copy link</strong>.</p>
+        </div>
       </div>
+      <p class="more-link">A link from a school account may open only for people in your district. The picture in step 2 shows your work to everyone either way. <a href="sources.html?ask=sharing">Each tool's own help on sharing</a>.</p>
+
+      <h3 class="subhead">2. Take a picture of it</h3>
+      <div class="tips">
+        <div>
+          <h4>Windows</h4>
+          <p>Press <kbd>Windows</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> and drag a box around your work. It's copied, ready to paste.</p>
+        </div>
+        <div>
+          <h4>Mac</h4>
+          <p>Press <kbd>Command</kbd> + <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>4</kbd> and drag a box around your work. It's copied, ready to paste.</p>
+        </div>
+        <div>
+          <h4>Chromebook</h4>
+          <p>Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Show windows</kbd>, drag a box around your work, and choose <strong>Capture</strong>. It's copied, ready to paste.</p>
+        </div>
+      </div>
+
+      <h3 class="subhead">3. Put it on the wall</h3>
+      <ol class="wall-steps">
+        <li>Open the gallery wall and click a slide with room on it. There are three; when one fills up, use the next.</li>
+        <li>Paste: <kbd>Ctrl</kbd> + <kbd>V</kbd>, or <kbd>Command</kbd> + <kbd>V</kbd> on a Mac.</li>
+        <li>Drag a corner to make it postcard-size, and move it to an open spot.</li>
+        <li>With the picture still selected, press <kbd>Ctrl</kbd> + <kbd>K</kbd> (<kbd>Command</kbd> + <kbd>K</kbd> on a Mac), paste your link, and choose <strong>Apply</strong>.</li>
+      </ol>
+      <p class="more-link">Now anyone can click your picture to open what you made. The wall is open to anyone with its link, and so is a published link, so keep to made-up data.</p>
     </div>
   </section>
 

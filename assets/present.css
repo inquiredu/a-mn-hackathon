@@ -102,6 +102,25 @@ body {
 .quote { margin: 0; max-width: 20ch; font-size: clamp(2.6rem, 6.4vw, 7rem); font-weight: 800; line-height: 1.12; }
 .quote::before { content: "\201C"; display: block; color: var(--sky); font-size: 1.4em; line-height: .6; }
 
+/* Plan: the morning at a glance */
+.plan { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.3vh; width: 100%; max-width: 1100px; }
+.plan li { display: grid; grid-template-columns: 5.5em 1fr auto; align-items: baseline; gap: 1.6vw; font-size: clamp(1.1rem, 2.1vw, 2.3rem); padding-bottom: 1.1vh; border-bottom: 1px solid #66C1E733; }
+.plan time { color: var(--sky); font-weight: 800; font-variant-numeric: tabular-nums; }
+.plan span { color: var(--ice); font-size: .8em; }
+
+/* Timer: on screens that ask for one */
+.timer { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 2vw; row-gap: 1vh; margin-top: 1vh; }
+.timer-display { grid-row: span 2; margin: 0; font-size: clamp(3.5rem, 9vw, 9.5rem); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; color: var(--sky); }
+.timer.done .timer-display { color: #FF8A7A; }
+.timer-status { margin: 0; font-size: clamp(1rem, 1.6vw, 1.6rem); font-weight: 700; color: var(--ice); text-transform: uppercase; letter-spacing: .1em; }
+.timer-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.timer-buttons button {
+  padding: 8px 16px; font: inherit; font-size: clamp(.95rem, 1.3vw, 1.2rem); font-weight: 700; cursor: pointer;
+  color: var(--white); background: #0A2340CC; border: 2px solid var(--sky); border-radius: 999px;
+}
+.timer-buttons .timer-go { background: var(--sky); color: var(--deep); }
+.has-timer.kind-pair .pair div { padding: 2.5vh 2.5vw; }
+
 /* Pair */
 .pair { width: 100%; display: grid; gap: 2vw; grid-template-columns: 1fr 1fr; }
 .pair div { padding: 4vh 3vw; border-radius: 22px; background: #FFFFFF14; border: 2px solid #66C1E755; }

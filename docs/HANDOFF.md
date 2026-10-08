@@ -8,6 +8,8 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 
 ## Decisions
 
+- **The opening runs on chat, then one builder shows.** Welcome walks the plan for the morning (the stage builds it from the session file), then asks two things in the chat: how much have you built with AI, 1 to 5 (1: not yet; 5: I'm having a hard time stopping), and, for builders, what was it. The co-host takes the anchors from those answers, so nobody opens the Teams doc at Welcome. Then **Show us yours** (8 minutes, taken from the Remix Arcade, now 17): one or two builders from the chat share their screen. Meet's Host controls keep "Share their screen" on for everyone, so no one needs to be a co-host. Chat is recorded, so it carries what docs used to: answers, wishes, and any change of plan.
+- **A live timer on the stage, not a live schedule.** Show us yours, Show & Cheer, and the wonder-and-worry close have a countdown the presenter stretches or shrinks as the conversation goes (from What We Talk About's timer). The participant pages still run on the session file's clock; a static site can't hear the stage, so when the plan changes, a host says so in the chat. Breakout rooms close on Meet's own timer, which the co-host sets.
 - **Play is the method; usefulness is the product.** Four starters for real work (Meeting Timer, Group Maker, Feedback Builder, Calendar Explorer) plus the Teacher's Lounge Oracle, kept for whimsy and used to open and close the morning.
 - **Teams of at most four.** Formed with the Teams doc: anyone who has built something interactive adds their name as an anchor, the co-host shuffles rooms and drags one anchor into each, and everyone adds their name to their room's row.
 - **Designed for Meet's limits.** Breakout chats are separate and start empty, and Meet can't message every room, so the page carries the time cues and the Teams doc carries the wishes. "Stuck?" points to Meet's Ask for help button.
@@ -46,6 +48,7 @@ The two backups are named by what's inside them, on the site and in Drive (renam
 
 ## Still to do
 
+- The Session slides backup deck (Google Slides) still has the old times and the old Welcome: Watch one get built at 10:08, the Remix Arcade at 10:20, and the Teams-doc anchor slide. Update it, or say in the chat that the times on the site are the ones to follow.
 - The walls deck has three slides before the wonder and worry slides ("Collaborative Walls Drive Engagement", one with no text, "Best Practices for Wall Facilitation"). The links jump straight to the wall slides, but delete those three if they weren't meant to be there.
 - Share the Teams doc ("anyone with the link can edit"), ideally Friday morning.
 - Test pasting a starter into Gemini (Canvas on) on a district account, and in Claude and ChatGPT.

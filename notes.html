@@ -32,6 +32,13 @@
   button.primary { background: var(--navy); color: #FFFFFF; }
   button:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
   .status { margin: 0; font-size: .9rem; color: var(--muted); }
+  .timer { padding: 12px 14px; border-radius: 12px; background: #FFFFFF; border: 2px solid var(--line); display: grid; gap: 10px; }
+  .timer[hidden] { display: none; }
+  .timer-read { display: flex; align-items: baseline; gap: 12px; }
+  .timer-display { font-size: 2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .timer.done .timer-display { color: #B3261E; }
+  .timer-status { color: var(--muted); font-size: .95rem; }
+  .timer .buttons button { padding: 8px; }
 </style>
 </head>
 <body>
@@ -43,6 +50,16 @@
     <h1 id="heading"></h1>
   </div>
   <p class="note" id="note"></p>
+  <div class="timer" id="timer" role="group" aria-label="Stage timer" hidden>
+    <p class="label">Timer on the stage</p>
+    <div class="timer-read"><span class="timer-display" id="timer-display"></span><span class="timer-status" id="timer-status"></span></div>
+    <div class="buttons">
+      <button class="primary" id="timer-go" type="button">Start</button>
+      <button id="timer-minus" type="button" aria-label="One minute less">−1 min</button>
+      <button id="timer-plus" type="button" aria-label="One minute more">+1 min</button>
+      <button id="timer-reset" type="button">Reset</button>
+    </div>
+  </div>
   <p class="next" id="next"></p>
   <div class="buttons">
     <button id="prev" type="button">← Back</button>
@@ -123,14 +140,30 @@ if (channel) {
     const message = event.data || {};
     if (typeof message.index === "number") {
       connected = true;
-      index = message.index;
-      $("status").textContent = "Following the stage.";
-      render();
+      if (message.index !== index || $("status").textContent !== "Following the stage.") {
+        index = message.index;
+        $("status").textContent = "Following the stage.";
+        render();
+      }
+      showTimer(message.timer);
     }
   };
   channel.postMessage({ hello: true });
 }
 $("status").textContent = "Open the stage (present.html) in another window and these notes will follow it.";
+
+// The stage owns the timer; these buttons ask it to act, and it reports back twice a second
+function showTimer(state) {
+  $("timer").hidden = !state;
+  if (!state) return;
+  $("timer").classList.toggle("done", state.done);
+  $("timer-display").textContent = state.display;
+  $("timer-status").textContent = state.status + " · " + state.minutes + " min";
+  $("timer-go").textContent = state.action;
+}
+[["timer-go", "toggle"], ["timer-minus", "minus"], ["timer-plus", "plus"], ["timer-reset", "reset"]].forEach(([id, action]) => {
+  $(id).addEventListener("click", () => { if (channel) channel.postMessage({ timer: action }); });
+});
 
 $("prev").addEventListener("click", () => go(index - 1));
 $("forward").addEventListener("click", () => go(index + 1));

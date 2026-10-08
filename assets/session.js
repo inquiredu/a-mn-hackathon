@@ -35,11 +35,11 @@ const SESSION = {
 
   // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.
   pace: {
-    anchors: 5,        // at the start of Welcome, builders add their names as anchors
+    showTurn: 4,       // each builder's turn at Show us yours (the stage timer starts here)
     roomsReady: 2,     // the co-host has the rooms ready this long before they open
     buildAlong: 5,     // anchors share their screen at the start of the rooms
     nudge: 10,         // hosts visit each room this long before building ends
-    share: [2, 3],     // each builder's turn at Show & Cheer
+    share: [2, 3],     // each builder's turn at Show & Cheer (the stage timer uses the longer)
     wonder: 2          // time for the wonder and worry wall at the close
   },
 
@@ -52,29 +52,50 @@ const SESSION = {
   //   link         which page (and place) to send people to; linkLabel names the button
   //   shared       links from `links` above that this part uses, shown with it: { link: "teams", label: "Teams doc" }
   //   screens      what the presenter view shows, in order (note: what the presenter says or does,
+  //                timer: a pace name or minutes for a countdown the presenter starts and adjusts live,
 //                shown only in the speaker-notes window)
   //   host         a checklist for hosts
   //   messages     ready-to-paste chat messages for hosts
   segments: [
     {
       id: "welcome", minutes: 8, title: "Welcome", where: "Main room",
-      hint: "Drop a wish in the chat: \"I wish I had a thing that...\" Built something with AI before? Add your name to the Teams doc.",
+      hint: "The plan for the morning, then the chat: how much have you built with AI, from 1 to 5, and what was it?",
       link: "index.html#today",
-      shared: [{ link: "teams", label: "Teams doc" }],
       screens: [
         { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", kicker: "MNGAIA · AI4MN", heading: "Hands On", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
         { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Teams doc keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
         { kind: "embed", note: "Share this tab with its sound on. Ask the Oracle two or three questions from the chat. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
-        { kind: "prompt", note: "Ask anyone who has built something interactive with AI, even once, to add their name. A raised hand works too. Your co-host watches the Teams doc.", heading: "Have you built something interactive with code?", body: "Even once, with any AI tool? Open the page, press Teams doc, and add your name. You'll anchor a team of four.", url: true }
+        { kind: "plan", note: "Walk the morning in a sentence each. The page has all of it, and so does the chat.", heading: "Here's what we're here to do", url: true },
+        { kind: "prompt", note: "Read a few numbers aloud as they come in. Every number is welcome; a room of 1s is a good room. Your co-host notes the 4s and 5s: they're the anchors.", heading: "How much have you built with AI?", big: "1 to 5, in the chat", body: "1: not yet. 5: I'm having a hard time stopping." },
+        { kind: "prompt", note: "Read two or three aloud. Pick one or two to show next, and say their names now so they're ready.", heading: "Built something already?", big: "What was it?", body: "One sentence in the chat. We'll ask one or two of you to show it next." }
       ],
       host: [
         "Pin the page link in the main chat.",
         "Turn on captions.",
-        "Ask the Oracle two or three questions from the chat."
+        "Ask the Oracle two or three questions from the chat.",
+        "Co-host: from the chat, list the 4s, the 5s, and anyone who says what they built. They're the anchors, one for each room."
       ],
       messages: [
         { to: "Main chat", text: "Welcome! Everything for today is here: https://inquiredu.org/a-mn-hackathon\nPage blocked on your network? The same morning as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
-        { to: "Main chat", text: "Have you built something interactive with AI, even once? Open the page, press Teams doc, and add your name to the first table. You'll anchor a team of four." }
+        { to: "Main chat", text: "How much have you built with AI? Type a number from 1 to 5.\n1: not yet. 5: I'm having a hard time stopping." },
+        { to: "Main chat", text: "Built something already? In one sentence: what was it?" }
+      ]
+    },
+    {
+      id: "show", minutes: 8, title: "Show us yours", where: "Main room",
+      hint: "One or two of us show something we built with AI and code, and how it went.",
+      link: "index.html#today",
+      screens: [
+        { kind: "prompt", note: "Call on one or two builders from the chat. They press Present now, then A tab. Start the timer (T) when they start, adjust it as the conversation goes, and Reset between people.", heading: "Show us yours", body: "Something you built with AI and code: what it does, who it's for, and one thing that went sideways.", timer: "showTurn" }
+      ],
+      host: [
+        "Before {start}: in Host controls, keep Share their screen on for everyone. No one needs to be a co-host to present.",
+        "Call on one or two builders from the chat answers.",
+        "Builders share with Present now, then A tab, so their tab's sound comes through.",
+        "Start the stage timer when they start; Reset between people."
+      ],
+      messages: [
+        { to: "Main chat", text: "Want to show what you built? Raise your hand. To share: Present now, then A tab, then pick the tab with your tool." }
       ]
     },
     {
@@ -86,14 +107,14 @@ const SESSION = {
       ],
       host: [
         "Co-host: open Breakout rooms. Rooms = builders ÷ 4, rounded up.",
-        "Press Shuffle, then drag one anchor from the Teams doc into each room.",
+        "Press Shuffle, then drag one anchor (a 4, a 5, or a builder from the chat) into each room.",
         "Fill in the Room column for each anchor in the Teams doc.",
         "Set the breakout timer to {building}."
       ],
       messages: []
     },
     {
-      id: "remix", minutes: 25, title: "The Remix Arcade", where: "Breakout rooms",
+      id: "remix", minutes: 17, title: "The Remix Arcade", where: "Breakout rooms",
       hint: "In breakout rooms of four. Pick a starter and make it yours.",
       link: "starters.html", linkLabel: "Open the starters",
       shared: [{ link: "teams", label: "Teams doc" }],
@@ -138,7 +159,7 @@ const SESSION = {
       link: "index.html#cheer", linkLabel: "The awards",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
-        { kind: "prompt", note: "Welcome everyone back. Ask for volunteers by raised hand. Applause first, then one question: who would you show this to?", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?" },
+        { kind: "prompt", note: "Welcome everyone back. Ask for volunteers by raised hand. Applause first, then one question: who would you show this to?", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?", timer: "share" },
         { kind: "awards", note: "Name the builds that earned each award.", heading: "This morning's awards", awards: [
           { icon: "💥", name: "Most Delightfully Broken", why: "For the most glorious error message of the morning." },
           { icon: "🛟", name: "Best Rescue", why: "For the save that made the room cheer." },
@@ -164,7 +185,7 @@ const SESSION = {
         { kind: "pair", note: "Post the wonder and worry link in the chat. Give it {wonder}.", heading: "Before you go", cards: [
           { heading: "I wonder...", body: "What did today make you curious about?" },
           { heading: "I worry...", body: "What did today make you uneasy about?" }
-        ], foot: "Add yours to the wall. Then one word in the chat for how you're leaving." },
+        ], foot: "Add yours to the wall. Then one word in the chat for how you're leaving.", timer: "wonder" },
         { kind: "prompt", note: "Ask for one word in the chat. Thank the anchors by name. Point to next month.", heading: "Next month", body: "We turn to assessment: what our practices have measured, who they have served, and who they may have held back.", foot: "Thank you for building with us." }
       ],
       host: [

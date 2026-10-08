@@ -67,7 +67,7 @@ In a page, mark the element that holds the braces: `<p data-fill>Back at {wish.e
 
 ## Kinds of screen
 
-Every screen has a `kind` and an optional `note` (shown only in the speaker notes).
+Every screen has a `kind` and an optional `note` (shown only in the speaker notes). Any screen can also have a `timer`: a `pace` name (`"showTurn"`, `"share"`) or a number of minutes. The stage then shows a countdown the presenter starts and stretches live: T starts or pauses it, + and - add or take away a minute without stopping it, and the speaker notes window has the same buttons. A length the presenter changes is remembered in that browser. The arithmetic lives in `assets/stage-timer.js`, tested by `node scripts/test-stage-timer.js`.
 
 | Kind | Fields | Use it for |
 | --- | --- | --- |
@@ -80,6 +80,7 @@ Every screen has a `kind` and an optional `note` (shown only in the speaker note
 | `awards` | `heading`, `awards` (`icon`, `name`, `why`) | Show & Cheer |
 | `code` | `heading`, `code`, `caption` | Showing a few lines of code (braces here are left alone) |
 | `quote` | `text` | One line, said and left to sit |
+| `plan` | `heading`, `url` | The whole morning from `segments`: each part's time, name, and place |
 | `pair` | `heading`, `cards` (`heading`, `body`), `foot` | Two side-by-side prompts |
 
 To add a kind, add a function to `KINDS` in `assets/present.js` and its styles to `assets/present.css`.

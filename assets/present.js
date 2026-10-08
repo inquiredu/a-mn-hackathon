@@ -1,6 +1,6 @@
 // The presenter view: one big idea per screen, read from the session file.
 // Keys: → / Space / Page Down = next, ← / Page Up = back, F = full screen, N = jump to now,
-// S = speaker notes in a second window.
+// S = speaker notes in a second window. On a screen with a timer: T = start or pause, + and - = a minute more or less.
 // Add ?now=10:50 to the address to preview the clock-driven parts at any moment.
 
 const screens = [];
@@ -101,6 +101,18 @@ const KINDS = {
   quote(s) {
     return [el("p", "quote", s.text)];
   },
+  plan(s) {
+    // The morning, from the session file: every part's time, name, and place
+    const list = el("ol", "plan");
+    SESSION.segments.forEach((seg) => {
+      const li = el("li");
+      li.append(el("time", "", TIMES.clock(seg.start)), el("strong", "", seg.title), el("span", "", seg.where));
+      list.append(li);
+    });
+    const parts = [el("h1", "heading", s.heading), list];
+    if (s.url) parts.push(urlPill());
+    return parts;
+  },
   pair(s) {
     const pair = el("div", "pair");
     s.cards.forEach((c) => {
@@ -113,6 +125,51 @@ const KINDS = {
 };
 
 
+// ---------- The timer, on screens that ask for one ----------
+
+const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());
+const timerKey = (screen) => screen.segment.id + "/" + (screen.heading || "");
+const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, SESSION.pace);
+let timerWasDone = false;
+
+function timerBlock() {
+  const box = el("div", "timer");
+  box.setAttribute("role", "group");
+  box.setAttribute("aria-label", "Timer");
+  const buttons = el("div", "timer-buttons");
+  [["go", "Start", ""], ["minus", "−1 min", "One minute less"], ["plus", "+1 min", "One minute more"], ["reset", "Reset", ""]].forEach(([action, label, aria]) => {
+    const b = el("button", "timer-" + action, label);
+    b.type = "button";
+    if (aria) b.setAttribute("aria-label", aria);
+    b.addEventListener("click", () => timerAction(action === "go" ? "toggle" : action));
+    buttons.append(b);
+  });
+  box.append(el("p", "timer-display"), el("p", "timer-status"), buttons);
+  return box;
+}
+
+function timerAction(action) {
+  const screen = screens[index];
+  if (!screen.timer) return;
+  const key = timerKey(screen);
+  const start = timerStart(screen);
+  const now = Date.now();
+  if (action === "toggle") timers.toggle(key, start, now);
+  else if (action === "plus") timers.adjust(key, start, +1, now);
+  else if (action === "minus") timers.adjust(key, start, -1, now);
+  else if (action === "reset") timers.reset(key, start);
+  tick();
+}
+
+// The timer's state for the stage and the notes window, or null on a screen without one
+function timerState() {
+  const screen = screens[index];
+  if (!screen.timer || timerStart(screen) === null) return null;
+  const v = timers.view(timerKey(screen), timerStart(screen), Date.now());
+  return { display: v.display, status: v.status, action: v.action, done: v.done, minutes: timers.minutes(timerKey(screen), timerStart(screen)) };
+}
+
+
 // ---------- Speaker notes, in a second window that follows along ----------
 // The stage and the notes window talk over a BroadcastChannel (same computer, same browser).
 
@@ -120,8 +177,9 @@ const channel = "BroadcastChannel" in window ? new BroadcastChannel("hands-on-st
 if (channel) {
   channel.onmessage = (event) => {
     const message = event.data || {};
-    if (message.hello) channel.postMessage({ index });
+    if (message.hello) channel.postMessage({ index, timer: timerState() });
     if (typeof message.go === "number") show(message.go);
+    if (message.timer) timerAction(message.timer);
   };
 }
 
@@ -137,6 +195,8 @@ function show(i) {
   const screen = screens[index];
   stage.className = "stage kind-" + screen.kind;
   stage.replaceChildren(...KINDS[screen.kind](screen));
+  if (timerState()) { stage.append(timerBlock()); stage.classList.add("has-timer"); }
+  timerWasDone = false;
   history.replaceState(null, "", location.search + "#" + index);
 
   const seg = screen.segment;
@@ -144,7 +204,6 @@ function show(i) {
   document.getElementById("rail-count").textContent = (index + 1) + " / " + screens.length;
   document.getElementById("status").textContent =
     "Screen " + (index + 1) + " of " + screens.length + ": " + (screen.heading || screen.text || "");
-  if (channel) channel.postMessage({ index });
   tick();
 }
 
@@ -162,8 +221,19 @@ function tick() {
       count.append("Time", el("small", "", "back to the main room"));
     }
   }
+  const state = timerState();
+  const box = stage.querySelector(".timer");
+  if (state && box) {
+    box.classList.toggle("done", state.done);
+    box.querySelector(".timer-display").textContent = state.display;
+    box.querySelector(".timer-status").textContent = state.status + " · " + state.minutes + " min";
+    box.querySelector(".timer-go").textContent = state.action;
+    if (state.done && !timerWasDone) document.getElementById("status").textContent = "Time.";
+    timerWasDone = state.done;
+  }
+  if (channel) channel.postMessage({ index, timer: state });
 }
-setInterval(tick, 1000);
+setInterval(tick, 500);
 
 // The first screen of whatever part of the session the clock says it is
 function jumpToNow() {
@@ -184,6 +254,9 @@ document.addEventListener("keydown", (event) => {
   else if (key === "f" || key === "F") toggleFullScreen();
   else if (key === "n" || key === "N") jumpToNow();
   else if (key === "s" || key === "S") openNotes();
+  else if (key === "t" || key === "T") timerAction("toggle");
+  else if (key === "+" || key === "=") timerAction("plus");
+  else if (key === "-" || key === "_") timerAction("minus");
   else if (key === "Home") show(0);
   else if (key === "End") show(screens.length - 1);
 });

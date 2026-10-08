@@ -58,7 +58,7 @@ const SESSION = {
   segments: [
     {
       id: "welcome", minutes: 8, title: "Welcome", where: "Main room",
-      hint: "Drop a wish in the chat: \"I wish I had a thing that...\"",
+      hint: "Drop a wish in the chat: \"I wish I had a thing that...\" Built something with AI before? Add your name to the Teams doc.",
       link: "index.html#today",
       shared: [{ link: "teams", label: "Teams doc" }],
       screens: [
@@ -119,7 +119,7 @@ const SESSION = {
     {
       id: "wish", minutes: 35, title: "Grant a wish", where: "Breakout rooms",
       hint: "Same room. Build something from scratch, your wish or someone else's.",
-      link: "wish.html", linkLabel: "How to start",
+      link: "wish.html", linkLabel: "Open Grant a wish",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
         { kind: "countdown", note: "Keep building in the main room. At {wish.end - nudge}, hosts visit each room to say there are {nudge} left.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before {wish.end}." }

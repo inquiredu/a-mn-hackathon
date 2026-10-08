@@ -15,7 +15,8 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 - **A reusable session kit.** One session file feeds the participant pages, the presenter view, the speaker notes, and the Hosts page. Clock-driven for Friday; live sync from the presenter is a later idea.
 - **Times live only in the session file.** The session has one start and end, each part has a length in minutes, and every time, date, and length on the site is written as `{braces}` that `assets/timing.js` fills in. Changing one part's length moves everything after it, everywhere.
 - **A visual gallery wall.** Builders paste a screenshot of their work onto one slide and link the picture to the real thing. A link from a school account may open only inside that district (Gemini follows the district's Drive settings; ChatGPT Edu and Claude Team links stay inside the workspace), so the picture is what everyone can see. The walls deck is set so anyone with the link can edit it, which people from other districts need, and which also means anyone who finds the site can edit it.
-- **Present is off the site's menu.** It's for one person, and it was the brightest button in every page's menu. It lives on the Hosts page.
+- **The menu is for participants: Home, Starters, Grant a wish, Sources.** Present is for one person and lives on the Hosts page. Hosts is off the menu too (it carries speaker notes, including the Oracle reveal); hosts open `/hosts.html` directly, or from Also on the site on Home before and after the event.
+- **One thing on screen at a time.** During the event, Home shows the Happening now card, the schedule, and only the sections whose part has started (Show & Cheer, the close). Sources keeps the now bar, so a detour there doesn't lose the clock.
 - **Hosting.** GitHub Pages at inquiredu.org/a-mn-hackathon, from the private repo inquiredu/a-mn-hackathon. The working folder lives in Google Drive so it's reachable from the Windows PC and the Mac mini.
 
 ## What exists
@@ -30,14 +31,14 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 | Present | `/present.html` | The full-screen stage for the main room (S opens speaker notes) |
 | Speaker notes | `/notes.html` | Follows the stage from a second window, and can move it |
 
-Shared spaces and decks, all linked from `links` in `assets/session.js` (none of the pages type out a link). Each part of the morning names the links it uses (`shared`), so they appear on that part's row of the timeline and on the "Happening now" card at that moment, not in a list at the bottom.
+Shared spaces and decks, all linked from `links` in `assets/session.js` (none of the pages type out a link). Each part of the morning names the links it uses (`shared`), and the "Happening now" card shows them at that moment. The timeline is the schedule only.
 
 | Link | What it is | Where people meet it |
 | --- | --- | --- |
-| `meet` | The [Google Meet](https://meet.google.com/wvq-zzwe-kny) | Home: first button of the invitation, and "Back to Google Meet" on the Happening now card. Hosts |
-| `teams` | The [Teams doc](https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit), in Sean's personal Google account | Welcome and Remix Arcade rows; Starters; Hosts |
-| `gallery` | Three slides in a row at the end of the walls deck; the link opens the first | Grant a wish and Show & Cheer rows; the how-to at `wish.html#wall`, linked from Starters step 4; the ten-minute room message; Hosts |
-| `wonder`, `worry` | One slide each in the walls deck, "Interactive Workshop Walls" | The close row and section; Hosts |
+| `meet` | The [Google Meet](https://meet.google.com/wvq-zzwe-kny) | Home: first button of the invitation (before the event only; during it, people are already in Meet). Hosts |
+| `teams` | The [Teams doc](https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit), in Sean's personal Google account | Happening now card at Welcome and the Remix Arcade; Starters; Hosts |
+| `gallery` | Three slides in a row at the end of the walls deck; the link opens the first | Happening now card at Grant a wish and Show & Cheer; the how-to at `wish.html#wall`; the ten-minute room message; Hosts |
+| `wonder`, `worry` | One slide each in the walls deck, "Interactive Workshop Walls" | Happening now card and the close section, once the close starts; Hosts |
 | `backup` | **Session slides**: the whole morning, screen by screen. Drive title "Hands On 10.9 · Session slides (backup)" | Before you come; the Welcome chat message; Hosts |
 | `companion` | **Starter code**: every starter's code and remix menu, in the speaker notes. Drive title "Hands On 10.9 · Starter code (backup)" | Before you come; the breakout-room chat message; Hosts |
 

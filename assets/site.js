@@ -81,7 +81,7 @@ function phase() {
 
 // ---------- The morning, as a list (Home) ----------
 
-// The shared spaces a part uses (the Teams doc, the walls), as links that open in a new tab
+// The shared spaces a part uses (the Teams doc, the walls), as links that open in a new tab, for the Happening now card
 function sharedLinks(segment, className) {
   return (segment.shared || []).filter((s) => LINKS[s.link]).map((s) => {
     const a = linkTo(LINKS[s.link], s.label);
@@ -102,7 +102,6 @@ if (timeline) {
     title.append(s.state);
     body.append(title, el("span", "", s.hint));
     if (s.linkLabel) body.append(" ", linkTo(s.link, s.linkLabel));
-    sharedLinks(s).forEach((a) => body.append(" ", a));
     li.append(el("time", "", TIMES.clock(s.start)), body);
     s.item = li;
     timeline.append(li);
@@ -178,6 +177,11 @@ function update() {
 
   const current = segments[now.index];
   const next = segments[now.index + 1];
+  // Sections for a later part (Show & Cheer, the close) wait until that part starts
+  document.querySelectorAll("[data-from]").forEach((section) => {
+    const from = segments.findIndex((s) => s.id === section.dataset.from);
+    if (from > now.index) section.hidden = true;
+  });
   segments.forEach((s, i) => {
     if (!s.item) return;
     if (i < now.index) { s.item.classList.add("done"); s.state.textContent = " (finished)"; }
@@ -264,7 +268,7 @@ function nextStep(message) {
   const favorite = recall("hands-on-ai");
   const tools = [...AI_TOOLS].sort((a, b) => (b.id === favorite) - (a.id === favorite));
   const inner = el("div", "next-step-inner");
-  inner.append(el("p", "next-step-lead", message + " Now paste it into your AI:"));
+  inner.append(el("p", "next-step-lead", message + " Now paste it into your AI chat. Not open yet?"));
   const row = el("div", "next-step-tools");
   tools.forEach((tool) => {
     const a = linkTo(tool.url, "Open " + tool.name + (tool.id === favorite ? " (your pick)" : ""));

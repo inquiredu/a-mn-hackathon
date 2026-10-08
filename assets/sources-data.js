@@ -94,6 +94,24 @@ const SOURCES = [
     asks: ["tools"]
   },
   {
+    id: "chatgpt-sharing", section: "moves", group: "Building in the tools you have",
+    title: "Sharing conversations and scheduled tasks in ChatGPT",
+    url: "https://help.openai.com/en/articles/7925741-chatgpt-shared-links-faq",
+    who: "OpenAI", venue: "OpenAI Help Center", when: "updated September 2026", type: "help",
+    says: "Share, then Create link or Copy link, shares a snapshot of the conversation. From a personal account, anyone with the link can view it. From a Business, Enterprise, or Edu workspace, only members of that workspace can.",
+    takeLabel: "For Friday", take: "Why a ChatGPT link from a school workspace may not open for someone from another district.",
+    asks: ["sharing", "tools"]
+  },
+  {
+    id: "copilot-sharing", section: "moves", group: "Building in the tools you have",
+    title: "Share a Microsoft 365 Copilot Page",
+    url: "https://support.microsoft.com/en-us/microsoft-365-copilot/share-a-microsoft-365-copilot-page",
+    who: "Microsoft", venue: "Microsoft Support", when: "as of October 2026", type: "help",
+    says: "Share, at the top right of a page, offers Copy link or Copy component. The link opens that one page in Loop for colleagues.",
+    takeLabel: "For Friday", take: "The steps for people building in Copilot Pages.",
+    asks: ["sharing", "tools"]
+  },
+  {
     id: "mdn", section: "moves", group: "What the code is",
     title: "Your first website",
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website",

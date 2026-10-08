@@ -14,7 +14,7 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 - **Never more than two windows.** Meet (or Meet's floating picture-in-picture) plus the AI tool, with the page beside it.
 - **A reusable session kit.** One session file feeds the participant pages, the presenter view, the speaker notes, and the Hosts page. Clock-driven for Friday; live sync from the presenter is a later idea.
 - **Times live only in the session file.** The session has one start and end, each part has a length in minutes, and every time, date, and length on the site is written as `{braces}` that `assets/timing.js` fills in. Changing one part's length moves everything after it, everywhere.
-- **No gallery wall, for now.** Builders show their work in their room and at Show & Cheer instead. The session slides deck still mentions a gallery wall on three slides.
+- **A visual gallery wall.** Builders paste a screenshot of their work onto one slide and link the picture to the real thing. A link from a school account may open only inside that district (Gemini follows the district's Drive settings; ChatGPT Edu and Claude Team links stay inside the workspace), so the picture is what everyone can see. The walls deck is set so anyone with the link can edit it, which people from other districts need, and which also means anyone who finds the site can edit it.
 - **Present is off the site's menu.** It's for one person, and it was the brightest button in every page's menu. It lives on the Hosts page.
 - **Hosting.** GitHub Pages at inquiredu.org/a-mn-hackathon, from the private repo inquiredu/a-mn-hackathon. The working folder lives in Google Drive so it's reachable from the Windows PC and the Mac mini.
 
@@ -24,9 +24,9 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 | --- | --- | --- |
 | Home | `/` | Changes with the clock: the invitation before, "Happening now" during, a keepsake after |
 | Starters | `/starters.html` | The five starters with Play, Copy for my AI, and remix menus |
-| Grant a wish | `/wish.html` | The build path, the wish builder, the wish jar, the stuck moves |
+| Grant a wish | `/wish.html` | The build path, the wish builder, the wish jar, the stuck moves, and how to pin your work to the gallery wall (`#wall`) |
 | Hosts | `/hosts.html` | Forming teams, a room calculator, the run of show, before/during/after |
-| Sources | `/sources.html` | 37 sources checked October 7, with start-here paths, section tabs, topic and kind filters (topics grouped under Building, Taking care, and Teaching and learning), search, and a shareable address for every view (for example `?ask=privacy`, `?path=leaders`, `#primm`). The sources live in `assets/sources-data.js`. |
+| Sources | `/sources.html` | 39 sources checked October 7 and 8, with start-here paths, section tabs, topic and kind filters (topics grouped under Building, Taking care, and Teaching and learning), search, and a shareable address for every view (for example `?ask=privacy`, `?path=leaders`, `#primm`). The sources live in `assets/sources-data.js`. |
 | Present | `/present.html` | The full-screen stage for the main room (S opens speaker notes) |
 | Speaker notes | `/notes.html` | Follows the stage from a second window, and can move it |
 
@@ -36,6 +36,7 @@ Shared spaces and decks, all linked from `links` in `assets/session.js` (none of
 | --- | --- | --- |
 | `meet` | The [Google Meet](https://meet.google.com/wvq-zzwe-kny) | Home: first button of the invitation, and "Back to Google Meet" on the Happening now card. Hosts |
 | `teams` | The [Teams doc](https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit), in Sean's personal Google account | Welcome and Remix Arcade rows; Starters; Hosts |
+| `gallery` | A slide in the walls deck | Grant a wish and Show & Cheer rows; the how-to at `wish.html#wall`, linked from Starters step 4; the ten-minute room message; Hosts |
 | `wonder`, `worry` | One slide each in the walls deck, "Interactive Workshop Walls" | The close row and section; Hosts |
 | `backup` | **Session slides**: the whole morning, screen by screen. Drive title "Hands On Backup Deck" | Before you come; the Welcome chat message; Hosts |
 | `companion` | **Starter code**: every starter's code and remix menu, in the speaker notes. Drive title "Backup slide deck for session" | Before you come; the breakout-room chat message; Hosts |

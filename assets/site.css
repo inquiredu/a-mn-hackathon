@@ -324,6 +324,10 @@ code { font: .9em ui-monospace, SFMono-Regular, Consolas, monospace; background:
 .stuck li { margin: 4px 0; }
 
 /* Link slots */
+#wall .link-slot { display: block; margin: 18px 0 0; }
+.wall-steps { margin: 0; padding-left: 1.4em; max-width: 42rem; }
+.wall-steps li { margin: 8px 0; }
+kbd { font: inherit; font-size: .88em; font-weight: 600; padding: 1px 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; background: var(--surface); white-space: nowrap; }
 .link-slot:empty { display: none; }
 .pending { font-style: italic; opacity: .85; }
 

@@ -22,6 +22,8 @@ const SESSION = {
     meet: "https://meet.google.com/wvq-zzwe-kny",
     teams: "https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit",
     // The walls deck ("Interactive Workshop Walls"): one slide each, linked straight to the slide.
+    // Anyone with the link can edit it, so people from every district can add to it.
+    gallery: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_407",
     wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_144",
     worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86",
     // Backups for when this site is blocked. Labeled by what's inside, because the Drive titles read the other way round.
@@ -102,7 +104,7 @@ const SESSION = {
           "Pick a starter and make it yours.",
           "Stuck? Press Ask for help in Meet."
         ], foot: "Back in the main room at {wish.end}" },
-        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the Teams doc, and how to build from scratch." },
+        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the Teams doc, and the gallery wall." },
         { kind: "countdown", note: "For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", until: "{wish.end}", body: "Rather watch? Stay here. We're building wishes live in the main room." }
       ],
       host: [
@@ -118,21 +120,23 @@ const SESSION = {
       id: "wish", minutes: 35, title: "Grant a wish", where: "Breakout rooms",
       hint: "Same room. Build something from scratch, your wish or someone else's.",
       link: "wish.html", linkLabel: "How to start",
+      shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
-        { kind: "countdown", note: "Keep building in the main room. At {wish.end - nudge}, hosts visit each room to say there are {nudge} left.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Back in the main room at {wish.end}." }
+        { kind: "countdown", note: "Keep building in the main room. At {wish.end - nudge}, hosts visit each room to say there are {nudge} left.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before {wish.end}." }
       ],
       host: [
-        "At {wish.end - nudge}, visit each room: {nudge} left, and pick one thing to show.",
+        "At {wish.end - nudge}, visit each room: {nudge} left, pin something to the gallery wall.",
         "Note one or two builds for Show & Cheer."
       ],
       messages: [
-        { to: "Each breakout room", text: "{Nudge} left! Pick one thing to show in the main room. Half-built counts." }
+        { to: "Each breakout room", text: "{Nudge} left! Pin what you have to the gallery wall, even if it's half-built. Half-built counts.\nHow: https://inquiredu.org/a-mn-hackathon/wish.html#wall" }
       ]
     },
     {
       id: "cheer", minutes: 22, title: "Show & Cheer", where: "Main room",
       hint: "Back in the main room. Applause first.",
       link: "index.html#cheer", linkLabel: "The awards",
+      shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
         { kind: "prompt", note: "Welcome everyone back. Ask for volunteers by raised hand. Applause first, then one question: who would you show this to?", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?" },
         { kind: "awards", note: "Name the builds that earned each award.", heading: "This morning's awards", awards: [
@@ -143,7 +147,7 @@ const SESSION = {
       ],
       host: [
         "Builders share with Present now, then A tab, so their tab's sound comes through.",
-        "If sharing fails, ask the builder to walk us through it while a host shares the starter they began from."
+        "If sharing fails, share the gallery wall and click their picture to open what they made."
       ],
       messages: [
         { to: "Main chat", text: "Show & Cheer! Want to share? Raise your hand. To share: Present now, then A tab, then pick your AI tab." }

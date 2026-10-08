@@ -36,12 +36,12 @@ Shared spaces and decks, all linked from `links` in `assets/session.js` (none of
 | --- | --- | --- |
 | `meet` | The [Google Meet](https://meet.google.com/wvq-zzwe-kny) | Home: first button of the invitation, and "Back to Google Meet" on the Happening now card. Hosts |
 | `teams` | The [Teams doc](https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit), in Sean's personal Google account | Welcome and Remix Arcade rows; Starters; Hosts |
-| `gallery` | A slide in the walls deck | Grant a wish and Show & Cheer rows; the how-to at `wish.html#wall`, linked from Starters step 4; the ten-minute room message; Hosts |
+| `gallery` | Three slides in a row at the end of the walls deck; the link opens the first | Grant a wish and Show & Cheer rows; the how-to at `wish.html#wall`, linked from Starters step 4; the ten-minute room message; Hosts |
 | `wonder`, `worry` | One slide each in the walls deck, "Interactive Workshop Walls" | The close row and section; Hosts |
-| `backup` | **Session slides**: the whole morning, screen by screen. Drive title "Hands On Backup Deck" | Before you come; the Welcome chat message; Hosts |
-| `companion` | **Starter code**: every starter's code and remix menu, in the speaker notes. Drive title "Backup slide deck for session" | Before you come; the breakout-room chat message; Hosts |
+| `backup` | **Session slides**: the whole morning, screen by screen. Drive title "Hands On 10.9 · Session slides (backup)" | Before you come; the Welcome chat message; Hosts |
+| `companion` | **Starter code**: every starter's code and remix menu, in the speaker notes. Drive title "Hands On 10.9 · Starter code (backup)" | Before you come; the breakout-room chat message; Hosts |
 
-The two backups are labeled by what's inside them. Their Drive titles read the other way round ("Hands On Backup Deck" holds the session, not the hands-on starters), so rename them in Drive if that keeps tripping people up. If the site is blocked, nobody sees the site's links, so the chat messages on the Hosts page carry them too.
+The two backups are named by what's inside them, on the site and in Drive (renamed October 8; the starter deck had been titled "Facilitation Slides - 10.9"). Both are owned by Sean's Orono account and shared with the AI4MN co-hosts. If the site is blocked, nobody sees the site's links, so the chat messages on the Hosts page carry them too.
 
 ## Still to do
 

@@ -22,14 +22,14 @@ const SESSION = {
     meet: "https://meet.google.com/wvq-zzwe-kny",
     teams: "https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit",
     // The walls deck ("Interactive Workshop Walls"): one slide each, linked straight to the slide.
-    // Anyone with the link can edit it, so people from every district can add to it.
+    // Anyone with the link can edit it, so people from every district can add to it. The gallery is three slides in a row; this opens the first.
     gallery: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_407",
     wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_144",
     worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86",
-    // Backups for when this site is blocked. Labeled by what's inside, because the Drive titles read the other way round.
-    // Session slides: the whole morning, screen by screen (Drive title "Hands On Backup Deck").
+    // Backups for when this site is blocked.
+    // Session slides: the whole morning, screen by screen (Drive title "Hands On 10.9 · Session slides (backup)").
     backup: "https://docs.google.com/presentation/d/18BmKOht78NXQ2H3AvPgt3uLm9zQGRsD03dB2EBBd020/edit",
-    // Starter code: every starter's code and remix menu, in the speaker notes (Drive title "Backup slide deck for session").
+    // Starter code: every starter's code and remix menu, in the speaker notes (Drive title "Hands On 10.9 · Starter code (backup)").
     companion: "https://docs.google.com/presentation/d/1L3rwzGa4nrh1HDlExkhGetHYmQeqq_-cMcc8mmovtDM/edit"
   },
 

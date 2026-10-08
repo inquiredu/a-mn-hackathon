@@ -205,12 +205,12 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
   const url = LINKS[slot.dataset.link];
   if (url) {
     const a = linkTo(url, slot.dataset.label);
-    a.className = "button primary";
+    a.className = slot.dataset.style || "button primary";
     a.target = "_blank";
     a.rel = "noopener";
     slot.append(a);
   } else {
-    slot.append(el("span", "pending", TIMES.fill(slot.dataset.pending || "The link appears here on {weekday}.")));
+    slot.append(el("span", "pending", TIMES.fill(slot.dataset.pending || "The link is coming soon.")));
   }
 });
 

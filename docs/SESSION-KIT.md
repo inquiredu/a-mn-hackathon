@@ -22,7 +22,7 @@ const SESSION = {
   start: "10:00", end: "12:00",     // the advertised start and end, 24-hour
   dateLabel,                        // shown in the bar on other days, written with {braces}
   url: "inquiredu.org/a-mn-hackathon",
-  links: { teams, gallery, wonder },  // leave one empty and the page says "link on" the day
+  links: { meet, teams, gallery, wonder, worry, backup, companion },  // leave one empty and the page says it's coming soon
   pace: { nudge: 10, ... },         // cues inside the parts, in minutes
   segments: [ ... ]                 // the parts of the session, in order
 };

@@ -22,12 +22,12 @@ const SESSION = {
     meet: "https://meet.google.com/wvq-zzwe-kny",
     teams: "https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit",
     // The walls deck ("Interactive Workshop Walls"): one slide each, linked straight to the slide.
-    gallery: "",
     wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_144",
     worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86",
-    // The facilitation backup ("Hands On Backup Deck"): the stage as Google Slides, for hosts if the Present page fails.
+    // Backups for when this site is blocked. Labeled by what's inside, because the Drive titles read the other way round.
+    // Session slides: the whole morning, screen by screen (Drive title "Hands On Backup Deck").
     backup: "https://docs.google.com/presentation/d/18BmKOht78NXQ2H3AvPgt3uLm9zQGRsD03dB2EBBd020/edit",
-    // The hands-on backup ("Code companion"): every starter's code in the speaker notes, for builders.
+    // Starter code: every starter's code and remix menu, in the speaker notes (Drive title "Backup slide deck for session").
     companion: "https://docs.google.com/presentation/d/1L3rwzGa4nrh1HDlExkhGetHYmQeqq_-cMcc8mmovtDM/edit"
   },
 
@@ -48,6 +48,7 @@ const SESSION = {
   //   where        "Main room" or "Breakout rooms"
   //   hint         one line for participants
   //   link         which page (and place) to send people to; linkLabel names the button
+  //   shared       links from `links` above that this part uses, shown with it: { link: "teams", label: "Teams doc" }
   //   screens      what the presenter view shows, in order (note: what the presenter says or does,
 //                shown only in the speaker-notes window)
   //   host         a checklist for hosts
@@ -57,6 +58,7 @@ const SESSION = {
       id: "welcome", minutes: 8, title: "Welcome", where: "Main room",
       hint: "Drop a wish in the chat: \"I wish I had a thing that...\"",
       link: "index.html#today",
+      shared: [{ link: "teams", label: "Teams doc" }],
       screens: [
         { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", kicker: "MNGAIA · AI4MN", heading: "Hands On", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
         { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Teams doc keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
@@ -69,7 +71,7 @@ const SESSION = {
         "Ask the Oracle two or three questions from the chat."
       ],
       messages: [
-        { to: "Main chat", text: "Welcome! Everything for today is here: https://inquiredu.org/a-mn-hackathon\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
+        { to: "Main chat", text: "Welcome! Everything for today is here: https://inquiredu.org/a-mn-hackathon\nPage blocked on your network? The same morning as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
         { to: "Main chat", text: "Have you built something interactive with AI, even once? Open the page, press Teams doc, and add your name to the first table. You'll anchor a team of four." }
       ]
     },
@@ -92,6 +94,7 @@ const SESSION = {
       id: "remix", minutes: 25, title: "The Remix Arcade", where: "Breakout rooms",
       hint: "In breakout rooms of four. Pick a starter and make it yours.",
       link: "starters.html", linkLabel: "Open the starters",
+      shared: [{ link: "teams", label: "Teams doc" }],
       screens: [
         { kind: "steps", note: "Walk the four steps. Anchors share their screen first. Then open the rooms.", heading: "Off to your room", steps: [
           "Add your name to your team in the Teams doc.",
@@ -99,7 +102,7 @@ const SESSION = {
           "Pick a starter and make it yours.",
           "Stuck? Press Ask for help in Meet."
         ], foot: "Back in the main room at {wish.end}" },
-        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the Teams doc, and the gallery wall." },
+        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the Teams doc, and how to build from scratch." },
         { kind: "countdown", note: "For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", until: "{wish.end}", body: "Rather watch? Stay here. We're building wishes live in the main room." }
       ],
       host: [
@@ -108,7 +111,7 @@ const SESSION = {
         "One host stays in the main room, building wishes live."
       ],
       messages: [
-        { to: "Each breakout room", text: "Everything's here: https://inquiredu.org/a-mn-hackathon\nPress Teams doc and add your name to your room. Anchor: share your screen and start a starter together." }
+        { to: "Each breakout room", text: "Everything's here: https://inquiredu.org/a-mn-hackathon\nPress Teams doc and add your name to your room. Anchor: share your screen and start a starter together.\nPage blocked? The starters as slides, code in the notes: {links.companion}" }
       ]
     },
     {
@@ -116,14 +119,14 @@ const SESSION = {
       hint: "Same room. Build something from scratch, your wish or someone else's.",
       link: "wish.html", linkLabel: "How to start",
       screens: [
-        { kind: "countdown", note: "Keep building in the main room. At {wish.end - nudge}, hosts visit each room to say there are {nudge} left.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before {wish.end}." }
+        { kind: "countdown", note: "Keep building in the main room. At {wish.end - nudge}, hosts visit each room to say there are {nudge} left.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Back in the main room at {wish.end}." }
       ],
       host: [
-        "At {wish.end - nudge}, visit each room: {nudge} left, pin something to the wall.",
+        "At {wish.end - nudge}, visit each room: {nudge} left, and pick one thing to show.",
         "Note one or two builds for Show & Cheer."
       ],
       messages: [
-        { to: "Each breakout room", text: "{Nudge}! Pin what you have to the gallery wall, even if it's half-built. Half-built counts." }
+        { to: "Each breakout room", text: "{Nudge} left! Pick one thing to show in the main room. Half-built counts." }
       ]
     },
     {
@@ -140,7 +143,7 @@ const SESSION = {
       ],
       host: [
         "Builders share with Present now, then A tab, so their tab's sound comes through.",
-        "If sharing fails, show their screenshot from the gallery wall."
+        "If sharing fails, ask the builder to walk us through it while a host shares the starter they began from."
       ],
       messages: [
         { to: "Main chat", text: "Show & Cheer! Want to share? Raise your hand. To share: Present now, then A tab, then pick your AI tab." }
@@ -150,6 +153,7 @@ const SESSION = {
       id: "close", minutes: 13, title: "What did we just do?", where: "Main room",
       hint: "One wonder, one worry, one word.",
       link: "index.html#close", linkLabel: "The close",
+      shared: [{ link: "wonder", label: "Wonder wall" }, { link: "worry", label: "Worry wall" }],
       screens: [
         { kind: "code", note: "Show the list of words. The Oracle didn't know anything: a person chose what it listens for.", heading: "How did the Oracle know?", code: "listensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou shall be long. Accept this.\",\n  \"The hotdish will contain tater tots. This is certain.\"\n]", caption: "A list of words a person chose. Every machine today started with a person, passed through an AI, and came back to a person." },
         { kind: "quote", note: "Say it, then let it sit for a moment.", text: "Everything you made today, a seventh grader can make tonight." },

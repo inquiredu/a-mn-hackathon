@@ -13,6 +13,7 @@
 //   {weekday} {date} {zone}    "Friday", "October 9", "Central"
 //   {parts}                    how many parts: "6"
 //   {title} {subtitle} {org}   the session's names
+//   {links.teams}              a link from the session file, for chat messages
 // Add :number or :unit to split a length for big numerals ("2" and "hours"),
 // and start with a capital letter to capitalize: {Length} reads "Two hours".
 
@@ -87,6 +88,7 @@ const TIMES = (() => {
     const part = parts[id];
     if (part && (field === "start" || field === "end")) return { time: toMinutes(part[field]) };
     if (part && field === "length") return { length: part.minutes };
+    if (id === "links" && SESSION.links[field]) return { text: SESSION.links[field] };
     return null;
   }
 

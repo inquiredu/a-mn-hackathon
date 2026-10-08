@@ -23,7 +23,6 @@
         <li><a href="wish.html">Grant a wish</a></li>
         <li><a href="hosts.html">Hosts</a></li>
         <li><a href="sources.html">Sources</a></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
       </ul>
     </nav>
   </div>
@@ -78,7 +77,7 @@
         <p class="nowcard-label">Happening now <span id="nowcard-where"></span></p>
         <h1 class="nowcard-title" id="nowcard-title"></h1>
         <p class="nowcard-hint" id="nowcard-hint"></p>
-        <p class="nowcard-action"><a class="button primary" id="nowcard-go" href="#today" hidden></a></p>
+        <p class="nowcard-action"><a class="button primary" id="nowcard-go" href="#today" hidden></a><span id="nowcard-shared"></span><span class="link-slot" data-link="meet" data-label="Back to Google Meet" data-style="button"></span></p>
         <p class="nowcard-next" id="nowcard-next"></p>
       </div>
     </div>
@@ -117,17 +116,6 @@
     <div class="wrap">
       <h2>The morning</h2>
       <ol class="timeline" id="timeline"></ol>
-      <div class="shared" id="shared">
-        <h3>Shared spaces</h3>
-        <p class="shared-links">
-          <span class="link-slot" data-link="meet" data-label="Google Meet"></span>
-          <span class="link-slot" data-link="teams" data-label="Teams doc" data-pending="Teams doc: coming soon"></span>
-          <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-pending="Gallery wall: coming soon"></span>
-          <span class="link-slot" data-link="wonder" data-label="Wonder wall" data-pending="Wonder wall: coming soon"></span>
-          <span class="link-slot" data-link="worry" data-label="Worry wall" data-pending="Worry wall: coming soon"></span>
-          <span class="link-slot" data-link="companion" data-label="Code companion"></span>
-        </p>
-      </div>
     </div>
   </section>
 
@@ -139,13 +127,13 @@
         <li><strong>A laptop or Chromebook.</strong> Building needs a keyboard. On a phone, you can watch and cheer.</li>
         <li data-fill><strong>An AI tool you can log in to.</strong> Gemini with your school Google account, Claude, or ChatGPT. Check that you can open it before {weekday}.</li>
         <li><strong>A wish.</strong> Something small you wish existed for your work. No wish? We have a jar of them.</li>
+        <li><strong>A backup, in case this site is blocked on your school network.</strong> The same morning and the same starters, as Google Slides: <span class="link-slot" data-link="backup" data-label="session slides" data-style="inline-link"></span> and <span class="link-slot" data-link="companion" data-label="starter code" data-style="inline-link"></span>.</li>
       </ul>
       <h2 class="subhead-2">The shape of the morning</h2>
       <ul class="shape">
         <li data-fill><strong>{length:number}</strong><span>{length:unit}, start to finish</span></li>
         <li><strong>4</strong><span>starters for real work, plus one just for fun</span></li>
         <li><strong>4</strong><span>people at most in each breakout room</span></li>
-        <li><strong>1</strong><span>gallery wall for everything we make</span></li>
       </ul>
     </div>
   </section>
@@ -199,7 +187,6 @@
         <a class="also-card" href="wish.html"><strong>Grant a wish</strong><span>Build something from nothing: a wish builder, a jar of wishes, and three moves for when you're stuck.</span><span class="go">Open</span></a>
         <a class="also-card" href="hosts.html"><strong>Hosts</strong><span>Running the morning: the run of show, forming teams, ready-to-paste messages, and safe play.</span><span class="go">Open</span></a>
         <a class="also-card" href="sources.html"><strong>Sources</strong><span>How-tos that take the mystery out of code, cautions worth knowing, and what research says about coding and thinking.</span><span class="go">Open</span></a>
-        <a class="also-card" href="present.html"><strong>Present</strong><span>The main-room stage: full screen, one idea at a time, with speaker notes in a second window.</span><span class="go">Open</span></a>
       </div>
     </div>
   </section>

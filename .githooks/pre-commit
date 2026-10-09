@@ -9,7 +9,7 @@ fail=0
 staged() { git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMRT; }
 
 # Files that never belong in this repo. .env.example and Keynote's .key decks are fine.
-sealed=$(staged | grep -E '(^|/)(\.env(\.[^/]*)?|[^/]*service-account[^/]*\.json|[^/]*firebase-adminsdk[^/]*\.json|github-recovery-codes\.txt|id_(rsa|ecdsa|ed25519)|[^/]*\.(pem|p12|pfx))$' | grep -vE '(^|/)\.env\.(example|sample|template)$')
+sealed=$(staged | grep -E '(^|/)(\.env(\.[^/]*)?|\.envrc|[^/]*service-account[^/]*\.json|[^/]*firebase-adminsdk[^/]*\.json|github-recovery-codes\.txt|id_(rsa|ecdsa|ed25519)|[^/]*\.(pem|p12|pfx))$' | grep -vE '(^|/)\.env\.(example|sample|template)$')
 if [ -n "$sealed" ]; then
   echo "pre-commit: these files hold credentials and stay out of git:" >&2
   echo "$sealed" | sed 's/^/  - /' >&2

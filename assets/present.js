@@ -151,7 +151,13 @@ const KINDS = {
 
 const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());
 const timerKey = (screen) => screen.segment.id + "/" + (screen.heading || "");
-const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, SESSION.pace);
+// A timer can also be as long as a part ("wish") or all the building time ("building")
+const lengths = { building: 0 };
+SESSION.segments.forEach((seg) => {
+  lengths[seg.id] = seg.minutes;
+  if (seg.where === "Breakout rooms") lengths.building += seg.minutes;
+});
+const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, SESSION.pace, lengths);
 let timerWasDone = false;
 
 function timerBlock() {

@@ -8,8 +8,10 @@ const STAGE_TIMER = (() => {
   const MAX = 60;
 
   // The starting length in minutes: a number, or a pace from the session file (a range like [2, 3] uses the longer)
-  function startingMinutes(timer, pace) {
-    const value = typeof timer === "number" ? timer : pace && pace[timer];
+  // timer: a number of minutes, a pace name, or (with lengths) a part's id or "building"
+  function startingMinutes(timer, pace, lengths) {
+    const named = (pace && pace[timer] !== undefined) ? pace[timer] : lengths && lengths[timer];
+    const value = typeof timer === "number" ? timer : named;
     const n = Array.isArray(value) ? Math.max(...value) : Number(value);
     return Number.isFinite(n) ? clampMinutes(n) : null;
   }

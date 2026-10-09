@@ -142,7 +142,7 @@ const SESSION = {
           "Stuck? Press Ask for help in Meet."
         ], foot: "Back in the main room in {building}" },
         { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the three levels, the Teams doc, and the gallery wall." },
-        { kind: "countdown", note: "For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", until: "{wish.end}", body: "Rather watch? Stay here. We're building wishes live in the main room." }
+        { kind: "prompt", note: "Start the timer (T) as the rooms open; it runs for all of {building} and you can stretch it. For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", body: "Rather watch? Stay here. We're building wishes live in the main room.", timer: "building" }
       ],
       host: [
         "Open the rooms.",
@@ -159,7 +159,7 @@ const SESSION = {
       link: "wish.html", linkLabel: "Open Grant a wish",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
-        { kind: "countdown", note: "Keep building in the main room. With {nudge} left, hosts visit each room to say so.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, at your level, or one from the Teams doc. Pin something to the gallery wall before you head back." }
+        { kind: "prompt", note: "Start the timer (T) as Grant a wish begins, or let the building timer run on. With {nudge} left, hosts visit each room to say so. Keep building in the main room.", heading: "Grant a wish", body: "Your wish, at your level, or one from the Teams doc. Pin something to the gallery wall before you head back.", timer: "wish" }
       ],
       host: [
         "With {nudge} left, visit each room: pin something to the gallery wall.",

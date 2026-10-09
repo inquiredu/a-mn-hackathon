@@ -11,6 +11,9 @@ assert.strictEqual(T.startingMinutes("showTurn", pace), 4);
 assert.strictEqual(T.startingMinutes(5, pace), 5);
 assert.strictEqual(T.startingMinutes("nope", pace), null, "an unknown pace gives no timer");
 assert.strictEqual(T.startingMinutes(90, pace), 60, "at most an hour");
+assert.strictEqual(T.startingMinutes("wish", pace, { wish: 40, building: 57 }), 40, "a part's length by its id");
+assert.strictEqual(T.startingMinutes("building", pace, { wish: 40, building: 57 }), 57, "all the building time");
+assert.strictEqual(T.startingMinutes("wish", pace), null, "a part's id without lengths gives no timer");
 
 // Untouched, running, paused, done
 assert.deepStrictEqual(

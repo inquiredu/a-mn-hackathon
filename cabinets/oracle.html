@@ -25,6 +25,9 @@ const THINKING = [
 // TOPICS: when your question uses one of these words, the Oracle answers on that topic.
 // Plurals and endings count too: "copiers", "copies", and "copying" all mean "copy".
 // If a question touches two topics, the one it mentions more (or last) wins.
+// A topic answers by the kind of question, too: "What's for lunch?" takes from the food topic's
+// `what` list, "When will the copier work?" from the copier's `when`. A yes-or-no question, or a
+// kind the topic hasn't got, takes from its `prophecies`.
 // To add a topic, copy one block, change the words it listens for, and write new prophecies.
 const TOPICS = [
   {
@@ -34,7 +37,12 @@ const TOPICS = [
       "Tray 2 is empty. It has always been empty. It will always be empty.",
       "The copier works today, but only for people who don't need it.",
       "The laminator will be warm and waiting. This is a rare and holy sign."
-    ]
+    ],
+    when: ["Thursday. Not this Thursday.", "The moment you stop needing it.", "Right after someone from the office walks past and says, 'It was working for me.'"],
+    who: ["The person who jammed it is already in their car.", "Nobody. The copier did this to itself.", "The one who ordered the heavy paper. They meant well."],
+    where: ["Tray 2. It is always Tray 2.", "Behind the paper tray, in a place no human hand can reach."],
+    why: ["Because it heard you say 'quick copies.'", "The copier is not broken. It is grieving."],
+    what: ["A paper jam, in a tray the manual does not mention.", "Error 0x7A. No one knows what it means. It means no."]
   },
   {
     listensFor: ["kid", "kids", "student", "students", "homework", "class", "children"],
@@ -43,7 +51,12 @@ const TOPICS = [
       "Three of them did the homework. One did it twice. One made a diorama nobody asked for.",
       "Your students learned more than they'll admit. They'll tell you in ten years.",
       "A student will ask, 'Is this graded?' The Oracle's answer is always yes."
-    ]
+    ],
+    what: ["Something you didn't plan. It's the part they'll remember.", "A diorama. Nobody asked for a diorama.", "The one thing you said in passing. That's what stuck."],
+    who: ["The quiet one in the back. They always knew.", "Not the one you think. The other one."],
+    when: ["Ten years from now, in a grocery store, they'll tell you what they learned.", "The last five minutes before the bell. That's when it lands."],
+    how: ["Slowly, then all at once, then they'll claim they always knew it.", "With a banana in the backpack. Don't ask."],
+    why: ["Because someone dared them.", "Because it was in the group chat."]
   },
   {
     listensFor: ["snow", "weather", "cold", "winter", "recess", "rain", "storm"],
@@ -51,7 +64,12 @@ const TOPICS = [
       "Snow shall fall before Halloween. Someone will say, 'Well, it's Minnesota.' They will be right.",
       "Indoor recess approaches. Gather your strength. And the good markers.",
       "The Oracle sees a snow day. The Oracle also sees an e-learning day. Brace yourself."
-    ]
+    ],
+    when: ["Before Halloween. Someone will say, 'Well, it's Minnesota.'", "The night before your observation."],
+    what: ["Four inches, right as the buses leave.", "Wintry mix. The worst of all the weathers."],
+    how: ["Sideways.", "In the way that cancels nothing and ruins the parking lot."],
+    where: ["On the one sidewalk the plow forgot."],
+    why: ["Minnesota."]
   },
   {
     listensFor: ["coffee", "caribou", "tea", "lunch", "lounge", "potluck", "food", "pizza", "hotdish", "snacks"],
@@ -60,7 +78,12 @@ const TOPICS = [
       "The hotdish at the next potluck will contain tater tots. This is certain.",
       "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell.",
       "A mug in the lounge sink has become self-aware. Approach it with kindness."
-    ]
+    ],
+    what: ["Hotdish. There is always hotdish.", "Tater tots, in some configuration.", "Whatever the PTO left in the lounge. Move quickly.", "A sad desk salad, eaten standing up. Tomorrow: pizza.", "Something from the staff fridge, unclaimed since Tuesday. Choose wisely."],
+    when: ["Fourth period, for eleven minutes, four of which are the walk.", "Sooner than the end of your meeting. Later than you'd like."],
+    where: ["The lounge, if you dare. The crockpot is unattended.", "At your desk, next to the grading. The Oracle is sorry."],
+    who: ["Whoever brought the crockpot. Thank them with your whole heart.", "The science department. They always have snacks."],
+    why: ["Because the hotdish called to you."]
   },
   {
     listensFor: ["email", "emails", "parent", "parents", "meeting", "meetings", "principal", "boss"],
@@ -68,7 +91,12 @@ const TOPICS = [
       "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
       "The meeting will run long. The snacks will run short.",
       "A parent will email just to say thank you. Print it. Keep it in a drawer for a hard day."
-    ]
+    ],
+    when: ["9:58 PM. Do not open it until morning.", "The minute you step into the hall. Every time."],
+    who: ["A parent you've never heard from, with a question about March.", "Someone who 'just wants to loop you in.' Run.", "The principal, with 'Quick question' in the subject line. It is not quick."],
+    what: ["A reply-all. Then another. Then someone asking to be removed from the thread.", "A thank-you. Print it. Keep it in a drawer for a hard day."],
+    how: ["Briefly. Then sleep on the second draft."],
+    why: ["Because the meeting could have been an email, and now it is one."]
   },
   {
     listensFor: ["wifi", "wi-fi", "internet", "password", "computer", "laptop", "chromebook", "tech", "technology", "ai", "robots"],
@@ -78,14 +106,24 @@ const TOPICS = [
       "Have you tried turning it off and on again? The Oracle has. It helped.",
       "The AI will write a beautiful paragraph. It will be about the wrong book.",
       "The AI can write the lesson. Only you know which kid needs the extra minute today."
-    ]
+    ],
+    why: ["Because the update ran at 7:59, on purpose.", "The Wi-Fi heard you call it 'the internet.' It took offense."],
+    when: ["On the busiest day of the quarter. Every day is the busiest day.", "The Wi-Fi returns the moment the bell rings."],
+    how: ["Off, then on again. The Oracle has done it. It helped.", "Ask the kid in the second row. They fixed it last time."],
+    what: ["A beautiful paragraph about the wrong book.", "An update. It will move one button and change nothing else."],
+    who: ["The tech department. They are already on their way, carrying a different cable."],
+    where: ["In the shared drive, in 'New Folder (7).'"]
   },
   {
     listensFor: ["sub", "subs", "substitute", "sick", "absent"],
     prophecies: [
       "Your sub plans will be three pages long. The sub will read one. It will be fine.",
       "The sub will leave a note that says 'They were great!' Do not ask follow-up questions."
-    ]
+    ],
+    who: ["A retired band teacher who has seen things.", "Someone who will read page one of your three pages. It will be fine."],
+    what: ["A note that says 'They were great!' Do not ask follow-up questions.", "The movie. They always find the movie."],
+    when: ["The day you planned the good lesson."],
+    how: ["Fine. Just fine. Don't look too closely."]
   },
   {
     listensFor: ["friday", "weekend", "break", "vacation", "summer", "holiday"],
@@ -94,7 +132,11 @@ const TOPICS = [
       "This Friday? Glorious. Something will break on purpose, and everyone will cheer.",
       "You will spend the first day of break doing laundry. The second day will be glorious.",
       "Winter break is closer than it looks. Not much closer. But closer."
-    ]
+    ],
+    when: ["Sooner than it looks. Not much sooner. But sooner.", "After one more Wednesday. There's always one more Wednesday."],
+    how: ["Count the days on a sticky note. Cross them off with ceremony.", "Laundry on day one, nothing on day two. That's the way."],
+    what: ["Laundry, then glory.", "A nap you will not apologize for."],
+    where: ["Somewhere with no bells."]
   },
   {
     listensFor: ["grade", "grades", "grading", "test", "tests", "quiz", "quizzes", "assessment", "rubric"],
@@ -102,7 +144,12 @@ const TOPICS = [
       "The stack of grading will shrink. Then it will grow back, like a hydra.",
       "The test will measure something. Whether it's the thing that matters, even the Oracle wonders.",
       "Somewhere, a rubric is being revised. It will be revised again."
-    ]
+    ],
+    when: ["Sunday night, with a show on in the background.", "Never, and also tomorrow."],
+    how: ["In sticky-note-sized pieces. Then the hydra grows back.", "Faster than you fear. Slower than you'd like."],
+    what: ["Something. Whether it's the thing that matters, even the Oracle wonders.", "A rubric. It will be revised again."],
+    who: ["The one who did it twice. And the one who made the diorama."],
+    why: ["Because someone, somewhere, is revising the rubric."]
   }
 ];
 
@@ -114,10 +161,12 @@ const EITHER_OR = [
   "{choice}. But bring snacks either way."
 ];
 
-// QUESTION KINDS: if no topic matches, the Oracle answers the kind of question you asked,
-// judging by the first few words.
+// QUESTION KINDS: the kind of question, judged by the first few words ("what's" counts as "what").
+// A topic that has a list named for the kind answers from it; otherwise these answers are for
+// questions with no topic.
 const QUESTION_KINDS = [
   {
+    kind: "yesno",
     firstWords: ["will", "is", "are", "am", "can", "could", "should", "would", "do", "does", "did", "has", "have", "may", "might", "shall"],
     answers: [
       "The signs say yes. The copier says no. Trust the signs.",
@@ -129,6 +178,7 @@ const QUESTION_KINDS = [
     ]
   },
   {
+    kind: "when",
     firstWords: ["when"],
     answers: [
       "Right after the next fire drill.",
@@ -137,6 +187,7 @@ const QUESTION_KINDS = [
     ]
   },
   {
+    kind: "who",
     firstWords: ["who"],
     answers: [
       "The one holding the good stapler.",
@@ -145,6 +196,7 @@ const QUESTION_KINDS = [
     ]
   },
   {
+    kind: "why",
     firstWords: ["why"],
     answers: [
       "Because the copier willed it.",
@@ -153,6 +205,7 @@ const QUESTION_KINDS = [
     ]
   },
   {
+    kind: "how",
     firstWords: ["how"],
     answers: [
       "Slowly, then all at once.",
@@ -161,6 +214,7 @@ const QUESTION_KINDS = [
     ]
   },
   {
+    kind: "where",
     firstWords: ["where"],
     answers: [
       "In the shared drive, in a folder called 'New Folder (7).'",
@@ -169,6 +223,7 @@ const QUESTION_KINDS = [
     ]
   },
   {
+    kind: "what",
     firstWords: ["what", "which"],
     answers: [
       "The answer is in the faculty handbook, page 47. There is no page 47.",
@@ -509,6 +564,16 @@ function topicOf(words) {
   return best && best.topic;
 }
 
+// The kind of question, from its first three words: "what's", "whats", and "what" all count as "what"
+function kindOf(words) {
+  for (const word of words.slice(0, 3)) {
+    const plain = word.replace(/^(what|who|where|when|how)'?s$/, "$1");
+    const kind = QUESTION_KINDS.find((k) => k.firstWords.includes(plain));
+    if (kind) return kind;
+  }
+  return null;
+}
+
 // "Pizza or hotdish?" gives ["Pizza", "hotdish"]. No "or" (or "or not") gives nothing.
 // "Will it snow or will it rain?" is two whole clauses, so it gives ["snow", "rain"].
 function choicesIn(text) {
@@ -543,17 +608,14 @@ function answer(questionText) {
     return pick(EITHER_OR).replace("{choice}", choice.charAt(0).toUpperCase() + choice.slice(1));
   }
 
-  // 4. Does the question touch one of the TOPICS?
+  // 4. What kind of question is it, and does it touch one of the TOPICS?
+  const kind = kindOf(words);
   const topic = topicOf(words);
+  if (topic && kind && topic[kind.kind]) return pick(topic[kind.kind]);   // "What's for lunch?" names a food
   if (topic) return pick(topic.prophecies);
+  if (kind) return pick(kind.answers);
 
-  // 5. What kind of question is it? (Reads the first three words, in order.)
-  for (const word of words.slice(0, 3)) {
-    const kind = QUESTION_KINDS.find((k) => k.firstWords.includes(word));
-    if (kind) return pick(kind.answers);
-  }
-
-  // 6. None of those? A classic prophecy.
+  // 5. None of those? A classic prophecy.
   return pick(PROPHECIES);
 }
 

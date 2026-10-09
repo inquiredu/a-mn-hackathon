@@ -12,11 +12,11 @@ const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m
 const element = new Proxy({}, { get: (_, name) => (name === "classList" ? { add() {}, remove() {} } : name === "firstElementChild" ? {} : () => {}) });
 const context = { document: { getElementById: () => element }, console };
 vm.createContext(context);
-const share = ["answer", "root", "pick", "choicesIn", "TOPICS", "QUESTION_KINDS", "PROPHECIES", "SILENCE", "EITHER_OR", "MANNERS"];
+const share = ["answer", "root", "pick", "choicesIn", "kindOf", "TOPICS", "QUESTION_KINDS", "PROPHECIES", "SILENCE", "EITHER_OR", "MANNERS"];
 vm.runInContext(scripts + "\n" + share.map((name) => "this." + name + " = " + name + ";").join(""), context, { filename: "cabinets/oracle.html" });
-const { answer, root, pick, choicesIn, TOPICS, QUESTION_KINDS, PROPHECIES, SILENCE, EITHER_OR, MANNERS } = context;
+const { answer, root, pick, choicesIn, kindOf, TOPICS, QUESTION_KINDS, PROPHECIES, SILENCE, EITHER_OR, MANNERS } = context;
 
-const topic = (word) => TOPICS.find((t) => t.listensFor.includes(word)).prophecies;
+const topic = (word, kind = "prophecies") => TOPICS.find((t) => t.listensFor.includes(word))[kind];
 const kind = (word) => QUESTION_KINDS.find((k) => k.firstWords.includes(word)).answers;
 const oneOf = (list, text, why) => assert.ok(list.includes(text), why + ": got \"" + text + "\"");
 const same = (a, b, why) => assert.strictEqual(JSON.stringify(a), JSON.stringify(b), why);   // arrays from the page's own realm
@@ -71,10 +71,22 @@ oneOf(topic("coffee"), answer("Is there coffee in the lounge today?"), "two word
 oneOf(topic("copier"), answer("Will the kids break the copier?"), "a tie goes to the topic mentioned last");
 oneOf(topic("kid"), answer("Will the copier survive my kids and their homework?"), "two mentions beat one");
 
+// 4b. A topic answers in the kind of question asked, when it has such a list
+oneOf(topic("lunch", "what"), answer("What's for lunch"), "a what-question about lunch names a food");
+oneOf(topic("lunch", "what"), answer("Whats for lunch?"), "without the apostrophe too");
+oneOf(topic("copier", "when"), answer("When will the copier work?"), "a when-question about the copier names a time");
+oneOf(topic("sub", "who"), answer("Who's the sub tomorrow?"), "a who-question about the sub names a person");
+oneOf(topic("copier"), answer("Will the copier work today?"), "a yes-or-no question takes the topic's prophecies");
+oneOf(topic("friday"), answer("Why is Friday so far away?"), "a kind the topic hasn't got falls back to its prophecies");
+assert.strictEqual(kindOf(["what's", "for", "lunch"]).kind, "what");
+assert.strictEqual(kindOf(["honestly", "though", "when"]).kind, "when");
+assert.strictEqual(kindOf(["lanyard"]), null);
+
 // 5. Kinds, then 6. classics
 oneOf(kind("when"), answer("When does the bell ring?"), "a when-question");
 oneOf(kind("will"), answer("Will it be okay?"), "a will-question");
 oneOf(kind("why"), answer("Honestly, why me?"), "a kind word within the first three");
+oneOf(kind("what"), answer("What's the point?"), "a what-question with no topic");
 oneOf(PROPHECIES, answer("Lanyard."), "anything else gets a classic");
 
 // pick: everything once before anything repeats, and never the same thing twice running

@@ -29,11 +29,19 @@ function sessionNow() {
   return Number(parts.hour) * 3600 + Number(parts.minute) * 60 + Number(parts.second);
 }
 
-function clockLabel(seconds) {
-  const h = Math.floor(seconds / 3600) % 24;
-  const m = Math.floor(seconds / 60) % 60;
-  return (h % 12 || 12) + ":" + String(m).padStart(2, "0");
+// Today's date in the session's time zone, so a late start saved today doesn't carry to another day
+function sessionDay() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: SESSION.timeZone }).format(new Date());
 }
+
+// The two hours, counted from the advertised start, or from when the presenter restarted them
+function sessionClock(now) {
+  let store;
+  try { store = localStorage; } catch { store = undefined; }
+  const start = STAGE_TIMER.savedStart(store, sessionDay()) ?? toSeconds(SESSION.start);
+  return STAGE_TIMER.sessionElapsed(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
+}
+
 
 
 // ---------- Building blocks ----------
@@ -210,7 +218,11 @@ function show(i) {
 // Every second: the clock in the rail, and any countdown on the stage
 function tick() {
   const now = sessionNow();
-  document.getElementById("rail-clock").textContent = clockLabel(now);
+  const two = sessionClock(now);
+  const corner = document.getElementById("rail-clock");
+  corner.textContent = two.display;
+  corner.classList.toggle("over", two.over);
+  document.querySelector(".rail").style.setProperty("--elapsed", two.pct.toFixed(2) + "%");
   const count = stage.querySelector(".count");
   if (count) {
     const left = Math.ceil((toSeconds(count.dataset.until) - now) / 60);

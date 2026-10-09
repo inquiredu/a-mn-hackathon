@@ -32,6 +32,9 @@
   button.primary { background: var(--navy); color: #FFFFFF; }
   button:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
   .status { margin: 0; font-size: .9rem; color: var(--muted); }
+  .restart { display: flex; gap: 8px; flex-wrap: wrap; }
+  .restart button { flex: 1 1 200px; padding: 8px; font-size: .9rem; font-weight: 600; border-width: 1.5px; }
+  .clock.over { color: #B3261E; }
   .timer { padding: 12px 14px; border-radius: 12px; background: #FFFFFF; border: 2px solid var(--line); display: grid; gap: 10px; }
   .timer[hidden] { display: none; }
   .timer-read { display: flex; align-items: baseline; gap: 12px; }
@@ -43,7 +46,7 @@
 </head>
 <body>
 <main class="wrap">
-  <p class="top"><span id="count"></span><span class="clock" id="clock"></span></p>
+  <p class="top"><span id="count"></span><span class="clock" id="clock" title="Time into the session"></span></p>
   <div class="segment"><strong id="segment"></strong><span class="left" id="left"></span></div>
   <div>
     <p class="label">On the stage</p>
@@ -66,10 +69,15 @@
     <button class="primary" id="forward" type="button">Next →</button>
   </div>
   <p class="status" id="status" aria-live="polite"></p>
+  <div class="restart">
+    <button id="start-now" type="button">Start the two hours now</button>
+    <button id="start-scheduled" type="button">Count from the scheduled start</button>
+  </div>
 </main>
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js"></script>
+<script src="assets/stage-timer.js"></script>
 <script>
 // The speaker notes follow the stage, and its buttons (or arrow keys) move the stage too.
 const screens = [];
@@ -93,6 +101,21 @@ function sessionNow() {
   return Number(parts.hour) * 3600 + Number(parts.minute) * 60 + Number(parts.second);
 }
 
+function store() { try { return localStorage; } catch { return undefined; } }
+function today() { return new Intl.DateTimeFormat("en-CA", { timeZone: SESSION.timeZone }).format(new Date()); }
+
+// Started late? Count the two hours from now (the stage, in this browser, follows). Saved for today only.
+$("start-now").addEventListener("click", () => {
+  STAGE_TIMER.saveStart(store(), today(), sessionNow());
+  $("status").textContent = "Counting the two hours from now.";
+  tick();
+});
+$("start-scheduled").addEventListener("click", () => {
+  STAGE_TIMER.saveStart(store(), today(), null);
+  $("status").textContent = "Counting from the scheduled start, " + TIMES.clock(SESSION.start) + ".";
+  tick();
+});
+
 function render() {
   const screen = screens[index];
   const next = screens[index + 1];
@@ -114,9 +137,9 @@ function render() {
 
 function tick() {
   const now = sessionNow();
-  const h = Math.floor(now / 3600);
-  const m = Math.floor(now / 60) % 60;
-  $("clock").textContent = (h % 12 || 12) + ":" + String(m).padStart(2, "0");
+  const two = STAGE_TIMER.sessionElapsed(now, STAGE_TIMER.savedStart(store(), today()) ?? toSeconds(SESSION.start), toSeconds(SESSION.end) - toSeconds(SESSION.start));
+  $("clock").textContent = two.display;
+  $("clock").classList.toggle("over", two.over);
   const end = toSeconds(screens[index].segment.end);
   const start = toSeconds(screens[index].segment.start);
   const left = Math.ceil((end - now) / 60);
@@ -139,10 +162,10 @@ if (channel) {
   channel.onmessage = (event) => {
     const message = event.data || {};
     if (typeof message.index === "number") {
-      connected = true;
-      if (message.index !== index || $("status").textContent !== "Following the stage.") {
+      if (!connected) $("status").textContent = "Following the stage.";
+      if (!connected || message.index !== index) {
+        connected = true;
         index = message.index;
-        $("status").textContent = "Following the stage.";
         render();
       }
       showTimer(message.timer);

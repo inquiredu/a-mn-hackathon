@@ -50,4 +50,14 @@ assert.strictEqual(T.createStore(storage).minutes("show", 4), 6, "a new store re
 assert.strictEqual(T.createStore(storage).view("show", 4, t0).status, "Ready", "runs aren't saved");
 assert.strictEqual(T.createStore({ getItem() { throw new Error("blocked"); } }).minutes("show", 4), 4, "blocked storage falls back");
 
+// The two hours, in the corner
+const ten = 10 * 3600, two = 2 * 3600;
+assert.strictEqual(T.sessionElapsed(ten - 300, ten, two).display, "0:00 of 2:00", "before the start");
+assert.strictEqual(T.sessionElapsed(ten - 300, ten, two).started, false);
+assert.strictEqual(T.sessionElapsed(ten + 42 * 60 + 59, ten, two).display, "0:42 of 2:00", "whole minutes, rounded down");
+assert.strictEqual(T.sessionElapsed(ten + 90 * 60, ten, two).pct, 75);
+assert.strictEqual(T.sessionElapsed(ten + two, ten, two).display, "2:00 of 2:00");
+assert.strictEqual(T.sessionElapsed(ten + two + 5 * 60, ten, two).display, "+0:05 over");
+assert.strictEqual(T.sessionElapsed(ten + two + 5 * 60, ten, two).pct, 100);
+
 console.log("stage timer: all tests pass");

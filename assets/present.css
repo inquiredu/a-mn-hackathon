@@ -138,6 +138,9 @@ body {
 .rail-mark { width: 40px; height: auto; }
 .rail-right span + span { padding-left: 14px; border-left: 2px solid #66C1E755; color: var(--ice); }
 #rail-clock { font-weight: 700; font-variant-numeric: tabular-nums; }
+#rail-clock.over { color: #FF8A7A; }
+/* How far into the session: a thin line along the top of the rail */
+.rail::before { content: ""; position: absolute; left: 0; top: -2px; height: 4px; width: var(--elapsed, 0%); background: var(--sky); }
 
 /* ---------- Controls: faint until you reach for them ---------- */
 .controls { position: fixed; top: 12px; right: 12px; display: flex; gap: 6px; opacity: .25; transition: opacity .2s; }

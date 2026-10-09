@@ -80,7 +80,37 @@ const STAGE_TIMER = (() => {
     };
   }
 
-  return { startingMinutes, clampMinutes, secondsLeft, view, toggle, adjust, createStore, MIN, MAX };
+  // The whole session, for the corner of the stage: how far in, out of how long, and whether it's over.
+  // All in seconds of the day. Before the start it reads 0:00.
+  function hm(seconds) {
+    const m = Math.floor(seconds / 60);
+    return Math.floor(m / 60) + ":" + String(m % 60).padStart(2, "0");
+  }
+  function sessionElapsed(now, start, length) {
+    const elapsed = Math.max(0, now - start);
+    const over = elapsed > length;
+    return {
+      elapsed,
+      display: over ? "+" + hm(elapsed - length) + " over" : hm(elapsed) + " of " + hm(length),
+      pct: Math.min(100, (100 * elapsed) / length),
+      started: now >= start,
+      over
+    };
+  }
+
+  // A late start: the presenter can restart the two hours from now. Saved for that day only, in this browser.
+  const START_KEY = "hands-on-started";
+  function savedStart(storage, today) {
+    try {
+      const saved = JSON.parse(storage?.getItem(START_KEY) || "null");
+      return saved && saved.day === today && Number.isFinite(saved.at) ? saved.at : null;
+    } catch { return null; }
+  }
+  function saveStart(storage, today, at) {
+    try { at === null ? storage?.removeItem(START_KEY) : storage?.setItem(START_KEY, JSON.stringify({ day: today, at })); } catch { /* private window */ }
+  }
+
+  return { startingMinutes, clampMinutes, secondsLeft, view, toggle, adjust, createStore, sessionElapsed, savedStart, saveStart, MIN, MAX };
 })();
 
 if (typeof module !== "undefined") module.exports = STAGE_TIMER;

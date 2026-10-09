@@ -51,13 +51,13 @@ No page or message types out a time, date, or length. Write it in braces instead
 | Write | Reads (for this session) | What it is |
 | --- | --- | --- |
 | `{start}`, `{end}` | 10:00, noon | The session's start and end |
-| `{wish.start}`, `{wish.end}` | 10:45, 11:20 | When a part starts or ends, by its `id` |
-| `{wish.end - nudge}` | 11:10 | A time moved by some minutes, or by a `pace` value |
-| `{length}`, `{wish.length}` | two hours, 35 minutes | How long the session or a part runs |
-| `{building}` | 60 minutes | All the time in breakout rooms |
+| `{wish.start}`, `{wish.end}` | 10:45, 11:25 | When a part starts or ends, by its `id` |
+| `{wish.end - nudge}` | 11:15 | A time moved by some minutes, or by a `pace` value |
+| `{length}`, `{wish.length}` | two hours, 40 minutes | How long the session or a part runs |
+| `{building}` | 57 minutes | All the time in breakout rooms |
 | `{nudge}`, `{share}` | ten minutes, two or three minutes | A `pace` value (a pair like `[2, 3]` reads as a range) |
 | `{weekday}`, `{date}`, `{zone}` | Friday, October 9, Central | From `day` and `timeZone` |
-| `{parts}` | 6 | How many parts |
+| `{parts}` | 7 | How many parts |
 | `{title}`, `{subtitle}`, `{org}` | Hands On, ... | The session's names |
 | `{links.teams}` | https://docs.google... | A link from `links`, for chat messages |
 

@@ -30,7 +30,9 @@ const SESSION = {
     // Session slides: the whole morning, screen by screen (Drive title "Hands On 10.9 · Session slides (backup)").
     backup: "https://docs.google.com/presentation/d/18BmKOht78NXQ2H3AvPgt3uLm9zQGRsD03dB2EBBd020/edit",
     // Starter code: every starter's code and remix menu, in the speaker notes (Drive title "Hands On 10.9 · Starter code (backup)").
-    companion: "https://docs.google.com/presentation/d/1L3rwzGa4nrh1HDlExkhGetHYmQeqq_-cMcc8mmovtDM/edit"
+    companion: "https://docs.google.com/presentation/d/1L3rwzGa4nrh1HDlExkhGetHYmQeqq_-cMcc8mmovtDM/edit",
+    // The site's own code, public: how a session like this is built.
+    repo: "https://github.com/inquiredu/a-mn-hackathon"
   },
 
   // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.

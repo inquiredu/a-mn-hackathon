@@ -222,14 +222,14 @@ html { scroll-padding-top: 76px; }
   display: grid; grid-template-columns: 72px 1fr; gap: 14px; align-items: start;
   background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px;
 }
-.timeline time { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--link); }
+.timeline .length { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--link); }
 .timeline strong { display: block; font-size: 1.05rem; }
 .timeline span { color: var(--muted); }
 .timeline a { font-weight: 600; white-space: nowrap; }
 .timeline li.done { background: var(--bg); border-style: dashed; }
-.timeline li.done :is(time, strong) { color: var(--muted); }
+.timeline li.done :is(.length, strong) { color: var(--muted); }
 .timeline li.now { border: 2px solid var(--sky); box-shadow: 0 0 0 4px color-mix(in srgb, var(--sky) 30%, transparent); }
-.timeline li.now time::after {
+.timeline li.now .length::after {
   content: "Now"; display: block; width: max-content; margin-top: 6px; padding: 0 8px;
   border-radius: 999px; background: var(--sky); color: #0A2340;
   font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
@@ -505,7 +505,7 @@ dialog::backdrop { background: rgb(7 27 49 / .75); }
 .segment { padding: 18px; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--link); border-radius: 0 16px 16px 0; }
 .segment.rooms { border-left-color: var(--sky); }
 .segment-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
-.segment-head time { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--link); }
+.segment-head .length { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--link); }
 .segment-head h3 { font-size: 1.2rem; }
 .segment .where { padding: 1px 10px; border-radius: 999px; background: var(--tint); font-size: .85rem; font-weight: 600; }
 .segment h4 { margin: 14px 0 6px; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }

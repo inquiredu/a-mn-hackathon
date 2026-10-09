@@ -102,6 +102,25 @@ body {
 .quote { margin: 0; max-width: 20ch; font-size: clamp(2.6rem, 6.4vw, 7rem); font-weight: 800; line-height: 1.12; }
 .quote::before { content: "\201C"; display: block; color: var(--sky); font-size: 1.4em; line-height: .6; }
 
+/* Plan: the morning at a glance */
+.plan { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.3vh; width: 100%; max-width: 1100px; }
+.plan li { display: grid; grid-template-columns: 5.5em 1fr auto; align-items: baseline; gap: 1.6vw; font-size: clamp(1.1rem, 2.1vw, 2.3rem); padding-bottom: 1.1vh; border-bottom: 1px solid #66C1E733; }
+.plan .length { color: var(--sky); font-weight: 800; font-variant-numeric: tabular-nums; }
+.plan span:not(.length) { color: var(--ice); font-size: .8em; }
+
+/* Timer: on screens that ask for one */
+.timer { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 2vw; row-gap: 1vh; margin-top: 1vh; }
+.timer-display { grid-row: span 2; margin: 0; font-size: clamp(3.5rem, 9vw, 9.5rem); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; color: var(--sky); }
+.timer.done .timer-display { color: #FF8A7A; }
+.timer-status { margin: 0; font-size: clamp(1rem, 1.6vw, 1.6rem); font-weight: 700; color: var(--ice); text-transform: uppercase; letter-spacing: .1em; }
+.timer-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.timer-buttons button {
+  padding: 8px 16px; font: inherit; font-size: clamp(.95rem, 1.3vw, 1.2rem); font-weight: 700; cursor: pointer;
+  color: var(--white); background: #0A2340CC; border: 2px solid var(--sky); border-radius: 999px;
+}
+.timer-buttons .timer-go { background: var(--sky); color: var(--deep); }
+.has-timer.kind-pair .pair div { padding: 2.5vh 2.5vw; }
+
 /* Pair */
 .pair { width: 100%; display: grid; gap: 2vw; grid-template-columns: 1fr 1fr; }
 .pair div { padding: 4vh 3vw; border-radius: 22px; background: #FFFFFF14; border: 2px solid #66C1E755; }
@@ -118,7 +137,10 @@ body {
 .rail p { margin: 0; display: flex; align-items: center; gap: 14px; }
 .rail-mark { width: 40px; height: auto; }
 .rail-right span + span { padding-left: 14px; border-left: 2px solid #66C1E755; color: var(--ice); }
-#rail-clock { font-weight: 700; font-variant-numeric: tabular-nums; }
+/* Room on the right of the rail for the session clock in its corner */
+.rail-right { padding-right: 12.5em; }
+/* How far into the session: a thin line along the top of the rail */
+.rail::before { content: ""; position: absolute; left: 0; top: -2px; height: 4px; width: var(--elapsed, 0%); background: var(--sky); }
 
 /* ---------- Controls: faint until you reach for them ---------- */
 .controls { position: fixed; top: 12px; right: 12px; display: flex; gap: 6px; opacity: .25; transition: opacity .2s; }
@@ -134,6 +156,56 @@ body {
 }
 @keyframes fade { to { opacity: 0; visibility: hidden; } }
 
+/* ---------- The session clock ----------
+   One element, three places: big on the opening screen (hero), small in the rail's corner, and large
+   above the stage when clicked (open). Moving between them animates position and size together. */
+.session-clock {
+  position: fixed; z-index: 20; right: 2vw; bottom: 12px; transform: translate(0, 0);
+  display: grid; justify-items: end; gap: .3em;
+  font-size: clamp(1rem, 1.6vw, 1.45rem);
+  padding: .2em .4em; border-radius: 18px; background: transparent;
+  transition: right .6s ease, bottom .6s ease, transform .6s ease, font-size .6s ease, padding .6s ease, background-color .6s ease;
+}
+.sc-face { display: flex; align-items: baseline; gap: .45em; padding: .15em .5em; font: inherit; color: var(--white); background: none; border: 0; border-radius: 12px; cursor: pointer; }
+.sc-face:hover { background: #FFFFFF14; }
+.sc-time { font-weight: 800; font-variant-numeric: tabular-nums; }
+.sc-label { color: var(--ice); font-weight: 600; font-size: .8em; }
+.session-clock[data-state="over"] .sc-time { color: #FF8A7A; }
+.sc-actions, .sc-wait { display: none; }
+
+/* Hero: the opening screen, big and waiting for the call to order, in the open space under the mark.
+   Anchored by its right edge like the other places (so the move animates), then shifted by its own width. */
+.session-clock[data-mode="hero"] { right: 93vw; bottom: 11vh; transform: translate(100%, 0); font-size: clamp(1.1rem, 2.2vw, 2.6rem); justify-items: start; }
+.session-clock[data-mode="hero"] .sc-start { font-size: .8em; }
+.session-clock[data-mode="hero"] .sc-face { flex-direction: column; align-items: flex-start; gap: 0; padding: 0; }
+.session-clock[data-mode="hero"] .sc-time { color: var(--sky); font-size: 1.6em; }
+.session-clock[data-mode="hero"] .sc-actions { display: flex; }
+.session-clock[data-mode="hero"] .sc-waits, .session-clock[data-mode="hero"] .sc-close { display: none; }
+
+/* Open: large, floating above the stage */
+.session-clock[data-mode="open"] {
+  right: 50%; bottom: 50%; transform: translate(50%, 50%);
+  font-size: clamp(1.8rem, 4.2vw, 4.4rem); padding: .8em 1.2em; justify-items: center;
+  background-color: var(--deep); border: 2px solid #66C1E788; box-shadow: 0 20px 60px #00000099;
+}
+.session-clock[data-mode="open"] .sc-time { font-size: 1.9em; color: var(--sky); }
+.session-clock[data-mode="open"] .sc-actions { display: flex; flex-direction: column; align-items: center; gap: .5em; font-size: .45em; }
+.session-clock[data-mode="open"] .sc-wait:not([hidden]) { display: grid; justify-items: center; }
+.session-clock[data-mode="open"].waiting .sc-time { font-size: 1em; }
+.sc-wait-label { color: var(--ice); font-weight: 700; font-size: .5em; letter-spacing: .12em; text-transform: uppercase; }
+.sc-wait-time { font-size: 2.4em; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; color: var(--white); }
+.sc-wait.done .sc-wait-time { color: #FF8A7A; }
+.sc-actions button {
+  white-space: nowrap; padding: .45em 1em; font: inherit; font-weight: 700; cursor: pointer;
+  color: var(--white); background: #0A2340CC; border: 2px solid var(--sky); border-radius: 999px;
+}
+.sc-actions .sc-start { background: var(--sky); color: var(--deep); }
+.sc-waits { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .4em; }
+.sc-waits span { color: var(--ice); font-weight: 700; margin-right: .2em; }
+.sc-actions [hidden] { display: none; }
+.sc-backdrop { position: fixed; inset: 0; z-index: 15; background: #0A2340B3; }
+.sc-backdrop[hidden] { display: none; }
+
 @media (max-width: 760px) {
   .kind-title { grid-template-columns: 1fr; }
   .kind-title .mark { grid-row: auto; }
@@ -141,5 +213,6 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .controls { transition: none; }
+  .session-clock { transition: none; }
   .keys { animation: none; display: none; }
 }

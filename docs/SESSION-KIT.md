@@ -44,6 +44,8 @@ Each segment:
 
 ## Times live only in the session file
 
+The pages and the stage show each part's length ("35 min"), not its clock time; only the session's own `{start}` and `{end}` appear as times. Prefer lengths in new copy too: `{building}`, `{wish.length}`, "with {nudge} left".
+
 No page or message types out a time, date, or length. Write it in braces instead, in any text in the session file or in a page element marked `data-fill`, and `assets/timing.js` fills it in:
 
 | Write | Reads (for this session) | What it is |
@@ -67,7 +69,7 @@ In a page, mark the element that holds the braces: `<p data-fill>Back at {wish.e
 
 ## Kinds of screen
 
-Every screen has a `kind` and an optional `note` (shown only in the speaker notes).
+Every screen has a `kind` and an optional `note` (shown only in the speaker notes). Any screen can also have a `timer`: a `pace` name (`"showTurn"`, `"share"`) or a number of minutes. The stage then shows a countdown the presenter starts and stretches live: T starts or pauses it, + and - add or take away a minute without stopping it, and the speaker notes window has the same buttons. A length the presenter changes is remembered in that browser. The stage also carries a session clock: large on the opening screen until the presenter calls the session to order (the button, or T), then counting down in the rail's corner, and large again above the stage on a click or C, with wait-time countdowns. Uncalled, it counts from `start` on the session's `day`. The arithmetic lives in `assets/stage-timer.js`, tested by `node scripts/test-stage-timer.js`.
 
 | Kind | Fields | Use it for |
 | --- | --- | --- |
@@ -80,6 +82,7 @@ Every screen has a `kind` and an optional `note` (shown only in the speaker note
 | `awards` | `heading`, `awards` (`icon`, `name`, `why`) | Show & Cheer |
 | `code` | `heading`, `code`, `caption` | Showing a few lines of code (braces here are left alone) |
 | `quote` | `text` | One line, said and left to sit |
+| `plan` | `heading`, `url` | The whole morning from `segments`: each part's time, name, and place |
 | `pair` | `heading`, `cards` (`heading`, `body`), `foot` | Two side-by-side prompts |
 
 To add a kind, add a function to `KINDS` in `assets/present.js` and its styles to `assets/present.css`.

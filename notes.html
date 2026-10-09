@@ -32,27 +32,52 @@
   button.primary { background: var(--navy); color: #FFFFFF; }
   button:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
   .status { margin: 0; font-size: .9rem; color: var(--muted); }
+  .restart { display: flex; gap: 8px; flex-wrap: wrap; }
+  .restart button { flex: 1 1 200px; padding: 8px; font-size: .9rem; font-weight: 600; border-width: 1.5px; }
+  .clock.over { color: #B3261E; }
+  .timer { padding: 12px 14px; border-radius: 12px; background: #FFFFFF; border: 2px solid var(--line); display: grid; gap: 10px; }
+  .timer[hidden] { display: none; }
+  .timer-read { display: flex; align-items: baseline; gap: 12px; }
+  .timer-display { font-size: 2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .timer.done .timer-display { color: #B3261E; }
+  .timer-status { color: var(--muted); font-size: .95rem; }
+  .timer .buttons button { padding: 8px; }
 </style>
 </head>
 <body>
 <main class="wrap">
-  <p class="top"><span id="count"></span><span class="clock" id="clock"></span></p>
+  <p class="top"><span id="count"></span><span class="clock" id="clock" title="Time into the session"></span></p>
   <div class="segment"><strong id="segment"></strong><span class="left" id="left"></span></div>
   <div>
     <p class="label">On the stage</p>
     <h1 id="heading"></h1>
   </div>
   <p class="note" id="note"></p>
+  <div class="timer" id="timer" role="group" aria-label="Stage timer" hidden>
+    <p class="label">Timer on the stage</p>
+    <div class="timer-read"><span class="timer-display" id="timer-display"></span><span class="timer-status" id="timer-status"></span></div>
+    <div class="buttons">
+      <button class="primary" id="timer-go" type="button">Start</button>
+      <button id="timer-minus" type="button" aria-label="One minute less">−1 min</button>
+      <button id="timer-plus" type="button" aria-label="One minute more">+1 min</button>
+      <button id="timer-reset" type="button">Reset</button>
+    </div>
+  </div>
   <p class="next" id="next"></p>
   <div class="buttons">
     <button id="prev" type="button">← Back</button>
     <button class="primary" id="forward" type="button">Next →</button>
   </div>
   <p class="status" id="status" aria-live="polite"></p>
+  <div class="restart">
+    <button id="start-now" type="button">Call to order now</button>
+    <button id="start-scheduled" type="button">Reset the session clock</button>
+  </div>
 </main>
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js"></script>
+<script src="assets/stage-timer.js"></script>
 <script>
 // The speaker notes follow the stage, and its buttons (or arrow keys) move the stage too.
 const screens = [];
@@ -76,12 +101,29 @@ function sessionNow() {
   return Number(parts.hour) * 3600 + Number(parts.minute) * 60 + Number(parts.second);
 }
 
+function store() { try { return localStorage; } catch { return undefined; } }
+function today() { return new Intl.DateTimeFormat("en-CA", { timeZone: SESSION.timeZone }).format(new Date()); }
+
+// Call to order from here, or reset (the stage, in this browser, follows). Saved for today only.
+$("start-now").addEventListener("click", () => {
+  STAGE_TIMER.saveStart(store(), today(), sessionNow());
+  $("status").textContent = "Called to order: the two hours are counting down.";
+  tick();
+});
+$("start-scheduled").addEventListener("click", () => {
+  STAGE_TIMER.saveStart(store(), today(), null);
+  $("status").textContent = today() === SESSION.day
+    ? "Counting from the scheduled start, " + TIMES.clock(SESSION.start) + "."
+    : "Reset. The clock waits for the call to order.";
+  tick();
+});
+
 function render() {
   const screen = screens[index];
   const next = screens[index + 1];
   const seg = screen.segment;
   $("count").textContent = "Screen " + (index + 1) + " of " + screens.length;
-  $("segment").textContent = seg.title + " · " + TIMES.clock(seg.start) + " to " + TIMES.clock(seg.end) + " · " + seg.where;
+  $("segment").textContent = seg.title + " · " + seg.minutes + " min · " + seg.where;
   $("heading").textContent = screen.heading || screen.text;
   $("note").textContent = screen.note || "No note for this screen.";
   $("next").replaceChildren();
@@ -97,13 +139,14 @@ function render() {
 
 function tick() {
   const now = sessionNow();
-  const h = Math.floor(now / 3600);
-  const m = Math.floor(now / 60) % 60;
-  $("clock").textContent = (h % 12 || 12) + ":" + String(m).padStart(2, "0");
+  const start = STAGE_TIMER.resolveStart(STAGE_TIMER.savedStart(store(), today()), today(), SESSION.day, toSeconds(SESSION.start));
+  const two = STAGE_TIMER.sessionClock(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
+  $("clock").textContent = two.display + " " + (two.state === "ready" ? "to go" : two.label);
+  $("clock").classList.toggle("over", two.over);
   const end = toSeconds(screens[index].segment.end);
-  const start = toSeconds(screens[index].segment.start);
+  const partStart = toSeconds(screens[index].segment.start);
   const left = Math.ceil((end - now) / 60);
-  $("left").textContent = now < start ? " · starts at " + TIMES.clock(screens[index].segment.start)
+  $("left").textContent = now < partStart ? " · not started yet"
     : left > 0 ? " · " + left + " min left in this part" : " · time to move on";
 }
 setInterval(tick, 1000);
@@ -122,15 +165,31 @@ if (channel) {
   channel.onmessage = (event) => {
     const message = event.data || {};
     if (typeof message.index === "number") {
-      connected = true;
-      index = message.index;
-      $("status").textContent = "Following the stage.";
-      render();
+      if (!connected) $("status").textContent = "Following the stage.";
+      if (!connected || message.index !== index) {
+        connected = true;
+        index = message.index;
+        render();
+      }
+      showTimer(message.timer);
     }
   };
   channel.postMessage({ hello: true });
 }
 $("status").textContent = "Open the stage (present.html) in another window and these notes will follow it.";
+
+// The stage owns the timer; these buttons ask it to act, and it reports back twice a second
+function showTimer(state) {
+  $("timer").hidden = !state;
+  if (!state) return;
+  $("timer").classList.toggle("done", state.done);
+  $("timer-display").textContent = state.display;
+  $("timer-status").textContent = state.status + " · " + state.minutes + " min";
+  $("timer-go").textContent = state.action;
+}
+[["timer-go", "toggle"], ["timer-minus", "minus"], ["timer-plus", "plus"], ["timer-reset", "reset"]].forEach(([id, action]) => {
+  $(id).addEventListener("click", () => { if (channel) channel.postMessage({ timer: action }); });
+});
 
 $("prev").addEventListener("click", () => go(index - 1));
 $("forward").addEventListener("click", () => go(index + 1));

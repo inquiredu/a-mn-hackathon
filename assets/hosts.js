@@ -29,7 +29,7 @@ SESSION.segments.forEach((segment, s) => {
   const card = el("article", "segment" + (segment.where === "Breakout rooms" ? " rooms" : ""));
 
   const head = el("div", "segment-head");
-  head.append(el("time", "", TIMES.clock(segment.start) + " to " + TIMES.clock(segment.end)), el("h3", "", segment.title), el("span", "where", segment.where));
+  head.append(el("span", "length", segment.minutes + " min"), el("h3", "", segment.title), el("span", "where", segment.where));
   card.append(head, el("p", "participants", "Participants see: " + segment.hint));
 
   // On the stage: each screen, linked to the presenter view at that screen

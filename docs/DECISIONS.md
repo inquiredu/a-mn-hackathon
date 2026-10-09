@@ -1,0 +1,17 @@
+# Decisions
+
+One line each: date · decision · why. Earlier decisions, from before this log, are in `HANDOFF.md` under Decisions.
+
+- 2026-10-08 · Every link lives in `links` in `assets/session.js`; pages reach it through a `link-slot` · The Hosts page had typed out two deck addresses, and two copies drift.
+- 2026-10-08 · The two backup decks are named by what's inside: Session slides (the whole morning) and Starter code (code in the speaker notes), on the site and in Drive · Their old titles read the other way round, which confused even the person who made them.
+- 2026-10-08 · The backup decks also travel in the Welcome and breakout-room chat messages · Someone whose network blocks the site never sees the site's links.
+- 2026-10-08 · The Google Meet link is the first button on the invitation, and is not on the Happening now card · Before the event it's how people get in; during it, they're already in Meet, and a second copy opened beside the first.
+- 2026-10-08 · Each part names the links it uses, and the Happening now card shows them; the timeline is the schedule only · A list of every link at the bottom gave newcomers no clue which one mattered when.
+- 2026-10-08 · A visual gallery wall: a screenshot on a slide, linked to the work, across three slides · A link from a school account often opens only inside that district; the picture is what everyone can see.
+- 2026-10-08 · The menu is Home, Starters, Grant a wish, Hosts, Sources, and a Present pill · Hosts stays open on purpose, so people can see how the session is built; Present matches the What We Talk About site.
+- 2026-10-08 · Show & Cheer and the close appear on Home when their part starts; Sources keeps the now bar · An independent first-visit review found people could get lost or see the ending at 10:00.
+- 2026-10-08 · Welcome runs on chat: the plan, then "how much have you built with AI, 1 to 5", then "what was it?"; anchors come from those answers · The session is recorded and chat keeps the answers; nobody has to open a doc in the first minutes.
+- 2026-10-08 · Show us yours (8 minutes) after Welcome, taken from the Remix Arcade (25 to 17) · A participant's own tool, early, shows what's possible better than a demo; the morning still ends at noon.
+- 2026-10-08 · Pages and the stage show each part's length, not its clock time; only the advertised start and end are times · The presenter can stretch the morning without the screen claiming a start time that's no longer true, and the kit carries to another day.
+- 2026-10-08 · Live timers belong to the stage and the notes; participant pages stay on the session file's clock, and hosts announce changes in chat · A static site can't hear the stage; a backend the night before is the wrong risk.
+- 2026-10-08 · A session clock the presenter calls to order, which then lives in the stage's corner and opens large for wait time · Keeps an eye on the two hours without a second device; it waits on other days so rehearsals start clean.

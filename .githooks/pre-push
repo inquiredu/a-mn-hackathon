@@ -1,15 +1,17 @@
 #!/bin/sh
-# Runs before every push, on each commit being pushed (not on what's on disk),
+# Runs before every push, on the tip of each branch or tag being pushed (not on what's on disk),
 # so a pull request never opens on a broken session file.
 zero=0000000000000000000000000000000000000000
 fail=0
+pushed=
+trap 'rm -rf "$pushed"' EXIT
 while read -r local_ref local_sha remote_ref remote_sha; do
   [ "$local_sha" = "$zero" ] && continue   # deleting a branch: nothing to check
   pushed=$(mktemp -d) || exit 1
   git archive "$local_sha" | tar -x -C "$pushed"
   node "$pushed/scripts/check-session.js" || fail=1
   node "$pushed/scripts/test-stage-timer.js" > /dev/null || fail=1
-  rm -rf "$pushed"
+  rm -rf "$pushed"; pushed=
 done
 [ $fail -eq 0 ] || echo "pre-push: push stopped. Fix the above, or skip once with --no-verify." >&2
 exit $fail

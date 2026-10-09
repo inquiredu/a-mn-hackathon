@@ -35,6 +35,7 @@ trap 'rm -rf "$staged_copy"' EXIT
 git checkout-index -a --prefix="$staged_copy/"
 node "$staged_copy/scripts/check-session.js" || fail=1
 node "$staged_copy/scripts/test-stage-timer.js" > /dev/null || fail=1
+node "$staged_copy/scripts/test-oracle.js" > /dev/null || fail=1
 
 [ $fail -eq 0 ] || echo "pre-commit: commit stopped. Fix the above, or skip once with --no-verify." >&2
 exit $fail

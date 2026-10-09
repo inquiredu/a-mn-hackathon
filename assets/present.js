@@ -89,11 +89,6 @@ const KINDS = {
     frame.title = s.heading;
     return [el("h1", "heading", s.heading), frame, el("p", "caption", s.caption || "")];
   },
-  countdown(s) {
-    const count = el("p", "count");
-    count.dataset.until = s.until;
-    return [el("h1", "heading", s.heading), count, el("p", "body", s.body || "")];
-  },
   awards(s) {
     const list = el("ul", "awards");
     s.awards.forEach((a) => {
@@ -149,16 +144,15 @@ const KINDS = {
 
 // ---------- The timer, on screens that ask for one ----------
 
-const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());
-const timerKey = (screen) => screen.segment.id + "/" + (screen.heading || "");
-// A timer can also be as long as a part ("wish") or all the building time ("building")
-const lengths = { building: 0 };
-SESSION.segments.forEach((seg) => {
-  lengths[seg.id] = seg.minutes;
-  if (seg.where === "Breakout rooms") lengths.building += seg.minutes;
+const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());// A timer's length is a pace, a part's id ("wish"), "building" (all the time in breakout rooms), or minutes.
+// Screens that name the same timerKey share one timer, so it keeps counting from one screen to the next.
+const TIMER_LENGTHS = { ...SESSION.pace, building: 0 };
+SESSION.segments.forEach((s) => {
+  TIMER_LENGTHS[s.id] = s.minutes;
+  if (s.where === "Breakout rooms") TIMER_LENGTHS.building += s.minutes;
 });
-const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, SESSION.pace, lengths);
-let timerWasDone = false;
+const timerKey = (screen) => screen.timerKey || screen.segment.id + "/" + (screen.heading || "");
+const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, TIMER_LENGTHS);let timerWasDone = false;
 
 function timerBlock() {
   const box = el("div", "timer");
@@ -247,13 +241,21 @@ function showClock(now) {
     waitBox.hidden = true;
   }
   clockBox.classList.toggle("waiting", !!wait);
+  document.getElementById("sc-wait-clear").hidden = !wait;   // nothing to clear until a wait is on
+  document.querySelectorAll("[data-wait]").forEach((b) => {
+    b.setAttribute("aria-pressed", String(!!wait && Number(b.dataset.wait) === wait.minutes));
+  });
 }
 
 document.getElementById("sc-face").addEventListener("click", () => openClock(!clockOpen));
 document.getElementById("sc-close").addEventListener("click", () => openClock(false));
 document.getElementById("sc-backdrop").addEventListener("click", () => openClock(false));
 document.getElementById("sc-start").addEventListener("click", callToOrder);
-document.getElementById("sc-wait-clear").addEventListener("click", () => { wait = null; tick(); });
+document.getElementById("sc-wait-clear").addEventListener("click", () => {
+  wait = null;
+  tick();
+  document.getElementById("sc-close").focus();   // Clear has just gone; keep the keyboard on the clock
+});
 document.querySelectorAll("[data-wait]").forEach((b) => b.addEventListener("click", () => startWait(Number(b.dataset.wait))));
 
 
@@ -288,27 +290,18 @@ function show(i) {
   placeClock();
 
   const seg = screen.segment;
-  document.getElementById("rail-segment").textContent = seg.title + " · " + seg.minutes + " min · " + seg.where;
+  document.getElementById("rail-segment").replaceChildren(
+    el("span", "rail-title", seg.title), el("span", "rail-length", seg.minutes + " min"), el("span", "rail-where", seg.where));
   document.getElementById("rail-count").textContent = (index + 1) + " / " + screens.length;
   document.getElementById("status").textContent =
     "Screen " + (index + 1) + " of " + screens.length + ": " + (screen.heading || screen.text || "");
   tick();
 }
 
-// Every second: the clock in the rail, and any countdown on the stage
+// Twice a second: the session clock, and the timer on a screen that has one
 function tick() {
   const now = sessionNow();
   showClock(now);
-  const count = stage.querySelector(".count");
-  if (count) {
-    const left = Math.ceil((toSeconds(count.dataset.until) - now) / 60);
-    count.replaceChildren();
-    if (left > 0) {
-      count.append(String(left), el("small", "", left === 1 ? "minute" : "minutes"));
-    } else {
-      count.append("Time", el("small", "", "back to the main room"));
-    }
-  }
   const state = timerState();
   const box = stage.querySelector(".timer");
   if (state && box) {

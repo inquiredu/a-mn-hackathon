@@ -14,181 +14,288 @@ const SOUND_ON = true;    // change to false to start with the sound off
 
 // What the Oracle mutters while it thinks
 const THINKING = [
-  "Consulting the faculty handbook...",
-  "Reading the coffee grounds in a lounge mug...",
-  "Asking the copier. It will not answer...",
-  "Searching the shared drive...",
-  "Waiting for the Wi-Fi...",
-  "Checking the sub calendar..."
+  "Consulting the faculty handbook. Page 47 is still missing...",
+  "Reading the tea leaves. They say 'steep'...",
+  "Asking the copier. It is collating its thoughts...",
+  "Scrolling the shared drive. Scrolling... scrolling...",
+  "Polishing the glass. Smudges affect the forecast...",
+  "Warming up the laminator for a sealed answer..."
 ];
 
 // TOPICS: when your question uses one of these words, the Oracle answers on that topic.
+// Plurals and endings count too: "copiers", "copies", and "copying" all mean "copy".
+// If a question touches two topics, the one it mentions more (or last) wins.
+// A topic answers by the kind of question, too: "What's for lunch?" takes from the food topic's
+// `what` list, "When will the copier work?" from the copier's `when`. A yes-or-no question, or a
+// kind the topic hasn't got, takes from its `prophecies`.
 // To add a topic, copy one block, change the words it listens for, and write new prophecies.
 const TOPICS = [
   {
     listensFor: ["copier", "copies", "copy", "print", "printer", "laminator"],
     prophecies: [
-      "The copier shall jam at the very moment of your greatest need. It was always thus.",
-      "Tray 2 is empty. It has always been empty. It will always be empty.",
-      "The copier works today, but only for people who don't need it.",
-      "The laminator will be warm and waiting. This is a rare and holy sign."
-    ]
+      "The copier is collating its thoughts. It will reach a conclusion, in triplicate.",
+      "Tray 2 sends its regards. It is on a break, as is tray-dition.",
+      "The copier likes you. It only jams for people it feels close to.",
+      "The laminator is warm and waiting. A sealed deal."
+    ],
+    when: ["Right after lunch. Copiers work best on a full tray.", "Thursday. Copiers love a Thursday.", "The moment you walk away. It's shy."],
+    who: ["The one who ordered the heavy paper. They meant well, and it weighed on them.", "Nobody. The copier is simply expressing itself."],
+    where: ["Tray 2. It is always Tray 2. It's a tray-dition.", "Behind the little door nobody opens. There's a lever. There's always a lever."],
+    why: ["It heard you say 'quick copies.' Copiers can't be rushed. They're deliberate.", "Toner is a mood, not a level."],
+    what: ["A paper jam, mild, with notes of stapler.", "Error 0x7A. Roughly translated: 'not right now, friend.'"]
   },
   {
     listensFor: ["kid", "kids", "student", "students", "homework", "class", "children"],
     prophecies: [
-      "The kids are alright. The homework is in a backpack, under a banana.",
-      "Three of them did the homework. One did it twice. One made a diorama nobody asked for.",
-      "Your students learned more than they'll admit. They'll tell you in ten years.",
-      "A student will ask, 'Is this graded?' The Oracle's answer is always yes."
-    ]
+      "The kids are alright. The homework is in a backpack, keeping a banana company.",
+      "Three did the homework. One did it twice, to be sure. One made a diorama, unprompted, and it's good.",
+      "They learned more than they'll admit. They'll tell you in ten years, in the cereal aisle.",
+      "A student will ask, 'Is this graded?' Say it's graded on a curve. A gentle one."
+    ],
+    what: ["Something you didn't plan. It's the part they'll remember.", "A diorama. Nobody asked for a diorama. Everyone's glad it exists.", "The one thing you said in passing. It stuck like a sticky note."],
+    who: ["The quiet one in the back. They knew the whole time.", "Not the one you think. The other one. They measure up like a ruler."],
+    when: ["The last five minutes before the bell. That's when it clicks.", "Ten years from now, in the cereal aisle. They'll say thanks."],
+    how: ["Slowly, then all at once, then they'll claim they always knew.", "With snacks. Everything goes better with snacks."],
+    why: ["Because someone dared them, and dares are binding.", "Because it was in the group chat, which is the real curriculum."]
   },
   {
     listensFor: ["snow", "weather", "cold", "winter", "recess", "rain", "storm"],
     prophecies: [
-      "Snow shall fall before Halloween. Someone will say, 'Well, it's Minnesota.' They will be right.",
-      "Indoor recess approaches. Gather your strength. And the good markers.",
-      "The Oracle sees a snow day. The Oracle also sees an e-learning day. Brace yourself."
-    ]
+      "Snow before Halloween. Someone will say, 'Well, it's Minnesota.' Give them a gold star.",
+      "Indoor recess approaches. Gather the good markers. It's a draw.",
+      "The Oracle sees a snow day. Keep the pajamas close. There's snow business like it."
+    ],
+    when: ["Before Halloween. The costumes will have parkas, as is custom.", "The night before your observation. Nature has timing."],
+    what: ["Four inches, fluffy, right as the buses leave. Flake news, but true.", "Wintry mix. The weather couldn't decide, so it chose all of the above."],
+    how: ["Sideways. Minnesota snow likes to make an entrance.", "Gently, then with a plow."],
+    where: ["On the one sidewalk the plow forgot. It's the plow's favorite joke."],
+    why: ["Minnesota. That's the whole answer, and it's a good one."]
   },
   {
     listensFor: ["coffee", "caribou", "tea", "lunch", "lounge", "potluck", "food", "pizza", "hotdish", "snacks"],
     prophecies: [
-      "The line at Caribou shall be long. Accept this. Good pizza awaits you later.",
-      "The hotdish at the next potluck will contain tater tots. This is certain.",
-      "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell.",
-      "A mug in the lounge sink has become self-aware. Approach it with kindness."
-    ]
+      "The line at Caribou will be long, and worth it. Good things come to those who wait in it.",
+      "The hotdish at the next potluck will contain tater tots. Tot-ally.",
+      "Someone brought bars to the lounge. Go now. This prophecy expires quickly.",
+      "A mug in the lounge sink has become sentient and friendly. It would like a rinse."
+    ],
+    what: ["Hotdish. There is always hotdish, and it's always better than it has any right to be.", "Tater tots, in some configuration. Tot-ally.", "Whatever the PTO left in the lounge. Move quickly, and with gratitude.", "Pizza, if the stars align. They're pepperoni-shaped today.", "Something in the staff fridge with your name on it. Literally. You labeled it Tuesday."],
+    when: ["Fourth period, for eleven glorious minutes.", "Sooner than the end of your meeting. Pack a snack. The Oracle is pro-snack."],
+    where: ["The lounge. The crockpot is unattended and welcoming.", "The science department. They always have snacks. It's chemistry."],
+    who: ["Whoever brought the crockpot. Thank them with your whole heart and a clean spoon.", "The office. There's always a candy dish. It's basically a lighthouse."],
+    why: ["Because hotdish is a love language."]
   },
   {
     listensFor: ["email", "emails", "parent", "parents", "meeting", "meetings", "principal", "boss"],
     prophecies: [
-      "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
-      "The meeting will run long. The snacks will run short.",
-      "A parent will email just to say thank you. Print it. Keep it in a drawer for a hard day."
-    ]
+      "An email will arrive at 9:58 PM. It'll keep until morning. It's refrigerated.",
+      "The meeting will run long, but someone will bring bars. Balance.",
+      "A parent will email just to say thank you. Print it. Frame it. It's a keeper."
+    ],
+    when: ["9:58 PM. Let it sleep. Reply at 7:58 and look like a wizard.", "The minute you step into the hall. Emails love a hallway."],
+    who: ["A parent with a question about March. March is far. You have time.", "Someone 'looping you in.' You're a loop now. Congratulations.", "The principal, subject line 'Quick question.' It's two questions, both fine."],
+    what: ["A reply-all. Then another. Then peace.", "A thank-you. Keep it in a drawer for a gray day. It glows."],
+    how: ["Briefly, kindly, and before the coffee wears off."],
+    why: ["Because the meeting became an email, and the email is thriving."]
   },
   {
     listensFor: ["wifi", "wi-fi", "internet", "password", "computer", "laptop", "chromebook", "tech", "technology", "ai", "robots"],
     prophecies: [
-      "Your password shall expire on the busiest day of the quarter. Every day is the busiest day.",
-      "The Wi-Fi will drop during your best lesson of the year. They will remember the lesson anyway.",
-      "Have you tried turning it off and on again? The Oracle has. It helped.",
-      "The AI will write a beautiful paragraph. It will be about the wrong book.",
+      "Your password will expire on a busy day. It's a password. It likes attention.",
+      "The Wi-Fi will blink during your best lesson. The lesson will be remembered. The Wi-Fi will not.",
+      "Have you tried turning it off and on again? The Oracle has. It's a glass half-rebooted.",
+      "The AI will write a beautiful paragraph about the wrong book. Points for style.",
       "The AI can write the lesson. Only you know which kid needs the extra minute today."
-    ]
+    ],
+    why: ["The update ran at 7:59. Updates are morning people.", "The Wi-Fi heard you call it 'the internet' and wanted a word."],
+    when: ["On the busiest day of the quarter. Passwords have a flair for drama.", "The Wi-Fi returns the moment the bell rings. Punctual, in its way."],
+    how: ["Off, then on again. Works on laptops and, honestly, on teachers.", "Ask the kid in the second row. They fixed it last time, with one eyebrow."],
+    what: ["A beautiful paragraph about the wrong book. Points for style.", "An update. It will move one button and call it progress."],
+    who: ["The tech department. On their way, carrying a different cable. Possibly the right one."],
+    where: ["In the shared drive, in 'New Folder (7).' It's the drive's junk drawer, and it loves it."]
   },
   {
     listensFor: ["sub", "subs", "substitute", "sick", "absent"],
     prophecies: [
-      "Your sub plans will be three pages long. The sub will read one. It will be fine.",
-      "The sub will leave a note that says 'They were great!' Do not ask follow-up questions."
-    ]
+      "Your sub plans will be three pages long. The sub will read one, and it will be the right one.",
+      "The sub will leave a note that says 'They were great!' Take the win. Frame the note."
+    ],
+    who: ["A retired band teacher who has seen things and brought a crossword.", "Someone kind who reads page one. Page one has everything that matters."],
+    what: ["A note that says 'They were great!' Accept it. No follow-ups.", "The movie. They always find the movie. It's educational if you squint."],
+    when: ["The day you planned the good lesson. Save it. Good lessons keep."],
+    how: ["Fine. Just fine. The plants got watered twice, and they're thrilled."]
   },
   {
     listensFor: ["friday", "weekend", "break", "vacation", "summer", "holiday"],
     prophecies: [
-      "Friday is coming. The Oracle can feel it in its glass.",
-      "This Friday? Glorious. Something will break on purpose, and everyone will cheer.",
-      "You will spend the first day of break doing laundry. The second day will be glorious.",
-      "Winter break is closer than it looks. Not much closer. But closer."
-    ]
+      "Friday is coming. The Oracle can feel it in its glass. A weekend in progress.",
+      "This Friday? Glorious. Something small will go right, and everyone will cheer.",
+      "Day one of break: laundry. Day two: glory. Day three: nap. All are sacred.",
+      "Winter break is closer than it looks. Objects in the mirror, and so on."
+    ],
+    when: ["Sooner than it looks. Not much sooner. But sooner, and that counts.", "After one more Wednesday. There's always one more Wednesday. Wednesdays are generous that way."],
+    how: ["Count the days on a sticky note. Cross them off with ceremony.", "Laundry on day one, nothing on day two. That's the whole recipe."],
+    what: ["Laundry, then glory.", "A nap you will not apologize for. The Oracle endorses it."],
+    where: ["Somewhere with no bells. The bells will miss you. Go anyway."]
   },
   {
-    listensFor: ["grade", "grades", "grading", "test", "tests", "quiz", "assessment", "rubric"],
+    listensFor: ["grade", "grades", "grading", "test", "tests", "quiz", "quizzes", "assessment", "rubric"],
     prophecies: [
-      "The stack of grading will shrink. Then it will grow back, like a hydra.",
-      "The test will measure something. Whether it's the thing that matters, even the Oracle wonders.",
-      "Somewhere, a rubric is being revised. It will be revised again."
-    ]
+      "The stack will shrink. Then a new stack will arrive, which is really just the first stack's cousin.",
+      "The test will measure something. Your gut measures the rest, and your gut is well calibrated.",
+      "Somewhere a rubric is being revised. It's a rubric's cube. It keeps turning."
+    ],
+    when: ["Sunday night, with a show on. The show helps. The Oracle doesn't make the rules.", "Tomorrow. Tomorrow is a great grader."],
+    how: ["In sticky-note-sized pieces. Small stacks, big snacks.", "Faster than you fear. Also, you're allowed to use the stamp."],
+    what: ["Something. Your gut knows what matters, and it's rarely the quiz.", "A rubric. It'll be revised again. Rubrics love a sequel."],
+    who: ["The one who did it twice. And the one who made the diorama. Stars for both."],
+    why: ["Because someone, somewhere, is improving the rubric. Bless them."]
   }
 ];
 
-// QUESTION KINDS: if no topic matches, the Oracle answers the kind of question you asked,
-// judging by the first few words.
+// EITHER/OR: "Pizza or hotdish?" The Oracle picks a side. {choice} becomes the side it picked.
+const EITHER_OR = [
+  "{choice}. Crystal clear.",
+  "{choice}. Don't ask the Oracle to show its work.",
+  "{choice}, and bring snacks either way.",
+  "{choice}. The Oracle is a ball, and the ball is now in your court."
+];
+
+// YES-OR-NO QUESTIONS: a question that opens with one of these words gets a VERDICT, then the
+// question turned around in the Oracle's mouth ("Will I finish grading?" becomes "You will finish
+// grading."), then an omen from the topic, or a SIGN_OFF when there is no topic.
+// More yeses than nos, on purpose. The nos are gentle.
+const YES_OR_NO = ["will", "would", "should", "shall", "can", "could", "may", "might", "must", "is", "are", "am", "was", "were", "do", "does", "has", "have", "had"];
+const VERDICTS = [
+  { says: "Yes.", no: false },
+  { says: "Yes, with sprinkles.", no: false },
+  { says: "Signs point to yes.", no: false },
+  { says: "Absolutely. The Oracle would stake its glass on it.", no: false },
+  { says: "Yes, and that's a lock.", no: false },
+  { says: "Not quite yet.", no: true },
+  { says: "Gently, no.", no: true },
+  { says: "No, but it's a near miss. A near mist, even.", no: true }
+];
+const SIGN_OFFS = [
+  "Crystal clear.",
+  "The Oracle has spoken. It's a lot of glass to talk through.",
+  "Write that down. In pen. The Oracle is pencil-averse.",
+  "That's the whole ball of wax. Well, glass.",
+  "Any clearer and you could see right through it."
+];
+
+// SWAPS: how the Oracle turns your question around. Your words become its words, one swap at a time.
+// (A program called ELIZA did this in 1966, and people told it their secrets.)
+const SWAPS = {
+  i: "you", me: "you", my: "your", mine: "yours", myself: "yourself", am: "are",
+  we: "you", us: "you", our: "your", ours: "yours",
+  you: "I", your: "my", yours: "mine", yourself: "myself"
+};
+
+// QUESTION KINDS: the kind of question, judged by the first few words ("what's" counts as "what").
+// A topic that has a list named for the kind answers from it; otherwise these answers are for
+// questions with no topic.
 const QUESTION_KINDS = [
   {
-    firstWords: ["will", "is", "are", "am", "can", "could", "should", "would", "do", "does", "did", "has", "have", "may", "might", "shall"],
-    answers: [
-      "The signs say yes. The copier says no. Trust the signs.",
-      "Yes. But only after a fire drill.",
-      "The mists are cloudy. Ask again after coffee.",
-      "Absolutely. Write that down before you forget.",
-      "No. But something better is on its way.",
-      "The Oracle nods slowly. That means yes."
-    ]
-  },
-  {
+    kind: "when",
     firstWords: ["when"],
     answers: [
-      "Right after the next fire drill.",
-      "Thursday. It's always Thursday.",
-      "Sooner than the next snow day. Later than you'd like."
+      "Right after the next fire drill. Drills are great at scheduling.",
+      "Thursday. It's always Thursday. Thursday is very dependable.",
+      "Sooner than the next snow day. The Oracle checked the forecast. It's in a fog."
     ]
   },
   {
+    kind: "who",
     firstWords: ["who"],
     answers: [
-      "The one holding the good stapler.",
-      "Someone in the lounge. They know what they did.",
-      "You. It was always you."
+      "The one holding the good stapler. Staple leadership.",
+      "Someone in the lounge, and they're bringing bars.",
+      "You. It was always you. You're kind of a big deal."
     ]
   },
   {
+    kind: "why",
     firstWords: ["why"],
     answers: [
-      "Because the copier willed it.",
-      "The Oracle has wondered the same thing since 1997. Still no answer.",
-      "For the same reason the laminator is always warm: mystery."
+      "Because the copier willed it, and the copier is a strong-willed machine.",
+      "The Oracle has wondered since 1997. Still a mystery, but a cozy one.",
+      "For the same reason the laminator is always warm: it's just that kind of place."
     ]
   },
   {
+    kind: "how",
     firstWords: ["how"],
     answers: [
-      "Slowly, then all at once.",
-      "With a lot of sticky notes.",
+      "Slowly, then all at once, with a snack in the middle.",
+      "With sticky notes. A note-worthy amount.",
       "The same way you do everything: better than you think."
     ]
   },
   {
+    kind: "where",
     firstWords: ["where"],
     answers: [
-      "In the shared drive, in a folder called 'New Folder (7).'",
-      "In the staff fridge, next to someone's yogurt.",
-      "Exactly where you left it, which is the last place you'll look."
+      "In the shared drive, in 'New Folder (7).' Everything is.",
+      "In the staff fridge, next to someone's yogurt. The yogurt says hi.",
+      "Exactly where you left it, which is the last place you'll look. Look there first and save a trip."
     ]
   },
   {
+    kind: "what",
     firstWords: ["what", "which"],
     answers: [
-      "The answer is in the faculty handbook, page 47. There is no page 47.",
-      "The thing you already suspected. Trust your gut.",
-      "Whatever it is, it's probably in the shared drive."
+      "It's in the faculty handbook, page 47. Page 47 is a myth, but a helpful one.",
+      "The thing you already suspected. Your gut is a good egg.",
+      "Whatever it is, it's probably in the shared drive, sharing itself."
     ]
   }
 ];
 
+// MANNERS: a greeting or a thank-you of three words or fewer gets manners back, not a prophecy.
+const MANNERS = [
+  { firstWords: ["hello", "hi", "hey", "greetings", "howdy"], answers: ["Hello, seeker. Pull up a chair. The good one, not the wobbly one.", "Greetings. The Oracle has been expecting you. The Oracle expects everyone. It's the job."] },
+  { firstWords: ["thanks", "thank", "ty"], answers: ["You're welcome. Tip your copier.", "The Oracle accepts thanks, coffee, and the good markers."] },
+  { firstWords: ["bye", "goodbye", "farewell"], answers: ["Go well. Take a mint from the office jar. The Oracle won't tell.", "Farewell. The Oracle will be here, polishing itself. It's a full-time glass act."] }
+];
+
+// AGAIN: for the same question twice in a row. {last} becomes what the Oracle said the first time.
+const AGAIN = [
+  "You asked that already. The answer is see-through and unchanged: {last}",
+  "The Oracle heard you the first time. Glass has great acoustics. {last}",
+  "Asking twice stirs the mist, not the answer: {last}"
+];
+
+// SILENCE: for an empty question.
+const SILENCE = [
+  "Ask with words, seeker. The Oracle reads minds only after its coffee.",
+  "Silence is a question too. The answer is: hotdish.",
+  "The Oracle hears nothing, and nods wisely. It's very good at nodding. Try words."
+];
+
 // CLASSIC PROPHECIES: for everything else. Add your own: put it in quotes and end it with a comma.
 const PROPHECIES = [
-  "Your lanyard is not lost. It is in the staff fridge, next to someone's yogurt.",
-  "You will find the perfect parking spot. Savor it. It will not happen again until May.",
-  "A fire drill shall arrive at the exact moment everyone is finally focused.",
-  "Ope. The Oracle just bumped into your future. Sorry, I'll just sneak past ya.",
+  "Your lanyard is not lost. It's in the staff fridge, keeping the yogurt company.",
+  "You will find the perfect parking spot. Savor it. It's a spot of luck.",
+  "A fire drill will arrive the moment everyone is focused. Fresh air. Free.",
+  "Ope. The Oracle just bumped into your future. Sorry, it'll just sneak past ya.",
   "Your class will laugh at your joke today. Not the one you planned. A better one.",
-  "The laminator will be warm and waiting. This is a rare and holy sign.",
-  "The copier shall jam at the very moment of your greatest need. It was always thus.",
-  "Indoor recess approaches. Gather your strength. And the good markers.",
-  "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
-  "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell."
+  "The laminator is warm and waiting. A sealed deal.",
+  "The copier likes you. It only jams for people it feels close to.",
+  "Indoor recess approaches. Gather the good markers. It's a draw.",
+  "An email will arrive at 9:58 PM. It'll keep until morning. It's refrigerated.",
+  "Someone brought bars to the lounge. Go now. This prophecy expires quickly."
 ];
 </script>
 <style>
   /* Colors: change these to make it yours */
   :root {
-    --night: #1a1033;   /* the background */
-    --glow: #b48cff;    /* the orb's glow */
-    --gold: #ffd36e;    /* the prophecy */
-    --text: #f4eefe;    /* everything else */
+    --night: #0A1A33;   /* the background: a Minnesota night */
+    --navy: #10345A;    /* the glow at the top of the sky */
+    --glow: #8F6CFF;    /* the light inside the orb */
+    --gold: #E6B84F;    /* the tripod, the button, and the prophecy */
+    --sky: #66C1E7;     /* the sparkles and the mutterings */
+    --text: #EAF6FC;    /* everything else */
   }
 
   * { box-sizing: border-box; }
@@ -206,49 +313,41 @@ const PROPHECIES = [
       radial-gradient(2px 2px at 72% 18%, #ffffff66, transparent),
       radial-gradient(1.5px 1.5px at 40% 82%, #ffffff77, transparent),
       radial-gradient(1.5px 1.5px at 86% 64%, #ffffff55, transparent),
-      radial-gradient(ellipse at top, #2d1b5c, var(--night) 70%);
+      radial-gradient(ellipse at top, var(--navy), var(--night) 70%);
   }
 
   main { width: 100%; max-width: 34rem; text-align: center; }
   h1 { font-size: clamp(1.6rem, 5vw, 2.3rem); margin: 0 0 4px; }
   .tagline { margin: 0; font-style: italic; opacity: .85; }
 
-  /* The crystal ball */
+  /* The crystal ball on its tripod. The drawing is in the <svg> below; this is how it moves. */
   .orb {
-    position: relative;
-    overflow: hidden;
-    width: 180px;
-    height: 180px;
-    margin: 24px auto 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 55%, var(--glow), #4b2a8a 60%, #120a26);
-    box-shadow: 0 0 40px var(--glow), inset 0 0 30px #00000099;
+    display: block;
+    height: clamp(170px, 36vh, 330px);
+    margin: 10px auto 2px;
+    overflow: visible;
   }
-  .orb::after { /* the shine */
-    content: "";
-    position: absolute;
-    top: 14%; left: 22%;
-    width: 28%; height: 18%;
-    border-radius: 50%;
-    background: #ffffff55;
-    filter: blur(4px);
-  }
-  .swirl {
-    position: absolute;
-    inset: -25%;
-    background: conic-gradient(transparent, #ffffff30, transparent 30%, #ffd36e30, transparent 65%);
-  }
+  .mn { fill: #163F73; stroke: var(--sky); stroke-opacity: .35; stroke-width: .6; }   /* the state */
+  .sparkles use, .teal { fill: var(--sky); }
+  .white { fill: #FFFFFF; }
+  .ball { filter: drop-shadow(0 0 14px #8F6CFF88); transition: filter .6s; }
+  .glow, .swirl, .logo { transform-box: view-box; transform-origin: 120px 112px; }
+
   /* The orb only swirls while it thinks */
-  .orb.thinking {
-    box-shadow: 0 0 90px 20px var(--glow), inset 0 0 30px #00000099;
-    animation: wobble .25s ease-in-out infinite alternate;
-  }
-  .orb.thinking .swirl { animation: swirl .5s linear infinite; }
+  .orb.thinking .ball { filter: drop-shadow(0 0 34px #8F6CFFEE); }
+  .orb.thinking .glow { animation: breathe 1.1s ease-in-out infinite alternate; }
+  .orb.thinking .swirl { animation: swirl 1.6s linear infinite; }
+  .orb.thinking .logo { animation: drift 2.4s ease-in-out infinite alternate; }
+  .orb.thinking .sparkles use { animation: twinkle .9s ease-in-out infinite alternate; }
+  .orb.thinking .sparkles use:nth-child(3n) { animation-delay: -.3s; }
+  .orb.thinking .sparkles use:nth-child(3n+1) { animation-delay: -.6s; }
 
-  @keyframes swirl  { to { transform: rotate(360deg); } }
-  @keyframes wobble { from { transform: scale(.98) rotate(-2deg); } to { transform: scale(1.03) rotate(2deg); } }
+  @keyframes swirl   { to { transform: rotate(360deg); } }
+  @keyframes breathe { from { opacity: .4; transform: scale(.9); } to { opacity: .95; transform: scale(1.1); } }
+  @keyframes drift   { from { transform: rotate(-4deg) scale(.98); } to { transform: rotate(4deg) scale(1.03); } }
+  @keyframes twinkle { from { opacity: .25; } to { opacity: 1; } }
 
-  .status { min-height: 1.5em; margin: 0; font-style: italic; opacity: .85; }
+  .status { min-height: 1.5em; margin: 0; font-style: italic; color: var(--sky); }
 
   form { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
   label { width: 100%; }
@@ -256,12 +355,12 @@ const PROPHECIES = [
     flex: 1 1 16rem;
     padding: 12px 16px;
     font: inherit;
-    border: 2px solid #ffffff80;
+    border: 2px solid #E6B84FB3;
     border-radius: 999px;
-    background: #ffffff14;
+    background: #FFFFFF14;
     color: var(--text);
   }
-  input::placeholder { color: #f4eefeaa; }
+  input::placeholder { color: #EAF6FCAA; }
   button {
     padding: 12px 22px;
     font: inherit;
@@ -269,7 +368,7 @@ const PROPHECIES = [
     border: none;
     border-radius: 999px;
     background: var(--gold);
-    color: #2a1a00;
+    color: #2A1A00;
     cursor: pointer;
   }
   button:disabled { opacity: .6; cursor: wait; }
@@ -282,7 +381,7 @@ const PROPHECIES = [
     font-size: .9rem;
     background: transparent;
     color: var(--text);
-    border: 2px solid #ffffff80;
+    border: 2px solid #E6B84FB3;
   }
   .sound[aria-pressed="false"] { opacity: .75; text-decoration: line-through; }
 
@@ -299,15 +398,25 @@ const PROPHECIES = [
   }
   .prophecy.revealed { opacity: 1; transform: none; }
 
-  /* Short screens: shrink the orb so the prophecy stays in view */
-  @media (max-height: 640px) {
+  /* Wide, short screens (a shared tab, a laptop): the orb sits beside the words */
+  @media (min-aspect-ratio: 4/3) and (max-height: 640px) {
+    body { padding: 12px 16px; }
+    main { max-width: 46rem; display: grid; grid-template-columns: auto 1fr; gap: 0 28px; align-items: center; text-align: left; }
+    .orb { grid-column: 1; grid-row: 1 / span 6; height: min(82vh, 330px); margin: 0; }
+    main > :not(.orb) { grid-column: 2; }
+    form { justify-content: flex-start; }
+  }
+
+  /* Short, narrow screens: shrink the orb so the prophecy stays in view */
+  @media (max-aspect-ratio: 4/3) and (max-height: 640px) {
     body { padding-top: 12px; padding-bottom: 12px; }
     h1 { font-size: 1.5rem; }
-    .orb { width: 120px; height: 120px; margin: 14px auto 10px; }
+    .orb { height: 140px; margin: 6px auto 2px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .orb.thinking, .orb.thinking .swirl { animation: none; }
+    .orb.thinking .glow, .orb.thinking .swirl, .orb.thinking .logo, .orb.thinking .sparkles use { animation: none; }
+    .ball { transition: none; }
     .prophecy { transition: none; }
   }
 </style>
@@ -318,7 +427,70 @@ const PROPHECIES = [
   <h1>The Teacher's Lounge Oracle</h1>
   <p class="tagline">Ask anything. The Oracle sees all. (Mostly the copier.)</p>
 
-  <div class="orb" id="orb" aria-hidden="true"><div class="swirl"></div></div>
+  <!-- The crystal ball: a glass orb on a gold tripod, with Minnesota inside -->
+  <svg class="orb" id="orb" viewBox="0 0 240 300" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="0" y1="80" x2="0" y2="280">
+        <stop offset="0" stop-color="#F8DF93"/><stop offset=".45" stop-color="#E6B84F"/><stop offset="1" stop-color="#9C6A1C"/>
+      </linearGradient>
+      <radialGradient id="glass" cx="50%" cy="42%" r="62%">
+        <stop offset="0" stop-color="#A48BFF"/><stop offset=".5" stop-color="#5A3BC4"/><stop offset="1" stop-color="#1B1444"/>
+      </radialGradient>
+      <radialGradient id="shade" cx="50%" cy="50%" r="50%">
+        <stop offset=".7" stop-color="#0A1A33" stop-opacity="0"/><stop offset="1" stop-color="#0A1A33" stop-opacity=".6"/>
+      </radialGradient>
+      <radialGradient id="plinth" cx="50%" cy="40%" r="60%">
+        <stop offset="0" stop-color="#3A2E4E"/><stop offset="1" stop-color="#1C1528"/>
+      </radialGradient>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+      <filter id="haze" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.5"/></filter>
+      <filter id="soft2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+      <clipPath id="inside"><circle cx="120" cy="112" r="70"/></clipPath>
+      <path id="sp" d="M0,-1L.22,-.22L1,0L.22,.22L0,1L-.22,.22L-1,0L-.22,-.22Z"/>
+    </defs>
+
+    <!-- The stand: an ebony plinth and a gold tripod -->
+    <ellipse cx="120" cy="278" rx="84" ry="16" fill="#0E0A16"/>
+    <rect x="36" y="268" width="168" height="10" fill="#0E0A16"/>
+    <ellipse cx="120" cy="268" rx="84" ry="16" fill="url(#plinth)"/>
+    <g fill="none" stroke="url(#gold)" stroke-width="6.5" stroke-linecap="round">
+      <path d="M120,174V248"/>
+      <path d="M82,184C60,194 48,226 59,256"/>
+      <path d="M158,184C180,194 192,226 181,256"/>
+    </g>
+    <g fill="url(#gold)">
+      <circle cx="120" cy="250" r="5.5"/><circle cx="58" cy="261" r="7"/><circle cx="182" cy="261" r="7"/>
+    </g>
+    <path d="M78,180A42,12 0 0 1 162,180" fill="none" stroke="url(#gold)" stroke-width="5"/>
+    <g transform="rotate(-12 120 118)" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round">
+      <path d="M20,118A100,30 0 0 1 220,118"/>
+    </g>
+
+    <!-- The orb, and what it holds -->
+    <circle class="ball" cx="120" cy="112" r="72" fill="url(#glass)"/>
+    <circle class="glow" cx="120" cy="112" r="54" fill="#8F6CFF" opacity=".5" filter="url(#soft)"/>
+    <g clip-path="url(#inside)">
+      <g class="swirl">
+        <ellipse cx="152" cy="78" rx="40" ry="14" fill="#FFFFFF" opacity=".16" filter="url(#soft)"/>
+        <ellipse cx="86" cy="148" rx="44" ry="14" fill="#E6B84F" opacity=".14" filter="url(#soft)"/>
+      </g>
+      <g class="logo"><g transform="translate(120 112) scale(.95)">
+        <path class="mn" d="M-18.1,-38.8L-39.1,-39.1L-38.8,-34.7L-37.3,-22.2L-35.9,-13.3L-35.6,0.9L-36.4,6.2L-37.3,9.8L-34.7,13.3L-34.1,18.7L-34.1,43.6L22.8,43.6L21.3,37.3L17.8,34.7L14.2,31.1L8.9,27.6L5.3,24L6.2,18.7L7.1,15.1L6.2,12.4L7.1,8.9L11,6.2L11,-3.6L13.3,-5.3L17.8,-9.8L23.1,-15.1L28.4,-19.6L33.8,-22.2L38.8,-24.4L33.8,-24.9L28.4,-25.4L23.1,-26.7L17.8,-26.7L12.4,-29.3L8,-30.8L3.6,-32.9L-1.8,-32L-7.1,-33.8L-12.4,-35L-14.2,-39.1L-15.1,-43.6L-18.1,-44.4Z"/>
+        <g class="sparkles"><use href="#sp" transform="translate(-22.7 -16.5) scale(1.0)"/><use href="#sp" transform="translate(-20.9 23.5) scale(1.0)"/><use href="#sp" transform="translate(-5.1 14.9) scale(0.8)"/><use href="#sp" transform="translate(-19.0 20.3) scale(0.6)"/><use href="#sp" transform="translate(5.4 27.6) scale(2.4)"/><use href="#sp" transform="translate(5.5 18.8) scale(1.0)"/><use href="#sp" transform="translate(4.9 35.0) scale(0.9)"/><use href="#sp" transform="translate(-28.8 -10.1) scale(0.9)"/><use href="#sp" transform="translate(6.1 9.2) scale(1.3)"/><use href="#sp" transform="translate(-33.0 -11.8) scale(1.0)"/><use href="#sp" transform="translate(-16.9 -17.8) scale(0.6)"/><use href="#sp" transform="translate(-19.3 -6.6) scale(1.3)"/><use href="#sp" transform="translate(-12.7 -19.8) scale(0.8)"/><use href="#sp" transform="translate(-20.8 7.2) scale(0.8)"/><use href="#sp" transform="translate(2.8 14.9) scale(1.0)"/><use href="#sp" transform="translate(-13.1 18.8) scale(0.9)"/><use href="#sp" transform="translate(-20.9 -3.2) scale(1.3)"/><use href="#sp" transform="translate(-30.6 28.5) scale(2.3)"/><use href="#sp" transform="translate(-28.7 -26.3) scale(0.8)"/><use href="#sp" transform="translate(-7.5 -21.4) scale(1.0)"/><use href="#sp" transform="translate(-29.4 36.0) scale(1.3)"/><use href="#sp" transform="translate(3.8 35.0) scale(0.8)"/><use href="#sp" transform="translate(-35.0 -13.6) scale(2.0)"/><use href="#sp" transform="translate(-18.9 34.0) scale(2.4)"/><use href="#sp" transform="translate(-7.3 36.0) scale(2.8)"/><use href="#sp" transform="translate(-27.2 39.5) scale(1.1)"/><use href="#sp" transform="translate(-23.7 -15.6) scale(1.1)"/><use href="#sp" transform="translate(-33.3 24.8) scale(1.1)"/><use href="#sp" transform="translate(-13.4 -29.6) scale(2.8)"/><use href="#sp" transform="translate(-29.8 18.8) scale(0.6)"/><use href="#sp" transform="translate(3.7 31.5) scale(1.2)"/><use href="#sp" transform="translate(-24.5 21.7) scale(0.9)"/><use href="#sp" transform="translate(-25.1 -2.1) scale(1.0)"/><use href="#sp" transform="translate(-20.0 13.8) scale(0.8)"/><use href="#sp" transform="translate(-26.8 -9.0) scale(1.3)"/><use href="#sp" transform="translate(-7.4 32.4) scale(0.8)"/><use href="#sp" transform="translate(-6.9 -22.0) scale(1.0)"/><use href="#sp" transform="translate(-1.3 37.8) scale(0.8)"/><use href="#sp" transform="translate(-15.7 -19.8) scale(0.9)"/><use href="#sp" transform="translate(-22.3 7.9) scale(1.1)"/><use href="#sp" transform="translate(-22.6 -14.6) scale(0.9)"/><use href="#sp" transform="translate(-32.2 25.1) scale(1.3)"/><use href="#sp" transform="translate(4.9 18.3) scale(0.6)"/><use href="#sp" transform="translate(-1.6 12.3) scale(1.3)"/><use href="#sp" transform="translate(-34.0 -21.9) scale(2.1)"/><use href="#sp" transform="translate(-31.8 -31.3) scale(1.3)"/></g>
+        <g class="teal"><path d="M-3.9,-8.9L-6.8,-13.7L-5.9,-8.4L-5.3,-3.6L-6,0.9L-8.5,5.3L-10.7,9.4L-7.1,6.2L-3.9,1.8L-2.7,-3.6Z"/><path d="M-10.7,-5.2L-16,-3.7L-11.4,-2L-6.8,-0.5L-6,-3.4Z"/><circle cx="-9.4" cy="-7.8" r="2.1"/><path d="M-6.4,-17.4L-6.9,-18.8L-7.5,-17.4L-9,-17.4L-7.8,-16.4L-8.2,-15L-6.9,-15.8L-5.7,-15L-6.1,-16.4L-4.9,-17.4Z"/></g>
+        <g class="white"><path d="M2.7,-2L1.2,-9L-1.9,-2.5L-9,-3.3L-3.8,1.6L-6.8,8.2L-0.5,4.8L4.9,9.6L3.6,2.5L9.8,-1Z"/><circle cx="0.7" cy="-8.0" r="2.1"/></g>
+      </g></g>
+    </g>
+    <circle cx="120" cy="112" r="72" fill="url(#shade)"/>
+    <ellipse cx="94" cy="64" rx="16" ry="8" fill="#FFFFFF" opacity=".42" filter="url(#soft2)"/>
+    <path d="M166,152A62,62 0 0 0 178,100" fill="none" stroke="#66C1E7" stroke-width="2.5" opacity=".45" stroke-linecap="round" filter="url(#haze)"/>
+
+    <!-- The front of the rings, over the orb -->
+    <g transform="rotate(-12 120 118)" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round">
+      <path d="M20,118A100,30 0 0 0 220,118"/>
+    </g>
+    <path d="M78,180A42,12 0 0 0 162,180" fill="none" stroke="url(#gold)" stroke-width="5"/>
+  </svg>
 
   <p class="status" id="status"></p>
   <p class="asked" id="asked"></p>
@@ -365,7 +537,163 @@ function gong() { // a big BONG when the prophecy arrives
 
 
 /* ------------------------------------------------------------
-   PART 3: WHAT HAPPENS WHEN YOU ASK
+   PART 3: HOW THE ORACLE READS A QUESTION
+   ------------------------------------------------------------ */
+
+// Picks from a list, saying everything once before anything repeats, and never the same thing twice running
+const bags = new WeakMap();
+function pick(list) {
+  let bag = bags.get(list);
+  if (!bag || bag.length === 0) {
+    const previous = bag && bag.previous;
+    bag = list.slice().sort(() => Math.random() - 0.5);
+    if (bag.length > 1 && bag[bag.length - 1] === previous) bag.unshift(bag.pop());
+    bags.set(list, bag);
+  }
+  bag.previous = bag.pop();
+  return bag.previous;
+}
+
+// The words in a question, lowercased: "Will the copier work?" becomes ["will", "the", "copier", "work"]
+function wordsOf(text) {
+  return text.toLowerCase().match(/[a-z'-]+/g) || [];
+}
+
+// Trims a word to its root, so "copiers", "copies", and "copying" all count as "copy"
+function root(word) {
+  let w = word.replace(/ie[sd]$/, "y");
+  if (w.length > 3 && !w.endsWith("ss")) w = w.replace(/e?s$/, "");
+  if (w.length > 5) w = w.replace(/(ing|ed)$/, "");
+  return w.replace(/e+$/, "");
+}
+
+// Which topic does the question touch? The one with the most words in it; in a tie, the one mentioned last.
+function topicOf(words) {
+  const roots = words.map(root);
+  let best = null;
+  for (const topic of TOPICS) {
+    const listened = topic.listensFor.map(root);
+    const hits = roots.map((r, i) => (listened.includes(r) ? i : -1)).filter((i) => i >= 0);
+    if (hits.length === 0) continue;
+    const last = hits[hits.length - 1];
+    if (!best || hits.length > best.count || (hits.length === best.count && last > best.last)) {
+      best = { topic, count: hits.length, last };
+    }
+  }
+  return best && best.topic;
+}
+
+// The kind of question, from its first three words: "what's", "whats", and "what" all count as "what"
+function kindOf(words) {
+  for (const word of words.slice(0, 3)) {
+    const plain = word.replace(/^(what|who|where|when|how)'?s$/, "$1");
+    const kind = QUESTION_KINDS.find((k) => k.firstWords.includes(plain));
+    if (kind) return kind;
+  }
+  return null;
+}
+
+// Turns a yes-or-no question around: "Will I finish grading tonight?" becomes "You will finish grading
+// tonight." (or, for a no, "You will not finish grading tonight."). Gives nothing when it can't be sure.
+const PRONOUNS = ["i", "you", "we", "they", "he", "she", "it", "there", "someone", "anyone", "everyone", "everybody", "nobody"];
+const DETERMINERS = ["the", "a", "an", "my", "our", "your", "his", "her", "their", "its", "this", "that", "these", "those"];
+const ADJECTIVES = ["new", "old", "good", "bad", "big", "little", "small", "best", "worst", "first", "last", "next", "whole", "other", "same", "favorite", "own", "entire", "final", "long", "short", "real", "true"];
+const swap = (word) => SWAPS[word.toLowerCase()] || word;
+const third = (verb) => (verb === "have" ? "has" : /(s|x|z|ch|sh|o)$/.test(verb) ? verb + "es" : /[^aeiou]y$/.test(verb) ? verb.slice(0, -1) + "ies" : verb + "s");
+function echo(questionText, no) {
+  const words = questionText.trim().replace(/[?!.]+$/, "").split(/\s+/);
+  const opener = words[0].toLowerCase();
+  if (!YES_OR_NO.includes(opener) || opener === "had" || words.length < 3 || words.length > 14) return "";
+  if (words.some((word) => /^or$/i.test(word))) return "";   // "working or not?" is not a sentence to turn around
+
+  // Where does the subject end? A pronoun; a determiner with its adjectives and noun; or a Name.
+  let end = 2;
+  const first = words[1].toLowerCase();
+  if (PRONOUNS.includes(first)) end = 2;
+  else if (DETERMINERS.includes(first)) {
+    if (/ing$/.test(words[2] || "")) end = 2;   // "Is this going to work": "this" stands alone
+    else { end = 2; while (end < words.length - 1 && (/^\d/.test(words[end]) || ADJECTIVES.includes(words[end].toLowerCase()) || /^(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)$/i.test(words[end]))) end++; end++; }
+  }
+  else if (/^[A-Z]/.test(words[1])) { end = 2; if (end < words.length - 1 && /^[A-Z]/.test(words[end])) end++; }
+  else return "";
+  if (end >= words.length) return "";
+
+  const subject = words.slice(1, end).map(swap);
+  const rest = words.slice(end).map(swap);
+  const who = subject.length === 1 ? subject[0] : "";   // "you" or "I" change the verb's form
+  const agree = (aux) => {
+    if (who === "you") return { am: "are", is: "are", was: "were", does: "do", has: "have" }[aux] || aux;
+    if (who === "I") return { are: "am", is: "am", were: "was", does: "do", has: "have" }[aux] || aux;
+    return aux;
+  };
+  const aux = agree(opener);
+  let turned;
+  if (aux === "do" || aux === "does") {
+    if (no) turned = [...subject, aux, "not", ...rest];
+    else turned = [...subject, aux === "does" ? third(rest[0]) : rest[0], ...rest.slice(1)];
+  } else {
+    const not = who === "there" && !/ing$/.test(rest[0]) ? "no" : "not";   // "There is no coffee", "There is not going to be"
+    turned = [...subject, aux === "can" && no ? "cannot" : aux, ...(no && aux !== "can" ? [not] : []), ...rest];
+  }
+  const sentence = turned.join(" ") + ".";
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
+
+// "Pizza or hotdish?" gives ["Pizza", "hotdish"]. No "or" (or "or not") gives nothing.
+// "Will it snow or will it rain?" is two whole clauses, so it gives ["snow", "rain"].
+function choicesIn(text) {
+  const sides = text.trim().replace(/[?!.]+$/, "").split(/\s+or\s+/i).map((side) => side.trim());
+  if (sides.length < 2 || sides.some((side) => !side)) return null;
+  const last = sides.pop();
+  if (/^not\b/i.test(last)) return null;
+  const opener = /^(will|would|should|shall|can|could|do|does|did|is|are|am|may|might)\s+((i|we|it|they|you|he|she)\b\s*)?/i;
+  const choices = opener.test(last)
+    ? sides.concat(last).map((side) => side.replace(opener, ""))
+    : sides.map((side) => side.split(/\s+/).pop().replace(/[,;:]+$/, "")).concat(last);
+  return choices.every(Boolean) ? choices : null;
+}
+
+// The Oracle reads your question and decides how to answer
+function answer(questionText) {
+  const words = wordsOf(questionText);
+
+  // 1. Nothing? Silence gets an answer too.
+  if (words.length === 0) return pick(SILENCE);
+
+  // 2. A short hello or thank-you gets manners.
+  if (words.length <= 3) {
+    const manner = MANNERS.find((m) => m.firstWords.includes(words[0]));
+    if (manner) return pick(manner.answers);
+  }
+
+  // 3. Either/or? The Oracle picks a side.
+  const choices = choicesIn(questionText);
+  if (choices) {
+    const choice = choices[Math.floor(Math.random() * choices.length)];
+    return pick(EITHER_OR).replace("{choice}", choice.charAt(0).toUpperCase() + choice.slice(1));
+  }
+
+  // 4. A yes-or-no question: a verdict, your question turned around, then an omen.
+  const topic = topicOf(words);
+  if (YES_OR_NO.includes(words[0])) {
+    const verdict = pick(VERDICTS);
+    const omen = topic ? pick(topic.prophecies) : pick(SIGN_OFFS);
+    return [verdict.says, echo(questionText, verdict.no), omen].filter(Boolean).join(" ");
+  }
+
+  // 5. What kind of question is it, and does it touch one of the TOPICS?
+  const kind = kindOf(words);
+  if (topic && kind && topic[kind.kind]) return pick(topic[kind.kind]);   // "What's for lunch?" names a food
+  if (topic) return pick(topic.prophecies);
+  if (kind) return pick(kind.answers);
+
+  // 6. None of those? A classic prophecy.
+  return pick(PROPHECIES);
+}
+
+
+/* ------------------------------------------------------------
+   PART 4: WHAT HAPPENS WHEN YOU ASK
    ------------------------------------------------------------ */
 
 const orb = document.getElementById("orb");
@@ -374,7 +702,7 @@ const askedLine = document.getElementById("asked");
 const prophecyLine = document.getElementById("prophecy");
 const question = document.getElementById("question");
 const button = document.getElementById("go");
-let lastProphecy = "";
+let memory = { question: "", prophecy: "" };   // the last question, and what the Oracle said to it
 
 // The sound switch in the corner
 let soundOn = SOUND_ON;
@@ -385,29 +713,6 @@ function showSound() {
 }
 showSound();
 soundSwitch.addEventListener("click", () => { soundOn = !soundOn; showSound(); });
-
-function pick(list) {
-  return list[Math.floor(Math.random() * list.length)];
-}
-
-// The Oracle reads your question and decides how to answer
-function answer(questionText) {
-  const words = questionText.toLowerCase().match(/[a-z'-]+/g) || [];
-
-  // 1. Does the question use a word from one of the TOPICS?
-  for (const topic of TOPICS) {
-    if (topic.listensFor.some((word) => words.includes(word))) return pick(topic.prophecies);
-  }
-
-  // 2. What kind of question is it? (Reads the first three words, in order.)
-  for (const word of words.slice(0, 3)) {
-    const kind = QUESTION_KINDS.find((k) => k.firstWords.includes(word));
-    if (kind) return pick(kind.answers);
-  }
-
-  // 3. Neither? A classic prophecy.
-  return pick(PROPHECIES);
-}
 
 document.getElementById("ask").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -430,9 +735,15 @@ document.getElementById("ask").addEventListener("submit", (event) => {
     orb.classList.remove("thinking");
     statusLine.textContent = "";
 
-    let prophecy = answer(question.value);
-    for (let tries = 0; prophecy === lastProphecy && tries < 10; tries++) prophecy = answer(question.value);
-    lastProphecy = prophecy;
+    // The same question twice in a row? The Oracle remembers.
+    const asked = wordsOf(question.value).join(" ");
+    let prophecy;
+    if (asked && asked === memory.question) {
+      prophecy = pick(AGAIN).replace("{last}", memory.prophecy);
+    } else {
+      prophecy = answer(question.value);
+      memory = { question: asked, prophecy };
+    }
 
     prophecyLine.textContent = prophecy;
     prophecyLine.classList.add("revealed");

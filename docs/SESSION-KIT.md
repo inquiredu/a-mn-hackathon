@@ -44,6 +44,8 @@ Each segment:
 
 ## Times live only in the session file
 
+The pages and the stage show each part's length ("35 min"), not its clock time; only the session's own `{start}` and `{end}` appear as times. Prefer lengths in new copy too: `{building}`, `{wish.length}`, "with {nudge} left".
+
 No page or message types out a time, date, or length. Write it in braces instead, in any text in the session file or in a page element marked `data-fill`, and `assets/timing.js` fills it in:
 
 | Write | Reads (for this session) | What it is |

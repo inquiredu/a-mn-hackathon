@@ -105,8 +105,8 @@ body {
 /* Plan: the morning at a glance */
 .plan { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.3vh; width: 100%; max-width: 1100px; }
 .plan li { display: grid; grid-template-columns: 5.5em 1fr auto; align-items: baseline; gap: 1.6vw; font-size: clamp(1.1rem, 2.1vw, 2.3rem); padding-bottom: 1.1vh; border-bottom: 1px solid #66C1E733; }
-.plan time { color: var(--sky); font-weight: 800; font-variant-numeric: tabular-nums; }
-.plan span { color: var(--ice); font-size: .8em; }
+.plan .length { color: var(--sky); font-weight: 800; font-variant-numeric: tabular-nums; }
+.plan span:not(.length) { color: var(--ice); font-size: .8em; }
 
 /* Timer: on screens that ask for one */
 .timer { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 2vw; row-gap: 1vh; margin-top: 1vh; }

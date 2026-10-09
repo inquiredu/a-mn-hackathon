@@ -89,7 +89,7 @@ const SESSION = {
         { kind: "prompt", note: "Call on one or two builders from the chat. They press Present now, then A tab. Start the timer (T) when they start, adjust it as the conversation goes, and Reset between people.", heading: "Show us yours", body: "Something you built with AI and code: what it does, who it's for, and one thing that went sideways.", timer: "showTurn" }
       ],
       host: [
-        "Before {start}: in Host controls, keep Share their screen on for everyone. No one needs to be a co-host to present.",
+        "Before you start: in Host controls, keep Share their screen on for everyone. No one needs to be a co-host to present.",
         "Call on one or two builders from the chat answers.",
         "Builders share with Present now, then A tab, so their tab's sound comes through.",
         "Start the stage timer when they start; Reset between people."
@@ -124,7 +124,7 @@ const SESSION = {
           "Your anchor shares their screen. Build along for {buildAlong}.",
           "Pick a starter and make it yours.",
           "Stuck? Press Ask for help in Meet."
-        ], foot: "Back in the main room at {wish.end}" },
+        ], foot: "Back in the main room in {building}" },
         { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the Teams doc, and the gallery wall." },
         { kind: "countdown", note: "For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", until: "{wish.end}", body: "Rather watch? Stay here. We're building wishes live in the main room." }
       ],
@@ -143,10 +143,10 @@ const SESSION = {
       link: "wish.html", linkLabel: "Open Grant a wish",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
-        { kind: "countdown", note: "Keep building in the main room. At {wish.end - nudge}, hosts visit each room to say there are {nudge} left.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before {wish.end}." }
+        { kind: "countdown", note: "Keep building in the main room. With {nudge} left, hosts visit each room to say so.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before you head back." }
       ],
       host: [
-        "At {wish.end - nudge}, visit each room: {nudge} left, pin something to the gallery wall.",
+        "With {nudge} left, visit each room: pin something to the gallery wall.",
         "Note one or two builds for Show & Cheer."
       ],
       messages: [

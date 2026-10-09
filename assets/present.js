@@ -106,7 +106,7 @@ const KINDS = {
     const list = el("ol", "plan");
     SESSION.segments.forEach((seg) => {
       const li = el("li");
-      li.append(el("time", "", TIMES.clock(seg.start)), el("strong", "", seg.title), el("span", "", seg.where));
+      li.append(el("span", "length", seg.minutes + " min"), el("strong", "", seg.title), el("span", "", seg.where));
       list.append(li);
     });
     const parts = [el("h1", "heading", s.heading), list];
@@ -200,7 +200,7 @@ function show(i) {
   history.replaceState(null, "", location.search + "#" + index);
 
   const seg = screen.segment;
-  document.getElementById("rail-segment").textContent = seg.title + " · " + TIMES.clock(seg.start) + " to " + TIMES.clock(seg.end) + " · " + seg.where;
+  document.getElementById("rail-segment").textContent = seg.title + " · " + seg.minutes + " min · " + seg.where;
   document.getElementById("rail-count").textContent = (index + 1) + " / " + screens.length;
   document.getElementById("status").textContent =
     "Screen " + (index + 1) + " of " + screens.length + ": " + (screen.heading || screen.text || "");

@@ -144,9 +144,9 @@ function tick() {
   $("clock").textContent = two.display + " " + (two.state === "ready" ? "to go" : two.label);
   $("clock").classList.toggle("over", two.over);
   const end = toSeconds(screens[index].segment.end);
-  const start = toSeconds(screens[index].segment.start);
+  const partStart = toSeconds(screens[index].segment.start);
   const left = Math.ceil((end - now) / 60);
-  $("left").textContent = now < start ? " · not started yet"
+  $("left").textContent = now < partStart ? " · not started yet"
     : left > 0 ? " · " + left + " min left in this part" : " · time to move on";
 }
 setInterval(tick, 1000);

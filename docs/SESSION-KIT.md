@@ -69,7 +69,7 @@ In a page, mark the element that holds the braces: `<p data-fill>Back at {wish.e
 
 ## Kinds of screen
 
-Every screen has a `kind` and an optional `note` (shown only in the speaker notes). Any screen can also have a `timer`: a `pace` name (`"showTurn"`, `"share"`) or a number of minutes. The stage then shows a countdown the presenter starts and stretches live: T starts or pauses it, + and - add or take away a minute without stopping it, and the speaker notes window has the same buttons. A length the presenter changes is remembered in that browser. The stage also carries a session clock: large on the opening screen until the presenter calls the session to order (the button, or T), then counting down in the rail's corner, and large again above the stage on a click or C, with wait-time countdowns. Uncalled, it counts from `start` on the session's `day`. The arithmetic lives in `assets/stage-timer.js`, tested by `node scripts/test-stage-timer.js`.
+Every screen has a `kind` and an optional `note` (shown only in the speaker notes). Any screen can also have a `timer`: a `pace` name (`"showTurn"`, `"share"`), `"building"` (all the time in breakout rooms), or a number of minutes. The stage then shows a countdown the presenter starts and stretches live: T starts or pauses it, + and - add or take away a minute without stopping it, and the speaker notes window has the same buttons. A length the presenter changes is remembered in that browser. Screens that name the same `timerKey` share one timer, so a countdown started on one screen keeps counting on the next (the two breakout-room screens do this). The stage never counts down to a clock time: a screen that did would claim a time that stops being true the moment the morning runs long. The stage also carries a session clock: large on the opening screen until the presenter calls the session to order (the button, or T), then counting down in the rail's corner, and large again above the stage on a click or C, with wait-time countdowns. Uncalled, it counts from `start` on the session's `day`. The arithmetic lives in `assets/stage-timer.js`, tested by `node scripts/test-stage-timer.js`.
 
 | Kind | Fields | Use it for |
 | --- | --- | --- |
@@ -78,7 +78,6 @@ Every screen has a `kind` and an optional `note` (shown only in the speaker note
 | `steps` | `heading`, `steps` (list), `foot` | Instructions before breakout rooms |
 | `link` | `heading`, `body` | Putting the site address on screen |
 | `embed` | `heading`, `src`, `caption` | Running something live on stage |
-| `countdown` | `heading`, `until` (`"{wish.end}"`), `body` | Time left, for anyone watching in the main room |
 | `awards` | `heading`, `awards` (`icon`, `name`, `why`) | Show & Cheer |
 | `code` | `heading`, `code`, `caption` | Showing a few lines of code (braces here are left alone) |
 | `quote` | `text` | One line, said and left to sit |

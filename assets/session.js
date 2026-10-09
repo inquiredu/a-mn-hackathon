@@ -35,7 +35,7 @@ const SESSION = {
 
   // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.
   pace: {
-    showTurn: 4,       // each builder's turn at Show us yours (the stage timer starts here)
+    showTurn: 4,       // each builder's turn at Show & Tell (the stage timer starts here)
     roomsReady: 2,     // the co-host has the rooms ready this long before they open
     buildAlong: 5,     // anchors share their screen at the start of the rooms
     nudge: 10,         // hosts visit each room this long before building ends
@@ -52,8 +52,8 @@ const SESSION = {
   //   link         which page (and place) to send people to; linkLabel names the button
   //   shared       links from `links` above that this part uses, shown with it: { link: "teams", label: "Teams doc" }
   //   screens      what the presenter view shows, in order (note: what the presenter says or does,
-  //                timer: a pace name or minutes for a countdown the presenter starts and adjusts live,
-//                shown only in the speaker-notes window)
+  //                timer: a pace name, "building", or minutes for a countdown the presenter starts and adjusts live;
+  //                screens that share a timerKey show one timer, so it keeps counting from screen to screen)
   //   host         a checklist for hosts
   //   messages     ready-to-paste chat messages for hosts
   segments: [
@@ -82,11 +82,11 @@ const SESSION = {
       ]
     },
     {
-      id: "show", minutes: 8, title: "Show us yours", where: "Main room",
+      id: "show", minutes: 8, title: "Show & Tell", where: "Main room",
       hint: "One or two of us show something we built with AI and code, and how it went.",
       link: "index.html#today",
       screens: [
-        { kind: "prompt", note: "Call on one or two builders from the chat. They press Present now, then A tab. Start the timer (T) when they start, adjust it as the conversation goes, and Reset between people.", heading: "Show us yours", body: "Something you built with AI and code: what it does, who it's for, and one thing that went sideways.", timer: "showTurn" }
+        { kind: "prompt", note: "Call on one or two builders from the chat. They press Present now, then A tab. Start the timer (T) when they start, adjust it as the conversation goes, and Reset between people.", heading: "Show & Tell", body: "Something you built with AI and code: what it does, who it's for, and one thing that went sideways.", timer: "showTurn" }
       ],
       host: [
         "Before you start: in Host controls, keep Share their screen on for everyone. No one needs to be a co-host to present.",
@@ -126,7 +126,7 @@ const SESSION = {
           "Stuck? Press Ask for help in Meet."
         ], foot: "Back in the main room in {building}" },
         { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the Teams doc, and the gallery wall." },
-        { kind: "countdown", note: "For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", until: "{wish.end}", body: "Rather watch? Stay here. We're building wishes live in the main room." }
+        { kind: "prompt", note: "Start the timer (T) as the rooms open; it keeps counting on the next part's screen. For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", body: "Rather watch? Stay here. We're building wishes live in the main room.", timer: "building", timerKey: "building" }
       ],
       host: [
         "Open the rooms.",
@@ -143,7 +143,7 @@ const SESSION = {
       link: "wish.html", linkLabel: "Open Grant a wish",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
-        { kind: "countdown", note: "Keep building in the main room. With {nudge} left, hosts visit each room to say so.", heading: "Grant a wish", until: "{wish.end}", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before you head back." }
+        { kind: "prompt", note: "The same timer as the last screen, still counting. Keep building in the main room. With {nudge} left, hosts visit each room to say so.", heading: "Grant a wish", body: "Your wish, or one from the Teams doc. Pin something to the gallery wall before you head back.", timer: "building", timerKey: "building" }
       ],
       host: [
         "With {nudge} left, visit each room: pin something to the gallery wall.",

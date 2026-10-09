@@ -89,11 +89,6 @@ const KINDS = {
     frame.title = s.heading;
     return [el("h1", "heading", s.heading), frame, el("p", "caption", s.caption || "")];
   },
-  countdown(s) {
-    const count = el("p", "count");
-    count.dataset.until = s.until;
-    return [el("h1", "heading", s.heading), count, el("p", "body", s.body || "")];
-  },
   awards(s) {
     const list = el("ul", "awards");
     s.awards.forEach((a) => {
@@ -138,8 +133,11 @@ const KINDS = {
 // ---------- The timer, on screens that ask for one ----------
 
 const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());
-const timerKey = (screen) => screen.segment.id + "/" + (screen.heading || "");
-const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, SESSION.pace);
+// A timer's length is a pace, "building" (all the time in breakout rooms), or minutes.
+// Screens that name the same timerKey share one timer, so it keeps counting from one screen to the next.
+const TIMER_LENGTHS = { ...SESSION.pace, building: SESSION.segments.filter((s) => s.where === "Breakout rooms").reduce((sum, s) => sum + s.minutes, 0) };
+const timerKey = (screen) => screen.timerKey || screen.segment.id + "/" + (screen.heading || "");
+const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, TIMER_LENGTHS);
 let timerWasDone = false;
 
 function timerBlock() {
@@ -278,27 +276,18 @@ function show(i) {
   placeClock();
 
   const seg = screen.segment;
-  document.getElementById("rail-segment").textContent = seg.title + " · " + seg.minutes + " min · " + seg.where;
+  document.getElementById("rail-segment").replaceChildren(
+    el("span", "rail-title", seg.title), el("span", "rail-length", seg.minutes + " min"), el("span", "rail-where", seg.where));
   document.getElementById("rail-count").textContent = (index + 1) + " / " + screens.length;
   document.getElementById("status").textContent =
     "Screen " + (index + 1) + " of " + screens.length + ": " + (screen.heading || screen.text || "");
   tick();
 }
 
-// Every second: the clock in the rail, and any countdown on the stage
+// Twice a second: the session clock, and the timer on a screen that has one
 function tick() {
   const now = sessionNow();
   showClock(now);
-  const count = stage.querySelector(".count");
-  if (count) {
-    const left = Math.ceil((toSeconds(count.dataset.until) - now) / 60);
-    count.replaceChildren();
-    if (left > 0) {
-      count.append(String(left), el("small", "", left === 1 ? "minute" : "minutes"));
-    } else {
-      count.append("Time", el("small", "", "back to the main room"));
-    }
-  }
   const state = timerState();
   const box = stage.querySelector(".timer");
   if (state && box) {

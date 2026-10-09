@@ -1,6 +1,7 @@
 // The presenter view: one big idea per screen, read from the session file.
 // Keys: → / Space / Page Down = next, ← / Page Up = back, F = full screen, N = jump to now,
-// S = speaker notes in a second window. On a screen with a timer: T = start or pause, + and - = a minute more or less.
+// S = speaker notes in a second window, C = the session clock large (Esc puts it back). On a screen with a timer:
+// T = start or pause, + and - = a minute more or less; on the opening screen, T calls the session to order.
 // Add ?now=10:50 to the address to preview the clock-driven parts at any moment.
 
 const screens = [];
@@ -34,12 +35,13 @@ function sessionDay() {
   return new Intl.DateTimeFormat("en-CA", { timeZone: SESSION.timeZone }).format(new Date());
 }
 
-// The two hours, counted from the advertised start, or from when the presenter restarted them
+// The two hours: from the presenter's call to order, or the advertised start on the day, or not yet
+function browserStore() {
+  try { return localStorage; } catch { return undefined; }
+}
 function sessionClock(now) {
-  let store;
-  try { store = localStorage; } catch { store = undefined; }
-  const start = STAGE_TIMER.savedStart(store, sessionDay()) ?? toSeconds(SESSION.start);
-  return STAGE_TIMER.sessionElapsed(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
+  const start = STAGE_TIMER.resolveStart(STAGE_TIMER.savedStart(browserStore(), sessionDay()), sessionDay(), SESSION.day, toSeconds(SESSION.start));
+  return STAGE_TIMER.sessionClock(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
 }
 
 
@@ -178,6 +180,63 @@ function timerState() {
 }
 
 
+// ---------- The session clock: big on the opening screen, then in the corner, and large again on a click ----------
+// One element moves between three places; CSS animates the move.
+
+const clockBox = document.getElementById("session-clock");
+let clockOpen = false;
+let wait = null;   // { minutes, run } while a wait-time countdown is on
+
+function placeClock() {
+  clockBox.dataset.mode = clockOpen ? "open" : index === 0 ? "hero" : "corner";
+  document.getElementById("sc-backdrop").hidden = !clockOpen;
+  document.getElementById("sc-face").setAttribute("aria-expanded", String(clockOpen));
+}
+
+function openClock(open) {
+  clockOpen = open;
+  placeClock();
+  if (open) document.getElementById("sc-close").focus();
+}
+
+function callToOrder() {
+  STAGE_TIMER.saveStart(browserStore(), sessionDay(), sessionNow());
+  document.getElementById("status").textContent = "The two hours have started.";
+  tick();
+}
+
+function startWait(minutes) {
+  wait = { minutes, run: STAGE_TIMER.toggle(undefined, minutes, Date.now()) };
+  tick();
+}
+
+function showClock(now) {
+  const two = sessionClock(now);
+  document.getElementById("sc-time").textContent = two.display;
+  document.getElementById("sc-label").textContent = two.state === "ready" ? TIMES.fill("{length}") : two.label;
+  clockBox.dataset.state = two.state;
+  document.getElementById("sc-start").hidden = two.state !== "ready";
+  document.querySelector(".rail").style.setProperty("--elapsed", two.pct.toFixed(2) + "%");
+  const waitBox = document.getElementById("sc-wait");
+  if (wait) {
+    const v = STAGE_TIMER.view(wait.run, wait.minutes, Date.now());
+    waitBox.hidden = false;
+    document.getElementById("sc-wait-time").textContent = v.done ? "Time" : v.display;
+    waitBox.classList.toggle("done", v.done);
+  } else {
+    waitBox.hidden = true;
+  }
+  clockBox.classList.toggle("waiting", !!wait);
+}
+
+document.getElementById("sc-face").addEventListener("click", () => openClock(!clockOpen));
+document.getElementById("sc-close").addEventListener("click", () => openClock(false));
+document.getElementById("sc-backdrop").addEventListener("click", () => openClock(false));
+document.getElementById("sc-start").addEventListener("click", callToOrder);
+document.getElementById("sc-wait-clear").addEventListener("click", () => { wait = null; tick(); });
+document.querySelectorAll("[data-wait]").forEach((b) => b.addEventListener("click", () => startWait(Number(b.dataset.wait))));
+
+
 // ---------- Speaker notes, in a second window that follows along ----------
 // The stage and the notes window talk over a BroadcastChannel (same computer, same browser).
 
@@ -206,6 +265,7 @@ function show(i) {
   if (timerState()) { stage.append(timerBlock()); stage.classList.add("has-timer"); }
   timerWasDone = false;
   history.replaceState(null, "", location.search + "#" + index);
+  placeClock();
 
   const seg = screen.segment;
   document.getElementById("rail-segment").textContent = seg.title + " · " + seg.minutes + " min · " + seg.where;
@@ -218,11 +278,7 @@ function show(i) {
 // Every second: the clock in the rail, and any countdown on the stage
 function tick() {
   const now = sessionNow();
-  const two = sessionClock(now);
-  const corner = document.getElementById("rail-clock");
-  corner.textContent = two.display;
-  corner.classList.toggle("over", two.over);
-  document.querySelector(".rail").style.setProperty("--elapsed", two.pct.toFixed(2) + "%");
+  showClock(now);
   const count = stage.querySelector(".count");
   if (count) {
     const left = Math.ceil((toSeconds(count.dataset.until) - now) / 60);
@@ -261,12 +317,17 @@ document.addEventListener("keydown", (event) => {
   if (event.target.closest && event.target.closest("iframe, input, textarea")) return;
   const key = event.key;
   if (event.target.tagName === "BUTTON" && (key === " " || key === "Enter")) return; // let the button do its job
+  if (key === "Escape" && clockOpen) { openClock(false); return; }
   if (key === "ArrowRight" || key === "PageDown" || key === " ") { event.preventDefault(); show(index + 1); }
   else if (key === "ArrowLeft" || key === "PageUp") { event.preventDefault(); show(index - 1); }
   else if (key === "f" || key === "F") toggleFullScreen();
   else if (key === "n" || key === "N") jumpToNow();
   else if (key === "s" || key === "S") openNotes();
-  else if (key === "t" || key === "T") timerAction("toggle");
+  else if (key === "c" || key === "C") openClock(!clockOpen);
+  else if (key === "t" || key === "T") {
+    if (screens[index].timer) timerAction("toggle");
+    else if (sessionClock(sessionNow()).state === "ready") callToOrder();
+  }
   else if (key === "+" || key === "=") timerAction("plus");
   else if (key === "-" || key === "_") timerAction("minus");
   else if (key === "Home") show(0);

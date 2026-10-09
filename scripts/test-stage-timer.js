@@ -50,14 +50,19 @@ assert.strictEqual(T.createStore(storage).minutes("show", 4), 6, "a new store re
 assert.strictEqual(T.createStore(storage).view("show", 4, t0).status, "Ready", "runs aren't saved");
 assert.strictEqual(T.createStore({ getItem() { throw new Error("blocked"); } }).minutes("show", 4), 4, "blocked storage falls back");
 
-// The two hours, in the corner
+// The two hours: ready, counting down to the second, then over
 const ten = 10 * 3600, two = 2 * 3600;
-assert.strictEqual(T.sessionElapsed(ten - 300, ten, two).display, "0:00 of 2:00", "before the start");
-assert.strictEqual(T.sessionElapsed(ten - 300, ten, two).started, false);
-assert.strictEqual(T.sessionElapsed(ten + 42 * 60 + 59, ten, two).display, "0:42 of 2:00", "whole minutes, rounded down");
-assert.strictEqual(T.sessionElapsed(ten + 90 * 60, ten, two).pct, 75);
-assert.strictEqual(T.sessionElapsed(ten + two, ten, two).display, "2:00 of 2:00");
-assert.strictEqual(T.sessionElapsed(ten + two + 5 * 60, ten, two).display, "+0:05 over");
-assert.strictEqual(T.sessionElapsed(ten + two + 5 * 60, ten, two).pct, 100);
+assert.deepStrictEqual([T.sessionClock(ten, null, two).state, T.sessionClock(ten, null, two).display], ["ready", "2:00:00"], "before the call to order");
+assert.strictEqual(T.sessionClock(ten - 300, ten, two).state, "ready", "before the start");
+assert.deepStrictEqual([T.sessionClock(ten + 42 * 60 + 5, ten, two).display, T.sessionClock(ten + 42 * 60 + 5, ten, two).label], ["1:17:55", "left"]);
+assert.strictEqual(T.sessionClock(ten + 90 * 60, ten, two).pct, 75);
+assert.strictEqual(T.sessionClock(ten + two, ten, two).display, "0:00:00", "the last second is still on time");
+assert.deepStrictEqual([T.sessionClock(ten + two + 312, ten, two).display, T.sessionClock(ten + two + 312, ten, two).over], ["+0:05:12", true]);
+assert.strictEqual(T.sessionClock(ten + two + 312, ten, two).pct, 100);
+
+// When the two hours began
+assert.strictEqual(T.resolveStart(ten + 240, "2026-10-09", "2026-10-09", ten), ten + 240, "a call to order wins");
+assert.strictEqual(T.resolveStart(null, "2026-10-09", "2026-10-09", ten), ten, "on the day, the advertised start");
+assert.strictEqual(T.resolveStart(null, "2026-10-08", "2026-10-09", ten), null, "a rehearsal waits for the call");
 
 console.log("stage timer: all tests pass");

@@ -16,7 +16,7 @@
 
 <footer class="rail">
   <p class="rail-left"><img src="assets/mngaia-mark.png" alt="" class="rail-mark"><span id="rail-segment"></span></p>
-  <p class="rail-right"><span id="rail-clock" title="Time into the session"></span><span id="rail-count"></span></p>
+  <p class="rail-right"><span id="rail-count"></span></p>
 </footer>
 
 <nav class="controls" aria-label="Presenter controls">
@@ -26,7 +26,28 @@
   <button id="full" type="button">Full screen</button>
   <button id="next" type="button" aria-label="Next screen">→</button>
 </nav>
-<p class="keys" aria-hidden="true">→ next · ← back · F full screen · N jump to now · S speaker notes · T timer</p>
+<div class="sc-backdrop" id="sc-backdrop" hidden></div>
+<section class="session-clock" id="session-clock" data-mode="hero" aria-label="Session clock">
+  <button class="sc-face" id="sc-face" type="button" aria-expanded="false" title="Session clock: click to show it large (C)">
+    <span class="sc-time" id="sc-time"></span><span class="sc-label" id="sc-label"></span>
+  </button>
+  <div class="sc-wait" id="sc-wait" hidden>
+    <span class="sc-wait-label">Wait time</span><span class="sc-wait-time" id="sc-wait-time"></span>
+  </div>
+  <div class="sc-actions">
+    <button class="sc-start" id="sc-start" type="button">Call to order</button>
+    <div class="sc-waits" role="group" aria-label="Wait time">
+      <span>Wait time</span>
+      <button type="button" data-wait="1">1 min</button>
+      <button type="button" data-wait="2">2 min</button>
+      <button type="button" data-wait="3">3 min</button>
+      <button type="button" data-wait="5">5 min</button>
+      <button type="button" id="sc-wait-clear">Clear</button>
+    </div>
+    <button class="sc-close" id="sc-close" type="button">Back to the corner</button>
+  </div>
+</section>
+<p class="keys" aria-hidden="true">→ next · ← back · F full screen · N jump to now · S speaker notes · C clock · T timer</p>
 <p class="sr-only" id="status" aria-live="polite"></p>
 
 <script src="assets/session.js"></script>

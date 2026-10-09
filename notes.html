@@ -70,8 +70,8 @@
   </div>
   <p class="status" id="status" aria-live="polite"></p>
   <div class="restart">
-    <button id="start-now" type="button">Start the two hours now</button>
-    <button id="start-scheduled" type="button">Count from the scheduled start</button>
+    <button id="start-now" type="button">Call to order now</button>
+    <button id="start-scheduled" type="button">Reset the session clock</button>
   </div>
 </main>
 
@@ -104,15 +104,17 @@ function sessionNow() {
 function store() { try { return localStorage; } catch { return undefined; } }
 function today() { return new Intl.DateTimeFormat("en-CA", { timeZone: SESSION.timeZone }).format(new Date()); }
 
-// Started late? Count the two hours from now (the stage, in this browser, follows). Saved for today only.
+// Call to order from here, or reset (the stage, in this browser, follows). Saved for today only.
 $("start-now").addEventListener("click", () => {
   STAGE_TIMER.saveStart(store(), today(), sessionNow());
-  $("status").textContent = "Counting the two hours from now.";
+  $("status").textContent = "Called to order: the two hours are counting down.";
   tick();
 });
 $("start-scheduled").addEventListener("click", () => {
   STAGE_TIMER.saveStart(store(), today(), null);
-  $("status").textContent = "Counting from the scheduled start, " + TIMES.clock(SESSION.start) + ".";
+  $("status").textContent = today() === SESSION.day
+    ? "Counting from the scheduled start, " + TIMES.clock(SESSION.start) + "."
+    : "Reset. The clock waits for the call to order.";
   tick();
 });
 
@@ -137,8 +139,9 @@ function render() {
 
 function tick() {
   const now = sessionNow();
-  const two = STAGE_TIMER.sessionElapsed(now, STAGE_TIMER.savedStart(store(), today()) ?? toSeconds(SESSION.start), toSeconds(SESSION.end) - toSeconds(SESSION.start));
-  $("clock").textContent = two.display;
+  const start = STAGE_TIMER.resolveStart(STAGE_TIMER.savedStart(store(), today()), today(), SESSION.day, toSeconds(SESSION.start));
+  const two = STAGE_TIMER.sessionClock(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
+  $("clock").textContent = two.display + " " + (two.state === "ready" ? "to go" : two.label);
   $("clock").classList.toggle("over", two.over);
   const end = toSeconds(screens[index].segment.end);
   const start = toSeconds(screens[index].segment.start);

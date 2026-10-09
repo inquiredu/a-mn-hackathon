@@ -80,22 +80,24 @@ const STAGE_TIMER = (() => {
     };
   }
 
-  // The whole session, for the corner of the stage: how far in, out of how long, and whether it's over.
-  // All in seconds of the day. Before the start it reads 0:00.
-  function hm(seconds) {
-    const m = Math.floor(seconds / 60);
-    return Math.floor(m / 60) + ":" + String(m % 60).padStart(2, "0");
+  // The whole session: how long is left, to the second. start is a second of the day, or null before the
+  // call to order. Ready shows the full length; running counts down; past the end it counts how far over.
+  function hms(seconds) {
+    const s = Math.max(0, Math.round(seconds));
+    return Math.floor(s / 3600) + ":" + String(Math.floor(s / 60) % 60).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
   }
-  function sessionElapsed(now, start, length) {
-    const elapsed = Math.max(0, now - start);
-    const over = elapsed > length;
-    return {
-      elapsed,
-      display: over ? "+" + hm(elapsed - length) + " over" : hm(elapsed) + " of " + hm(length),
-      pct: Math.min(100, (100 * elapsed) / length),
-      started: now >= start,
-      over
-    };
+  function sessionClock(now, start, length) {
+    if (start === null || now < start) return { state: "ready", display: hms(length), label: "", pct: 0, over: false };
+    const left = start + length - now;
+    if (left >= 0) return { state: "running", display: hms(left), label: "left", pct: (100 * (length - left)) / length, over: false };
+    return { state: "over", display: "+" + hms(-left), label: "over", pct: 100, over: true };
+  }
+
+  // When the two hours began: the presenter's call to order if there was one today, otherwise the
+  // advertised start on the session's own day, otherwise not yet (so a rehearsal waits for the call).
+  function resolveStart(saved, today, eventDay, scheduled) {
+    if (saved !== null) return saved;
+    return today === eventDay ? scheduled : null;
   }
 
   // A late start: the presenter can restart the two hours from now. Saved for that day only, in this browser.
@@ -110,7 +112,7 @@ const STAGE_TIMER = (() => {
     try { at === null ? storage?.removeItem(START_KEY) : storage?.setItem(START_KEY, JSON.stringify({ day: today, at })); } catch { /* private window */ }
   }
 
-  return { startingMinutes, clampMinutes, secondsLeft, view, toggle, adjust, createStore, sessionElapsed, savedStart, saveStart, MIN, MAX };
+  return { startingMinutes, clampMinutes, secondsLeft, view, toggle, adjust, createStore, sessionClock, resolveStart, savedStart, saveStart, MIN, MAX };
 })();
 
 if (typeof module !== "undefined") module.exports = STAGE_TIMER;

@@ -422,6 +422,8 @@ kbd { font: inherit; font-size: .88em; font-weight: 600; padding: 1px 6px; borde
 .footer-inner { display: flex; gap: 16px; align-items: center; }
 .footer p { margin: 2px 0; }
 .footer .small { color: inherit; opacity: .85; }
+.footer a.inline { color: inherit; font-weight: 700; }
+.footer .backups .pending { font-style: normal; }
 
 /* ---------- The machine room ---------- */
 dialog {

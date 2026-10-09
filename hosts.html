@@ -67,7 +67,7 @@
       <ul class="shape">
         <li data-fill><strong>{length:number}</strong><span>{length:unit}, {start} to {end} {zone}</span></li>
         <li data-fill><strong>{building:number}</strong><span>{building:unit} of building in breakout rooms</span></li>
-        <li><strong>4</strong><span>people at most in each room, one anchor each</span></li>
+        <li><strong>4</strong><span>people at most in each room, same level together</span></li>
         <li data-fill><strong>{parts}</strong><span>parts, each with a stage, a checklist, and messages</span></li>
       </ul>
     </div>
@@ -75,17 +75,18 @@
 
   <section class="section band" aria-labelledby="teams-title">
     <div class="wrap">
-      <h2 id="teams-title">Forming teams of four</h2>
+      <h2 id="teams-title">Forming teams of four, by level</h2>
       <ol class="checks">
-        <li data-fill><strong>During Welcome ({welcome.length}), main room.</strong> In the chat, everyone rates how much they've built with AI, 1 to 5, and builders say what they made. The co-host lists the 4s, the 5s, and the builders. They're the anchors.</li>
-        <li><strong>During Show us yours and the live build.</strong> The co-host counts the builders, opens Breakout rooms with the number below, presses Shuffle, then drags one anchor into each room and fills in the Room column in the Teams doc.</li>
-        <li><strong>When the Remix Arcade starts.</strong> Open the rooms. Everyone adds their name to their room's row in the Teams doc. That's how we know the teams.</li>
-        <li><strong>Latecomers.</strong> Add them to the room with the fewest people, and add their name to that room's row.</li>
+        <li data-fill><strong>During Welcome ({welcome.length}), main room.</strong> In the chat, everyone rates how much they've built with AI, 1 to 5, and builders say what they made. The co-host notes the 4s, the 5s, and the builders: the anchors, where they fall.</li>
+        <li data-fill><strong>During Three levels ({levels.length}).</strong> The presenter shows the three levels live. Nobody is sorted; the levels are for choosing.</li>
+        <li data-fill><strong>During Show us yours ({show.length}).</strong> Everyone opens the Teams doc and adds their name under the level they want to try, with a partner's name beside it if they have one. The co-host opens Breakout rooms and makes rooms of up to four from each level's list, partners together, an anchor in each room where one fits, then writes the room numbers in the Room column.</li>
+        <li><strong>When the Remix Arcade starts.</strong> Open the rooms. Everyone finds their room number next to their name. Level 1 rooms start with a starter; level 2 and 3 rooms start with their level's example.</li>
+        <li><strong>Latecomers.</strong> Ask which level, add them to that level's smallest room, and write the room number next to their name.</li>
       </ol>
       <div class="card">
         <h3>How many rooms?</h3>
         <div class="calc">
-          <label for="builders">People building (not counting anyone who'd rather watch)</label>
+          <label for="builders">People on one level's list (run it once per level)</label>
           <input id="builders" type="number" min="1" max="200" value="30">
         </div>
         <p class="calc-out" id="calc-out" aria-live="polite"></p>
@@ -110,6 +111,7 @@
           <ul>
             <li data-fill>Share the Teams doc so anyone with the link can edit. {Weekday} morning is a good time.</li>
             <li>Paste a starter into Gemini on a district account (choose Canvas first), and check that it runs. ChatGPT now previews code with a Preview switch instead of Canvas.</li>
+            <li>Set up the three Chrome tabs for Three levels: the Oracle in a chat; the charter with the infographic prompt in Gemini (Canvas on) and the Google Site open to edit; the Apps Script editor with the Drive Inventory, the folder's ID in, run once so the permission screen is behind you.</li>
             <li>Name the co-host who will set up the breakout rooms.</li>
             <li>Rehearse with the stage in one window and the speaker notes in another.</li>
           </ul>

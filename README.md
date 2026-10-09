@@ -7,7 +7,8 @@ A one-link site for a two-hour virtual hackathon hosted by MNGAIA · AI4MN on Fr
 | Page | For | What it does |
 | --- | --- | --- |
 | [Home](index.html) | Everyone | Changes with the clock: the invitation before, "Happening now" during, a keepsake after |
-| [Starters](starters.html) | Builders | Five starters that already work, to play, copy into an AI tool, and remix |
+| [Three levels](levels.html) | Everyone | Three levels of getting started with code: in the chat, on your site, behind the scenes, each with a prompt and its steps |
+| [Starters](starters.html) | Builders | Nine starters across the three levels, to play, copy into an AI tool, and remix |
 | [Grant a wish](wish.html) | Builders | Build something from nothing: a wish builder, a jar of wishes, three moves for when you're stuck |
 | [Hosts](hosts.html) | Hosts and anchors | Forming teams, a room calculator, the run of show, before, during, and after |
 | [Sources](sources.html) | Anyone curious | How-tos, cautions, and research on learning to code |
@@ -27,6 +28,7 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 | `assets/present.js`, `assets/present.css`, `notes.html` | The stage and the speaker notes |
 | `assets/stage-timer.js` | The arithmetic behind the stage's timers and session clock, tested by `scripts/test-stage-timer.js` |
 | `cabinets/` | The starters, each a single HTML file that pastes cleanly into any AI tool |
+| `recipes/` | The level 3 starters: Apps Scripts, one file each, shown and copied from the pages |
 | `scripts/serve.js` | A small local server for previewing |
 | `scripts/test-stage-timer.js` | Tests for the timers: `node scripts/test-stage-timer.js` |
 | `scripts/check-session.js` | Checks the session file and every page the way the browser reads them: `node scripts/check-session.js` |

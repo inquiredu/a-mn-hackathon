@@ -82,8 +82,10 @@
           <li>Drag the box to the size you want, and <strong>Publish</strong>.</li>
         </ol>
         <div class="copybox">
+          <details><summary>Read the prompt</summary>
           <p id="site-prompt">Here is a document my team already uses. Turn it into an interactive infographic as a single HTML page: each section becomes a card that opens when clicked or tapped, the key commitments become a row of badges, in plain language and large type, and it works on a phone. Keep the document's meaning exactly; don't add anything it doesn't say. No outside libraries, images, or fonts. The document is below.</p>
-          <button data-copy-from="site-prompt">Copy</button>
+          </details>
+          <button data-copy-from="site-prompt">Copy the prompt</button>
         </div>
         <p class="more-link">If Sites says the code is too long, ask your AI for a lighter version: fewer sections, less decoration. The page runs in its own sealed box on your site, which is why Sites lets it in.</p>
         <h3>Monday</h3>
@@ -106,11 +108,14 @@
           <li>Open the <strong>Execution log</strong>. The link to your new Sheet is there, and the Sheet is in your Drive.</li>
         </ol>
         <div class="copybox">
+          <details><summary>Read the prompt</summary>
           <p id="script-prompt">Write a Google Apps Script that lists every file in one Google Drive folder and all of its subfolders in a new Google Sheet: one row per file, with the folder path, the file's title, its type in plain words (Doc, Sheet, Slides, PDF), its link, and when it last changed. Use only DriveApp and SpreadsheetApp. Put the folder ID in one clearly marked line at the top. Then tell me, in plain language, what the first run will ask permission for and why.</p>
-          <button data-copy-from="script-prompt">Copy</button>
+          </details>
+          <button data-copy-from="script-prompt">Copy the prompt</button>
         </div>
         <h3>Or start from ours</h3>
         <div class="copybox">
+          <details><summary>Read the script</summary>
           <pre id="inventory-script" data-script="inventory">// Drive inventory: every file in a folder and its subfolders, in a new Google Sheet.
 // 1. Paste the folder's ID between the quotes. (Open the folder in Drive: the ID is the long string after folders/ in the address.)
 // 2. Choose "inventory" and press Run. The first run asks to see your Drive and make a Sheet. Read it, then allow.
@@ -154,6 +159,7 @@ function kind(mime) {
   };
   return names[mime] || mime.replace(/^.*\//, "");
 }</pre>
+          </details>
           <button data-copy-from="inventory-script">Copy the script</button>
         </div>
         <div class="caution">

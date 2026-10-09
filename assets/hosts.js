@@ -24,11 +24,14 @@ showPlan();
 
 // ---------- The run of show ----------
 
+// Each part folds. The part that's on stays open; before and after the morning, the first one does.
+const live = phase();
 let screenNumber = 0;
 SESSION.segments.forEach((segment, s) => {
-  const card = el("article", "segment" + (segment.where === "Breakout rooms" ? " rooms" : ""));
+  const card = el("details", "segment" + (segment.where === "Breakout rooms" ? " rooms" : ""));
+  card.open = live.mode === "during" ? live.index === s : s === 0;
 
-  const head = el("div", "segment-head");
+  const head = el("summary", "segment-head");
   head.append(el("span", "length", segment.minutes + " min"), el("h3", "", segment.title), el("span", "where", segment.where));
   card.append(head, el("p", "participants", "Participants see: " + segment.hint));
 

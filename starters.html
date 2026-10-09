@@ -49,7 +49,7 @@
     <div class="wrap">
       <p class="kicker-dark">The Remix Arcade</p>
       <h1 class="page-title">Starters</h1>
-      <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours. Five live in the chat, two are pages for your Google Site, and two are scripts that work behind the scenes: <a href="levels.html">the three levels</a>, with a starter or two for each.</p>
+      <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours. Four live in the chat, two are pages for your Google Site, and two are scripts that work behind the scenes: <a href="levels.html">the three levels</a>, with a starter or two for each.</p>
 
       <div class="first">
         <p><strong>First, find your room.</strong> Open the Teams doc: your room number is next to your name.</p>
@@ -63,7 +63,7 @@
       </ol>
 
       <h3 class="subhead">Level 1 · In the chat</h3>
-      <div class="machines">
+      <div class="machines four">
 
         <article class="cabinet" style="--c: var(--timer)">
           <div class="badge hex" aria-hidden="true">⏱️</div>
@@ -166,40 +166,6 @@
             <h5>Look inside (no AI needed)</h5>
             <ul>
               <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>TONES</code>, write your own opener and closer, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
-        </article>
-
-        <article class="cabinet" style="--c: var(--calendar)">
-          <div class="badge hex" aria-hidden="true">🗓️</div>
-          <p class="for">For leaders and anyone who juggles calendars</p>
-          <h4>The Calendar Explorer</h4>
-          <p>Every calendar in one view you can filter and search, with busy days and double-booked rooms flagged.</p>
-          <p class="monday"><strong>Monday:</strong> spot next month's collisions before they happen.</p>
-          <div class="actions">
-            <button class="primary" data-play="calendar">Play</button>
-            <button data-copy-machine="calendar">Copy for my AI</button>
-          </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Change the calendars to our buildings and programs: ___.</span></li>
-              <li><span>Use these events instead: ___. (Paste public events only.)</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a month grid view with a colored dot for each event.</span></li>
-              <li><span>Add a button that copies one week as a list for the staff bulletin.</span></li>
-              <li><span>Flag any evening with more than two events for the same families.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>Add a quiet-day finder that celebrates days with nothing scheduled.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>EVENTS</code>, add one for something on your own calendar, and press <strong>Run my changes</strong>.</li>
             </ul>
           </details>
         </article>
@@ -311,15 +277,15 @@
 
       </div>
 
-      <div class="level-note">
-        <h4>What Google Sites does to pasted code</h4>
+      <details class="level-note">
+        <summary><h4>What Google Sites does to pasted code</h4></summary>
         <p>It runs in a sealed box on your page. That keeps your site safe, and it sets the limits: the page can't remember anything between visits, so saved settings and scores vanish; it can't reach the rest of your site or your visitors' accounts; sound and full screen wait for a tap; and a very long page may be refused or load slowly. One box holds one page, and it shows at the size you drag it to, so build for a box, not a window.</p>
         <p>If what you pasted doesn't fit or doesn't behave, hand your AI this:</p>
         <div class="copybox">
           <p id="sites-stem">Make this one self-contained HTML file for a Google Sites embed box about 800 pixels wide: no outside libraries, fonts, or images; nothing saved between visits; no sound until a tap; large type that works on a phone; and as short as it can be while keeping everything it does.</p>
           <button data-copy-from="sites-stem">Copy</button>
         </div>
-      </div>
+      </details>
 
       <h3 class="subhead" id="level-3">Level 3 · Behind the scenes</h3>
       <p class="hint">Scripts, not pages: nothing to play here. Copy one into a new project at <a href="https://script.google.com" rel="noopener">script.google.com</a>, or hand it to your AI first and have it explained. <a href="levels.html#script">The steps, and the cautions</a>.</p>
@@ -387,7 +353,8 @@
 
       </div>
 
-      <h3 class="subhead" id="where">Where do I paste it?</h3>
+      <details class="fold" id="where">
+      <summary>Where do I paste it?</summary>
       <div class="tips">
         <div>
           <h4>Gemini</h4>
@@ -407,6 +374,7 @@
         </div>
       </div>
       <p class="more-link">Step-by-step help for each tool, checked this week: <a href="sources.html?ask=tools">sources on building in your AI tool</a>.</p>
+      </details>
     </div>
   </section>
 

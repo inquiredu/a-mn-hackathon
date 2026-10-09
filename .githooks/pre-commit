@@ -4,8 +4,12 @@
 cd "$(git rev-parse --show-toplevel)" || exit 1
 fail=0
 
-# Files that never belong in this repo
-sealed=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '(^|/)(\.env[^/]*|[^/]*service-account[^/]*\.json|github-recovery-codes\.txt|[^/]*\.(pem|p12|key))$')
+# What's being added. Plain output whatever the user's git config: no colour, no quoted names, no diff helpers.
+# T counts too: a symlink swapped for a real file is new content.
+staged() { git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMRT; }
+
+# Files that never belong in this repo. .env.example and Keynote's .key decks are fine.
+sealed=$(staged | grep -E '(^|/)(\.env(\.[^/]*)?|[^/]*service-account[^/]*\.json|[^/]*firebase-adminsdk[^/]*\.json|github-recovery-codes\.txt|id_(rsa|ecdsa|ed25519)|[^/]*\.(pem|p12|pfx))$' | grep -vE '(^|/)\.env\.(example|sample|template)$')
 if [ -n "$sealed" ]; then
   echo "pre-commit: these files hold credentials and stay out of git:" >&2
   echo "$sealed" | sed 's/^/  - /' >&2
@@ -13,9 +17,10 @@ if [ -n "$sealed" ]; then
 fi
 
 # Keys and tokens in the lines being added (names only, never the value)
-keys='AIza[0-9A-Za-z_-]{35}|sk-ant-[0-9A-Za-z_-]{20,}|sk-[0-9A-Za-z]{32,}|gh[pousr]_[0-9A-Za-z]{36}|github_pat_[0-9A-Za-z_]{40,}|xox[abprs]-[0-9A-Za-z-]{10,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----'
-hits=$(git diff --cached --name-only --diff-filter=ACMR | while IFS= read -r file; do
-  git diff --cached -U0 -- "$file" | grep '^+' | grep -v '^+++' | grep -qE "$keys" && echo "$file"
+keys='AIza[0-9A-Za-z_-]{35}|GOCSPX-[0-9A-Za-z_-]{20,}|(^|[^0-9A-Za-z_-])sk-(proj-|ant-|svcacct-)?[0-9A-Za-z_-]{32,}|[sr]k_live_[0-9A-Za-z]{20,}|gh[pousr]_[0-9A-Za-z]{36}|github_pat_[0-9A-Za-z_]{40,}|xox[abprs]-[0-9A-Za-z-]{10,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----'
+# --text and dropping NUL bytes read binary files too, so a key can't hide in one
+hits=$(staged | while IFS= read -r file; do
+  git diff --cached --no-color --no-ext-diff --no-textconv --text -U0 -- "$file" | tr -d '\000' | grep '^+' | grep -v '^+++' | grep -qE "$keys" && echo "$file"
 done)
 if [ -n "$hits" ]; then
   echo "pre-commit: something shaped like a key or token is being added in:" >&2

@@ -57,6 +57,7 @@ The Session slides deck matches the site as of the evening of October 8: lengths
 - On the Windows PC, turn on the commit and push checks and test them once. See "On the Windows PC" below.
 - In Meet's Host controls, keep "Share their screen" on for everyone, for Show us yours and Show & Cheer.
 - Tell the co-host the room routine: rooms come from the three level lists in the Teams doc (up to four each, partners together), not from a shuffle; put a 4 or 5 from the Welcome chat in each room where it works; write room numbers in the Room column.
+- The Starter code backup deck doesn't have the four new starters (two pages, two scripts); add them to its speaker notes if there's time, or point people at the site.
 - Sean, before 10:00, in Chrome: tab 1, an AI chat with the Oracle pasted in and running; tab 2, Gemini with Canvas on and the charter ready, plus the Google Site open to edit; tab 3, the Apps Script editor with the inventory script from `levels.html`, the folder's ID in place, run once so the permission screen is behind you. Share Chrome as a window.
 - ⚠️ Not verified this morning: whether Google Sites caps the length of pasted embed code, and whether its sandbox breaks anything the starters rely on. The page says to ask for a lighter version if Sites refuses.
 - Before 10:00 on the presenting computer: open Present, press F, and check the session clock on the opening screen. Call to order when you start, or it counts from 10:00 on its own.

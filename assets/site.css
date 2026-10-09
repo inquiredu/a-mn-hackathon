@@ -29,6 +29,9 @@
   --bar-accent: #66C1E7;
 
   --oracle: #6A44C9;
+  --charter: #10345A;
+  --syllabus: #0B6E6E;
+  --script: #7A4B00;
   --timer: #0B6E6E;
   --groups: #B8430F;
   --feedback: #2E7D4F;
@@ -62,6 +65,12 @@
     --bar-ink: #EAF6FC;
     --bar-accent: #66C1E7;
     --oracle: #B79CFF;
+  --charter: #8FD3F4;
+  --syllabus: #5FD0C8;
+  --script: #F0B860;
+    --charter: #8FD3F4;
+    --syllabus: #5FD0C8;
+    --script: #F0B860;
     --timer: #5FD0C8;
     --groups: #FF9E6B;
     --feedback: #7FD7A0;
@@ -326,6 +335,12 @@ button:hover, .button:hover { border-color: var(--link); }
 }
 .remix li button { flex: none; padding: 4px 12px; font-size: .85rem; }
 .remix .note { display: block; margin-top: 4px; font-size: .85rem; color: var(--muted); }
+.level-note { margin: 24px 0 10px; padding: 14px 18px; border-left: 6px solid var(--sky); background: var(--surface); border-radius: 0 14px 14px 0; }
+.level-note h4 { margin: 0 0 6px; font-size: 1rem; }
+.level-note p { margin: 6px 0 0; }
+.level-note .copybox { margin-top: 10px; }
+.cabinet .steps-in { margin: 0 0 14px; padding-left: 20px; color: var(--muted); font-size: .95rem; }
+.cabinet .steps-in li { margin: 3px 0; }
 .remix li.do { display: block; background: transparent; border: 1px dashed var(--line); }
 code { font: .9em ui-monospace, SFMono-Regular, Consolas, monospace; background: var(--tint); padding: 1px 5px; border-radius: 5px; }
 

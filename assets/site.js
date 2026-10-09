@@ -13,7 +13,15 @@ const MACHINES = {
   groups: { name: "The Group Maker", file: "cabinets/group-maker.html" },
   feedback: { name: "The Feedback Builder", file: "cabinets/feedback-builder.html" },
   calendar: { name: "The Calendar Explorer", file: "cabinets/calendar-explorer.html" },
-  oracle: { name: "The Teacher's Lounge Oracle", file: "cabinets/oracle.html" }
+  oracle: { name: "The Teacher's Lounge Oracle", file: "cabinets/oracle.html" },
+  charter: { name: "The Charter Cards", file: "cabinets/charter-cards.html" },
+  syllabus: { name: "The Syllabus Page", file: "cabinets/syllabus-page.html" }
+};
+
+// Level 3: scripts for Apps Script, shown and copied from one file each
+const SCRIPTS = {
+  inventory: { name: "The Drive Inventory", file: "recipes/drive-inventory.gs" },
+  multiplier: { name: "The Doc Multiplier", file: "recipes/doc-multiplier.gs" }
 };
 
 // The AI tools people paste into, for the "next step" panel
@@ -376,6 +384,41 @@ document.querySelectorAll(".remix li:not(.do)").forEach((item) => {
   button.setAttribute("aria-label", "Copy: " + text);
   button.addEventListener("click", () => copyText(text, "Copied. Paste it into the same AI chat."));
   item.appendChild(button);
+});
+
+// A script box: <pre data-script="inventory"> fills from its file; data-copy-script and
+// data-ask-script copy the script, or the script with a question for the AI
+const scriptCache = {};
+async function loadScript(id) {
+  if (!scriptCache[id]) {
+    const response = await fetch(SCRIPTS[id].file);
+    if (!response.ok) throw new Error("Could not load " + SCRIPTS[id].file);
+    scriptCache[id] = await response.text();
+  }
+  return scriptCache[id];
+}
+function askFor(id, code) {
+  return 'Here is a Google Apps Script called "' + SCRIPTS[id].name + '". ' +
+    "First, explain what it does in plain language, line by line, and tell me exactly what permission the first run will ask for and why. " +
+    "Then wait: I'll tell you what to change.\n\n```javascript\n" + code + "\n```";
+}
+document.querySelectorAll("[data-script]").forEach((box) => {
+  loadScript(box.dataset.script).then((code) => { box.textContent = code; }).catch(() => { box.textContent = "Couldn't load the script. Try opening the page from its web link."; });
+});
+if (document.querySelector("[data-copy-script], [data-ask-script]")) {
+  Object.keys(SCRIPTS).forEach((id) => loadScript(id).catch(() => {}));
+}
+document.querySelectorAll("[data-copy-script], [data-ask-script]").forEach((button) => {
+  const ask = "askScript" in button.dataset;
+  const id = ask ? button.dataset.askScript : button.dataset.copyScript;
+  button.addEventListener("click", async () => {
+    try {
+      const code = await loadScript(id);
+      copyText(ask ? askFor(id, code) : code, ask ? "Copied. Paste it into your AI chat." : "Copied. Paste it into a new Apps Script project.");
+    } catch {
+      say("Couldn't load that script. Try opening the page from its web link.");
+    }
+  });
 });
 
 document.querySelectorAll("[data-copy-from]").forEach((button) => {

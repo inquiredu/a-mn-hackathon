@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Syllabus Page</title>
+<script>
+/* ------------------------------------------------------------
+   PART 1: THE KNOBS. Change these to make the Syllabus Page yours.
+   A made-up course. Replace it with your own syllabus, part by part.
+   Nothing here is saved anywhere.
+   ------------------------------------------------------------ */
+
+const COURSE = "Grade 8 Science · Loon Lake Middle School";
+const TEACHER = "Ms. Okafor · room 214 · office hours Tuesday and Thursday after school";
+
+// The questions families and students actually ask, each with a short answer
+const QUESTIONS = [
+  { q: "What do I bring?", a: "A notebook, a pencil, and your charged Chromebook. Goggles live in the room." },
+  { q: "How is my grade figured?", a: "Labs and projects 50%, quizzes 30%, class work 20%. Late work is accepted for full credit for one week." },
+  { q: "What if I'm absent?", a: "Check the week's row below, then the class site. You have as many days as you missed to catch up." },
+  { q: "How do I reach you?", a: "Email answered by the next school day. Students: ask in class or at office hours first." },
+  { q: "Can I redo something?", a: "Any quiz, once, within two weeks. Labs can be redone during office hours." }
+];
+
+// The year, a row per unit. Pressing a row opens its details.
+const UNITS = [
+  { when: "Sep", name: "Lab safety and the scientific method", detail: "Goggles on. We practice asking a question we can actually test." },
+  { when: "Oct", name: "Matter and its properties", detail: "Density, states of matter, and one very dramatic demonstration with dry ice." },
+  { when: "Nov", name: "Forces and motion", detail: "Ramps, carts, and a cardboard coaster competition." },
+  { when: "Jan", name: "Energy", detail: "Heat, light, and a solar oven that may or may not melt a marshmallow." },
+  { when: "Mar", name: "Earth's systems", detail: "Weather, water, and why the lake freezes from the top." },
+  { when: "May", name: "Your own investigation", detail: "A question of your choosing, a poster, and a science night for families." }
+];
+</script>
+<style>
+  /* Colors: change these to make it yours */
+  :root {
+    --accent: #0B6E6E;   /* headings and the open row */
+    --page: #F3FAF9;
+    --card: #FFFFFF;
+    --ink: #10322F;
+    --muted: #4C6866;
+    --line: #CFE6E3;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px 16px 32px; background: var(--page); color: var(--ink); font: 18px/1.5 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { margin: 0; font-size: clamp(1.5rem, 4.5vw, 2.2rem); line-height: 1.15; color: var(--accent); }
+  .teacher { margin: 6px 0 20px; color: var(--muted); }
+  h2 { margin: 24px 0 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .qa { display: grid; gap: 8px; }
+  .qa button, .units button { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; background: var(--card); border: 2px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+  .qa button:hover, .units button:hover { border-color: var(--accent); }
+  .qa button:focus-visible, .units button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .qa strong, .units strong { display: block; }
+  .qa p, .units p { margin: 8px 0 0; color: var(--muted); }
+  [hidden] { display: none !important; }
+  .units { display: grid; gap: 8px; }
+  .units button { display: grid; grid-template-columns: 3.2em 1fr; column-gap: 12px; align-items: baseline; }
+  .units .when { font-weight: 800; color: var(--accent); }
+  .units p { grid-column: 2; }
+  [aria-expanded="true"] { border-color: var(--accent); }
+  .foot { margin: 22px 0 0; font-size: .9rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="course"></h1>
+  <p class="teacher" id="teacher"></p>
+  <h2>Questions people ask</h2>
+  <div class="qa" id="qa"></div>
+  <h2>The year</h2>
+  <div class="units" id="units"></div>
+  <p class="foot">Tap anything to open it. Made-up course, made-up teacher.</p>
+</main>
+<script>
+/* ------------------------------------------------------------
+   PART 2: THE WORKS. You don't need to change anything below.
+   ------------------------------------------------------------ */
+const $ = (id) => document.getElementById(id);
+$("course").textContent = COURSE;
+$("teacher").textContent = TEACHER;
+
+// A button that shows its detail when pressed
+function opener(parts, detail, openFirst) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.setAttribute("aria-expanded", String(openFirst));
+  const p = document.createElement("p");
+  p.textContent = detail;
+  p.hidden = !openFirst;
+  b.append(...parts, p);
+  b.addEventListener("click", () => {
+    const open = b.getAttribute("aria-expanded") === "true";
+    b.setAttribute("aria-expanded", String(!open));
+    p.hidden = open;
+  });
+  return b;
+}
+function strong(text, className) {
+  const s = document.createElement("strong");
+  if (className) s.className = className;
+  s.textContent = text;
+  return s;
+}
+QUESTIONS.forEach((item, i) => $("qa").append(opener([strong(item.q)], item.a, i === 0)));
+UNITS.forEach((unit) => $("units").append(opener([strong(unit.when, "when"), strong(unit.name)], unit.detail, false)));
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Charter Cards</title>
+<script>
+/* ------------------------------------------------------------
+   PART 1: THE KNOBS. Change these to make the Charter Cards yours.
+   A made-up department charter. Replace it with your own document,
+   section by section. Nothing here is saved anywhere.
+   ------------------------------------------------------------ */
+
+const TITLE = "Loon Lake Schools · Technology Department";
+const TAGLINE = "Present when needed, invisible when not.";
+
+// The badges across the top: the handful of words you'd put on a wall
+const COMMITMENTS = ["Fewer steps", "Ask first", "Fix it once", "Teach as we go", "Student data stays home"];
+
+// Each section becomes a card that opens when clicked or tapped
+const SECTIONS = [
+  { title: "Why we're here", text: "Technology earns its place by removing friction, so people's own talent comes through. If a tool adds steps, we take it away." },
+  { title: "How we decide", text: "Every request gets an answer within two school days, even when the answer is a question. Big changes get piloted with volunteers before anyone is required to use them." },
+  { title: "What we promise teachers", text: "A working projector by first bell. One login for the things you use daily. A real person on the phone, not a ticket number." },
+  { title: "What we promise families", text: "Plain-language answers about what we collect and why. Nothing about a student goes to a vendor we haven't vetted." },
+  { title: "What we ask of each other", text: "Say what broke, not who broke it. Write it down so the next person can pick it up cold. Leave the cabling better than you found it." }
+];
+</script>
+<style>
+  /* Colors: change these to make it yours */
+  :root {
+    --accent: #10345A;   /* badges, headings, and the open card's edge */
+    --sky: #66C1E7;
+    --page: #F4F8FB;
+    --card: #FFFFFF;
+    --ink: #10345A;
+    --muted: #4A6580;
+    --line: #D5E7F2;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px 16px 32px; background: var(--page); color: var(--ink); font: 18px/1.5 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { margin: 0; font-size: clamp(1.5rem, 4.5vw, 2.2rem); line-height: 1.15; }
+  .tagline { margin: 6px 0 16px; font-size: 1.1rem; color: var(--muted); }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; padding: 0; list-style: none; }
+  .badges li { padding: 6px 14px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-weight: 700; font-size: .95rem; }
+  .cards { display: grid; gap: 10px; }
+  .card { width: 100%; text-align: left; font: inherit; color: inherit; padding: 16px 18px; background: var(--card); border: 2px solid var(--line); border-radius: 14px; cursor: pointer; }
+  .card:hover { border-color: var(--sky); }
+  .card:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+  .card h2 { margin: 0; font-size: 1.15rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .card h2::after { content: "+"; font-size: 1.4rem; color: var(--muted); }
+  .card[aria-expanded="true"] { border-color: var(--accent); }
+  .card[aria-expanded="true"] h2::after { content: "–"; }
+  .card p { margin: 10px 0 0; color: var(--muted); }
+  .card p[hidden] { display: none; }
+  .foot { margin: 22px 0 0; font-size: .9rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title"></h1>
+  <p class="tagline" id="tagline"></p>
+  <ul class="badges" id="badges" aria-label="Our commitments"></ul>
+  <div class="cards" id="cards"></div>
+  <p class="foot">Tap a card to open it. Made-up department, made-up charter.</p>
+</main>
+<script>
+/* ------------------------------------------------------------
+   PART 2: THE WORKS. You don't need to change anything below.
+   ------------------------------------------------------------ */
+const $ = (id) => document.getElementById(id);
+$("title").textContent = TITLE;
+$("tagline").textContent = TAGLINE;
+COMMITMENTS.forEach((word) => {
+  const li = document.createElement("li");
+  li.textContent = word;
+  $("badges").append(li);
+});
+SECTIONS.forEach((section, i) => {
+  const card = document.createElement("button");
+  card.className = "card";
+  card.type = "button";
+  card.setAttribute("aria-expanded", i === 0 ? "true" : "false");
+  const h = document.createElement("h2");
+  h.textContent = section.title;
+  const p = document.createElement("p");
+  p.textContent = section.text;
+  p.hidden = i !== 0;
+  card.append(h, p);
+  card.addEventListener("click", () => {
+    const open = card.getAttribute("aria-expanded") === "true";
+    card.setAttribute("aria-expanded", String(!open));
+    p.hidden = open;
+  });
+  $("cards").append(card);
+});
+</script>
+</body>
+</html>

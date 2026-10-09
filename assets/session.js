@@ -138,7 +138,7 @@ const SESSION = {
       ]
     },
     {
-      id: "wish", minutes: 35, title: "Grant a wish", where: "Breakout rooms",
+      id: "wish", minutes: 40, title: "Grant a wish", where: "Breakout rooms",
       hint: "Same room. Build something from scratch, your wish or someone else's.",
       link: "wish.html", linkLabel: "Open Grant a wish",
       shared: [{ link: "gallery", label: "Gallery wall" }],

@@ -26,6 +26,12 @@ vm.runInContext(read("assets/session.js") + "\nthis.SESSION = SESSION;", context
 vm.runInContext(read("assets/timing.js") + "\nthis.TIMES = TIMES;", context, { filename: "assets/timing.js" });
 const { SESSION, TIMES } = context;
 
+// The parts fill the session exactly: the clock already complains if they run long, this catches short
+// (in minutes, so "9:00" and "09:00" are the same time)
+const minutes = (time) => { const [h, m] = time.split(":").map(Number); return h * 60 + m; };
+const last = SESSION.segments[SESSION.segments.length - 1];
+if (last && minutes(last.end) < minutes(SESSION.end)) problems.add("The parts end at " + last.end + ", before the session's end at " + SESSION.end + ".");
+
 // Every link a part names is in the links list, and every link is a web address
 SESSION.segments.forEach((segment) => {
   (segment.shared || []).forEach(({ link }) => {

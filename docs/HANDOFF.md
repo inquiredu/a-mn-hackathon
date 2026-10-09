@@ -49,21 +49,33 @@ The Session slides deck matches the site as of the evening of October 8: lengths
 
 ## Still to do
 
-- The walls deck has three slides before the wonder and worry slides ("Collaborative Walls Drive Engagement", one with no text, "Best Practices for Wall Facilitation"). The links jump straight to the wall slides, but delete those three if they weren't meant to be there.
-- Share the Teams doc ("anyone with the link can edit"), ideally Friday morning.
-- Set Meet's breakout timer to 57 minutes, the whole stretch in rooms (the Remix Arcade's 17 plus Grant a wish's 40; an earlier note here said 40). The co-host sets it; the site can't.
-- On the Windows PC, turn on the commit and push checks and test them once. See "On the Windows PC" below.- In Meet's Host controls, keep "Share their screen" on for everyone, for Show & Tell and Show & Cheer.
+### This morning, before 10:00
+
+- Share the Teams doc ("anyone with the link can edit").
+- Set Meet's breakout timer to 57 minutes, the whole stretch in rooms (the Remix Arcade's 17 plus Grant a wish's 40). The co-host sets it; the site can't.
+- In Meet's Host controls, keep "Share their screen" on for everyone, for Show & Tell and Show & Cheer.
 - Tell the co-host the room routine: rooms come from the three level lists in the Teams doc (up to four each, partners together), not from a shuffle; put a 4 or 5 from the Welcome chat in each room where it works; write room numbers in the Room column.
-- The Starter code backup deck doesn't have the four new starters (two pages, two scripts); add them to its speaker notes if there's time, or point people at the site.
-- Sean, before 10:00, in Chrome: tab 1, an AI chat with the Oracle pasted in and running; tab 2, Gemini with Canvas on and the charter ready, plus the Google Site open to edit; tab 3, the Apps Script editor with the inventory script from `levels.html`, the folder's ID in place, run once so the permission screen is behind you. Share Chrome as a window.
-- ⚠️ Not verified this morning: whether Google Sites caps the length of pasted embed code, and whether its sandbox breaks anything the starters rely on. The page says to ask for a lighter version if Sites refuses.- Before 10:00 on the presenting computer: open Present, press F, and check the session clock on the opening screen. Call to order when you start, or it counts from 10:00 on its own.
+- Sean, in Chrome: tab 1, an AI chat with the Oracle pasted in and running; tab 2, Gemini with Canvas on and the charter ready, plus the Google Site open to edit; tab 3, the Apps Script editor with the Drive Inventory from `levels.html`, the folder's ID in place, run once so the permission screen is behind you. Share Chrome as a window.
+- On the presenting computer: open Present, press F, and check the session clock on the opening screen. Call to order when you start, or it counts from 10:00 on its own.
+- ⚠️ Not verified: whether Google Sites caps the length of pasted embed code, and whether its sandbox breaks anything the starters rely on. Starters carries a note and a prompt stem for a lighter version if Sites refuses.
+
+### After the session, from the Windows PC: polish and ADA, the final work
+
+The site design is getting heavy. Eleven commits landed between the evening of October 8 and the morning of October 9, and it shows: the look is uneven from page to page, and some pages scroll too long. This is the last work planned for the site, done from the PC, and it has two parts.
+
+- **Polish.** Walk every page at desktop and phone width and make them read as one site: the same spacing, the same card and section rhythm, the same weight of headings. Candidates for the long scroll: Starters (nine starters in three levels, each with a remix menu), Three levels (three full levels, a script, and a caution box), and Hosts (materials, team forming, the run of show, and the guide). Favor fewer, denser sections over more copy: collapse what's reference into `details`, move what's duplicated to one place, and cut what the day proved unnecessary. Keep the one-source rule: times, links, and stage copy stay in `assets/session.js`.
+- **ADA.** The WCAG 2.1 AA pass in `docs/ACCESSIBILITY.md`: a manual screen-reader pass (NVDA or ChromeVox, and VoiceOver) over the nine starters, the Three levels page, the stage with its clock and timers, and the Play window; contrast in both themes after any polish; focus order and visible focus on every button the polish touches; reduced motion honored by the new starters.
+- Do the polish first and the ADA pass last, so the audit covers what ships.
+
+### Loose ends, any time
+
+- The walls deck has three slides before the wonder and worry slides ("Collaborative Walls Drive Engagement", one with no text, "Best Practices for Wall Facilitation"). The links jump straight to the wall slides, but delete those three if they weren't meant to be there.
+- The Starter code backup deck (`companion`) doesn't have the four new starters (two pages, two scripts) and still holds the Oracle's older code and look. Paste the current `cabinets/` files in when you next open it, or point people at the site.
 - Open the site on a district laptop from another district (Donna's isd742.org account is a good test) to see whether a web filter blocks it.
 - Test pasting a starter into Gemini (Canvas on) on a district account, and in Claude and ChatGPT.
 - Edit the speaker notes in `assets/session.js` into Sean's own words.
-- The Starter code deck (`companion`) still holds the Oracle's older code and look. Paste the new `cabinets/oracle.html` in when you next open it.
-- A manual screen-reader pass (NVDA or ChromeVox, and VoiceOver), including the stage's new clock and timers. See `docs/ACCESSIBILITY.md`.
 - Get planner feedback on the starters.
-- Recheck the AI tools' help pages close to Friday: ChatGPT moved from canvas to a Preview switch in May 2026, and Gemini Canvas sharing depends on each district's Drive settings.
+- Recheck the AI tools' help pages: ChatGPT moved from canvas to a Preview switch in May 2026, and Gemini Canvas sharing depends on each district's Drive settings.
 
 ## Working on it
 
@@ -75,10 +87,10 @@ The Session slides deck matches the site as of the evening of October 8: lengths
 
 The repo carries checks that run before every commit and every push. They stop credential files (`.env`, service-account JSON, private keys) and anything shaped like an API key. Then they check the session file and every page the way the browser reads them, and run the timer tests. Git doesn't turn them on from a clone, so each computer does it once. The Mac is done; the PC isn't. Use Git Bash, which comes with Git for Windows, from the repo folder.
 
-1. Bring the PC up to date. Use a git clone, not the old Drive copy: `git switch main`, then `git pull`.
+1. Bring the PC up to date. Use a git clone, not the old Drive copy: `git switch main`, then `git pull`. Main now holds everything from October 9 (the three levels, the nine starters, the merged stage work).
 2. Check that Node is installed: `node --version`. The checks need it on the PATH. Without it, commits and pushes are blocked, not let through.
 3. Turn the checks on, once per clone: `git config core.hooksPath .githooks`.
-4. Test them without committing or pushing. Each should print `session check: 7 parts, 7 links, 7 pages, all clear`:
+4. Test them without committing or pushing. Each should print `session check: 7 parts, 7 links, 8 pages, all clear`, then the stage timer and Oracle test lines:
    - Commit check: `sh .githooks/pre-commit`
    - Push check: `echo "refs/heads/main $(git rev-parse HEAD) refs/heads/main 0000000000000000000000000000000000000000" | sh .githooks/pre-push`
 5. If either says `Cannot find module`, Git Bash isn't handling the checks' temporary folder. Commits will be blocked until that's fixed. To get past it once, on purpose, use `git commit --no-verify`, then ask a Claude session to fix the hooks for Windows.

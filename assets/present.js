@@ -123,6 +123,18 @@ const KINDS = {
     if (s.url) parts.push(urlPill());
     return parts;
   },
+  ladder(s) {
+    // Levels, one line each; a rung marked later is shown fainter
+    const list = el("ol", "ladder");
+    s.rungs.forEach((r) => {
+      const li = el("li", r.later ? "later" : "");
+      li.append(el("strong", "", r.name), el("span", "", r.why));
+      list.append(li);
+    });
+    const parts = [el("h1", "heading", s.heading), list];
+    if (s.foot) parts.push(el("p", "foot", s.foot));
+    return parts;
+  },
   pair(s) {
     const pair = el("div", "pair");
     s.cards.forEach((c) => {

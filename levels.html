@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three levels · Hands On</title>
+<meta name="description" content="Three levels of getting started with code: in the chat, on your site, behind the scenes. Each with a prompt to copy, and one with a script.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the main content</a>
+<header class="site-head">
+  <div class="wrap site-head-inner">
+    <a class="brand" href="index.html"><img src="assets/mngaia-mark.png" alt="" width="44" height="38"><span>Hands On</span></a>
+    <nav aria-label="Site">
+      <ul class="site-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="levels.html" aria-current="page">Three levels</a></li>
+        <li><a href="starters.html">Starters</a></li>
+        <li><a href="wish.html">Grant a wish</a></li>
+        <li><a href="hosts.html">Hosts</a></li>
+        <li><a href="sources.html">Sources</a></li>
+        <li><a href="present.html" class="present-link">Present</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="nowbar" role="region" aria-label="What's happening now">
+  <div class="wrap nowbar-inner">
+    <p class="now" id="now"></p>
+  </div>
+  <div class="cue" id="cue" hidden>
+    <div class="wrap cue-inner">
+      <p class="cue-text" id="cue-text" role="status"></p>
+      <a class="button primary" id="cue-go" href="index.html">Take me there</a>
+      <button class="cue-close" id="cue-close" aria-label="Dismiss this notice">Got it</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <section id="levels" class="section">
+    <div class="wrap">
+      <p class="kicker-dark">Three levels</p>
+      <h1 class="page-title">Three levels of getting started with code</h1>
+      <p class="section-lede">There are three ways most of us got started, and each one is a little bigger than the last. Level 1 runs inside your AI chat. Level 2 lives on your own website. Level 3 does work for you behind the scenes, in your Drive. Every level is a good level. The best one is the one that would stretch you a little.</p>
+      <p class="hint">On the day: watch all three happen live, then <a href="#pick">pick yours</a>.</p>
+
+      <!-- LEVEL 1 -->
+      <article class="level" id="chat" aria-labelledby="level-1">
+        <div class="level-head"><span class="num hex">1</span><h2 id="level-1">In the chat</h2></div>
+        <p class="level-what">A small tool that runs right inside your AI chat: a timer, a picker, a quiz, an oracle. You describe it, the AI writes it, and it appears beside the conversation, working. Nothing to install and nothing to publish.</p>
+        <h3>Live on the day</h3>
+        <p>The Teacher's Lounge Oracle, pasted into a chat from the starters page, then taught a new topic.</p>
+        <h3>Try it</h3>
+        <ol>
+          <li>Open <a href="starters.html">the starters</a> and press <strong>Play</strong> on one. Guess what it does first.</li>
+          <li>Press <strong>Copy for my AI</strong> and paste into Gemini (choose Canvas first), Claude, or ChatGPT (switch on Preview when the code appears).</li>
+          <li>Ask for one change. Then another. Then break it on purpose and tell the AI exactly what you see.</li>
+        </ol>
+        <h3>Monday</h3>
+        <p>A timer that knows your bell schedule. A spinner for whose turn it is. A quiz on this week's words. Anything you'd put on the board and press.</p>
+      </article>
+
+      <!-- LEVEL 2 -->
+      <article class="level" id="site" aria-labelledby="level-2">
+        <div class="level-head"><span class="num hex">2</span><h2 id="level-2">On your site</h2></div>
+        <p class="level-what">A document you already have becomes an interactive page, and you put it on your Google Site with a feature most people never find: <strong>Embed code</strong>. It looks like part of the site. It is the thing you built.</p>
+        <h3>Live on the day</h3>
+        <p>A department charter goes into Gemini with Canvas on, comes out as an interactive infographic, and lands on a Google Site in about a minute.</p>
+        <h3>Try it</h3>
+        <ol>
+          <li>Pick a document you already use: a charter, a syllabus, a handbook page, the norms on the wall. Made-up or your own; just nothing about students.</li>
+          <li>Copy the prompt below, paste it into Gemini (Canvas on), Claude, or ChatGPT (Preview on), and paste your document after it.</li>
+          <li>When it looks right, copy the code. Every tool has a code view or a Copy button for it.</li>
+          <li>Open your Google Site to edit it. Choose <strong>Insert</strong>, then <strong>Embed</strong>, then the <strong>Embed code</strong> tab. Paste, choose <strong>Next</strong>, then <strong>Insert</strong>.</li>
+          <li>Drag the box to the size you want, and <strong>Publish</strong>.</li>
+        </ol>
+        <div class="copybox">
+          <p id="site-prompt">Here is a document my team already uses. Turn it into an interactive infographic as a single HTML page: each section becomes a card that opens when clicked or tapped, the key commitments become a row of badges, in plain language and large type, and it works on a phone. Keep the document's meaning exactly; don't add anything it doesn't say. No outside libraries, images, or fonts. The document is below.</p>
+          <button data-copy-from="site-prompt">Copy</button>
+        </div>
+        <p class="more-link">If Sites says the code is too long, ask your AI for a lighter version: fewer sections, less decoration. The page runs in its own sealed box on your site, which is why Sites lets it in.</p>
+        <h3>Monday</h3>
+        <p>A syllabus that opens section by section. A family-handbook page people actually read. A "who to call" card for your department. Anything that's a document now and should be a page.</p>
+      </article>
+
+      <!-- LEVEL 3 -->
+      <article class="level" id="script" aria-labelledby="level-3">
+        <div class="level-head"><span class="num hex">3</span><h2 id="level-3">Behind the scenes</h2></div>
+        <p class="level-what">A short script does a job for you inside Google Workspace: Apps Script, which is built into every Google account. No screen to look at, just work that gets done. The AI writes it, you paste it, you press Run.</p>
+        <h3>Live on the day</h3>
+        <p>A Drive folder with folders inside it, and a script that reads all of them and writes a Sheet: every document, its type, and a link to open it. A whole curriculum, one search away.</p>
+        <h3>Try it</h3>
+        <ol>
+          <li>Ask your AI for the script with the prompt below, or start from ours, further down.</li>
+          <li>Go to <a href="https://script.google.com" rel="noopener">script.google.com</a> and choose <strong>New project</strong>. Delete what's there and paste the script.</li>
+          <li>Open a folder in Drive. Its ID is the long string at the end of the address, after <code>folders/</code>. Paste it between the quotes at the top of the script.</li>
+          <li>Press <strong>Save</strong>, make sure <strong>inventory</strong> is the chosen function, and press <strong>Run</strong>.</li>
+          <li>The first run asks for permission: this script wants to see your Drive and make a Sheet. Read it, then allow. If it says Google hasn't verified the app, that's because you just wrote it: choose <strong>Advanced</strong>, then go to your project.</li>
+          <li>Open the <strong>Execution log</strong>. The link to your new Sheet is there, and the Sheet is in your Drive.</li>
+        </ol>
+        <div class="copybox">
+          <p id="script-prompt">Write a Google Apps Script that lists every file in one Google Drive folder and all of its subfolders in a new Google Sheet: one row per file, with the folder path, the file's title, its type in plain words (Doc, Sheet, Slides, PDF), its link, and when it last changed. Use only DriveApp and SpreadsheetApp. Put the folder ID in one clearly marked line at the top. Then tell me, in plain language, what the first run will ask permission for and why.</p>
+          <button data-copy-from="script-prompt">Copy</button>
+        </div>
+        <h3>Or start from ours</h3>
+        <div class="copybox">
+          <pre id="inventory-script">// Drive inventory: every file in a folder and its subfolders, in a new Google Sheet.
+// 1. Paste the folder's ID between the quotes. (Open the folder in Drive: the ID is the long string after folders/ in the address.)
+// 2. Choose "inventory" and press Run. The first run asks to see your Drive and make a Sheet. Read it, then allow.
+// 3. Open the Execution log for the link to the Sheet.
+
+const FOLDER_ID = "PASTE_THE_FOLDER_ID_HERE";
+
+function inventory() {
+  const root = DriveApp.getFolderById(FOLDER_ID);
+  const rows = [["Folder", "Title", "Type", "Link", "Last changed"]];
+  walk(root, root.getName(), rows);
+  const sheet = SpreadsheetApp.create("Inventory: " + root.getName());
+  sheet.getActiveSheet().getRange(1, 1, rows.length, rows[0].length).setValues(rows);
+  sheet.getActiveSheet().setFrozenRows(1);
+  Logger.log((rows.length - 1) + " files listed. Open the inventory: " + sheet.getUrl());
+}
+
+// Every file in this folder, then every folder inside it, and so on
+function walk(folder, path, rows) {
+  const files = folder.getFiles();
+  while (files.hasNext()) {
+    const file = files.next();
+    rows.push([path, file.getName(), kind(file.getMimeType()), file.getUrl(), file.getLastUpdated()]);
+  }
+  const folders = folder.getFolders();
+  while (folders.hasNext()) {
+    const sub = folders.next();
+    walk(sub, path + " / " + sub.getName(), rows);
+  }
+}
+
+// A file's type in plain words
+function kind(mime) {
+  const names = {
+    "application/vnd.google-apps.document": "Doc",
+    "application/vnd.google-apps.spreadsheet": "Sheet",
+    "application/vnd.google-apps.presentation": "Slides",
+    "application/vnd.google-apps.form": "Form",
+    "application/vnd.google-apps.folder": "Folder",
+    "application/pdf": "PDF"
+  };
+  return names[mime] || mime.replace(/^.*\//, "");
+}</pre>
+          <button data-copy-from="inventory-script">Copy the script</button>
+        </div>
+        <div class="caution">
+          <h3>A script runs as you</h3>
+          <ul>
+            <li><strong>Read it before you run it.</strong> Ask your AI to explain every line. A line nobody can explain doesn't run.</li>
+            <li><strong>The permission screen is the gate.</strong> It names exactly what the script may touch. Read it like a permission slip. Ours asks for Drive and Sheets, because that's its whole job; a script that asks for Gmail to list a folder is asking for too much.</li>
+            <li><strong>Made-up files today.</strong> Point it at a folder of practice documents while you're learning. Nothing about real students goes into a script you can't yet explain.</li>
+            <li><strong>Never run a script a stranger sent you,</strong> and never share one that touches student data. If script.google.com won't open, your district turned it off, and that's a conversation with your technology director, not a workaround.</li>
+          </ul>
+        </div>
+        <h3>Monday</h3>
+        <p>An inventory of a curriculum folder, so the right lesson is one search away. A Sheet that fills in a Doc for every row. A reminder that writes itself on Friday afternoon. Anything you do by hand in Workspace, again and again.</p>
+      </article>
+
+      <!-- PICK -->
+      <div class="pick" id="pick">
+        <h2>Pick your level</h2>
+        <p>Any level is a good level. The best one is the one that would stretch you a little. Open the Teams doc and add your name under 1, 2, or 3. Working with someone? Put their name next to yours. Your co-host makes rooms from the lists, and your room number appears next to your name.</p>
+        <p class="link-slot" data-link="teams" data-label="Open the Teams doc" data-pending="Teams doc: coming soon"></p>
+      </div>
+
+      <!-- LEVEL 4, A GLIMPSE -->
+      <article class="level later" id="workbench" aria-labelledby="level-4">
+        <div class="level-head"><span class="num hex">4</span><h2 id="level-4">With a workbench, later</h2></div>
+        <p class="level-what">Claude Code, Codex, Cursor, Gemini CLI. The AI sits inside a folder of files on your computer: it reads them, changes them, runs them, and checks its own work while you watch. This site was built that way, by an English teacher. It needs a terminal, a GitHub account, and a tolerance for things breaking on purpose.</p>
+        <p>Not for today. When level three feels easy, come find one of us.</p>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <img src="assets/mngaia-mark.png" alt="" width="64" height="55">
+    <div>
+      <p><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
+      <p class="small"><strong>Safe play:</strong> use made-up names and made-up data. Nothing about real students goes into an AI today.</p>
+    </div>
+  </div>
+</footer>
+
+<dialog id="fallback" aria-labelledby="fallback-title">
+  <div class="fallback-inner">
+    <h2 id="fallback-title">Copy this by hand</h2>
+    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
+    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
+    <div><button class="primary" id="fallback-close">Done</button></div>
+  </div>
+</dialog>
+
+<p id="toast" class="toast" role="status" aria-live="polite"></p>
+
+<script src="assets/session.js"></script>
+<script src="assets/timing.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

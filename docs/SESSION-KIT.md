@@ -84,6 +84,7 @@ Every screen has a `kind` and an optional `note` (shown only in the speaker note
 | `quote` | `text` | One line, said and left to sit |
 | `plan` | `heading`, `url` | The whole morning from `segments`: each part's time, name, and place |
 | `pair` | `heading`, `cards` (`heading`, `body`), `foot` | Two side-by-side prompts |
+| `ladder` | `heading`, `rungs` (`name`, `why`, `later: true` shows a rung fainter), `foot` | Levels, one line each: the three levels of getting started, and where they go |
 
 To add a kind, add a function to `KINDS` in `assets/present.js` and its styles to `assets/present.css`.
 

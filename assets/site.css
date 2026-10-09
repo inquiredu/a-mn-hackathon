@@ -263,6 +263,27 @@ html { scroll-padding-top: 76px; }
 }
 .copybox p { margin: 0; color: var(--ink); }
 .copybox button { flex: none; }
+.copybox pre { flex: 1; min-width: 0; margin: 0; max-height: 420px; overflow: auto; white-space: pre; color: var(--ink); font: .82rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* The three levels */
+.level { margin-top: 24px; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.level-head { display: flex; align-items: center; gap: 12px; }
+.level-head h2 { margin: 0; }
+.level h3 { margin: 20px 0 4px; font-size: .85rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.level p { margin: 6px 0 0; }
+.level .level-what { font-size: 1.05rem; }
+.level ol { margin: 6px 0 0; padding-left: 22px; }
+.level li { margin: 6px 0; }
+.level code { font: .9em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.level.later { border-style: dashed; }
+.level.later .num { background: var(--muted); }
+.caution { margin-top: 18px; padding: 14px 18px; border-left: 6px solid var(--coral, #B3261E); background: var(--tint); border-radius: 0 12px 12px 0; }
+.caution h3 { margin-top: 0; color: var(--ink); }
+.caution ul { margin: 8px 0 0; padding-left: 20px; }
+.caution li { margin: 6px 0; }
+.pick { margin-top: 28px; padding: 20px 22px; background: var(--tint); border-radius: 16px; }
+.pick h2 { margin: 0; }
+.pick p { margin: 10px 0 0; }
 
 /* Buttons */
 button, .button {
@@ -344,6 +365,9 @@ kbd { font: inherit; font-size: .88em; font-weight: 600; padding: 1px 6px; borde
 .card h3 { font-size: 1.25rem; }
 .card p { margin: 6px 0 0; color: var(--muted); }
 #close .link-slot { margin-top: 18px; }
+.rungs { margin: 12px 0 0; padding-left: 24px; display: grid; gap: 8px; }
+.rungs li::marker { color: var(--link); font-weight: 700; }
+.rungs li.later { color: var(--muted); }
 .next { margin-top: 32px; padding: 18px 20px; background: var(--tint); border-radius: 16px; }
 .next h3 { font-size: .85rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
 .next p { margin: 6px 0 0; font-size: 1.05rem; }

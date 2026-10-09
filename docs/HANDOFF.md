@@ -27,7 +27,7 @@ A two-hour virtual hackathon on Google Meet, 10:00 to noon Central, for about 35
 | Page | Address | What it does |
 | --- | --- | --- |
 | Home | `/` | Changes with the clock: the invitation before, "Happening now" during, a keepsake after |
-| Starters | `/starters.html` | The five starters with Play, Copy for my AI, and remix menus |
+| Starters | `/starters.html` | The eight starters across the three levels, with Play, Copy for my AI, and remix menus |
 | Grant a wish | `/wish.html` | The build path, the wish builder, the wish jar, the stuck moves, and how to pin your work to the gallery wall (`#wall`) |
 | Hosts | `/hosts.html` | Forming teams, a room calculator, the run of show, before/during/after |
 | Sources | `/sources.html` | 39 sources checked October 7 and 8, with start-here paths, section tabs, topic and kind filters (topics grouped under Building, Taking care, and Teaching and learning), search, and a shareable address for every view (for example `?ask=privacy`, `?path=leaders`, `#primm`). The sources live in `assets/sources-data.js`. |

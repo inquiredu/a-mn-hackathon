@@ -13,6 +13,10 @@ Read `docs/HANDOFF.md` first: what's decided, what exists, what's left. `docs/SE
 - **Made-up data only**, in starters, examples, and wishes. Real names belong only in the Teams doc and the walls, which participants fill on the day.
 - **Voice and look:** plain, warm, exact copy; the MNGAIA navy and sky; WCAG 2.1 AA, checked at 375px in light and dark.
 
+## Checks
+
+Once per clone: `git config core.hooksPath .githooks`. Then every commit stops on credential files or anything shaped like an API key, and every commit and push runs `node scripts/check-session.js` (the session file and every page's braces and scripts, read the way the browser reads them) and the timer tests. Run them yourself after editing the session file, a page, or a script.
+
 ## Seeing a change
 
 `node scripts/serve.js`, then http://localhost:4178. Add `?now=10:50` to any page, the stage included, to see it at that moment on the day. The stage (`present.html`) and speaker notes (`notes.html`) talk over a BroadcastChannel, so test them as two tabs of the same browser.

@@ -14,12 +14,12 @@ const SOUND_ON = true;    // change to false to start with the sound off
 
 // What the Oracle mutters while it thinks
 const THINKING = [
-  "Consulting the faculty handbook...",
-  "Reading the coffee grounds in a lounge mug...",
-  "Asking the copier. It will not answer...",
-  "Searching the shared drive...",
-  "Waiting for the Wi-Fi...",
-  "Checking the sub calendar..."
+  "Consulting the faculty handbook. Page 47 is still missing...",
+  "Reading the tea leaves. They say 'steep'...",
+  "Asking the copier. It is collating its thoughts...",
+  "Scrolling the shared drive. Scrolling... scrolling...",
+  "Polishing the glass. Smudges affect the forecast...",
+  "Warming up the laminator for a sealed answer..."
 ];
 
 // TOPICS: when your question uses one of these words, the Oracle answers on that topic.
@@ -33,154 +33,155 @@ const TOPICS = [
   {
     listensFor: ["copier", "copies", "copy", "print", "printer", "laminator"],
     prophecies: [
-      "The copier shall jam at the very moment of your greatest need. It was always thus.",
-      "Tray 2 is empty. It has always been empty. It will always be empty.",
-      "The copier works today, but only for people who don't need it.",
-      "The laminator will be warm and waiting. This is a rare and holy sign."
+      "The copier is collating its thoughts. It will reach a conclusion, in triplicate.",
+      "Tray 2 sends its regards. It is on a break, as is tray-dition.",
+      "The copier likes you. It only jams for people it feels close to.",
+      "The laminator is warm and waiting. A sealed deal."
     ],
-    when: ["Thursday. Not this Thursday.", "The moment you stop needing it.", "Right after someone from the office walks past and says, 'It was working for me.'"],
-    who: ["The person who jammed it is already in their car.", "Nobody. The copier did this to itself.", "The one who ordered the heavy paper. They meant well."],
-    where: ["Tray 2. It is always Tray 2.", "Behind the paper tray, in a place no human hand can reach."],
-    why: ["Because it heard you say 'quick copies.'", "The copier is not broken. It is grieving."],
-    what: ["A paper jam, in a tray the manual does not mention.", "Error 0x7A. No one knows what it means. It means no."]
+    when: ["Right after lunch. Copiers work best on a full tray.", "Thursday. Copiers love a Thursday.", "The moment you walk away. It's shy."],
+    who: ["The one who ordered the heavy paper. They meant well, and it weighed on them.", "Nobody. The copier is simply expressing itself."],
+    where: ["Tray 2. It is always Tray 2. It's a tray-dition.", "Behind the little door nobody opens. There's a lever. There's always a lever."],
+    why: ["It heard you say 'quick copies.' Copiers can't be rushed. They're deliberate.", "Toner is a mood, not a level."],
+    what: ["A paper jam, mild, with notes of stapler.", "Error 0x7A. Roughly translated: 'not right now, friend.'"]
   },
   {
     listensFor: ["kid", "kids", "student", "students", "homework", "class", "children"],
     prophecies: [
-      "The kids are alright. The homework is in a backpack, under a banana.",
-      "Three of them did the homework. One did it twice. One made a diorama nobody asked for.",
-      "Your students learned more than they'll admit. They'll tell you in ten years.",
-      "A student will ask, 'Is this graded?' The Oracle's answer is always yes."
+      "The kids are alright. The homework is in a backpack, keeping a banana company.",
+      "Three did the homework. One did it twice, to be sure. One made a diorama, unprompted, and it's good.",
+      "They learned more than they'll admit. They'll tell you in ten years, in the cereal aisle.",
+      "A student will ask, 'Is this graded?' Say it's graded on a curve. A gentle one."
     ],
-    what: ["Something you didn't plan. It's the part they'll remember.", "A diorama. Nobody asked for a diorama.", "The one thing you said in passing. That's what stuck."],
-    who: ["The quiet one in the back. They always knew.", "Not the one you think. The other one."],
-    when: ["Ten years from now, in a grocery store, they'll tell you what they learned.", "The last five minutes before the bell. That's when it lands."],
-    how: ["Slowly, then all at once, then they'll claim they always knew it.", "With a banana in the backpack. Don't ask."],
-    why: ["Because someone dared them.", "Because it was in the group chat."]
+    what: ["Something you didn't plan. It's the part they'll remember.", "A diorama. Nobody asked for a diorama. Everyone's glad it exists.", "The one thing you said in passing. It stuck like a sticky note."],
+    who: ["The quiet one in the back. They knew the whole time.", "Not the one you think. The other one. They measure up like a ruler."],
+    when: ["The last five minutes before the bell. That's when it clicks.", "Ten years from now, in the cereal aisle. They'll say thanks."],
+    how: ["Slowly, then all at once, then they'll claim they always knew.", "With snacks. Everything goes better with snacks."],
+    why: ["Because someone dared them, and dares are binding.", "Because it was in the group chat, which is the real curriculum."]
   },
   {
     listensFor: ["snow", "weather", "cold", "winter", "recess", "rain", "storm"],
     prophecies: [
-      "Snow shall fall before Halloween. Someone will say, 'Well, it's Minnesota.' They will be right.",
-      "Indoor recess approaches. Gather your strength. And the good markers.",
-      "The Oracle sees a snow day. The Oracle also sees an e-learning day. Brace yourself."
+      "Snow before Halloween. Someone will say, 'Well, it's Minnesota.' Give them a gold star.",
+      "Indoor recess approaches. Gather the good markers. It's a draw.",
+      "The Oracle sees a snow day. Keep the pajamas close. There's snow business like it."
     ],
-    when: ["Before Halloween. Someone will say, 'Well, it's Minnesota.'", "The night before your observation."],
-    what: ["Four inches, right as the buses leave.", "Wintry mix. The worst of all the weathers."],
-    how: ["Sideways.", "In the way that cancels nothing and ruins the parking lot."],
-    where: ["On the one sidewalk the plow forgot."],
-    why: ["Minnesota."]
+    when: ["Before Halloween. The costumes will have parkas, as is custom.", "The night before your observation. Nature has timing."],
+    what: ["Four inches, fluffy, right as the buses leave. Flake news, but true.", "Wintry mix. The weather couldn't decide, so it chose all of the above."],
+    how: ["Sideways. Minnesota snow likes to make an entrance.", "Gently, then with a plow."],
+    where: ["On the one sidewalk the plow forgot. It's the plow's favorite joke."],
+    why: ["Minnesota. That's the whole answer, and it's a good one."]
   },
   {
     listensFor: ["coffee", "caribou", "tea", "lunch", "lounge", "potluck", "food", "pizza", "hotdish", "snacks"],
     prophecies: [
-      "The line at Caribou shall be long. Accept this. Good pizza awaits you later.",
-      "The hotdish at the next potluck will contain tater tots. This is certain.",
-      "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell.",
-      "A mug in the lounge sink has become self-aware. Approach it with kindness."
+      "The line at Caribou will be long, and worth it. Good things come to those who wait in it.",
+      "The hotdish at the next potluck will contain tater tots. Tot-ally.",
+      "Someone brought bars to the lounge. Go now. This prophecy expires quickly.",
+      "A mug in the lounge sink has become sentient and friendly. It would like a rinse."
     ],
-    what: ["Hotdish. There is always hotdish.", "Tater tots, in some configuration.", "Whatever the PTO left in the lounge. Move quickly.", "A sad desk salad, eaten standing up. Tomorrow: pizza.", "Something from the staff fridge, unclaimed since Tuesday. Choose wisely."],
-    when: ["Fourth period, for eleven minutes, four of which are the walk.", "Sooner than the end of your meeting. Later than you'd like."],
-    where: ["The lounge, if you dare. The crockpot is unattended.", "At your desk, next to the grading. The Oracle is sorry."],
-    who: ["Whoever brought the crockpot. Thank them with your whole heart.", "The science department. They always have snacks."],
-    why: ["Because the hotdish called to you."]
+    what: ["Hotdish. There is always hotdish, and it's always better than it has any right to be.", "Tater tots, in some configuration. Tot-ally.", "Whatever the PTO left in the lounge. Move quickly, and with gratitude.", "Pizza, if the stars align. They're pepperoni-shaped today.", "Something in the staff fridge with your name on it. Literally. You labeled it Tuesday."],
+    when: ["Fourth period, for eleven glorious minutes.", "Sooner than the end of your meeting. Pack a snack. The Oracle is pro-snack."],
+    where: ["The lounge. The crockpot is unattended and welcoming.", "The science department. They always have snacks. It's chemistry."],
+    who: ["Whoever brought the crockpot. Thank them with your whole heart and a clean spoon.", "The office. There's always a candy dish. It's basically a lighthouse."],
+    why: ["Because hotdish is a love language."]
   },
   {
     listensFor: ["email", "emails", "parent", "parents", "meeting", "meetings", "principal", "boss"],
     prophecies: [
-      "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
-      "The meeting will run long. The snacks will run short.",
-      "A parent will email just to say thank you. Print it. Keep it in a drawer for a hard day."
+      "An email will arrive at 9:58 PM. It'll keep until morning. It's refrigerated.",
+      "The meeting will run long, but someone will bring bars. Balance.",
+      "A parent will email just to say thank you. Print it. Frame it. It's a keeper."
     ],
-    when: ["9:58 PM. Do not open it until morning.", "The minute you step into the hall. Every time."],
-    who: ["A parent you've never heard from, with a question about March.", "Someone who 'just wants to loop you in.' Run.", "The principal, with 'Quick question' in the subject line. It is not quick."],
-    what: ["A reply-all. Then another. Then someone asking to be removed from the thread.", "A thank-you. Print it. Keep it in a drawer for a hard day."],
-    how: ["Briefly. Then sleep on the second draft."],
-    why: ["Because the meeting could have been an email, and now it is one."]
+    when: ["9:58 PM. Let it sleep. Reply at 7:58 and look like a wizard.", "The minute you step into the hall. Emails love a hallway."],
+    who: ["A parent with a question about March. March is far. You have time.", "Someone 'looping you in.' You're a loop now. Congratulations.", "The principal, subject line 'Quick question.' It's two questions, both fine."],
+    what: ["A reply-all. Then another. Then peace.", "A thank-you. Keep it in a drawer for a gray day. It glows."],
+    how: ["Briefly, kindly, and before the coffee wears off."],
+    why: ["Because the meeting became an email, and the email is thriving."]
   },
   {
     listensFor: ["wifi", "wi-fi", "internet", "password", "computer", "laptop", "chromebook", "tech", "technology", "ai", "robots"],
     prophecies: [
-      "Your password shall expire on the busiest day of the quarter. Every day is the busiest day.",
-      "The Wi-Fi will drop during your best lesson of the year. They will remember the lesson anyway.",
-      "Have you tried turning it off and on again? The Oracle has. It helped.",
-      "The AI will write a beautiful paragraph. It will be about the wrong book.",
+      "Your password will expire on a busy day. It's a password. It likes attention.",
+      "The Wi-Fi will blink during your best lesson. The lesson will be remembered. The Wi-Fi will not.",
+      "Have you tried turning it off and on again? The Oracle has. It's a glass half-rebooted.",
+      "The AI will write a beautiful paragraph about the wrong book. Points for style.",
       "The AI can write the lesson. Only you know which kid needs the extra minute today."
     ],
-    why: ["Because the update ran at 7:59, on purpose.", "The Wi-Fi heard you call it 'the internet.' It took offense."],
-    when: ["On the busiest day of the quarter. Every day is the busiest day.", "The Wi-Fi returns the moment the bell rings."],
-    how: ["Off, then on again. The Oracle has done it. It helped.", "Ask the kid in the second row. They fixed it last time."],
-    what: ["A beautiful paragraph about the wrong book.", "An update. It will move one button and change nothing else."],
-    who: ["The tech department. They are already on their way, carrying a different cable."],
-    where: ["In the shared drive, in 'New Folder (7).'"]
+    why: ["The update ran at 7:59. Updates are morning people.", "The Wi-Fi heard you call it 'the internet' and wanted a word."],
+    when: ["On the busiest day of the quarter. Passwords have a flair for drama.", "The Wi-Fi returns the moment the bell rings. Punctual, in its way."],
+    how: ["Off, then on again. Works on laptops and, honestly, on teachers.", "Ask the kid in the second row. They fixed it last time, with one eyebrow."],
+    what: ["A beautiful paragraph about the wrong book. Points for style.", "An update. It will move one button and call it progress."],
+    who: ["The tech department. On their way, carrying a different cable. Possibly the right one."],
+    where: ["In the shared drive, in 'New Folder (7).' It's the drive's junk drawer, and it loves it."]
   },
   {
     listensFor: ["sub", "subs", "substitute", "sick", "absent"],
     prophecies: [
-      "Your sub plans will be three pages long. The sub will read one. It will be fine.",
-      "The sub will leave a note that says 'They were great!' Do not ask follow-up questions."
+      "Your sub plans will be three pages long. The sub will read one, and it will be the right one.",
+      "The sub will leave a note that says 'They were great!' Take the win. Frame the note."
     ],
-    who: ["A retired band teacher who has seen things.", "Someone who will read page one of your three pages. It will be fine."],
-    what: ["A note that says 'They were great!' Do not ask follow-up questions.", "The movie. They always find the movie."],
-    when: ["The day you planned the good lesson."],
-    how: ["Fine. Just fine. Don't look too closely."]
+    who: ["A retired band teacher who has seen things and brought a crossword.", "Someone kind who reads page one. Page one has everything that matters."],
+    what: ["A note that says 'They were great!' Accept it. No follow-ups.", "The movie. They always find the movie. It's educational if you squint."],
+    when: ["The day you planned the good lesson. Save it. Good lessons keep."],
+    how: ["Fine. Just fine. The plants got watered twice, and they're thrilled."]
   },
   {
     listensFor: ["friday", "weekend", "break", "vacation", "summer", "holiday"],
     prophecies: [
-      "Friday is coming. The Oracle can feel it in its glass.",
-      "This Friday? Glorious. Something will break on purpose, and everyone will cheer.",
-      "You will spend the first day of break doing laundry. The second day will be glorious.",
-      "Winter break is closer than it looks. Not much closer. But closer."
+      "Friday is coming. The Oracle can feel it in its glass. A weekend in progress.",
+      "This Friday? Glorious. Something small will go right, and everyone will cheer.",
+      "Day one of break: laundry. Day two: glory. Day three: nap. All are sacred.",
+      "Winter break is closer than it looks. Objects in the mirror, and so on."
     ],
-    when: ["Sooner than it looks. Not much sooner. But sooner.", "After one more Wednesday. There's always one more Wednesday."],
-    how: ["Count the days on a sticky note. Cross them off with ceremony.", "Laundry on day one, nothing on day two. That's the way."],
-    what: ["Laundry, then glory.", "A nap you will not apologize for."],
-    where: ["Somewhere with no bells."]
+    when: ["Sooner than it looks. Not much sooner. But sooner, and that counts.", "After one more Wednesday. There's always one more Wednesday. Wednesdays are generous that way."],
+    how: ["Count the days on a sticky note. Cross them off with ceremony.", "Laundry on day one, nothing on day two. That's the whole recipe."],
+    what: ["Laundry, then glory.", "A nap you will not apologize for. The Oracle endorses it."],
+    where: ["Somewhere with no bells. The bells will miss you. Go anyway."]
   },
   {
     listensFor: ["grade", "grades", "grading", "test", "tests", "quiz", "quizzes", "assessment", "rubric"],
     prophecies: [
-      "The stack of grading will shrink. Then it will grow back, like a hydra.",
-      "The test will measure something. Whether it's the thing that matters, even the Oracle wonders.",
-      "Somewhere, a rubric is being revised. It will be revised again."
+      "The stack will shrink. Then a new stack will arrive, which is really just the first stack's cousin.",
+      "The test will measure something. Your gut measures the rest, and your gut is well calibrated.",
+      "Somewhere a rubric is being revised. It's a rubric's cube. It keeps turning."
     ],
-    when: ["Sunday night, with a show on in the background.", "Never, and also tomorrow."],
-    how: ["In sticky-note-sized pieces. Then the hydra grows back.", "Faster than you fear. Slower than you'd like."],
-    what: ["Something. Whether it's the thing that matters, even the Oracle wonders.", "A rubric. It will be revised again."],
-    who: ["The one who did it twice. And the one who made the diorama."],
-    why: ["Because someone, somewhere, is revising the rubric."]
+    when: ["Sunday night, with a show on. The show helps. The Oracle doesn't make the rules.", "Tomorrow. Tomorrow is a great grader."],
+    how: ["In sticky-note-sized pieces. Small stacks, big snacks.", "Faster than you fear. Also, you're allowed to use the stamp."],
+    what: ["Something. Your gut knows what matters, and it's rarely the quiz.", "A rubric. It'll be revised again. Rubrics love a sequel."],
+    who: ["The one who did it twice. And the one who made the diorama. Stars for both."],
+    why: ["Because someone, somewhere, is improving the rubric. Bless them."]
   }
 ];
 
 // EITHER/OR: "Pizza or hotdish?" The Oracle picks a side. {choice} becomes the side it picked.
 const EITHER_OR = [
-  "{choice}. The Oracle has spoken.",
-  "{choice}. Do not ask the Oracle to explain.",
-  "{choice}, obviously. The copier agrees.",
-  "{choice}. But bring snacks either way."
+  "{choice}. Crystal clear.",
+  "{choice}. Don't ask the Oracle to show its work.",
+  "{choice}, and bring snacks either way.",
+  "{choice}. The Oracle is a ball, and the ball is now in your court."
 ];
 
 // YES-OR-NO QUESTIONS: a question that opens with one of these words gets a VERDICT, then the
 // question turned around in the Oracle's mouth ("Will I finish grading?" becomes "You will finish
 // grading."), then an omen from the topic, or a SIGN_OFF when there is no topic.
+// More yeses than nos, on purpose. The nos are gentle.
 const YES_OR_NO = ["will", "would", "should", "shall", "can", "could", "may", "might", "must", "is", "are", "am", "was", "were", "do", "does", "has", "have", "had"];
 const VERDICTS = [
   { says: "Yes.", no: false },
-  { says: "Yes, obviously.", no: false },
-  { says: "The signs say yes.", no: false },
-  { says: "Almost certainly.", no: false },
-  { says: "No.", no: true },
-  { says: "No, and you knew that.", no: true },
-  { says: "The Oracle regrets: no.", no: true },
-  { says: "Not this time.", no: true }
+  { says: "Yes, with sprinkles.", no: false },
+  { says: "Signs point to yes.", no: false },
+  { says: "Absolutely. The Oracle would stake its glass on it.", no: false },
+  { says: "Yes, and that's a lock.", no: false },
+  { says: "Not quite yet.", no: true },
+  { says: "Gently, no.", no: true },
+  { says: "No, but it's a near miss. A near mist, even.", no: true }
 ];
 const SIGN_OFFS = [
-  "The Oracle has spoken.",
-  "Write that down before you forget.",
-  "The copier agrees.",
-  "Do not ask the Oracle to explain.",
-  "That is all the mists will say."
+  "Crystal clear.",
+  "The Oracle has spoken. It's a lot of glass to talk through.",
+  "Write that down. In pen. The Oracle is pencil-averse.",
+  "That's the whole ball of wax. Well, glass.",
+  "Any clearer and you could see right through it."
 ];
 
 // SWAPS: how the Oracle turns your question around. Your words become its words, one swap at a time.
@@ -199,35 +200,35 @@ const QUESTION_KINDS = [
     kind: "when",
     firstWords: ["when"],
     answers: [
-      "Right after the next fire drill.",
-      "Thursday. It's always Thursday.",
-      "Sooner than the next snow day. Later than you'd like."
+      "Right after the next fire drill. Drills are great at scheduling.",
+      "Thursday. It's always Thursday. Thursday is very dependable.",
+      "Sooner than the next snow day. The Oracle checked the forecast. It's in a fog."
     ]
   },
   {
     kind: "who",
     firstWords: ["who"],
     answers: [
-      "The one holding the good stapler.",
-      "Someone in the lounge. They know what they did.",
-      "You. It was always you."
+      "The one holding the good stapler. Staple leadership.",
+      "Someone in the lounge, and they're bringing bars.",
+      "You. It was always you. You're kind of a big deal."
     ]
   },
   {
     kind: "why",
     firstWords: ["why"],
     answers: [
-      "Because the copier willed it.",
-      "The Oracle has wondered the same thing since 1997. Still no answer.",
-      "For the same reason the laminator is always warm: mystery."
+      "Because the copier willed it, and the copier is a strong-willed machine.",
+      "The Oracle has wondered since 1997. Still a mystery, but a cozy one.",
+      "For the same reason the laminator is always warm: it's just that kind of place."
     ]
   },
   {
     kind: "how",
     firstWords: ["how"],
     answers: [
-      "Slowly, then all at once.",
-      "With a lot of sticky notes.",
+      "Slowly, then all at once, with a snack in the middle.",
+      "With sticky notes. A note-worthy amount.",
       "The same way you do everything: better than you think."
     ]
   },
@@ -235,55 +236,55 @@ const QUESTION_KINDS = [
     kind: "where",
     firstWords: ["where"],
     answers: [
-      "In the shared drive, in a folder called 'New Folder (7).'",
-      "In the staff fridge, next to someone's yogurt.",
-      "Exactly where you left it, which is the last place you'll look."
+      "In the shared drive, in 'New Folder (7).' Everything is.",
+      "In the staff fridge, next to someone's yogurt. The yogurt says hi.",
+      "Exactly where you left it, which is the last place you'll look. Look there first and save a trip."
     ]
   },
   {
     kind: "what",
     firstWords: ["what", "which"],
     answers: [
-      "The answer is in the faculty handbook, page 47. There is no page 47.",
-      "The thing you already suspected. Trust your gut.",
-      "Whatever it is, it's probably in the shared drive."
+      "It's in the faculty handbook, page 47. Page 47 is a myth, but a helpful one.",
+      "The thing you already suspected. Your gut is a good egg.",
+      "Whatever it is, it's probably in the shared drive, sharing itself."
     ]
   }
 ];
 
 // MANNERS: a greeting or a thank-you of three words or fewer gets manners back, not a prophecy.
 const MANNERS = [
-  { firstWords: ["hello", "hi", "hey", "greetings", "howdy"], answers: ["Hello, seeker. Ask, and the Oracle shall answer. Eventually.", "Greetings. The Oracle has been expecting you since third period."] },
-  { firstWords: ["thanks", "thank", "ty"], answers: ["You are welcome. Tip your copier.", "The Oracle accepts thanks, coffee, and the good markers."] },
-  { firstWords: ["bye", "goodbye", "farewell"], answers: ["Go in peace. Check your mailbox on the way out.", "Farewell. The Oracle will be here, humming, next to the laminator."] }
+  { firstWords: ["hello", "hi", "hey", "greetings", "howdy"], answers: ["Hello, seeker. Pull up a chair. The good one, not the wobbly one.", "Greetings. The Oracle has been expecting you. The Oracle expects everyone. It's the job."] },
+  { firstWords: ["thanks", "thank", "ty"], answers: ["You're welcome. Tip your copier.", "The Oracle accepts thanks, coffee, and the good markers."] },
+  { firstWords: ["bye", "goodbye", "farewell"], answers: ["Go well. Take a mint from the office jar. The Oracle won't tell.", "Farewell. The Oracle will be here, polishing itself. It's a full-time glass act."] }
 ];
 
 // AGAIN: for the same question twice in a row. {last} becomes what the Oracle said the first time.
 const AGAIN = [
-  "You asked that already. The Oracle's answer stands: {last}",
-  "The Oracle heard you the first time. {last}",
-  "Asking twice does not stir the mists. {last}"
+  "You asked that already. The answer is see-through and unchanged: {last}",
+  "The Oracle heard you the first time. Glass has great acoustics. {last}",
+  "Asking twice stirs the mist, not the answer: {last}"
 ];
 
 // SILENCE: for an empty question.
 const SILENCE = [
-  "Ask with words, seeker. The Oracle cannot read minds before 10 a.m.",
-  "Silence is a question too. The answer is still the copier.",
-  "The Oracle hears nothing, and nods. Try again with words."
+  "Ask with words, seeker. The Oracle reads minds only after its coffee.",
+  "Silence is a question too. The answer is: hotdish.",
+  "The Oracle hears nothing, and nods wisely. It's very good at nodding. Try words."
 ];
 
 // CLASSIC PROPHECIES: for everything else. Add your own: put it in quotes and end it with a comma.
 const PROPHECIES = [
-  "Your lanyard is not lost. It is in the staff fridge, next to someone's yogurt.",
-  "You will find the perfect parking spot. Savor it. It will not happen again until May.",
-  "A fire drill shall arrive at the exact moment everyone is finally focused.",
-  "Ope. The Oracle just bumped into your future. Sorry, I'll just sneak past ya.",
+  "Your lanyard is not lost. It's in the staff fridge, keeping the yogurt company.",
+  "You will find the perfect parking spot. Savor it. It's a spot of luck.",
+  "A fire drill will arrive the moment everyone is focused. Fresh air. Free.",
+  "Ope. The Oracle just bumped into your future. Sorry, it'll just sneak past ya.",
   "Your class will laugh at your joke today. Not the one you planned. A better one.",
-  "The laminator will be warm and waiting. This is a rare and holy sign.",
-  "The copier shall jam at the very moment of your greatest need. It was always thus.",
-  "Indoor recess approaches. Gather your strength. And the good markers.",
-  "An email shall arrive at 9:58 PM. The Oracle advises: do not open it until morning.",
-  "Someone microwaved fish in the lounge. The Oracle knows who. The Oracle will never tell."
+  "The laminator is warm and waiting. A sealed deal.",
+  "The copier likes you. It only jams for people it feels close to.",
+  "Indoor recess approaches. Gather the good markers. It's a draw.",
+  "An email will arrive at 9:58 PM. It'll keep until morning. It's refrigerated.",
+  "Someone brought bars to the lounge. Go now. This prophecy expires quickly."
 ];
 </script>
 <style>

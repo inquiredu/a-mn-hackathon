@@ -164,7 +164,7 @@ function go(i) {
 if (channel) {
   channel.onmessage = (event) => {
     const message = event.data || {};
-    if (typeof message.index === "number") {
+    if (Number.isInteger(message.index) && message.index >= 0 && message.index < screens.length) {
       if (!connected) $("status").textContent = "Following the stage.";
       if (!connected || message.index !== index) {
         connected = true;

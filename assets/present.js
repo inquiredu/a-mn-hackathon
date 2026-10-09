@@ -247,7 +247,7 @@ if (channel) {
   channel.onmessage = (event) => {
     const message = event.data || {};
     if (message.hello) channel.postMessage({ index, timer: timerState() });
-    if (typeof message.go === "number") show(message.go);
+    if (Number.isInteger(message.go)) show(message.go);   // the channel is shared with every page on inquiredu.org
     if (message.timer) timerAction(message.timer);
   };
 }

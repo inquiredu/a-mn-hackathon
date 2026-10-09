@@ -28,9 +28,13 @@ if [ -n "$hits" ]; then
   fail=1
 fi
 
-# The session file, as the pages read it, and the stage timer's arithmetic
-node scripts/check-session.js || fail=1
-node scripts/test-stage-timer.js > /dev/null || fail=1
+# The session file, as the pages read it, and the stage timer's arithmetic,
+# run on what's staged (a copy of the index), not on what happens to be on disk
+staged_copy=$(mktemp -d) || exit 1
+trap 'rm -rf "$staged_copy"' EXIT
+git checkout-index -a --prefix="$staged_copy/"
+node "$staged_copy/scripts/check-session.js" || fail=1
+node "$staged_copy/scripts/test-stage-timer.js" > /dev/null || fail=1
 
 [ $fail -eq 0 ] || echo "pre-commit: commit stopped. Fix the above, or skip once with --no-verify." >&2
 exit $fail

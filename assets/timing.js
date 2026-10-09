@@ -6,12 +6,12 @@
 // What you can write in braces:
 //   {start} {end}              the session's start and end: "10:00", "noon"
 //   {wish.start} {wish.end}    when a part starts or ends, by its id
-//   {wish.end - nudge}         a time moved by some minutes, or by a pace: "11:10"
-//   {length} {wish.length}     how long the session or a part runs: "two hours", "35 minutes"
-//   {building}                 all the time in breakout rooms: "60 minutes"
+//   {wish.end - nudge}         a time moved by some minutes, or by a pace: "11:15"
+//   {length} {wish.length}     how long the session or a part runs: "two hours", "40 minutes"
+//   {building}                 all the time in breakout rooms: "57 minutes"
 //   {nudge}                    a pace from the session file: "ten minutes" ([2, 3] reads "two or three minutes")
 //   {weekday} {date} {zone}    "Friday", "October 9", "Central"
-//   {parts}                    how many parts: "6"
+//   {parts}                    how many parts: "7"
 //   {title} {subtitle} {org}   the session's names
 //   {links.teams}              a link from the session file, for chat messages
 // Add :number or :unit to split a length for big numerals ("2" and "hours"),
@@ -92,7 +92,7 @@ const TIMES = (() => {
     return null;
   }
 
-  // "wish.end - nudge" becomes "11:10". With canonical, times stay 24-hour ("11:10") for the code that counts down.
+  // "wish.end - nudge" becomes "11:15". With canonical, times stay 24-hour ("11:15") for the code that counts down.
   function evaluate(expression, canonical) {
     const [, body, modifier] = expression.match(/^(.*?)(?::(number|unit))?$/);
     const lower = body.charAt(0).toLowerCase() + body.slice(1);

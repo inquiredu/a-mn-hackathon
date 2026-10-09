@@ -18,10 +18,16 @@ const types = {
 };
 
 http.createServer((req, res) => {
-  let urlPath = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
+  let urlPath;
+  try {
+    urlPath = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
+  } catch {
+    res.writeHead(400);   // a malformed address like /% would otherwise stop the server
+    return res.end("Bad request");
+  }
   if (urlPath.endsWith("/")) urlPath += "index.html";
   const file = path.join(root, urlPath);
-  if (!file.startsWith(root)) {
+  if (file !== root && !file.startsWith(root + path.sep)) {   // not a sibling such as a-mn-hackathon-old
     res.writeHead(403);
     return res.end("Forbidden");
   }

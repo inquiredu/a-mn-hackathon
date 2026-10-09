@@ -29,6 +29,8 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 | `cabinets/` | The starters, each a single HTML file that pastes cleanly into any AI tool |
 | `scripts/serve.js` | A small local server for previewing |
 | `scripts/test-stage-timer.js` | Tests for the timers: `node scripts/test-stage-timer.js` |
+| `scripts/check-session.js` | Checks the session file and every page the way the browser reads them: `node scripts/check-session.js` |
+| `.githooks/` | Run the checks, and keep credentials out, on every commit and push. Turn on once per clone: `git config core.hooksPath .githooks` |
 
 ## Docs
 

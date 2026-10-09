@@ -46,11 +46,10 @@ Shared spaces and decks, all linked from `links` in `assets/session.js` (none of
 | `backup` | **Session slides**: the whole morning, screen by screen. Drive title "Hands On 10.9 · Session slides (backup)" | Before you come; the Welcome chat message; Hosts |
 | `companion` | **Starter code**: every starter's code and remix menu, in the speaker notes. Drive title "Hands On 10.9 · Starter code (backup)" | Before you come; the breakout-room chat message; Hosts |
 
-The two backups are named by what's inside them, on the site and in Drive (renamed October 8; the starter deck had been titled "Facilitation Slides - 10.9"). Both are owned by Sean's Orono account and shared with the AI4MN co-hosts. If the site is blocked, nobody sees the site's links, so the chat messages on the Hosts page carry them too.
+The Session slides deck matches the site as of October 8: lengths instead of clock times, the 1-to-5 Welcome slide, and a Show us yours slide (copied from Watch one get built, so its speaker notes are that slide's until someone edits them). It has no plan slide; the site's stage does. The two backups are named by what's inside them, on the site and in Drive (renamed October 8; the starter deck had been titled "Facilitation Slides - 10.9"). Both are owned by Sean's Orono account and shared with the AI4MN co-hosts. If the site is blocked, nobody sees the site's links, so the chat messages on the Hosts page carry them too.
 
 ## Still to do
 
-- The Session slides backup deck (Google Slides) still has the old times and the old Welcome: Watch one get built at 10:08, the Remix Arcade at 10:20, and the Teams-doc anchor slide. Update it, or say in the chat that the times on the site are the ones to follow.
 - The walls deck has three slides before the wonder and worry slides ("Collaborative Walls Drive Engagement", one with no text, "Best Practices for Wall Facilitation"). The links jump straight to the wall slides, but delete those three if they weren't meant to be there.
 - Share the Teams doc ("anyone with the link can edit"), ideally Friday morning.
 - In Meet's Host controls, keep "Share their screen" on for everyone, for Show us yours and Show & Cheer.

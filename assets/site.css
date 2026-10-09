@@ -333,8 +333,12 @@ button:hover, .button:hover { border-color: var(--link); }
 .primary:hover { border-color: var(--sky); }
 
 /* Machines */
-.machines { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); align-items: start; }
+/* Cards in a row are the same height, and their buttons and Remix menu sit on the same line */
+.machines { display: grid; gap: 16px; grid-template-columns: 1fr; align-items: stretch; }
+@media (min-width: 600px) { .machines { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .machines.four { grid-template-columns: repeat(4, 1fr); } }
 .cabinet {
+  display: flex; flex-direction: column;
   background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--c);
   border-radius: var(--radius); padding: var(--card-pad) var(--card-pad) 14px; box-shadow: var(--shadow);
 }
@@ -349,6 +353,7 @@ button:hover, .button:hover { border-color: var(--link); }
 .cabinet.soon .badge { opacity: .6; }
 .soon-tag { display: inline-block; font-size: .85rem; font-weight: 600; color: var(--muted); border: 1px dashed var(--line); border-radius: 999px; padding: 2px 10px; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.cabinet .actions { margin-top: auto; }
 
 .remix { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
 .remix summary { cursor: pointer; font-weight: 600; padding: 4px 0; }

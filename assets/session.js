@@ -180,7 +180,7 @@ const SESSION = {
       link: "index.html#close", linkLabel: "The close",
       shared: [{ link: "wonder", label: "Wonder wall" }, { link: "worry", label: "Worry wall" }],
       screens: [
-        { kind: "code", note: "Show the list of words. The Oracle didn't know anything: a person chose what it listens for.", heading: "How did the Oracle know?", code: "listensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou shall be long. Accept this.\",\n  \"The hotdish will contain tater tots. This is certain.\"\n]", caption: "A list of words a person chose. Every machine today started with a person, passed through an AI, and came back to a person." },
+        { kind: "code", note: "Show the swaps and the list of words. The Oracle didn't know anything: it turned your question around with a few word swaps (a program called ELIZA did the same in 1966), and a person chose what it listens for.", heading: "How did the Oracle know?", code: "SWAPS = { i: \"you\", my: \"your\", am: \"are\" }\n\nlistensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou will be long, and worth it.\",\n  \"The hotdish will contain tater tots. Tot-ally.\"\n]", caption: "A few swaps and a list of words, both chosen by a person. Every machine today started with a person, passed through an AI, and came back to a person." },
         { kind: "quote", note: "Say it, then let it sit for a moment.", text: "Everything you made today, a seventh grader can make tonight." },
         { kind: "pair", note: "Post the wonder and worry link in the chat. Give it {wonder}.", heading: "Before you go", cards: [
           { heading: "I wonder...", body: "What did today make you curious about?" },

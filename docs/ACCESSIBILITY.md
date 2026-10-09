@@ -22,6 +22,8 @@ Already passing then: text contrast at full opacity in both themes, the heading 
 
 The site grew into several pages, four starters, the presenter view, the speaker notes, and the Hosts page. They follow the same patterns (labels, the same focus ring and contrast tokens, reduced-motion rules), but they have not had a separate audit.
 
+On October 8 the Oracle got its tripod and the AI4MN mark. The figure is decorative (`aria-hidden`), it moves only while the Oracle thinks and not at all under reduced motion, and it was checked at 375px wide and on a wide, short screen (the shape of the shared tab). Gold on the night background is 9.4:1 and the sky mutterings 8.6:1; the text boxes' gold borders are 6.9:1.
+
 ## Still needs a person
 
 - A pass with NVDA and Chrome, or ChromeVox, for the messages, the next-step panel, and the Oracle's prophecy

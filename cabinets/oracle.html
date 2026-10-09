@@ -161,22 +161,40 @@ const EITHER_OR = [
   "{choice}. But bring snacks either way."
 ];
 
+// YES-OR-NO QUESTIONS: a question that opens with one of these words gets a VERDICT, then the
+// question turned around in the Oracle's mouth ("Will I finish grading?" becomes "You will finish
+// grading."), then an omen from the topic, or a SIGN_OFF when there is no topic.
+const YES_OR_NO = ["will", "would", "should", "shall", "can", "could", "may", "might", "must", "is", "are", "am", "was", "were", "do", "does", "has", "have", "had"];
+const VERDICTS = [
+  { says: "Yes.", no: false },
+  { says: "Yes, obviously.", no: false },
+  { says: "The signs say yes.", no: false },
+  { says: "Almost certainly.", no: false },
+  { says: "No.", no: true },
+  { says: "No, and you knew that.", no: true },
+  { says: "The Oracle regrets: no.", no: true },
+  { says: "Not this time.", no: true }
+];
+const SIGN_OFFS = [
+  "The Oracle has spoken.",
+  "Write that down before you forget.",
+  "The copier agrees.",
+  "Do not ask the Oracle to explain.",
+  "That is all the mists will say."
+];
+
+// SWAPS: how the Oracle turns your question around. Your words become its words, one swap at a time.
+// (A program called ELIZA did this in 1966, and people told it their secrets.)
+const SWAPS = {
+  i: "you", me: "you", my: "your", mine: "yours", myself: "yourself", am: "are",
+  we: "you", us: "you", our: "your", ours: "yours",
+  you: "I", your: "my", yours: "mine", yourself: "myself"
+};
+
 // QUESTION KINDS: the kind of question, judged by the first few words ("what's" counts as "what").
 // A topic that has a list named for the kind answers from it; otherwise these answers are for
 // questions with no topic.
 const QUESTION_KINDS = [
-  {
-    kind: "yesno",
-    firstWords: ["will", "is", "are", "am", "can", "could", "should", "would", "do", "does", "did", "has", "have", "may", "might", "shall"],
-    answers: [
-      "The signs say yes. The copier says no. Trust the signs.",
-      "Yes. But only after a fire drill.",
-      "The mists are cloudy. Ask again after coffee.",
-      "Absolutely. Write that down before you forget.",
-      "No. But something better is on its way.",
-      "The Oracle nods slowly. That means yes."
-    ]
-  },
   {
     kind: "when",
     firstWords: ["when"],
@@ -574,6 +592,52 @@ function kindOf(words) {
   return null;
 }
 
+// Turns a yes-or-no question around: "Will I finish grading tonight?" becomes "You will finish grading
+// tonight." (or, for a no, "You will not finish grading tonight."). Gives nothing when it can't be sure.
+const PRONOUNS = ["i", "you", "we", "they", "he", "she", "it", "there", "someone", "anyone", "everyone", "everybody", "nobody"];
+const DETERMINERS = ["the", "a", "an", "my", "our", "your", "his", "her", "their", "its", "this", "that", "these", "those"];
+const ADJECTIVES = ["new", "old", "good", "bad", "big", "little", "small", "best", "worst", "first", "last", "next", "whole", "other", "same", "favorite", "own", "entire", "final", "long", "short", "real", "true"];
+const swap = (word) => SWAPS[word.toLowerCase()] || word;
+const third = (verb) => (verb === "have" ? "has" : /(s|x|z|ch|sh|o)$/.test(verb) ? verb + "es" : /[^aeiou]y$/.test(verb) ? verb.slice(0, -1) + "ies" : verb + "s");
+function echo(questionText, no) {
+  const words = questionText.trim().replace(/[?!.]+$/, "").split(/\s+/);
+  const opener = words[0].toLowerCase();
+  if (!YES_OR_NO.includes(opener) || opener === "had" || words.length < 3 || words.length > 14) return "";
+  if (words.some((word) => /^or$/i.test(word))) return "";   // "working or not?" is not a sentence to turn around
+
+  // Where does the subject end? A pronoun; a determiner with its adjectives and noun; or a Name.
+  let end = 2;
+  const first = words[1].toLowerCase();
+  if (PRONOUNS.includes(first)) end = 2;
+  else if (DETERMINERS.includes(first)) {
+    if (/ing$/.test(words[2] || "")) end = 2;   // "Is this going to work": "this" stands alone
+    else { end = 2; while (end < words.length - 1 && (/^\d/.test(words[end]) || ADJECTIVES.includes(words[end].toLowerCase()) || /^(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)$/i.test(words[end]))) end++; end++; }
+  }
+  else if (/^[A-Z]/.test(words[1])) { end = 2; if (end < words.length - 1 && /^[A-Z]/.test(words[end])) end++; }
+  else return "";
+  if (end >= words.length) return "";
+
+  const subject = words.slice(1, end).map(swap);
+  const rest = words.slice(end).map(swap);
+  const who = subject.length === 1 ? subject[0] : "";   // "you" or "I" change the verb's form
+  const agree = (aux) => {
+    if (who === "you") return { am: "are", is: "are", was: "were", does: "do", has: "have" }[aux] || aux;
+    if (who === "I") return { are: "am", is: "am", were: "was", does: "do", has: "have" }[aux] || aux;
+    return aux;
+  };
+  const aux = agree(opener);
+  let turned;
+  if (aux === "do" || aux === "does") {
+    if (no) turned = [...subject, aux, "not", ...rest];
+    else turned = [...subject, aux === "does" ? third(rest[0]) : rest[0], ...rest.slice(1)];
+  } else {
+    const not = who === "there" && !/ing$/.test(rest[0]) ? "no" : "not";   // "There is no coffee", "There is not going to be"
+    turned = [...subject, aux === "can" && no ? "cannot" : aux, ...(no && aux !== "can" ? [not] : []), ...rest];
+  }
+  const sentence = turned.join(" ") + ".";
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
+
 // "Pizza or hotdish?" gives ["Pizza", "hotdish"]. No "or" (or "or not") gives nothing.
 // "Will it snow or will it rain?" is two whole clauses, so it gives ["snow", "rain"].
 function choicesIn(text) {
@@ -608,14 +672,21 @@ function answer(questionText) {
     return pick(EITHER_OR).replace("{choice}", choice.charAt(0).toUpperCase() + choice.slice(1));
   }
 
-  // 4. What kind of question is it, and does it touch one of the TOPICS?
-  const kind = kindOf(words);
+  // 4. A yes-or-no question: a verdict, your question turned around, then an omen.
   const topic = topicOf(words);
+  if (YES_OR_NO.includes(words[0])) {
+    const verdict = pick(VERDICTS);
+    const omen = topic ? pick(topic.prophecies) : pick(SIGN_OFFS);
+    return [verdict.says, echo(questionText, verdict.no), omen].filter(Boolean).join(" ");
+  }
+
+  // 5. What kind of question is it, and does it touch one of the TOPICS?
+  const kind = kindOf(words);
   if (topic && kind && topic[kind.kind]) return pick(topic[kind.kind]);   // "What's for lunch?" names a food
   if (topic) return pick(topic.prophecies);
   if (kind) return pick(kind.answers);
 
-  // 5. None of those? A classic prophecy.
+  // 6. None of those? A classic prophecy.
   return pick(PROPHECIES);
 }
 

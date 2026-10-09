@@ -229,13 +229,21 @@ function showClock(now) {
     waitBox.hidden = true;
   }
   clockBox.classList.toggle("waiting", !!wait);
+  document.getElementById("sc-wait-clear").hidden = !wait;   // nothing to clear until a wait is on
+  document.querySelectorAll("[data-wait]").forEach((b) => {
+    b.setAttribute("aria-pressed", String(!!wait && Number(b.dataset.wait) === wait.minutes));
+  });
 }
 
 document.getElementById("sc-face").addEventListener("click", () => openClock(!clockOpen));
 document.getElementById("sc-close").addEventListener("click", () => openClock(false));
 document.getElementById("sc-backdrop").addEventListener("click", () => openClock(false));
 document.getElementById("sc-start").addEventListener("click", callToOrder);
-document.getElementById("sc-wait-clear").addEventListener("click", () => { wait = null; tick(); });
+document.getElementById("sc-wait-clear").addEventListener("click", () => {
+  wait = null;
+  tick();
+  document.getElementById("sc-close").focus();   // Clear has just gone; keep the keyboard on the clock
+});
 document.querySelectorAll("[data-wait]").forEach((b) => b.addEventListener("click", () => startWait(Number(b.dataset.wait))));
 
 

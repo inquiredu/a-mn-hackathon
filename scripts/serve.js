@@ -21,7 +21,7 @@ http.createServer((req, res) => {
   let urlPath = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
   if (urlPath.endsWith("/")) urlPath += "index.html";
   const file = path.join(root, urlPath);
-  if (!file.startsWith(root)) {
+  if (file !== root && !file.startsWith(root + path.sep)) {   // not a sibling such as a-mn-hackathon-old
     res.writeHead(403);
     return res.end("Forbidden");
   }

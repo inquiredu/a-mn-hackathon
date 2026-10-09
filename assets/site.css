@@ -301,6 +301,13 @@ html { scroll-padding-top: 76px; }
 .copybox pre { flex: 1; min-width: 0; margin: 0; max-height: 420px; overflow: auto; white-space: pre; color: var(--ink); font: .82rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
 /* The three levels */
+/* The opening: the three levels across the page, each a step down to its section */
+.glance { margin-bottom: var(--block); }
+.glance li { display: flex; flex-direction: column; }
+.glance strong { font-size: 1.15rem; }
+.glance span:not(.num) { margin-top: 4px; }
+.glance a { margin-top: auto; padding-top: 10px; font-weight: 700; }
+.glance + .hint { margin-top: 0; }
 .level { margin-top: var(--block); padding: var(--card-pad) 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .level-head { display: flex; align-items: center; gap: 12px; }
 .level-head h2 { margin: 0; }

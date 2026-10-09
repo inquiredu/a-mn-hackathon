@@ -46,12 +46,14 @@ Shared spaces and decks, all linked from `links` in `assets/session.js` (none of
 | `backup` | **Session slides**: the whole morning, screen by screen. Drive title "Hands On 10.9 · Session slides (backup)" | Before you come; the Welcome chat message; Hosts |
 | `companion` | **Starter code**: every starter's code and remix menu, in the speaker notes. Drive title "Hands On 10.9 · Starter code (backup)" | Before you come; the breakout-room chat message; Hosts |
 
-The Session slides deck matches the site as of October 8: lengths instead of clock times, the 1-to-5 Welcome slide, and a Show us yours slide (copied from Watch one get built, so its speaker notes are that slide's until someone edits them). It has no plan slide; the site's stage does. The two backups are named by what's inside them, on the site and in Drive (renamed October 8; the starter deck had been titled "Facilitation Slides - 10.9"). Both are owned by Sean's Orono account and shared with the AI4MN co-hosts. If the site is blocked, nobody sees the site's links, so the chat messages on the Hosts page carry them too.
+The Session slides deck matches the site as of the evening of October 8: lengths instead of clock times, Grant a wish at 40 minutes (57 minutes of building in all), the 1-to-5 Welcome slide, and a Show us yours slide (copied from Watch one get built, so its speaker notes are that slide's until someone edits them). It has no plan slide; the site's stage does. The two backups are named by what's inside them, on the site and in Drive (renamed October 8; the starter deck had been titled "Facilitation Slides - 10.9"). Both are owned by Sean's Orono account and shared with the AI4MN co-hosts. If the site is blocked, nobody sees the site's links, so the chat messages on the Hosts page carry them too.
 
 ## Still to do
 
 - The walls deck has three slides before the wonder and worry slides ("Collaborative Walls Drive Engagement", one with no text, "Best Practices for Wall Facilitation"). The links jump straight to the wall slides, but delete those three if they weren't meant to be there.
 - Share the Teams doc ("anyone with the link can edit"), ideally Friday morning.
+- Set Meet's breakout timer for Grant a wish to 40 minutes (it was 35). The co-host sets it; the site can't.
+- On the Windows PC, turn on the commit and push checks and test them once. See "On the Windows PC" below.
 - In Meet's Host controls, keep "Share their screen" on for everyone, for Show us yours and Show & Cheer.
 - Tell the co-host the new anchor routine: the 4s, the 5s, and the builders from the Welcome chat.
 - Before 10:00 on the presenting computer: open Present, press F, and check the session clock on the opening screen. Call to order when you start, or it counts from 10:00 on its own.
@@ -67,6 +69,20 @@ The Session slides deck matches the site as of October 8: lengths instead of clo
 - Since October 8 the Mac works from a plain clone at `~/Documents/VIBECODE/a-mn-hackathon`, outside Drive. ⚠️ If the Drive copy is still in use on the Windows PC, pull there before working, so the two don't drift.
 - Preview locally with `node scripts/serve.js`, then open http://localhost:4178. Add `?now=10:50` to any page to see it at that moment on the day.
 - Work on a branch and open a pull request; the live site updates about a minute after it merges to `main`. `CLAUDE.md` has the rules for changing the site, and `docs/DECISIONS.md` logs each decision with its date and reason.
+
+## On the Windows PC
+
+The repo carries checks that run before every commit and every push. They stop credential files (`.env`, service-account JSON, private keys) and anything shaped like an API key. Then they check the session file and every page the way the browser reads them, and run the timer tests. Git doesn't turn them on from a clone, so each computer does it once. The Mac is done; the PC isn't. Use Git Bash, which comes with Git for Windows, from the repo folder.
+
+1. Bring the PC up to date. Use a git clone, not the old Drive copy: `git switch main`, then `git pull`.
+2. Check that Node is installed: `node --version`. The checks need it on the PATH. Without it, commits and pushes are blocked, not let through.
+3. Turn the checks on, once per clone: `git config core.hooksPath .githooks`.
+4. Test them without committing or pushing. Each should print `session check: 7 parts, 7 links, 7 pages, all clear`:
+   - Commit check: `sh .githooks/pre-commit`
+   - Push check: `echo "refs/heads/main $(git rev-parse HEAD) refs/heads/main 0000000000000000000000000000000000000000" | sh .githooks/pre-push`
+5. If either says `Cannot find module`, Git Bash isn't handling the checks' temporary folder. Commits will be blocked until that's fixed. To get past it once, on purpose, use `git commit --no-verify`, then ask a Claude session to fix the hooks for Windows.
+
+The checks haven't been run on Windows yet; the Mac has. A commit or push the checks stop names the file and the problem, and never prints a key's value. GitHub Desktop and other apps run the same checks, but only if they can find Node.
 
 ## Starter prompt for a new chat
 

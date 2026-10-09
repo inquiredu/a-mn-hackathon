@@ -194,9 +194,11 @@ function placeClock() {
 }
 
 function openClock(open) {
+  const hadFocus = clockBox.contains(document.activeElement);
   clockOpen = open;
   placeClock();
   if (open) document.getElementById("sc-close").focus();
+  else if (hadFocus) document.getElementById("sc-face").focus();   // back where the keyboard left off
 }
 
 function callToOrder() {

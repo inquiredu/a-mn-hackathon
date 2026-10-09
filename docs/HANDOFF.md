@@ -32,8 +32,8 @@ A two-hour virtual hackathon for MNGAIA · AI4MN on Google Meet, 10:00 to noon C
 | Grant a wish | `/wish.html` | The build path, the wish builder, the wish jar, the stuck moves, and how to pin your work to the gallery wall (`#wall`) |
 | Hosts | `/hosts.html` | Forming teams, a room calculator, the run of show, before/during/after |
 | Sources | `/sources.html` | 39 sources checked October 7 and 8, with start-here paths, section tabs, topic and kind filters (topics grouped under Building, Taking care, and Teaching and learning), search, and a shareable address for every view (for example `?ask=privacy`, `?path=leaders`, `#primm`). The sources live in `assets/sources-data.js`. |
-| Present | `/present.html` | The full-screen stage for the main room (S opens speaker notes) |
-| Speaker notes | `/notes.html` | Follows the stage from a second window, and can move it |
+| Present | `/present.html` | The full-screen stage for the main room: a session clock you call to order, which then lives in the corner and opens large for wait time (C); live timers on Show us yours, Show & Cheer, and the close (T, +, −); S opens speaker notes |
+| Speaker notes | `/notes.html` | Follows the stage from a second window and can move it; runs the stage timer and the session clock (Call to order, Reset) |
 
 Shared spaces and decks, all linked from `links` in `assets/session.js` (none of the pages type out a link). Each part of the morning names the links it uses (`shared`), and the "Happening now" card shows them at that moment. The timeline is the schedule only.
 
@@ -53,18 +53,22 @@ The two backups are named by what's inside them, on the site and in Drive (renam
 - The Session slides backup deck (Google Slides) still has the old times and the old Welcome: Watch one get built at 10:08, the Remix Arcade at 10:20, and the Teams-doc anchor slide. Update it, or say in the chat that the times on the site are the ones to follow.
 - The walls deck has three slides before the wonder and worry slides ("Collaborative Walls Drive Engagement", one with no text, "Best Practices for Wall Facilitation"). The links jump straight to the wall slides, but delete those three if they weren't meant to be there.
 - Share the Teams doc ("anyone with the link can edit"), ideally Friday morning.
+- In Meet's Host controls, keep "Share their screen" on for everyone, for Show us yours and Show & Cheer.
+- Tell the co-host the new anchor routine: the 4s, the 5s, and the builders from the Welcome chat.
+- Before 10:00 on the presenting computer: open Present, press F, and check the session clock on the opening screen. Call to order when you start, or it counts from 10:00 on its own.
+- Open the site on a district laptop from another district (Donna's isd742.org account is a good test) to see whether a web filter blocks it.
 - Test pasting a starter into Gemini (Canvas on) on a district account, and in Claude and ChatGPT.
 - Edit the speaker notes in `assets/session.js` into Sean's own words.
-- A manual screen-reader pass (NVDA or ChromeVox, and VoiceOver). See `docs/ACCESSIBILITY.md`.
+- A manual screen-reader pass (NVDA or ChromeVox, and VoiceOver), including the stage's new clock and timers. See `docs/ACCESSIBILITY.md`.
 - Get planner feedback on the starters.
 - Recheck the AI tools' help pages close to Friday: ChatGPT moved from canvas to a Preview switch in May 2026, and Gemini Canvas sharing depends on each district's Drive settings.
 
 ## Working on it
 
-- Git lives inside the Drive folder. Use one computer at a time and let Drive finish syncing before switching.
+- Since October 8 the Mac works from a plain clone at `~/Documents/VIBECODE/a-mn-hackathon`, outside Drive. ⚠️ If the Drive copy is still in use on the Windows PC, pull there before working, so the two don't drift.
 - Preview locally with `node scripts/serve.js`, then open http://localhost:4178. Add `?now=10:50` to any page to see it at that moment on the day.
-- Commit and push from either computer; the live site updates in about a minute.
+- Work on a branch and open a pull request; the live site updates about a minute after it merges to `main`. `CLAUDE.md` has the rules for changing the site, and `docs/DECISIONS.md` logs each decision with its date and reason.
 
 ## Starter prompt for a new chat
 
-> I'm working on "Hands On," a one-link site for a two-hour virtual hackathon (MNGAIA · AI4MN, Friday October 9, 2026). The project is in this folder; start by reading `docs/HANDOFF.md`, `docs/SESSION-KIT.md`, and `README.md`. Everything about the morning lives in `assets/session.js`. Keep the MNGAIA look, plain warm language, WCAG 2.1 AA, and made-up data only. Ask me before publishing anything.
+> I'm working on "Hands On," a one-link site for a two-hour virtual hackathon (MNGAIA · AI4MN, Friday October 9, 2026). The project is in this folder; start by reading `CLAUDE.md`, then `docs/HANDOFF.md`. Everything about the morning lives in `assets/session.js`. Keep the MNGAIA look, plain warm language, WCAG 2.1 AA, and made-up data only. Ask me before publishing anything.

@@ -23,6 +23,8 @@ const THINKING = [
 ];
 
 // TOPICS: when your question uses one of these words, the Oracle answers on that topic.
+// Plurals and endings count too: "copiers", "copies", and "copying" all mean "copy".
+// If a question touches two topics, the one it mentions more (or last) wins.
 // To add a topic, copy one block, change the words it listens for, and write new prophecies.
 const TOPICS = [
   {
@@ -95,13 +97,21 @@ const TOPICS = [
     ]
   },
   {
-    listensFor: ["grade", "grades", "grading", "test", "tests", "quiz", "assessment", "rubric"],
+    listensFor: ["grade", "grades", "grading", "test", "tests", "quiz", "quizzes", "assessment", "rubric"],
     prophecies: [
       "The stack of grading will shrink. Then it will grow back, like a hydra.",
       "The test will measure something. Whether it's the thing that matters, even the Oracle wonders.",
       "Somewhere, a rubric is being revised. It will be revised again."
     ]
   }
+];
+
+// EITHER/OR: "Pizza or hotdish?" The Oracle picks a side. {choice} becomes the side it picked.
+const EITHER_OR = [
+  "{choice}. The Oracle has spoken.",
+  "{choice}. Do not ask the Oracle to explain.",
+  "{choice}, obviously. The copier agrees.",
+  "{choice}. But bring snacks either way."
 ];
 
 // QUESTION KINDS: if no topic matches, the Oracle answers the kind of question you asked,
@@ -168,6 +178,27 @@ const QUESTION_KINDS = [
   }
 ];
 
+// MANNERS: a greeting or a thank-you of three words or fewer gets manners back, not a prophecy.
+const MANNERS = [
+  { firstWords: ["hello", "hi", "hey", "greetings", "howdy"], answers: ["Hello, seeker. Ask, and the Oracle shall answer. Eventually.", "Greetings. The Oracle has been expecting you since third period."] },
+  { firstWords: ["thanks", "thank", "ty"], answers: ["You are welcome. Tip your copier.", "The Oracle accepts thanks, coffee, and the good markers."] },
+  { firstWords: ["bye", "goodbye", "farewell"], answers: ["Go in peace. Check your mailbox on the way out.", "Farewell. The Oracle will be here, humming, next to the laminator."] }
+];
+
+// AGAIN: for the same question twice in a row. {last} becomes what the Oracle said the first time.
+const AGAIN = [
+  "You asked that already. The Oracle's answer stands: {last}",
+  "The Oracle heard you the first time. {last}",
+  "Asking twice does not stir the mists. {last}"
+];
+
+// SILENCE: for an empty question.
+const SILENCE = [
+  "Ask with words, seeker. The Oracle cannot read minds before 10 a.m.",
+  "Silence is a question too. The answer is still the copier.",
+  "The Oracle hears nothing, and nods. Try again with words."
+];
+
 // CLASSIC PROPHECIES: for everything else. Add your own: put it in quotes and end it with a comma.
 const PROPHECIES = [
   "Your lanyard is not lost. It is in the staff fridge, next to someone's yogurt.",
@@ -185,10 +216,12 @@ const PROPHECIES = [
 <style>
   /* Colors: change these to make it yours */
   :root {
-    --night: #1a1033;   /* the background */
-    --glow: #b48cff;    /* the orb's glow */
-    --gold: #ffd36e;    /* the prophecy */
-    --text: #f4eefe;    /* everything else */
+    --night: #0A1A33;   /* the background: a Minnesota night */
+    --navy: #10345A;    /* the glow at the top of the sky */
+    --glow: #8F6CFF;    /* the light inside the orb */
+    --gold: #E6B84F;    /* the tripod, the button, and the prophecy */
+    --sky: #66C1E7;     /* the sparkles and the mutterings */
+    --text: #EAF6FC;    /* everything else */
   }
 
   * { box-sizing: border-box; }
@@ -206,49 +239,41 @@ const PROPHECIES = [
       radial-gradient(2px 2px at 72% 18%, #ffffff66, transparent),
       radial-gradient(1.5px 1.5px at 40% 82%, #ffffff77, transparent),
       radial-gradient(1.5px 1.5px at 86% 64%, #ffffff55, transparent),
-      radial-gradient(ellipse at top, #2d1b5c, var(--night) 70%);
+      radial-gradient(ellipse at top, var(--navy), var(--night) 70%);
   }
 
   main { width: 100%; max-width: 34rem; text-align: center; }
   h1 { font-size: clamp(1.6rem, 5vw, 2.3rem); margin: 0 0 4px; }
   .tagline { margin: 0; font-style: italic; opacity: .85; }
 
-  /* The crystal ball */
+  /* The crystal ball on its tripod. The drawing is in the <svg> below; this is how it moves. */
   .orb {
-    position: relative;
-    overflow: hidden;
-    width: 180px;
-    height: 180px;
-    margin: 24px auto 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 55%, var(--glow), #4b2a8a 60%, #120a26);
-    box-shadow: 0 0 40px var(--glow), inset 0 0 30px #00000099;
+    display: block;
+    height: clamp(170px, 36vh, 330px);
+    margin: 10px auto 2px;
+    overflow: visible;
   }
-  .orb::after { /* the shine */
-    content: "";
-    position: absolute;
-    top: 14%; left: 22%;
-    width: 28%; height: 18%;
-    border-radius: 50%;
-    background: #ffffff55;
-    filter: blur(4px);
-  }
-  .swirl {
-    position: absolute;
-    inset: -25%;
-    background: conic-gradient(transparent, #ffffff30, transparent 30%, #ffd36e30, transparent 65%);
-  }
+  .mn { fill: #163F73; stroke: var(--sky); stroke-opacity: .35; stroke-width: .6; }   /* the state */
+  .sparkles use, .teal { fill: var(--sky); }
+  .white { fill: #FFFFFF; }
+  .ball { filter: drop-shadow(0 0 14px #8F6CFF88); transition: filter .6s; }
+  .glow, .swirl, .logo { transform-box: view-box; transform-origin: 120px 112px; }
+
   /* The orb only swirls while it thinks */
-  .orb.thinking {
-    box-shadow: 0 0 90px 20px var(--glow), inset 0 0 30px #00000099;
-    animation: wobble .25s ease-in-out infinite alternate;
-  }
-  .orb.thinking .swirl { animation: swirl .5s linear infinite; }
+  .orb.thinking .ball { filter: drop-shadow(0 0 34px #8F6CFFEE); }
+  .orb.thinking .glow { animation: breathe 1.1s ease-in-out infinite alternate; }
+  .orb.thinking .swirl { animation: swirl 1.6s linear infinite; }
+  .orb.thinking .logo { animation: drift 2.4s ease-in-out infinite alternate; }
+  .orb.thinking .sparkles use { animation: twinkle .9s ease-in-out infinite alternate; }
+  .orb.thinking .sparkles use:nth-child(3n) { animation-delay: -.3s; }
+  .orb.thinking .sparkles use:nth-child(3n+1) { animation-delay: -.6s; }
 
-  @keyframes swirl  { to { transform: rotate(360deg); } }
-  @keyframes wobble { from { transform: scale(.98) rotate(-2deg); } to { transform: scale(1.03) rotate(2deg); } }
+  @keyframes swirl   { to { transform: rotate(360deg); } }
+  @keyframes breathe { from { opacity: .4; transform: scale(.9); } to { opacity: .95; transform: scale(1.1); } }
+  @keyframes drift   { from { transform: rotate(-4deg) scale(.98); } to { transform: rotate(4deg) scale(1.03); } }
+  @keyframes twinkle { from { opacity: .25; } to { opacity: 1; } }
 
-  .status { min-height: 1.5em; margin: 0; font-style: italic; opacity: .85; }
+  .status { min-height: 1.5em; margin: 0; font-style: italic; color: var(--sky); }
 
   form { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
   label { width: 100%; }
@@ -256,12 +281,12 @@ const PROPHECIES = [
     flex: 1 1 16rem;
     padding: 12px 16px;
     font: inherit;
-    border: 2px solid #ffffff80;
+    border: 2px solid #E6B84FB3;
     border-radius: 999px;
-    background: #ffffff14;
+    background: #FFFFFF14;
     color: var(--text);
   }
-  input::placeholder { color: #f4eefeaa; }
+  input::placeholder { color: #EAF6FCAA; }
   button {
     padding: 12px 22px;
     font: inherit;
@@ -269,7 +294,7 @@ const PROPHECIES = [
     border: none;
     border-radius: 999px;
     background: var(--gold);
-    color: #2a1a00;
+    color: #2A1A00;
     cursor: pointer;
   }
   button:disabled { opacity: .6; cursor: wait; }
@@ -282,7 +307,7 @@ const PROPHECIES = [
     font-size: .9rem;
     background: transparent;
     color: var(--text);
-    border: 2px solid #ffffff80;
+    border: 2px solid #E6B84FB3;
   }
   .sound[aria-pressed="false"] { opacity: .75; text-decoration: line-through; }
 
@@ -299,15 +324,25 @@ const PROPHECIES = [
   }
   .prophecy.revealed { opacity: 1; transform: none; }
 
-  /* Short screens: shrink the orb so the prophecy stays in view */
-  @media (max-height: 640px) {
+  /* Wide, short screens (a shared tab, a laptop): the orb sits beside the words */
+  @media (min-aspect-ratio: 4/3) and (max-height: 640px) {
+    body { padding: 12px 16px; }
+    main { max-width: 46rem; display: grid; grid-template-columns: auto 1fr; gap: 0 28px; align-items: center; text-align: left; }
+    .orb { grid-column: 1; grid-row: 1 / span 6; height: min(82vh, 330px); margin: 0; }
+    main > :not(.orb) { grid-column: 2; }
+    form { justify-content: flex-start; }
+  }
+
+  /* Short, narrow screens: shrink the orb so the prophecy stays in view */
+  @media (max-aspect-ratio: 4/3) and (max-height: 640px) {
     body { padding-top: 12px; padding-bottom: 12px; }
     h1 { font-size: 1.5rem; }
-    .orb { width: 120px; height: 120px; margin: 14px auto 10px; }
+    .orb { height: 140px; margin: 6px auto 2px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .orb.thinking, .orb.thinking .swirl { animation: none; }
+    .orb.thinking .glow, .orb.thinking .swirl, .orb.thinking .logo, .orb.thinking .sparkles use { animation: none; }
+    .ball { transition: none; }
     .prophecy { transition: none; }
   }
 </style>
@@ -318,7 +353,70 @@ const PROPHECIES = [
   <h1>The Teacher's Lounge Oracle</h1>
   <p class="tagline">Ask anything. The Oracle sees all. (Mostly the copier.)</p>
 
-  <div class="orb" id="orb" aria-hidden="true"><div class="swirl"></div></div>
+  <!-- The crystal ball: a glass orb on a gold tripod, with Minnesota inside -->
+  <svg class="orb" id="orb" viewBox="0 0 240 300" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="0" y1="80" x2="0" y2="280">
+        <stop offset="0" stop-color="#F8DF93"/><stop offset=".45" stop-color="#E6B84F"/><stop offset="1" stop-color="#9C6A1C"/>
+      </linearGradient>
+      <radialGradient id="glass" cx="50%" cy="42%" r="62%">
+        <stop offset="0" stop-color="#A48BFF"/><stop offset=".5" stop-color="#5A3BC4"/><stop offset="1" stop-color="#1B1444"/>
+      </radialGradient>
+      <radialGradient id="shade" cx="50%" cy="50%" r="50%">
+        <stop offset=".7" stop-color="#0A1A33" stop-opacity="0"/><stop offset="1" stop-color="#0A1A33" stop-opacity=".6"/>
+      </radialGradient>
+      <radialGradient id="plinth" cx="50%" cy="40%" r="60%">
+        <stop offset="0" stop-color="#3A2E4E"/><stop offset="1" stop-color="#1C1528"/>
+      </radialGradient>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+      <filter id="haze" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.5"/></filter>
+      <filter id="soft2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+      <clipPath id="inside"><circle cx="120" cy="112" r="70"/></clipPath>
+      <path id="sp" d="M0,-1L.22,-.22L1,0L.22,.22L0,1L-.22,.22L-1,0L-.22,-.22Z"/>
+    </defs>
+
+    <!-- The stand: an ebony plinth and a gold tripod -->
+    <ellipse cx="120" cy="278" rx="84" ry="16" fill="#0E0A16"/>
+    <rect x="36" y="268" width="168" height="10" fill="#0E0A16"/>
+    <ellipse cx="120" cy="268" rx="84" ry="16" fill="url(#plinth)"/>
+    <g fill="none" stroke="url(#gold)" stroke-width="6.5" stroke-linecap="round">
+      <path d="M120,174V248"/>
+      <path d="M82,184C60,194 48,226 59,256"/>
+      <path d="M158,184C180,194 192,226 181,256"/>
+    </g>
+    <g fill="url(#gold)">
+      <circle cx="120" cy="250" r="5.5"/><circle cx="58" cy="261" r="7"/><circle cx="182" cy="261" r="7"/>
+    </g>
+    <path d="M78,180A42,12 0 0 1 162,180" fill="none" stroke="url(#gold)" stroke-width="5"/>
+    <g transform="rotate(-12 120 118)" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round">
+      <path d="M20,118A100,30 0 0 1 220,118"/>
+    </g>
+
+    <!-- The orb, and what it holds -->
+    <circle class="ball" cx="120" cy="112" r="72" fill="url(#glass)"/>
+    <circle class="glow" cx="120" cy="112" r="54" fill="#8F6CFF" opacity=".5" filter="url(#soft)"/>
+    <g clip-path="url(#inside)">
+      <g class="swirl">
+        <ellipse cx="152" cy="78" rx="40" ry="14" fill="#FFFFFF" opacity=".16" filter="url(#soft)"/>
+        <ellipse cx="86" cy="148" rx="44" ry="14" fill="#E6B84F" opacity=".14" filter="url(#soft)"/>
+      </g>
+      <g class="logo"><g transform="translate(120 112) scale(.95)">
+        <path class="mn" d="M-18.1,-38.8L-39.1,-39.1L-38.8,-34.7L-37.3,-22.2L-35.9,-13.3L-35.6,0.9L-36.4,6.2L-37.3,9.8L-34.7,13.3L-34.1,18.7L-34.1,43.6L22.8,43.6L21.3,37.3L17.8,34.7L14.2,31.1L8.9,27.6L5.3,24L6.2,18.7L7.1,15.1L6.2,12.4L7.1,8.9L11,6.2L11,-3.6L13.3,-5.3L17.8,-9.8L23.1,-15.1L28.4,-19.6L33.8,-22.2L38.8,-24.4L33.8,-24.9L28.4,-25.4L23.1,-26.7L17.8,-26.7L12.4,-29.3L8,-30.8L3.6,-32.9L-1.8,-32L-7.1,-33.8L-12.4,-35L-14.2,-39.1L-15.1,-43.6L-18.1,-44.4Z"/>
+        <g class="sparkles"><use href="#sp" transform="translate(-22.7 -16.5) scale(1.0)"/><use href="#sp" transform="translate(-20.9 23.5) scale(1.0)"/><use href="#sp" transform="translate(-5.1 14.9) scale(0.8)"/><use href="#sp" transform="translate(-19.0 20.3) scale(0.6)"/><use href="#sp" transform="translate(5.4 27.6) scale(2.4)"/><use href="#sp" transform="translate(5.5 18.8) scale(1.0)"/><use href="#sp" transform="translate(4.9 35.0) scale(0.9)"/><use href="#sp" transform="translate(-28.8 -10.1) scale(0.9)"/><use href="#sp" transform="translate(6.1 9.2) scale(1.3)"/><use href="#sp" transform="translate(-33.0 -11.8) scale(1.0)"/><use href="#sp" transform="translate(-16.9 -17.8) scale(0.6)"/><use href="#sp" transform="translate(-19.3 -6.6) scale(1.3)"/><use href="#sp" transform="translate(-12.7 -19.8) scale(0.8)"/><use href="#sp" transform="translate(-20.8 7.2) scale(0.8)"/><use href="#sp" transform="translate(2.8 14.9) scale(1.0)"/><use href="#sp" transform="translate(-13.1 18.8) scale(0.9)"/><use href="#sp" transform="translate(-20.9 -3.2) scale(1.3)"/><use href="#sp" transform="translate(-30.6 28.5) scale(2.3)"/><use href="#sp" transform="translate(-28.7 -26.3) scale(0.8)"/><use href="#sp" transform="translate(-7.5 -21.4) scale(1.0)"/><use href="#sp" transform="translate(-29.4 36.0) scale(1.3)"/><use href="#sp" transform="translate(3.8 35.0) scale(0.8)"/><use href="#sp" transform="translate(-35.0 -13.6) scale(2.0)"/><use href="#sp" transform="translate(-18.9 34.0) scale(2.4)"/><use href="#sp" transform="translate(-7.3 36.0) scale(2.8)"/><use href="#sp" transform="translate(-27.2 39.5) scale(1.1)"/><use href="#sp" transform="translate(-23.7 -15.6) scale(1.1)"/><use href="#sp" transform="translate(-33.3 24.8) scale(1.1)"/><use href="#sp" transform="translate(-13.4 -29.6) scale(2.8)"/><use href="#sp" transform="translate(-29.8 18.8) scale(0.6)"/><use href="#sp" transform="translate(3.7 31.5) scale(1.2)"/><use href="#sp" transform="translate(-24.5 21.7) scale(0.9)"/><use href="#sp" transform="translate(-25.1 -2.1) scale(1.0)"/><use href="#sp" transform="translate(-20.0 13.8) scale(0.8)"/><use href="#sp" transform="translate(-26.8 -9.0) scale(1.3)"/><use href="#sp" transform="translate(-7.4 32.4) scale(0.8)"/><use href="#sp" transform="translate(-6.9 -22.0) scale(1.0)"/><use href="#sp" transform="translate(-1.3 37.8) scale(0.8)"/><use href="#sp" transform="translate(-15.7 -19.8) scale(0.9)"/><use href="#sp" transform="translate(-22.3 7.9) scale(1.1)"/><use href="#sp" transform="translate(-22.6 -14.6) scale(0.9)"/><use href="#sp" transform="translate(-32.2 25.1) scale(1.3)"/><use href="#sp" transform="translate(4.9 18.3) scale(0.6)"/><use href="#sp" transform="translate(-1.6 12.3) scale(1.3)"/><use href="#sp" transform="translate(-34.0 -21.9) scale(2.1)"/><use href="#sp" transform="translate(-31.8 -31.3) scale(1.3)"/></g>
+        <g class="teal"><path d="M-3.9,-8.9L-6.8,-13.7L-5.9,-8.4L-5.3,-3.6L-6,0.9L-8.5,5.3L-10.7,9.4L-7.1,6.2L-3.9,1.8L-2.7,-3.6Z"/><path d="M-10.7,-5.2L-16,-3.7L-11.4,-2L-6.8,-0.5L-6,-3.4Z"/><circle cx="-9.4" cy="-7.8" r="2.1"/><path d="M-6.4,-17.4L-6.9,-18.8L-7.5,-17.4L-9,-17.4L-7.8,-16.4L-8.2,-15L-6.9,-15.8L-5.7,-15L-6.1,-16.4L-4.9,-17.4Z"/></g>
+        <g class="white"><path d="M2.7,-2L1.2,-9L-1.9,-2.5L-9,-3.3L-3.8,1.6L-6.8,8.2L-0.5,4.8L4.9,9.6L3.6,2.5L9.8,-1Z"/><circle cx="0.7" cy="-8.0" r="2.1"/></g>
+      </g></g>
+    </g>
+    <circle cx="120" cy="112" r="72" fill="url(#shade)"/>
+    <ellipse cx="94" cy="64" rx="16" ry="8" fill="#FFFFFF" opacity=".42" filter="url(#soft2)"/>
+    <path d="M166,152A62,62 0 0 0 178,100" fill="none" stroke="#66C1E7" stroke-width="2.5" opacity=".45" stroke-linecap="round" filter="url(#haze)"/>
+
+    <!-- The front of the rings, over the orb -->
+    <g transform="rotate(-12 120 118)" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round">
+      <path d="M20,118A100,30 0 0 0 220,118"/>
+    </g>
+    <path d="M78,180A42,12 0 0 0 162,180" fill="none" stroke="url(#gold)" stroke-width="5"/>
+  </svg>
 
   <p class="status" id="status"></p>
   <p class="asked" id="asked"></p>
@@ -365,7 +463,103 @@ function gong() { // a big BONG when the prophecy arrives
 
 
 /* ------------------------------------------------------------
-   PART 3: WHAT HAPPENS WHEN YOU ASK
+   PART 3: HOW THE ORACLE READS A QUESTION
+   ------------------------------------------------------------ */
+
+// Picks from a list, saying everything once before anything repeats, and never the same thing twice running
+const bags = new WeakMap();
+function pick(list) {
+  let bag = bags.get(list);
+  if (!bag || bag.length === 0) {
+    const previous = bag && bag.previous;
+    bag = list.slice().sort(() => Math.random() - 0.5);
+    if (bag.length > 1 && bag[bag.length - 1] === previous) bag.unshift(bag.pop());
+    bags.set(list, bag);
+  }
+  bag.previous = bag.pop();
+  return bag.previous;
+}
+
+// The words in a question, lowercased: "Will the copier work?" becomes ["will", "the", "copier", "work"]
+function wordsOf(text) {
+  return text.toLowerCase().match(/[a-z'-]+/g) || [];
+}
+
+// Trims a word to its root, so "copiers", "copies", and "copying" all count as "copy"
+function root(word) {
+  let w = word.replace(/ie[sd]$/, "y");
+  if (w.length > 3 && !w.endsWith("ss")) w = w.replace(/e?s$/, "");
+  if (w.length > 5) w = w.replace(/(ing|ed)$/, "");
+  return w.replace(/e+$/, "");
+}
+
+// Which topic does the question touch? The one with the most words in it; in a tie, the one mentioned last.
+function topicOf(words) {
+  const roots = words.map(root);
+  let best = null;
+  for (const topic of TOPICS) {
+    const listened = topic.listensFor.map(root);
+    const hits = roots.map((r, i) => (listened.includes(r) ? i : -1)).filter((i) => i >= 0);
+    if (hits.length === 0) continue;
+    const last = hits[hits.length - 1];
+    if (!best || hits.length > best.count || (hits.length === best.count && last > best.last)) {
+      best = { topic, count: hits.length, last };
+    }
+  }
+  return best && best.topic;
+}
+
+// "Pizza or hotdish?" gives ["Pizza", "hotdish"]. No "or" (or "or not") gives nothing.
+// "Will it snow or will it rain?" is two whole clauses, so it gives ["snow", "rain"].
+function choicesIn(text) {
+  const sides = text.trim().replace(/[?!.]+$/, "").split(/\s+or\s+/i).map((side) => side.trim());
+  if (sides.length < 2 || sides.some((side) => !side)) return null;
+  const last = sides.pop();
+  if (/^not\b/i.test(last)) return null;
+  const opener = /^(will|would|should|shall|can|could|do|does|did|is|are|am|may|might)\s+((i|we|it|they|you|he|she)\b\s*)?/i;
+  const choices = opener.test(last)
+    ? sides.concat(last).map((side) => side.replace(opener, ""))
+    : sides.map((side) => side.split(/\s+/).pop().replace(/[,;:]+$/, "")).concat(last);
+  return choices.every(Boolean) ? choices : null;
+}
+
+// The Oracle reads your question and decides how to answer
+function answer(questionText) {
+  const words = wordsOf(questionText);
+
+  // 1. Nothing? Silence gets an answer too.
+  if (words.length === 0) return pick(SILENCE);
+
+  // 2. A short hello or thank-you gets manners.
+  if (words.length <= 3) {
+    const manner = MANNERS.find((m) => m.firstWords.includes(words[0]));
+    if (manner) return pick(manner.answers);
+  }
+
+  // 3. Either/or? The Oracle picks a side.
+  const choices = choicesIn(questionText);
+  if (choices) {
+    const choice = choices[Math.floor(Math.random() * choices.length)];
+    return pick(EITHER_OR).replace("{choice}", choice.charAt(0).toUpperCase() + choice.slice(1));
+  }
+
+  // 4. Does the question touch one of the TOPICS?
+  const topic = topicOf(words);
+  if (topic) return pick(topic.prophecies);
+
+  // 5. What kind of question is it? (Reads the first three words, in order.)
+  for (const word of words.slice(0, 3)) {
+    const kind = QUESTION_KINDS.find((k) => k.firstWords.includes(word));
+    if (kind) return pick(kind.answers);
+  }
+
+  // 6. None of those? A classic prophecy.
+  return pick(PROPHECIES);
+}
+
+
+/* ------------------------------------------------------------
+   PART 4: WHAT HAPPENS WHEN YOU ASK
    ------------------------------------------------------------ */
 
 const orb = document.getElementById("orb");
@@ -374,7 +568,7 @@ const askedLine = document.getElementById("asked");
 const prophecyLine = document.getElementById("prophecy");
 const question = document.getElementById("question");
 const button = document.getElementById("go");
-let lastProphecy = "";
+let memory = { question: "", prophecy: "" };   // the last question, and what the Oracle said to it
 
 // The sound switch in the corner
 let soundOn = SOUND_ON;
@@ -385,29 +579,6 @@ function showSound() {
 }
 showSound();
 soundSwitch.addEventListener("click", () => { soundOn = !soundOn; showSound(); });
-
-function pick(list) {
-  return list[Math.floor(Math.random() * list.length)];
-}
-
-// The Oracle reads your question and decides how to answer
-function answer(questionText) {
-  const words = questionText.toLowerCase().match(/[a-z'-]+/g) || [];
-
-  // 1. Does the question use a word from one of the TOPICS?
-  for (const topic of TOPICS) {
-    if (topic.listensFor.some((word) => words.includes(word))) return pick(topic.prophecies);
-  }
-
-  // 2. What kind of question is it? (Reads the first three words, in order.)
-  for (const word of words.slice(0, 3)) {
-    const kind = QUESTION_KINDS.find((k) => k.firstWords.includes(word));
-    if (kind) return pick(kind.answers);
-  }
-
-  // 3. Neither? A classic prophecy.
-  return pick(PROPHECIES);
-}
 
 document.getElementById("ask").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -430,9 +601,15 @@ document.getElementById("ask").addEventListener("submit", (event) => {
     orb.classList.remove("thinking");
     statusLine.textContent = "";
 
-    let prophecy = answer(question.value);
-    for (let tries = 0; prophecy === lastProphecy && tries < 10; tries++) prophecy = answer(question.value);
-    lastProphecy = prophecy;
+    // The same question twice in a row? The Oracle remembers.
+    const asked = wordsOf(question.value).join(" ");
+    let prophecy;
+    if (asked && asked === memory.question) {
+      prophecy = pick(AGAIN).replace("{last}", memory.prophecy);
+    } else {
+      prophecy = answer(question.value);
+      memory = { question: asked, prophecy };
+    }
 
     prophecyLine.textContent = prophecy;
     prophecyLine.classList.add("revealed");

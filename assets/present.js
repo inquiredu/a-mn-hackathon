@@ -39,9 +39,54 @@ function sessionDay() {
 function browserStore() {
   try { return localStorage; } catch { return undefined; }
 }
+// Pause and reset, saved for today only, in this browser: a pause remembers the second it began, and a
+// reset makes the clock wait for the call to order even on the day itself
+const PAUSE_KEY = "hands-on-paused";
+const RESET_KEY = "hands-on-reset";
+function readToday(key) {
+  try {
+    const saved = JSON.parse(browserStore()?.getItem(key) || "null");
+    return saved && saved.day === sessionDay() ? saved : null;
+  } catch { return null; }
+}
+function writeToday(key, value) {
+  try {
+    if (value === null) browserStore()?.removeItem(key);
+    else browserStore()?.setItem(key, JSON.stringify({ day: sessionDay(), ...value }));
+  } catch { /* private window */ }
+}
+function sessionStart() {
+  const saved = STAGE_TIMER.savedStart(browserStore(), sessionDay());
+  if (saved === null && readToday(RESET_KEY)) return null;
+  return STAGE_TIMER.resolveStart(saved, sessionDay(), SESSION.day, toSeconds(SESSION.start));
+}
 function sessionClock(now) {
-  const start = STAGE_TIMER.resolveStart(STAGE_TIMER.savedStart(browserStore(), sessionDay()), sessionDay(), SESSION.day, toSeconds(SESSION.start));
-  return STAGE_TIMER.sessionClock(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
+  const paused = readToday(PAUSE_KEY);
+  const two = STAGE_TIMER.sessionClock(paused ? paused.at : now, sessionStart(), toSeconds(SESSION.end) - toSeconds(SESSION.start));
+  const isPaused = !!paused && two.state !== "ready";
+  return { ...two, paused: isPaused, state: isPaused ? "paused" : two.state, label: isPaused ? "paused" : two.label };
+}
+function pauseClock() {
+  const now = sessionNow();
+  const start = sessionStart();
+  if (start === null) return;
+  const paused = readToday(PAUSE_KEY);
+  if (paused) {
+    STAGE_TIMER.saveStart(browserStore(), sessionDay(), start + (now - paused.at));   // the pause doesn't count
+    writeToday(PAUSE_KEY, null);
+    document.getElementById("status").textContent = "The two hours are counting again.";
+  } else {
+    writeToday(PAUSE_KEY, { at: now });
+    document.getElementById("status").textContent = "The two hours are paused.";
+  }
+  tick();
+}
+function resetClock() {
+  STAGE_TIMER.saveStart(browserStore(), sessionDay(), null);
+  writeToday(PAUSE_KEY, null);
+  writeToday(RESET_KEY, { reset: true });
+  document.getElementById("status").textContent = "Reset. The clock waits for the call to order.";
+  tick();
 }
 
 
@@ -214,6 +259,8 @@ function openClock(open) {
 }
 
 function callToOrder() {
+  writeToday(PAUSE_KEY, null);
+  writeToday(RESET_KEY, null);
   STAGE_TIMER.saveStart(browserStore(), sessionDay(), sessionNow());
   document.getElementById("status").textContent = "The two hours have started.";
   tick();
@@ -230,6 +277,9 @@ function showClock(now) {
   document.getElementById("sc-label").textContent = two.state === "ready" ? TIMES.fill("{length}") : two.label;
   clockBox.dataset.state = two.state;
   document.getElementById("sc-start").hidden = two.state !== "ready";
+  document.getElementById("sc-pause").hidden = two.state === "ready";
+  document.getElementById("sc-pause").textContent = two.paused ? "Resume" : "Pause";
+  document.getElementById("sc-reset").hidden = two.state === "ready";
   document.querySelector(".rail").style.setProperty("--elapsed", two.pct.toFixed(2) + "%");
   const waitBox = document.getElementById("sc-wait");
   if (wait) {
@@ -251,6 +301,8 @@ document.getElementById("sc-face").addEventListener("click", () => openClock(!cl
 document.getElementById("sc-close").addEventListener("click", () => openClock(false));
 document.getElementById("sc-backdrop").addEventListener("click", () => openClock(false));
 document.getElementById("sc-start").addEventListener("click", callToOrder);
+document.getElementById("sc-pause").addEventListener("click", pauseClock);
+document.getElementById("sc-reset").addEventListener("click", resetClock);
 document.getElementById("sc-wait-clear").addEventListener("click", () => {
   wait = null;
   tick();
@@ -337,6 +389,7 @@ document.addEventListener("keydown", (event) => {
   else if (key === "n" || key === "N") jumpToNow();
   else if (key === "s" || key === "S") openNotes();
   else if (key === "c" || key === "C") openClock(!clockOpen);
+  else if (key === "p" || key === "P") pauseClock();
   else if (key === "t" || key === "T") {
     if (screens[index].timer) timerAction("toggle");
     else if (sessionClock(sessionNow()).state === "ready") callToOrder();
@@ -355,6 +408,14 @@ function toggleFullScreen() {
 document.getElementById("next").addEventListener("click", () => show(index + 1));
 document.getElementById("prev").addEventListener("click", () => show(index - 1));
 document.getElementById("full").addEventListener("click", toggleFullScreen);
+document.addEventListener("fullscreenchange", () => {
+  document.getElementById("full").textContent = document.fullscreenElement ? "Leave full screen" : "Full screen";
+});
+// Back to the site: full screen hides the browser's tabs, so leave it first, then open the site in a new tab
+document.getElementById("site-button").addEventListener("click", () => {
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  window.open("index.html", "_blank", "noopener");
+});
 document.getElementById("now-button").addEventListener("click", jumpToNow);
 document.getElementById("notes-button").addEventListener("click", openNotes);
 

@@ -37,7 +37,9 @@ body {
   max-width: 1500px;
   margin: 0 auto;
   overflow-y: auto;   /* a tall screen on a small window scrolls instead of clipping */
+  scrollbar-width: none;   /* without a scrollbar on the shared screen */
 }
+.stage::-webkit-scrollbar { display: none; }
 .kicker { margin: 0; color: var(--sky); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: clamp(1rem, 1.6vw, 1.6rem); }
 .heading { margin: 0; font-size: clamp(2.2rem, 4.6vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -.01em; }
 .body { margin: 0; max-width: 32ch; font-size: clamp(1.4rem, 2.6vw, 2.8rem); line-height: 1.35; color: var(--ice); }
@@ -71,8 +73,9 @@ body {
 }
 
 /* Ladder */
-.ladder { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 1100px; display: grid; gap: 1.6vh; counter-reset: rung; }
-.ladder li { display: grid; grid-template-columns: auto 1fr; column-gap: 1.6vw; align-items: center; padding-bottom: 1.4vh; border-bottom: 1px solid #66C1E733; }
+.ladder { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 1100px; display: grid; gap: 1.2vh; counter-reset: rung; }
+.ladder li { display: grid; grid-template-columns: auto 1fr; column-gap: 1.6vw; align-items: center; padding-bottom: 1vh; border-bottom: 1px solid #66C1E733; }
+.kind-ladder { gap: 1.8vh; padding-top: 4vh; padding-bottom: 4vh; }
 .ladder li::before {
   counter-increment: rung; content: counter(rung); grid-row: 1 / 3;
   display: grid; place-items: center; width: 1.9em; height: 1.65em; font-size: clamp(1.3rem, 2.5vw, 2.8rem);
@@ -257,6 +260,11 @@ body {
 .sc-actions button:active { transform: scale(.97); }
 .sc-actions .sc-start { background: var(--sky); color: var(--deep); }
 .sc-actions .sc-start:hover { background: #8AD2EE; }
+/* Call to order, Pause, and Reset: one row, in the hero and when the clock is open */
+.sc-clock-row { display: flex; flex-wrap: wrap; align-items: center; gap: .4em; }
+.session-clock[data-mode="hero"] .sc-clock-row { font-size: .8em; }
+.session-clock[data-mode="hero"] .sc-start { font-size: 1em; }
+.session-clock[data-state="paused"] .sc-time { color: var(--ice); }
 /* The wait buttons: one even row; the label leaves once the wait above says it */
 .sc-waits { display: flex; align-items: center; gap: .4em; }
 .sc-waits > span { color: var(--ice); font-weight: 700; margin-right: .3em; }

@@ -23,6 +23,7 @@
   <button id="prev" type="button" aria-label="Previous screen">←</button>
   <button id="now-button" type="button">Jump to now</button>
   <button id="notes-button" type="button">Speaker notes</button>
+  <button id="site-button" type="button" title="Leaves full screen and opens the site in a new tab">Open the site</button>
   <button id="full" type="button">Full screen</button>
   <button id="next" type="button" aria-label="Next screen">→</button>
 </nav>
@@ -35,7 +36,11 @@
     <span class="sc-wait-label">Wait time</span><span class="sc-wait-time" id="sc-wait-time"></span>
   </div>
   <div class="sc-actions">
-    <button class="sc-start" id="sc-start" type="button">Call to order</button>
+    <div class="sc-clock-row">
+      <button class="sc-start" id="sc-start" type="button">Call to order</button>
+      <button id="sc-pause" type="button" hidden>Pause</button>
+      <button id="sc-reset" type="button" hidden>Reset</button>
+    </div>
     <div class="sc-waits" role="group" aria-label="Wait time">
       <span>Wait time</span>
       <button type="button" data-wait="1">1 min</button>
@@ -47,7 +52,7 @@
     <button class="sc-close" id="sc-close" type="button">Back to the corner</button>
   </div>
 </section>
-<p class="keys" aria-hidden="true">→ next · ← back · F full screen · N jump to now · S speaker notes · C clock · T timer</p>
+<p class="keys" aria-hidden="true">→ next · ← back · F full screen · N jump to now · S speaker notes · C clock · P pause the clock · T timer</p>
 <p class="sr-only" id="status" aria-live="polite"></p>
 
 <script src="assets/session.js"></script>

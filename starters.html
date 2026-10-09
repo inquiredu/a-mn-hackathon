@@ -19,6 +19,7 @@
     <nav aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html">Home</a></li>
+        <li><a href="levels.html">Three levels</a></li>
         <li><a href="starters.html" aria-current="page">Starters</a></li>
         <li><a href="wish.html">Grant a wish</a></li>
         <li><a href="hosts.html">Hosts</a></li>
@@ -48,10 +49,10 @@
     <div class="wrap">
       <p class="kicker-dark">The Remix Arcade</p>
       <h1 class="page-title">Starters</h1>
-      <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours.</p>
+      <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours. Five live in the chat, two are pages for your Google Site, and two are scripts that work behind the scenes: <a href="levels.html">the three levels</a>, with a starter or two for each.</p>
 
       <div class="first">
-        <p><strong>First, join your team.</strong> Open the Teams doc and add your name next to your room number.</p>
+        <p><strong>First, find your room.</strong> Open the Teams doc: your room number is next to your name.</p>
         <p class="link-slot" data-link="teams" data-label="Open the Teams doc" data-style="button"></p>
       </div>
 
@@ -61,7 +62,7 @@
         <li><span class="num hex">3</span><strong>Remix it.</strong> <span>Copy a change from the remix menu, paste it in the same chat, and see what happens.</span></li>
       </ol>
 
-      <h3 class="subhead">The starters</h3>
+      <h3 class="subhead">Level 1 · In the chat</h3>
       <div class="machines">
 
         <article class="cabinet" style="--c: var(--timer)">
@@ -236,6 +237,150 @@
             <ul>
               <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>SPIN_SECONDS</code>, change the 3 to a 10, and press <strong>Run my changes</strong>.</li>
               <li class="do">In the code, find the coffee topic under <code>TOPICS</code>. Add your own prophecy in quotes, end it with a comma, press <strong>Run my changes</strong>, and ask about coffee.</li>
+            </ul>
+          </details>
+        </article>
+
+      </div>
+
+      <h3 class="subhead" id="level-2">Level 2 · On your site</h3>
+      <p class="hint">A page, not a tool. Play it, hand it to your AI with your own document, then paste the code into a Google Site: <strong>Insert</strong>, <strong>Embed</strong>, <strong>Embed code</strong>.</p>
+      <div class="machines">
+
+        <article class="cabinet" style="--c: var(--charter)">
+          <div class="badge hex" aria-hidden="true">🪪</div>
+          <p class="for">For a department, a team, or a PLC</p>
+          <h4>The Charter Cards</h4>
+          <p>A made-up department charter as a page: the commitments as badges, each section a card that opens when you tap it.</p>
+          <p class="monday"><strong>Monday:</strong> your own charter or team norms on your site, readable on a phone.</p>
+          <div class="actions">
+            <button class="primary" data-play="charter">Play</button>
+            <button data-copy-machine="charter">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it yours</h5>
+            <ul>
+              <li><span>Replace the charter with this document, section by section, keeping its meaning exactly: ___</span></li>
+              <li><span>Use our school colors: ___ and ___. Put our name at the top: ___.</span></li>
+              <li><span>Make the badges these five words: ___.</span></li>
+            </ul>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Add a "who to call" card at the end with made-up names and extensions.</span></li>
+              <li><span>Add a search box that opens only the cards that mention what I typed.</span></li>
+              <li><span>Add a Print button that opens every card and prints the page on one sheet.</span></li>
+            </ul>
+            <h5>Look inside (no AI needed)</h5>
+            <ul>
+              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>COMMITMENTS</code>, change one word, and press <strong>Run my changes</strong>.</li>
+            </ul>
+          </details>
+        </article>
+
+        <article class="cabinet" style="--c: var(--syllabus)">
+          <div class="badge hex" aria-hidden="true">📘</div>
+          <p class="for">For teachers and course leads</p>
+          <h4>The Syllabus Page</h4>
+          <p>A made-up course as a page families actually read: the questions people ask, each with a short answer, and the year as a row per unit.</p>
+          <p class="monday"><strong>Monday:</strong> your syllabus on your class site, opening question by question.</p>
+          <div class="actions">
+            <button class="primary" data-play="syllabus">Play</button>
+            <button data-copy-machine="syllabus">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it yours</h5>
+            <ul>
+              <li><span>Replace the course with my syllabus, keeping every policy exactly as written: ___</span></li>
+              <li><span>Add a question: "___?" with the answer: ___.</span></li>
+              <li><span>Use our school colors: ___ and ___.</span></li>
+            </ul>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Add a "this week" marker that highlights the unit for today's date.</span></li>
+              <li><span>Add a Spanish version of every answer, shown with a toggle at the top.</span></li>
+              <li><span>Add a "what to bring tomorrow" line at the very top that I can change in one place.</span></li>
+            </ul>
+            <h5>Look inside (no AI needed)</h5>
+            <ul>
+              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>QUESTIONS</code>, change one answer, and press <strong>Run my changes</strong>.</li>
+            </ul>
+          </details>
+        </article>
+
+      </div>
+
+      <div class="level-note">
+        <h4>What Google Sites does to pasted code</h4>
+        <p>It runs in a sealed box on your page. That keeps your site safe, and it sets the limits: the page can't remember anything between visits, so saved settings and scores vanish; it can't reach the rest of your site or your visitors' accounts; sound and full screen wait for a tap; and a very long page may be refused or load slowly. One box holds one page, and it shows at the size you drag it to, so build for a box, not a window.</p>
+        <p>If what you pasted doesn't fit or doesn't behave, hand your AI this:</p>
+        <div class="copybox">
+          <p id="sites-stem">Make this one self-contained HTML file for a Google Sites embed box about 800 pixels wide: no outside libraries, fonts, or images; nothing saved between visits; no sound until a tap; large type that works on a phone; and as short as it can be while keeping everything it does.</p>
+          <button data-copy-from="sites-stem">Copy</button>
+        </div>
+      </div>
+
+      <h3 class="subhead" id="level-3">Level 3 · Behind the scenes</h3>
+      <p class="hint">Scripts, not pages: nothing to play here. Copy one into a new project at <a href="https://script.google.com" rel="noopener">script.google.com</a>, or hand it to your AI first and have it explained. <a href="levels.html#script">The steps, and the cautions</a>.</p>
+      <div class="machines">
+
+        <article class="cabinet" style="--c: var(--script)">
+          <div class="badge hex" aria-hidden="true">🗂️</div>
+          <p class="for">For curriculum leads and anyone with a deep folder</p>
+          <h4>The Drive Inventory</h4>
+          <p>Point it at a folder. It reads every folder inside and writes a Sheet: each document, its type, its link, and when it last changed.</p>
+          <p class="monday"><strong>Monday:</strong> a whole curriculum folder, one search away.</p>
+          <ol class="steps-in">
+            <li>Paste the script into a new project. Put your folder's ID between the quotes at the top.</li>
+            <li>Choose <strong>inventory</strong>, press <strong>Run</strong>, and read the permission screen: Drive and Sheets.</li>
+            <li>Open the Execution log for the link.</li>
+          </ol>
+          <div class="actions">
+            <button class="primary" data-copy-script="inventory">Copy the script</button>
+            <button data-ask-script="inventory">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Add a column for who owns each file.</span></li>
+              <li><span>Skip anything that hasn't changed in two years, and list those in a second tab instead.</span></li>
+              <li><span>Make the Link column a clickable "Open" instead of the whole address.</span></li>
+            </ul>
+            <h5>Make it careful</h5>
+            <ul>
+              <li><span>Explain exactly which permission each line needs, and whether any line could change or delete a file. (It shouldn't.)</span></li>
+            </ul>
+          </details>
+        </article>
+
+        <article class="cabinet" style="--c: var(--script)">
+          <div class="badge hex" aria-hidden="true">🗃️</div>
+          <p class="for">For anyone who makes the same Doc many times</p>
+          <h4>The Doc Multiplier</h4>
+          <p>One template Doc and a Sheet of names. It makes a copy for each row, named for the row, gathers them in a folder, and writes each link back into the Sheet.</p>
+          <p class="monday"><strong>Monday:</strong> a planning doc for every team, made in one press. Practice with made-up names.</p>
+          <ol class="steps-in">
+            <li>Paste the script into a new project. Put the template Doc's ID and the Sheet's ID at the top.</li>
+            <li>Choose <strong>multiply</strong>, press <strong>Run</strong>, and read the permission screen: Drive and Sheets.</li>
+            <li>Open the Execution log for the folder's link.</li>
+          </ol>
+          <div class="actions">
+            <button class="primary" data-copy-script="multiplier">Copy the script</button>
+            <button data-ask-script="multiplier">Copy for my AI</button>
+          </div>
+          <details class="remix">
+            <summary>Remix menu</summary>
+            <h5>Make it useful</h5>
+            <ul>
+              <li><span>Replace the words TEAM and DATE inside each copy with the row's name and today's date.</span></li>
+              <li><span>Skip a row if column B already has a link, so I can run it again safely.</span></li>
+              <li><span>Share each copy with the email address in column C, as an editor.</span></li>
+            </ul>
+            <h5>Make it careful</h5>
+            <ul>
+              <li><span>Before anything is copied, show me how many copies it's about to make and stop if it's more than 30.</span></li>
             </ul>
           </details>
         </article>

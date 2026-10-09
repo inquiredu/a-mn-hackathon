@@ -40,6 +40,7 @@ const PATHS = {
   firsttime: { title: "Never built anything?", blurb: "What code is, how to start in your tool, and the habits that make it work.", ids: ["mdn", "gemini-canvas", "chatgpt-preview", "willison-habits"] },
   leaders: { title: "Leading a school or district?", blurb: "Data practices, Minnesota law, accessibility, and a simple rule for what to share.", ids: ["mde", "mn-1332", "fpf-vetting", "ada-rule", "willison-vibe"] },
   teachers: { title: "Teaching with it next week?", blurb: "How beginners learn best, what helps and what harms, and a colleague's examples.", ids: ["primm", "bastani", "kazemitabaar", "ciddl"] },
+  levels: { title: "Picked a level?", blurb: "The official help behind each of the three levels: Canvas, Sites' embed, Apps Script and its permission screen, and a glimpse of the workbench.", ids: ["gemini-canvas", "sites-embed", "apps-script-overview", "apps-script-authorization", "apps-script-driveapp", "claude-code-overview", "codex-overview"] },
   november: { title: "Thinking ahead to November?", blurb: "Process, artifacts, and explanation: where assessment is heading.", ids: ["brennan-resnick", "robots-are-here", "scherer-2019", "denny-2024"] }
 };
 
@@ -110,6 +111,60 @@ const SOURCES = [
     says: "Share, at the top right of a page, offers Copy link or Copy component. The link opens that one page in Loop for colleagues.",
     takeLabel: "For Friday", take: "The steps for people building in Copilot Pages.",
     asks: ["sharing", "tools"]
+  },
+  {
+    id: "sites-embed", section: "moves", group: "The three levels",
+    title: "Add Google files, video & more to your site",
+    url: "https://support.google.com/sites/answer/90569",
+    who: "Google", venue: "Sites Help", when: "as of October 2026", type: "help",
+    says: "How to add things to a Google Site, including the Embed option: by URL, or by pasting embed code. The pasted code becomes its own box on the page.",
+    takeLabel: "Level 2", take: "Insert, then Embed, then the Embed code tab: the step most people never find.",
+    asks: ["tools", "sharing"]
+  },
+  {
+    id: "apps-script-overview", section: "moves", group: "The three levels",
+    title: "Google Apps Script overview",
+    url: "https://developers.google.com/apps-script/overview",
+    who: "Google", venue: "Google for Developers", when: "as of October 2026", type: "help",
+    says: "What Apps Script is: a JavaScript platform built into Google Workspace, with built-in services for Drive, Sheets, Docs, Gmail, and Calendar, run from script.google.com with nothing to install.",
+    takeLabel: "Level 3", take: "The whole of level 3 lives here, in the account you already have.",
+    asks: ["tools", "code"]
+  },
+  {
+    id: "apps-script-authorization", section: "moves", group: "The three levels",
+    title: "Authorization for Google services",
+    url: "https://developers.google.com/apps-script/guides/services/authorization",
+    who: "Google", venue: "Google for Developers", when: "as of October 2026", type: "help",
+    says: "Why a script asks for permission the first time it runs, how the scopes it asks for come from the services it calls, and what the authorization screen shows.",
+    takeLabel: "The habit", take: "The permission screen is the gate. Read it like a permission slip, every time.",
+    asks: ["security", "code"]
+  },
+  {
+    id: "apps-script-driveapp", section: "moves", group: "The three levels",
+    title: "Class DriveApp",
+    url: "https://developers.google.com/apps-script/reference/drive/drive-app",
+    who: "Google", venue: "Google for Developers", when: "as of October 2026", type: "help",
+    says: "The reference for the Drive service a script uses to find folders and files: getFolderById, getFiles, getFolders, and each file's name, type, and link.",
+    takeLabel: "Level 3", take: "Every line of the inventory script is explained here, if you want to see for yourself.",
+    asks: ["code"]
+  },
+  {
+    id: "claude-code-overview", section: "moves", group: "The three levels",
+    title: "Claude Code overview",
+    url: "https://code.claude.com/docs/en/overview",
+    who: "Anthropic", venue: "Claude Code documentation", when: "as of October 2026", type: "help",
+    says: "A coding tool that works inside a folder of files: it reads, edits, runs, and tests code from a terminal or a desktop app, and asks before it acts.",
+    takeLabel: "Later", take: "The workbench. This site was built with it. When level three feels easy.",
+    asks: ["tools"]
+  },
+  {
+    id: "codex-overview", section: "moves", group: "The three levels",
+    title: "Codex",
+    url: "https://developers.openai.com/codex",
+    who: "OpenAI", venue: "OpenAI for Developers", when: "as of October 2026", type: "help",
+    says: "OpenAI's coding tool, in the terminal, an editor, or the cloud, working across a whole project.",
+    takeLabel: "Later", take: "The other workbench. Same idea, different vendor.",
+    asks: ["tools"]
   },
   {
     id: "mdn", section: "moves", group: "What the code is",

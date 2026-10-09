@@ -29,7 +29,7 @@ On October 8 the Oracle got its tripod and the AI4MN mark. The figure is decorat
 - A pass with NVDA and Chrome, or ChromeVox, for the messages, the next-step panel, and the Oracle's prophecy
 - VoiceOver on iOS for the Play window
 - Real keyboard use of every button, and Escape inside a running starter
-- An audit of the four starters and the presenter view, including the session clock (a button that opens a panel above the stage, closes with Escape, and returns focus) and the screen timers
+- An audit of the nine starters (seven pages, two scripts shown as text), the Three levels page, and the presenter view, including the session clock (a button that opens a panel above the stage, closes with Escape, and returns focus) and the screen timers
 
 An automated and scripted review can't certify compliance on its own.
 

@@ -118,6 +118,18 @@ const KINDS = {
     if (s.url) parts.push(urlPill());
     return parts;
   },
+  ladder(s) {
+    // Levels, one line each; a rung marked later is shown fainter
+    const list = el("ol", "ladder");
+    s.rungs.forEach((r) => {
+      const li = el("li", r.later ? "later" : "");
+      li.append(el("strong", "", r.name), el("span", "", r.why));
+      list.append(li);
+    });
+    const parts = [el("h1", "heading", s.heading), list];
+    if (s.foot) parts.push(el("p", "foot", s.foot));
+    return parts;
+  },
   pair(s) {
     const pair = el("div", "pair");
     s.cards.forEach((c) => {
@@ -132,13 +144,15 @@ const KINDS = {
 
 // ---------- The timer, on screens that ask for one ----------
 
-const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());
-// A timer's length is a pace, "building" (all the time in breakout rooms), or minutes.
+const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());// A timer's length is a pace, a part's id ("wish"), "building" (all the time in breakout rooms), or minutes.
 // Screens that name the same timerKey share one timer, so it keeps counting from one screen to the next.
-const TIMER_LENGTHS = { ...SESSION.pace, building: SESSION.segments.filter((s) => s.where === "Breakout rooms").reduce((sum, s) => sum + s.minutes, 0) };
+const TIMER_LENGTHS = { ...SESSION.pace, building: 0 };
+SESSION.segments.forEach((s) => {
+  TIMER_LENGTHS[s.id] = s.minutes;
+  if (s.where === "Breakout rooms") TIMER_LENGTHS.building += s.minutes;
+});
 const timerKey = (screen) => screen.timerKey || screen.segment.id + "/" + (screen.heading || "");
-const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, TIMER_LENGTHS);
-let timerWasDone = false;
+const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, TIMER_LENGTHS);let timerWasDone = false;
 
 function timerBlock() {
   const box = el("div", "timer");

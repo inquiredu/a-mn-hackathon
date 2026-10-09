@@ -61,8 +61,8 @@ pages.forEach((page) => {
 });
 
 // Every script parses: one syntax error stops a whole file, and the page goes quiet without saying why
-const scripts = ["assets", "scripts"].flatMap((dir) => fs.readdirSync(path.join(root, dir))
-  .filter((file) => file.endsWith(".js")).map((file) => ({ name: dir + "/" + file, code: read(dir + "/" + file) })));
+const scripts = ["assets", "scripts", "recipes"].flatMap((dir) => fs.readdirSync(path.join(root, dir))
+  .filter((file) => file.endsWith(".js") || file.endsWith(".gs")).map((file) => ({ name: dir + "/" + file, code: read(dir + "/" + file) })));
 pages.concat(fs.readdirSync(path.join(root, "cabinets")).map((file) => "cabinets/" + file)).forEach((page) => {
   [...read(page).matchAll(/<script(?![^>]*\ssrc=)[^>]*>([\s\S]*?)<\/script>/g)].forEach((match, i) => {
     scripts.push({ name: page + " (inline script " + (i + 1) + ")", code: match[1] });

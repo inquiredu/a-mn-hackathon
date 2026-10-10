@@ -1,6 +1,6 @@
 # Hands On: working in this repo
 
-A one-link site for a two-hour virtual hackathon (MNGAIA · AI4MN, Friday October 9, 2026), live at inquiredu.org/a-mn-hackathon from GitHub Pages. Plain HTML, CSS, and JavaScript: no build step, no dependencies, no tracking.
+A one-link site for a two-hour virtual hackathon (MNGAIA · AI4MN, Friday October 9, 2026, now run), live at inquiredu.org/a-mn-hackathon from GitHub Pages. Plain HTML, CSS, and JavaScript: no build step, no dependencies, no tracking. The site stays up as the record and as a reusable session kit; remaining work is polish and accessibility (see `docs/HANDOFF.md` § Still to do).
 
 Read `docs/HANDOFF.md` first: what's decided, what exists, what's left. `docs/SESSION-KIT.md` is the reference for the session file, its braces, and the kinds of stage screen.
 
@@ -15,7 +15,7 @@ Read `docs/HANDOFF.md` first: what's decided, what exists, what's left. `docs/SE
 
 ## Checks
 
-Once per clone: `git config core.hooksPath .githooks`. Then every commit stops on credential files or anything shaped like an API key, and every commit and push runs `node scripts/check-session.js` (the session file and every page's braces and scripts, read the way the browser reads them) and the timer tests. Run them yourself after editing the session file, a page, or a script.
+Once per clone: `git config core.hooksPath .githooks`. Then every commit stops on credential files or anything shaped like an API key, and every commit and push runs `node scripts/check-session.js` (the session file and every page's braces and scripts, read the way the browser reads them), `node scripts/test-stage-timer.js`, and `node scripts/test-oracle.js`. Run them yourself after editing the session file, a page, or a script.
 
 ## Seeing a change
 

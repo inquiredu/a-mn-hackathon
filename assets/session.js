@@ -7,10 +7,11 @@
 // assets/timing.js fills them in, and lists everything you can write.
 
 const SESSION = {
-  title: "Hands On",
+  title: "First Builds",              // first run as Hands On, October 9, 2026
   subtitle: "A {weekday} Hackathon",
   org: "MNGAIA · AI4MN",            // the partner: "Prepared for and presented with {org}" on Home, every footer, and the stage
-  maker: "Sean Beaverson",          // who made the kit: "Made by {maker}" in the same places (inquiredu.org only hosts it)
+  maker: "s.beaverson",              // who made the kit: signed at the lower left of every page and the stage, with the license
+  license: "CC BY-NC-SA 4.0",        // the words, pages, and slides; the code is MIT (see README). Its deed is links.license
   day: "2026-10-09",                 // the clock-driven parts only run on this day
   timeZone: "America/Chicago",
   start: "10:00",                    // when the session starts and ends, as advertised (24-hour)
@@ -33,7 +34,9 @@ const SESSION = {
     // Starter code: every starter's code and remix menu, in the speaker notes (Drive title "Hands On 10.9 · Starter code (backup)").
     companion: "https://docs.google.com/presentation/d/1L3rwzGa4nrh1HDlExkhGetHYmQeqq_-cMcc8mmovtDM/edit",
     // The site's own code, public: how a session like this is built.
-    repo: "https://github.com/inquiredu/a-mn-hackathon"
+    repo: "https://github.com/inquiredu/a-mn-hackathon",
+    // The license for the words, pages, and slides, beside the signature at the foot of every page
+    license: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
   },
 
   // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.
@@ -66,7 +69,7 @@ const SESSION = {
       hint: "The plan for the morning, then the chat: how much have you built with AI, from 1 to 5, and what was it?",
       link: "index.html#today",
       screens: [
-        { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", heading: "Hands On", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
+        { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", heading: "{title}", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
         { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Teams doc keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
         { kind: "embed", note: "Share this tab with its sound on. Ask the Oracle two or three questions from the chat. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
         { kind: "plan", note: "Walk the morning in a sentence each. The page has all of it, and so does the chat.", heading: "Here's what we're here to do", url: true },

@@ -1,4 +1,4 @@
-// Hands On: the script shared by Home, Starters, Grant a wish, and Hosts.
+// First Builds: the script shared by Home, Starters, Grant a wish, and Hosts.
 // Times, links, and the day all come from the session file (assets/session.js),
 // read through the clock in assets/timing.js: TIMES.fill() for {braces}. The clock decides which part is on;
 // the pages show each part's length, not its clock time, so the plan reads the same if the morning runs long.
@@ -241,10 +241,10 @@ setInterval(update, 15000);
 document.querySelectorAll(".link-slot").forEach((slot) => {
   const url = LINKS[slot.dataset.link];
   if (url) {
-    const a = linkTo(url, slot.dataset.label);
+    const a = linkTo(url, TIMES.fill(slot.dataset.label));   // a label can be a {brace}: {license}
     a.className = slot.dataset.style || "button primary";
     a.target = "_blank";
-    a.rel = "noopener";
+    a.rel = slot.dataset.link === "license" ? "license noopener" : "noopener";
     slot.append(a);
   } else {
     slot.append(el("span", "pending", TIMES.fill(slot.dataset.pending || "The link is coming soon.")));

@@ -57,10 +57,9 @@ body {
 .kind-title { align-content: start; padding-top: 9vh; }
 .kind-title .heading { font-size: clamp(3.5rem, 10vw, 10rem); line-height: 1.02; }
 .kind-title .body { max-width: 30ch; }
-.credits { display: flex; flex-wrap: wrap; gap: 2vh 4vw; margin: 0 0 2vh; }
-.credit { display: flex; align-items: center; gap: 1.4vw; margin: 0; }
-.credit img { width: auto; height: clamp(48px, 6vw, 104px); flex: none; }
-.credit span { display: grid; gap: .25em; font-size: clamp(1rem, 1.7vw, 1.8rem); font-weight: 600; line-height: 1.2; }
+.credit { display: flex; align-items: center; gap: 1.6vw; margin: 0 0 2vh; }
+.credit img { width: auto; height: clamp(64px, 8vw, 140px); flex: none; }
+.credit span { display: grid; gap: .25em; font-size: clamp(1.1rem, 2.2vw, 2.4rem); font-weight: 600; line-height: 1.2; }
 .credit small { font-size: .62em; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ice); }
 
 /* Prompt */
@@ -154,7 +153,10 @@ body {
 .rail p { margin: 0; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
 .rail-length::before, .rail-where::before { content: " · "; }
 .rail-mark { width: auto; height: 36px; }
-.rail-mark + span { padding-left: 14px; border-left: 1px solid #45627D; }
+/* The author's signature, lower left: his mark, his name, and the license, quieter than the part's name */
+.rail-sign { display: flex; align-items: center; gap: 10px; color: var(--ice); font-size: .78em; font-weight: 500; }
+.rail-sign + span { padding-left: 14px; border-left: 1px solid #45627D; }
+@media (max-width: 1000px) { #rail-sign { display: none; } }   /* a narrow window keeps the mark and the part's name */
 .rail-right span + span { padding-left: 14px; border-left: 2px solid #8BAEBA55; color: var(--ice); }
 /* Room on the right of the rail for the session clock in its corner */
 .rail-right { padding-right: 12.5em; }
@@ -221,7 +223,8 @@ body {
 
 /* Hero: the opening screen, big and waiting for the call to order, in the open space under the mark.
    Anchored by its right edge like the other places (so the move animates), then shifted by its own width. */
-.session-clock[data-mode="hero"] { right: 93vw; bottom: 11vh; transform: translate(100%, 0); font-size: clamp(1.1rem, 2.2vw, 2.6rem); justify-items: start; }
+/* Its left edge lines up with the words, which sit in a column at most 1500px wide */
+.session-clock[data-mode="hero"] { right: calc(min(100vw, 50vw + 750px) - 7vw); bottom: 11vh; transform: translate(100%, 0); font-size: clamp(1.1rem, 2.2vw, 2.6rem); justify-items: start; }
 .session-clock[data-mode="hero"] .sc-start { font-size: .8em; }
 .session-clock[data-mode="hero"] .sc-face { flex-direction: column; align-items: flex-start; gap: 0; padding: 0; }
 .session-clock[data-mode="hero"] .sc-time { color: var(--accent); font-size: 1.6em; }

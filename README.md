@@ -1,8 +1,8 @@
-# Hands On: A Friday Hackathon
+# First Builds
 
-A one-link site for a two-hour virtual hackathon hosted by MNGAIA · AI4MN on Friday, October 9, 2026, 10:00 to noon Central. Educators build small tools with AI that are worth opening on Monday, in teams of four, and show one person what they made. It lives at [inquiredu.org/a-mn-hackathon](https://inquiredu.org/a-mn-hackathon).
+Small tools you can build with AI in an afternoon or less, for people who run classrooms, schools, and meetings, and a two-hour session kit to run with your own team. It was prepared for and first presented with MNGAIA · AI4MN as Hands On, a virtual hackathon on Friday, October 9, 2026: educators built tools worth opening on Monday, in teams of four, and showed one person what they made. It lives at [inquiredu.org/a-mn-hackathon](https://inquiredu.org/a-mn-hackathon).
 
-**Status:** ran on October 9, 2026, and kept here as a session kit. Plain HTML, CSS, and JavaScript. No build step, no dependencies, no tracking, no analytics, no cookies. MIT licensed: fork it and run your own.
+**Status:** first run October 9, 2026, and kept here as a kit for anyone. Plain HTML, CSS, and JavaScript. No build step, no dependencies, no tracking, no analytics, no cookies. The code is MIT and the words and pages are [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/): fork it and run your own, with credit, not for resale.
 
 ## The pages
 
@@ -42,7 +42,7 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 
 1. Fork the repo and turn on GitHub Pages for `main`. Add an empty `.nojekyll` if yours lacks one (this repo has it).
 2. Edit `assets/session.js`: the date, the start and end, each part's length, the links to your own Meet, team doc, and decks, and the presenter's screens and notes. `docs/SESSION-KIT.md` explains every field and what `{braces}` can say. Every page, the stage, and the notes read from this one file.
-3. Replace the marks and names with your own: `maker` and `org` in the session file, `assets/mngaia-mark.png` (the partner credit), and Sean Beaverson's mark in `assets/brand/` (the header, the credits, the stage rail, and the favicon). The colors are named once, as roles, at the top of `assets/site.css` and `assets/present.css`; point them at your palette.
+3. Replace the names and marks with your own: `title`, `maker`, `license`, and `org` in the session file (and `links.license`), `assets/mngaia-mark.png` (the partner credit), and Sean Beaverson's mark in `assets/brand/` (the signature at the lower left, the stage rail, and the favicon). The colors are named once, as roles, at the top of `assets/site.css` and `assets/present.css`; point them at your palette.
 4. Turn on the hooks (`git config core.hooksPath .githooks`) and run `node scripts/check-all.js`. It tells you about a link the pages name that the session file doesn't have, a brace that nothing fills, and parts that don't add up to the advertised length.
 5. Preview with `node scripts/serve.js`, and walk the morning with `?now=10:50` on any page.
 
@@ -80,4 +80,4 @@ The target is WCAG 2.1 AA, with the WCAG 2.2 focus-not-hidden and target-size it
 
 ## License
 
-[MIT](LICENSE), with two sets of marks excepted: the MNGAIA mark belongs to MNGAIA · AI4MN and is used with permission, and Sean Beaverson's mark in `assets/brand/` is his. Replace both with your own when you reuse the kit. The icons in `assets/icons.js` are Lucide's, under the ISC license.
+Two licenses. The code (the HTML, CSS, and JavaScript, the starters, and the Apps Scripts) is [MIT](LICENSE). The words, pages, and slides are [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) by s.beaverson: share and adapt them with credit, not commercially, under the same license. Two sets of marks are excepted from both: the MNGAIA mark belongs to MNGAIA · AI4MN and is used with permission, and Sean Beaverson's mark in `assets/brand/` is his. Replace both with your own when you reuse the kit. The icons in `assets/icons.js` are Lucide's, under the ISC license.

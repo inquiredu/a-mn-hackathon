@@ -104,26 +104,22 @@ function urlPill() {
   return el("p", "url", SESSION.url);
 }
 
+// The author's signature, at the lower left of every screen: his mark (in the page), his name, and the license
+document.getElementById("rail-sign").textContent = SESSION.maker + " · " + SESSION.license;
+
 // One function per kind of screen. Each returns the elements to put on the stage.
 const KINDS = {
-  // The opening: who made the kit, and the partner it was prepared for and presented with, each mark in its own colors
+  // The opening: the partner the session was prepared for and presented with, their mark in its own colors.
+  // The author signs in the rail, at the lower left, not here.
   title(s) {
-    const credit = (src, label, name) => {
-      const mark = el("img");
-      mark.src = src;
-      mark.alt = "";
-      const words = el("span");
-      words.append(el("small", "", label), name);
-      const line = el("p", "credit");
-      line.append(mark, words);
-      return line;
-    };
-    const credits = el("div", "credits");
-    credits.append(
-      credit("assets/brand/sean-beaverson-mark-reversed.png", "Made by", SESSION.maker),
-      credit("assets/mngaia-mark.png", "Prepared for and presented with", SESSION.org)
-    );
-    const parts = [credits];
+    const mark = el("img");
+    mark.src = "assets/mngaia-mark.png";
+    mark.alt = "";
+    const words = el("span");
+    words.append(el("small", "", "Prepared for and presented with"), SESSION.org);
+    const credit = el("p", "credit");
+    credit.append(mark, words);
+    const parts = [credit];
     if (s.kicker) parts.push(el("p", "kicker", s.kicker));
     return parts.concat(el("h1", "heading", s.heading), el("p", "body", s.sub));
   },

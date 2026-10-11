@@ -1,4 +1,4 @@
-/* Hands On: A Friday Hackathon
+/* First Builds (first run as Hands On, a Friday hackathon)
    Made by Sean Beaverson, so it wears his North Shore look: assets/brand/north-shore.css loads first with the palette
    and the type (Montserrat for headings and anything you press, Newsreader for reading). This file names the site's
    roles in those tokens, so a color here is a role, not a hex value. inquiredu.org is where the site lives, not its look.
@@ -406,12 +406,15 @@ kbd { font: inherit; font-size: .88em; font-weight: 600; padding: 1px 6px; borde
 .next { margin-top: var(--block); padding: var(--card-pad) 20px; background: var(--tint); border-radius: var(--radius); }
 .next p { margin: 6px 0 0; font-size: 1.05rem; }
 
-/* Footer: who made it and where it lives, then the partner the session was prepared for and presented with */
+/* Footer: the partner the session was prepared for and presented with, the notes, and at the lower left,
+   the author's signature: his mark, his name, and the license. That's the only place his identity appears. */
 .footer { background: var(--bar-bg); color: var(--bar-ink); padding: 36px 0 44px; }
 .footer-inner { display: grid; gap: 22px; }
-.footer-brands { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; padding-bottom: 24px; border-bottom: 1px solid var(--bar-line); }
 .footer .credit p { max-width: 32rem; }
-.footer .credit .label, .footer .credit .host { color: var(--bar-ink-2); }
+.footer .credit .label { color: var(--bar-ink-2); }
+.signature { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 6px 0 0; padding-top: 18px; border-top: 1px solid var(--bar-line); font-family: var(--font-sans); font-size: .85rem; color: var(--bar-ink-2); }
+.signature img { width: auto; height: 32px; }   /* the mark's minimum */
+.footer .signature a.inline { font-weight: 500; }
 .footer p { margin: 2px 0; }
 .footer .small { color: var(--bar-ink-2); }
 .footer .small strong { color: var(--bar-ink); }
@@ -484,12 +487,10 @@ dialog::backdrop { background: var(--scrim); }
 
 /* ---------- Site header and navigation (every page) ---------- */
 /* The header is navy, like the now bar under it and the footer: the page is framed in North Shore navy.
-   Sean Beaverson's mark leads (the reversed file, made for navy), then the session's name after a hairline. */
+   The kit's name alone: the author signs at the foot of the page, not here. */
 .site-head { background: var(--bar-bg); color: var(--bar-ink); border-bottom: 1px solid var(--bar-line); }
 .site-head-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; padding-top: 10px; padding-bottom: 10px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--bar-ink); text-decoration: none; font-family: var(--font-sans); font-weight: 600; font-size: 1.05rem; }
-.brand img { width: auto; height: 34px; }   /* the mark's minimum is 32px */
-.brand-name { padding-left: 12px; border-left: 1px solid var(--bar-line); line-height: 28px; }
 .site-nav { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
 .site-nav a { display: block; padding: 6px 12px; border-radius: 999px; color: var(--bar-ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
 .site-nav a:hover { background: rgb(255 255 255 / .12); }

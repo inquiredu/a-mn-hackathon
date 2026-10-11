@@ -17,6 +17,7 @@ One file describes a whole session, and every view reads it. To run a new sessio
 ```js
 const SESSION = {
   title, subtitle, org, maker,      // names shown on pages and the stage: org is the partner, maker made the kit
+  license,                          // the words' license, beside the maker's signature; its deed is links.license
   day: "2026-10-09",                // clock-driven features run on this day
   timeZone: "America/Chicago",
   start: "10:00", end: "12:00",     // the advertised start and end, 24-hour

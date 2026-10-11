@@ -53,7 +53,7 @@
         <h1>First Builds</h1>
         <p class="hero-meta" data-fill>{weekday}, {date} · {start} to {end} {zone} · on Google Meet</p>
         <p class="hero-lede" data-fill>A month into the school year, a morning to play. {Length} to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
-        <p class="hero-actions"><span class="link-slot" data-link="meet" data-label="Join on Google Meet"></span> <a class="button" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
+        <p class="hero-actions"><span class="link-slot" data-link="meet" data-label="Join on Google Meet" data-pending="Ask whoever invited you for the Meet link."></span> <a class="button" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
         <div class="credit credit-lead">
           <img src="assets/mngaia-mark.png" alt="" width="104" height="90">
           <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
@@ -82,14 +82,28 @@
         <div class="hero-text">
           <p class="eyebrow">Kit · Building with AI</p>
           <h1 id="keepsake-title">First Builds</h1>
-          <p class="hero-lede">Small tools you can build with AI in an afternoon or less, for people who run classrooms, schools, and meetings. Pick a level, play a starter, or run the whole two-hour session with your own team. No coding background needed, and everything here is free to use and to change.</p>
-          <p class="hero-actions"><a class="button primary" href="levels.html">Start with the three levels</a> <a class="button" href="starters.html">Try a starter</a></p>
+          <p class="hero-lede">Small tools you can build with AI in twenty minutes to an afternoon, for people who run classrooms, schools, and meetings: a meeting timer, a group maker, a page for your Google Site, a script (a few instructions Google runs for you inside your Drive, after you approve them) that tidies a folder. You copy and paste and ask for changes; the AI writes the code. Everything here works on your own, any day, and is free to use and to change.</p>
+          <p class="hero-actions"><a class="button primary" href="#start">Start here</a> <a class="button" href="starters.html">Try a starter</a> <a class="button" href="hosts.html">Run it with your team</a></p>
           <div class="credit credit-lead">
             <img src="assets/mngaia-mark.png" alt="" width="104" height="90">
-            <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong><span class="host" data-fill>First run as Hands On, {weekday}, {date}, {year}</span></p>
+            <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong><span class="host" data-fill>First run live as Hands On, {weekday}, {date}, {year}</span></p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- AFTER: start here, on your own -->
+  <section id="start" class="section" data-show="after" aria-labelledby="start-title">
+    <div class="wrap">
+      <h2 id="start-title">On your own? Start here</h2>
+      <p class="section-lede">Twenty minutes, a laptop or Chromebook, and an AI chat you can sign in to: Gemini with your school Google account, ChatGPT, or Claude. Open it in another tab first. Use made-up names and made-up data in everything you try.</p>
+      <ol class="steps glance" aria-label="The first twenty minutes">
+        <li><span class="num hex">1</span><strong>Play a starter</strong><span>A starter is a small tool that already works: a meeting timer, a group maker, a feedback builder. Press Play and try it.</span><a href="starters.html">Open the starters</a></li>
+        <li><span class="num hex">2</span><strong>Hand it to your AI</strong><span>Each starter has a Copy for my AI button. Press it, paste into your chat, and send. In a few seconds the same tool is running in a panel beside the conversation, and now it's yours to change. Only code, or nothing pasted? The starters page says what to do.</span><a href="starters.html#where">Where to paste it</a></li>
+        <li><span class="num hex">3</span><strong>Ask for one change</strong><span>"Use our school colors." "Add a sound at the end." Then another. When it breaks, tell the AI exactly what you see. Still broken after two tries? Start a new chat and paste the starter again; that counts.</span><a href="wish.html">Then build your own: Grant a wish</a></li>
+      </ol>
+      <p class="hint">Want more than the chat? <a href="levels.html">The three levels</a> go from a tool in your chat, to a page on your Google Site, to a script that works inside your Drive.</p>
     </div>
   </section>
 
@@ -146,7 +160,7 @@
         <li><strong>In the chat.</strong> A tool inside your AI chat. Twenty minutes.</li>
         <li><strong>On your site.</strong> A page on your Google Site. An hour.</li>
         <li><strong>Behind the scenes.</strong> A script in your Drive. An afternoon.</li>
-        <li class="later"><strong>With a workbench.</strong> Claude Code, Codex, Cursor: the AI works inside your files. When level three feels easy.</li>
+        <li class="later"><strong>With a workbench.</strong> An app where the AI edits the files on your computer instead of chatting (Claude Code, Codex, Cursor). For when level three feels easy, and usually not allowed on a district laptop.</li>
       </ol>
       <p class="more-link">Each level, with its prompt and its script: <a href="levels.html">the three levels</a>.</p>
       <div class="two-up">
@@ -159,12 +173,12 @@
           <p>What did today make you uneasy about?</p>
         </div>
       </div>
-      <p class="link-slot" data-link="wonder" data-label="Add yours to the wonder wall"></p>
-      <p class="link-slot" data-link="worry" data-label="Add yours to the worry wall"></p>
+      <p class="link-slot" data-link="wonder" data-label="Add yours to the wonder wall" data-pending="Your host posts the wonder wall's link in the chat."></p>
+      <p class="link-slot" data-link="worry" data-label="Add yours to the worry wall" data-pending="Your host posts the worry wall's link in the chat."></p>
       <p>Then one word in the chat for how you're leaving.</p>
       <div class="next">
-        <h3>Next month</h3>
-        <p>We turn to assessment: what our practices have measured, who they have served, and who they may have held back.</p>
+        <h3>Next time</h3>
+        <p data-fill>{next}</p>
       </div>
     </div>
   </section>
@@ -175,11 +189,11 @@
     <div class="wrap">
       <h2>Everything here</h2>
       <div class="also">
-        <a class="also-card" href="levels.html"><strong>Three levels</strong><span>Getting started with code: in the chat, on your site, behind the scenes. Each with a prompt to copy, and one with a script.</span><span class="go">Open</span></a>
-        <a class="also-card" href="starters.html"><strong>Starters</strong><span>Eight starters across the three levels. Play one, hand it to your AI, make it yours.</span><span class="go">Open</span></a>
-        <a class="also-card" href="wish.html"><strong>Grant a wish</strong><span>Build something from nothing: a wish builder, a jar of wishes, and three moves for when you're stuck.</span><span class="go">Open</span></a>
-        <a class="also-card" href="hosts.html"><strong>Hosts</strong><span>Run the session yourself: the run of show, forming teams, ready-to-paste messages, and safe play.</span><span class="go">Open</span></a>
-        <a class="also-card" href="sources.html"><strong>Sources</strong><span>How-tos that take the mystery out of code, cautions worth knowing, and what research says about coding and thinking.</span><span class="go">Open</span></a>
+        <a class="also-card" href="levels.html"><strong>Three levels</strong><span>Three ways to start, from easiest: in the chat, where the AI builds a small tool inside your chat window; on your site, where you put that tool on a Google Sites page; behind the scenes, where a short script does a job in your Google Drive. Each with its steps and a prompt to copy.</span><span class="go">Open</span></a>
+        <a class="also-card" href="starters.html"><strong>Starters</strong><span>Eight small tools that already work. Play one, copy it into your AI chat, and ask for a change. Two are pages for a Google Site; two are scripts for your Drive.</span><span class="go">Open</span></a>
+        <a class="also-card" href="wish.html"><strong>Grant a wish</strong><span>Build something from nothing: three short answers become a request you paste into your AI, a jar of wishes if you have none, and three moves for when you're stuck.</span><span class="go">Open</span></a>
+        <a class="also-card" href="hosts.html"><strong>Hosts</strong><span>Run the two-hour session with your own group: what to set up the week before, who does what, the run of show, messages ready to paste, and what to do when something breaks.</span><span class="go">Open</span></a>
+        <a class="also-card" href="sources.html"><strong>Sources</strong><span>Help pages for each AI tool, cautions worth knowing about student data and safety, and what research says about learning to code.</span><span class="go">Open</span></a>
       </div>
     </div>
   </section>
@@ -190,7 +204,7 @@
       <div class="keep-grid">
         <div class="card">
           <h2>Run it with your own team</h2>
-          <p>The whole two-hour session is here as a kit: the run of show, a stage for the main room, speaker notes, and chat messages ready to paste. One session file holds the times, the parts, and the links, so you can copy it and make it yours.</p>
+          <p>The whole two-hour session is here: the run of show, a full-screen slideshow with its own timers to share in your video call (Present, in the menu), <a href="notes.html">speaker notes</a> that follow it from a second window, and chat messages ready to paste. Run it from this site as it is, on any day: the slideshow moves when you press next, and you post your own Meet link and your own copies of two Google files, the Breakout Planner and the walls deck, in the chat. What you give up: on a day other than the first run's, this home page shows your group the kit, not your schedule, so your chat says what's next. The hosts' guide has all of it, written for people who don't code, with the co-host's part spelled out. Optional, for someone comfortable with GitHub: copy the kit and change one text file of times and links, and the clock, the links, and the names on every page become yours, at your own web address.</p>
           <p class="card-actions"><a class="button primary" href="hosts.html">The hosts' guide</a> <span class="link-slot" data-link="repo" data-label="The kit on GitHub" data-style="button"></span></p>
         </div>
         <div class="card">
@@ -214,8 +228,8 @@
       <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
     </div>
     <div class="footer-notes">
-      <p class="small"><strong>Safe play:</strong> use made-up names and made-up data. Nothing about real students goes into an AI today.</p>
-      <p class="small backups"><strong>Site blocked?</strong> The same morning as slides: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters, with the code in the notes: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
+      <p class="small"><strong>Safe play:</strong> made-up names and made-up data, every time. Nothing about real students goes into an AI.</p>
+      <p class="small backups"><strong>Site blocked at school?</strong> The same steps are in a Google Slides deck: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters are in a second deck, each tool's code in the speaker notes under its slide: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
     </div>
     <p class="signature"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="34" height="32"><span data-fill>{maker}</span><span aria-hidden="true">·</span><span class="sr-only">License:</span><span class="link-slot" data-link="license" data-label="{license}" data-style="inline"></span></p>
   </div>

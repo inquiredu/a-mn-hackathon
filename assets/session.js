@@ -19,16 +19,18 @@ const SESSION = {
   dateLabel: "{weekday}, {date} · {start} to {end} {zone}",   // shown in the bar on other days
   url: "inquiredu.org/a-mn-hackathon",
 
-  // Shared spaces and decks. A link shows on the site as soon as it's here; leave one empty and the page says it's coming soon.
+  // Shared spaces and decks. A link shows on the site as soon as it's here. Leave one empty and the page says so
+  // in its own words (a chat message says "(your planner link)"), so a host can run the session from this site
+  // with their own Meet and their own copies of the Google files, pasting the links in the chat.
   links: {
-    meet: "https://meet.google.com/wvq-zzwe-kny",
-    teams: "https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit",
-    // The walls deck ("Interactive Workshop Walls"): one slide each, linked straight to the slide.
-    // Anyone with the link can edit it, so people from every district can add to it. The gallery is three slides in a row; this opens the first.
-    gallery: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_407",
-    wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_144",
-    worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86",
-    // Backups for when this site is blocked.
+    meet: "",                        // your Google Meet
+    planner: "",                     // the Breakout Planner: a shared Google Doc with a list under each level, a Partner column, and a Room column
+    // The walls: one Google Slides deck, one slide each, linked straight to the slide (the gallery is three slides in a row; link the first).
+    // Share it so anyone with the link can edit, so people from every district can add to it.
+    gallery: "",
+    wonder: "",
+    worry: "",
+    // Backups for when this site is blocked. To run your own session from them, open each and choose File > Make a copy.
     // Session slides: the whole morning, screen by screen (Drive title "Hands On 10.9 · Session slides (backup)").
     backup: "https://docs.google.com/presentation/d/18BmKOht78NXQ2H3AvPgt3uLm9zQGRsD03dB2EBBd020/edit",
     // Starter code: every starter's code and remix menu, in the speaker notes (Drive title "Hands On 10.9 · Starter code (backup)").
@@ -38,6 +40,18 @@ const SESSION = {
     // The license for the words, pages, and slides, beside the signature at the foot of every page
     license: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
   },
+
+  // The first run, for the record: Hosts shows these folded under "How the first run went". They are view-only now.
+  record: {
+    ran: "Hands On, Friday, October 9, 2026, for MNGAIA · AI4MN",
+    planner: "https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit",
+    gallery: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_407",
+    wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_144",
+    worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86"
+  },
+
+  // What comes after this session, said at the close. Leave it empty and the close skips it.
+  next: "We turn to assessment: what our practices have measured, who they have served, and who they may have held back.",
 
   // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.
   pace: {
@@ -57,7 +71,7 @@ const SESSION = {
   //   where        "Main room" or "Breakout rooms"
   //   hint         one line for participants
   //   link         which page (and place) to send people to; linkLabel names the button
-  //   shared       links from `links` above that this part uses, shown with it: { link: "teams", label: "Teams doc" }
+  //   shared       links from `links` above that this part uses, shown with it: { link: "planner", label: "Breakout Planner" }
   //   screens      what the presenter view shows, in order (note: what the presenter says or does,
   //                timer: a pace name, "building", or minutes for a countdown the presenter starts and adjusts live;
   //                screens that share a timerKey show one timer, so it keeps counting from screen to screen)
@@ -70,7 +84,7 @@ const SESSION = {
       link: "index.html#today",
       screens: [
         { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", heading: "{title}", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
-        { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Teams doc keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
+        { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Breakout Planner keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
         { kind: "embed", note: "Share this tab with its sound on. Ask the Oracle two or three questions from the chat. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
         { kind: "plan", note: "Walk the morning in a sentence each. The page has all of it, and so does the chat.", heading: "Here's what we're here to do", url: true },
         { kind: "prompt", note: "Read a few numbers aloud as they come in. Every number is welcome; a room of 1s is a good room. Your co-host notes the 4s and 5s: they're the anchors.", heading: "How much have you built with AI?", big: "1 to 5, in the chat", body: "1: not yet. 5: I'm having a hard time stopping." },
@@ -83,13 +97,13 @@ const SESSION = {
         "Co-host: from the chat, list the 4s, the 5s, and anyone who says what they built. They're the anchors, one for each room."
       ],
       messages: [
-        { to: "Main chat", text: "Welcome! Everything for today is here: https://inquiredu.org/a-mn-hackathon\nPage blocked on your network? The same morning as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
+        { to: "Main chat", text: "Welcome! Everything for today is here: https://{url}\nPage blocked on your network? The same morning as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
         { to: "Main chat", text: "How much have you built with AI? Type a number from 1 to 5.\n1: not yet. 5: I'm having a hard time stopping." },
         { to: "Main chat", text: "Built something already? In one sentence: what was it?" }
       ]
     },
     {      id: "levels", minutes: 12, title: "Three levels of getting started", where: "Main room",
-      hint: "In the chat, on your site, behind the scenes: three levels of getting started with code, each one shown live in a tab.",
+      hint: "In the chat, on your site, behind the scenes: three levels of getting started with code. Your host shows each one live.",
       link: "levels.html", linkLabel: "The three levels",
       screens: [
         { kind: "ladder", note: "Name the three levels in a sentence each before any tab opens. Every level is a good level; the point is that there's always a next one, and it's closer than it looks.", heading: "Three levels of getting started with code", rungs: [
@@ -104,18 +118,18 @@ const SESSION = {
         "Back to the stage for Show & Tell."
       ],
       messages: [
-        { to: "Main chat", text: "Three levels of getting started with code: in the chat, on your site, behind the scenes. All three, with the prompts and the script, ready to copy: https://inquiredu.org/a-mn-hackathon/levels.html" }
+        { to: "Main chat", text: "Three levels of getting started with code: in the chat, on your site, behind the scenes. All three, with the prompts and the script, ready to copy: https://{url}/levels.html" }
       ]
     },
     {
       id: "show", minutes: 8, title: "Show & Tell", where: "Main room",
-      hint: "Done one of these already? Open mic: show it, or tell us about it. Then pick your level in the Teams doc.",
+      hint: "Done one of these already? Open mic: show it, or tell us about it. Then pick your level: write your name under it in the Breakout Planner, a shared Google Doc your host links in the chat.",
       link: "levels.html#pick", linkLabel: "Pick your level",
-      shared: [{ link: "teams", label: "Teams doc" }],
+      shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
         { kind: "prompt", note: "Open the mic: who has done one of these? Builders press Present now, then A tab. Start the timer (T) when someone starts, stretch it as the conversation goes, and Reset between people.", heading: "Done one of these?", body: "Show it, or tell us about it: which level, what it does, and one thing that went sideways.", timer: "showTurn" },
-        { kind: "steps", note: "Everyone opens the Teams doc and adds their name under a level. Your co-host makes the rooms from those lists, up to four to a room, same level together. Say it plainly: any level is a good level, and the one that would stretch you a little is the best one.", heading: "Pick your level", steps: [
-          "Open the Teams doc.",
+        { kind: "steps", note: "Everyone opens the Breakout Planner and adds their name under a level. Your co-host makes the rooms from those lists, up to four to a room, same level together. Say it plainly: any level is a good level, and the one that would stretch you a little is the best one.", heading: "Pick your level", steps: [
+          "Open the Breakout Planner.",
           "Add your name under the level you want to try today: 1, 2, or 3.",
           "Want company? Put a partner's name next to yours, or two."
         ], foot: "Stretch a little. Any level is a good level." }
@@ -124,27 +138,27 @@ const SESSION = {
         "Before you start: in Host controls, keep Share their screen on for everyone. No one needs to be a co-host to present.",
         "Builders share with Present now, then A tab, so their tab's sound comes through.",
         "Start the stage timer when they start; Reset between people.",
-        "Co-host: as names land under the levels in the Teams doc, open Breakout rooms and make rooms of up to four from each level's list, partners together. Rooms = names ÷ 4, rounded up, for each level.",
+        "Co-host: as names land under the levels in the Breakout Planner, open Breakout rooms and make rooms of up to four from each level's list, partners together. Rooms = names ÷ 4, rounded up, for each level.",
         "Where you can, put a 4 or a 5 from the Welcome chat in each room. They're the anchors.",
         "Write each person's room number in the Room column, and set the breakout timer to {building}."
       ],
       messages: [
         { to: "Main chat", text: "Done one of these already? Raise your hand and show us. To share: Present now, then A tab, then pick the tab with your tool." },
-        { to: "Main chat", text: "Pick your level: open the Teams doc and add your name under 1, 2, or 3. Working with someone? Put their name next to yours.\n{links.teams}" }
+        { to: "Main chat", text: "Pick your level: open the Breakout Planner and add your name under 1, 2, or 3. Working with someone? Put their name next to yours.\n{links.planner}" }
       ]
     },
     {
       id: "remix", minutes: 17, title: "The Remix Arcade", where: "Breakout rooms",
-      hint: "In breakout rooms, by level. Level 1: pick a starter and make it yours. Levels 2 and 3: run your level's example, then make it yours.",
+      hint: "The hosts move you into a breakout room with others at your level, and you stay in it for Grant a wish. Level 1 (in the chat): pick a starter and make it yours. Levels 2 (on your site) and 3 (behind the scenes): open your level on Three levels, get its example working, then make it yours.",
       link: "starters.html", linkLabel: "Open the starters",
-      shared: [{ link: "teams", label: "Teams doc" }],
+      shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
         { kind: "steps", note: "Walk the four steps. Anchors share their screen first. Then open the rooms.", heading: "Off to your room", steps: [
-          "Find your room number next to your name in the Teams doc.",
+          "Find your room number next to your name in the Breakout Planner.",
           "Your anchor shares their screen. Build along for {buildAlong}.",
           "Level 1: pick a starter and make it yours. Levels 2 and 3: run your level's example, then make it yours.",
           "Stuck? Press Ask for help in Meet."
-        ], foot: "Back in the main room in {building}" },        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the three levels, the Teams doc, and the gallery wall." },
+        ], foot: "Back in the main room in {building}" },        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the three levels, the Breakout Planner, and the gallery wall." },
         { kind: "prompt", note: "Start the timer (T) as the rooms open and nudge it with + and - as the morning goes; the session clock in the corner keeps the big picture. For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", body: "Rather watch? Stay here. We're building wishes live in the main room.", timer: 25, timerKey: "building" }      ],
       host: [
         "Open the rooms.",
@@ -152,26 +166,26 @@ const SESSION = {
         "One host stays in the main room, building wishes live."
       ],
       messages: [
-        { to: "Each breakout room", text: "Everything's here: https://inquiredu.org/a-mn-hackathon\nLevel 1: the starters. Levels 2 and 3: your example, prompt, and script are at https://inquiredu.org/a-mn-hackathon/levels.html\nAnchor: share your screen and start one together.\nPage blocked? The starters as slides, code in the notes: {links.companion}" }
+        { to: "Each breakout room", text: "Everything's here: https://{url}\nLevel 1: the starters. Levels 2 and 3: your example, prompt, and script are at https://{url}/levels.html\nAnchor: share your screen and start one together.\nPage blocked? The starters as slides, code in the notes: {links.companion}" }
       ]
     },
     {
       id: "wish", minutes: 40, title: "Grant a wish", where: "Breakout rooms",
-      hint: "Same room. Build something from scratch at your level: your wish, or someone else's.",
+      hint: "Same room. Build something from nothing at your level: your own wish, or one from the Breakout Planner.",
       link: "wish.html", linkLabel: "Open Grant a wish",
       shared: [{ link: "gallery", label: "Gallery wall" }],
-      screens: [        { kind: "prompt", note: "The same timer as the last screen, still counting; nudge it with + and - as you go. With {nudge} left, hosts visit each room to say so. Keep building in the main room.", heading: "Grant a wish", body: "Your wish, at your level, or one from the Teams doc. Pin something to the gallery wall before you head back.", timer: 25, timerKey: "building" }      ],
+      screens: [        { kind: "prompt", note: "The same timer as the last screen, still counting; nudge it with + and - as you go. With {nudge} left, hosts visit each room to say so. Keep building in the main room.", heading: "Grant a wish", body: "Your wish, at your level, or one from the Breakout Planner. Pin something to the gallery wall before you head back.", timer: 25, timerKey: "building" }      ],
       host: [
         "With {nudge} left, visit each room: pin something to the gallery wall.",
         "Note one or two builds for Show & Cheer."
       ],
       messages: [
-        { to: "Each breakout room", text: "{Nudge} left! Pin what you have to the gallery wall, even if it's half-built. Half-built counts.\nHow: https://inquiredu.org/a-mn-hackathon/wish.html#wall" }
+        { to: "Each breakout room", text: "{Nudge} left! Pin what you have to the gallery wall, even if it's half-built. Half-built counts.\nHow: https://{url}/wish.html#wall" }
       ]
     },
     {
       id: "cheer", minutes: 22, title: "Show & Cheer", where: "Main room",
-      hint: "Back in the main room. Applause first.",
+      hint: "Back in the main room. A few builders share their screens, two or three minutes each. Applause first.",
       link: "index.html#cheer", linkLabel: "The awards",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
@@ -213,7 +227,7 @@ const SESSION = {
         "Thank the anchors by name."
       ],
       messages: [
-        { to: "Main chat", text: "One wonder, one worry: add yours to the wall. Then one word in the chat for how you're leaving." }
+        { to: "Main chat", text: "One wonder, one worry: add yours to the walls.\nI wonder: {links.wonder}\nI worry: {links.worry}\nThen one word in the chat for how you're leaving." }
       ]
     }
   ]

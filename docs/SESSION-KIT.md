@@ -22,8 +22,11 @@ const SESSION = {
   timeZone: "America/Chicago",
   start: "10:00", end: "12:00",     // the advertised start and end, 24-hour
   dateLabel,                        // shown in the bar on other days, written with {braces}
-  url: "inquiredu.org/a-mn-hackathon",
-  links: { meet, teams, wonder, worry, backup, companion },  // leave one empty and the page says it's coming soon
+  url: "inquiredu.org/a-mn-hackathon",   // no https://; messages write https://{url}
+  links: { meet, planner, gallery, wonder, worry, backup, companion, repo, license },
+                                    // the host's own; leave one empty and the page says so in its own words
+  record: { ran, planner, gallery, wonder, worry },  // the first run's shared files, shown folded on Hosts
+  next: "We turn to assessment…",   // what comes after this session, said at the close; empty hides it
   pace: { nudge: 10, ... },         // cues inside the parts, in minutes
   segments: [ ... ]                 // the parts of the session, in order
 };
@@ -38,7 +41,7 @@ Each segment:
 | `title`, `where` | Its name, and "Main room" or "Breakout rooms" |
 | `hint` | One line for participants |
 | `link`, `linkLabel` | The page to send people to, and the button's words |
-| `shared` | Links from `links` this part uses, shown on its timeline row and its Happening now card: `[{ link: "teams", label: "Teams doc" }]` |
+| `shared` | Links from `links` this part uses, shown on its timeline row and its Happening now card: `[{ link: "planner", label: "Breakout Planner" }]`. An empty link is left out |
 | `screens` | What the stage shows, in order |
 | `host` | A checklist for hosts |
 | `messages` | Ready-to-paste chat messages: `{ to, text }` |
@@ -60,7 +63,8 @@ No page or message types out a time, date, or length. Write it in braces instead
 | `{weekday}`, `{date}`, `{zone}` | Friday, October 9, Central | From `day` and `timeZone` |
 | `{parts}` | 7 | How many parts |
 | `{title}`, `{subtitle}`, `{org}` | Hands On, ... | The session's names |
-| `{links.teams}` | https://docs.google... | A link from `links`, for chat messages |
+| `{url}`, `{next}` | inquiredu.org/a-mn-hackathon, We turn to… | The site's address, and what comes after the session |
+| `{links.planner}` | https://docs.google... | A link from `links`, for chat messages; an empty one reads "(your planner link)" so the host sees what to paste |
 
 Add `:number` or `:unit` to split a length for big numerals (`{length:number}` is "2", `{length:unit}` is "hours"). Start with a capital letter to capitalize: `{Length}` reads "Two hours".
 

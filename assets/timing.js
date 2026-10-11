@@ -14,7 +14,8 @@
 //   {zone}                     "Central"
 //   {parts}                    how many parts: "7"
 //   {title} {subtitle} {org}   the session's names; {maker} is who made the kit, {license} its license
-//   {links.teams}              a link from the session file, for chat messages
+//   {url} {next}               the site's address (no https://), and what comes after this session
+//   {links.planner}            a link from the session file, for chat messages; an empty link reads "(your planner link)"
 // Add :number or :unit to split a length for big numerals ("2" and "hours"),
 // and start with a capital letter to capitalize: {Length} reads "Two hours".
 
@@ -83,14 +84,14 @@ const TIMES = (() => {
     if (name === "building") {
       return { length: SESSION.segments.filter((s) => s.where === "Breakout rooms").reduce((sum, s) => sum + s.minutes, 0) };
     }
-    if (name === "title" || name === "subtitle" || name === "org" || name === "maker" || name === "license") return { text: SESSION[name] };
+    if (["title", "subtitle", "org", "maker", "license", "url", "next"].includes(name)) return { text: SESSION[name] || "" };
     if (name in pace) return { length: pace[name] };
     if (name in named) return { text: named[name] };
     const [id, field] = name.split(".");
     const part = parts[id];
     if (part && (field === "start" || field === "end")) return { time: toMinutes(part[field]) };
     if (part && field === "length") return { length: part.minutes };
-    if (id === "links" && SESSION.links[field]) return { text: SESSION.links[field] };
+    if (id === "links" && field in SESSION.links) return { text: SESSION.links[field] || "(your " + field + " link)" };
     return null;
   }
 

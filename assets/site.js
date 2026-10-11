@@ -99,7 +99,7 @@ function phase() {
 
 // ---------- The morning, as a list (Home) ----------
 
-// The shared spaces a part uses (the Teams doc, the walls), as links that open in a new tab, for the Happening now card
+// The shared spaces a part uses (the Breakout Planner, the walls), as links that open in a new tab, for the Happening now card
 function sharedLinks(segment, className) {
   return (segment.shared || []).filter((s) => LINKS[s.link]).map((s) => {
     const a = linkTo(LINKS[s.link], s.label);
@@ -158,6 +158,9 @@ if ($("cue")) {
   $("cue-close").addEventListener("click", () => { $("cue").hidden = true; });
 }
 
+// What comes next is the session file's to say; with nothing there, the card stays away
+document.querySelectorAll(".next").forEach((card) => { card.hidden = !SESSION.next; });
+
 function showMode(mode) {
   document.body.dataset.mode = mode;
   document.querySelectorAll("[data-show]").forEach((section) => {
@@ -212,7 +215,10 @@ function update() {
     current.state.textContent = " (happening now)";
   }
 
-  const pieces = [linkTo(current.link, current.title)];
+  // The part's name, then its button's words as the link, so the link says where it goes
+  const pieces = current.linkLabel
+    ? [el("span", "", current.title), " · ", linkTo(current.link, current.linkLabel)]
+    : [linkTo(current.link, current.title)];
   if (next) pieces.push(el("span", "upnext", " · Next: " + next.title));
   setNow("Now", ...pieces);
 

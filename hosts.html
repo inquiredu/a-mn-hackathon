@@ -56,10 +56,10 @@
         <a class="button primary" href="present.html">Present the stage</a>
         <a class="button" href="notes.html">Speaker notes</a>
         <a class="button" href="index.html">The participant page</a>
-        <span class="link-slot" data-link="meet" data-label="Google Meet" data-style="button"></span>
+        <span class="link-slot" data-link="meet" data-label="Google Meet" data-style="button" data-pending="Google Meet: add yours to the session file"></span>
         <span class="link-slot" data-link="backup" data-label="Session slides (backup)" data-style="button"></span>
         <span class="link-slot" data-link="companion" data-label="Starter code (backup)" data-style="button"></span>
-        <span class="link-slot" data-link="teams" data-label="Teams doc" data-style="button" data-pending="Teams doc: coming soon"></span>
+        <span class="link-slot" data-link="planner" data-label="Breakout Planner" data-style="button" data-pending="Breakout Planner: add yours to the session file"></span>
         <span class="link-slot" data-link="gallery" data-label="Gallery wall" data-style="button" data-pending="Gallery wall: coming soon"></span>
         <span class="link-slot" data-link="wonder" data-label="Wonder wall" data-style="button" data-pending="Wonder wall: coming soon"></span>
         <span class="link-slot" data-link="worry" data-label="Worry wall" data-style="button" data-pending="Worry wall: coming soon"></span>
@@ -79,7 +79,7 @@
       <h2 id="teams-title">Forming teams of four, by level</h2>
       <ol class="checks">        <li data-fill><strong>During Welcome ({welcome.length}), main room.</strong> In the chat, everyone rates how much they've built with AI, 1 to 5, and builders say what they made. The co-host notes the 4s, the 5s, and the builders: the anchors, where they fall.</li>
         <li data-fill><strong>During Three levels ({levels.length}).</strong> The presenter shows the three levels live. Nobody is sorted; the levels are for choosing.</li>
-        <li data-fill><strong>During Show &amp; Tell ({show.length}).</strong> Everyone opens the Teams doc and adds their name under the level they want to try, with a partner's name beside it if they have one. The co-host opens Breakout rooms and makes rooms of up to four from each level's list, partners together, an anchor in each room where one fits, then writes the room numbers in the Room column.</li>
+        <li data-fill><strong>During Show &amp; Tell ({show.length}).</strong> Everyone opens the Breakout Planner and adds their name under the level they want to try, with a partner's name beside it if they have one. The co-host opens Breakout rooms and makes rooms of up to four from each level's list, partners together, an anchor in each room where one fits, then writes the room numbers in the Room column.</li>
         <li><strong>When the Remix Arcade starts.</strong> Open the rooms. Everyone finds their room number next to their name. Level 1 rooms start with a starter; level 2 and 3 rooms start with their level's example.</li>
         <li><strong>Latecomers.</strong> Ask which level, add them to that level's smallest room, and write the room number next to their name.</li>      </ol>
       <div class="card">
@@ -108,7 +108,7 @@
         <div class="card">
           <h3 data-fill>Before {weekday}</h3>
           <ul>
-            <li data-fill>Share the Teams doc so anyone with the link can edit. {Weekday} morning is a good time.</li>
+            <li data-fill>Share the Breakout Planner so anyone with the link can edit. {Weekday} morning is a good time.</li>
             <li>Paste a starter into Gemini on a district account (choose Canvas first), and check that it runs. ChatGPT now previews code with a Preview switch instead of Canvas.</li>
             <li>Set up the three Chrome tabs for Three levels: the Oracle in a chat; the charter with the infographic prompt in Gemini (Canvas on) and the Google Site open to edit; the Apps Script editor with the Drive Inventory, the folder's ID in, run once so the permission screen is behind you.</li>
             <li>Name the co-host who will set up the breakout rooms.</li>
@@ -156,8 +156,8 @@
       <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
     </div>
     <div class="footer-notes">
-      <p class="small"><strong>Safe play:</strong> use made-up names and made-up data. Nothing about real students goes into an AI today.</p>
-      <p class="small backups"><strong>Site blocked?</strong> The same morning as slides: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters, with the code in the notes: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
+      <p class="small"><strong>Safe play:</strong> made-up names and made-up data, every time. Nothing about real students goes into an AI.</p>
+      <p class="small backups"><strong>Site blocked at school?</strong> The same steps are in a Google Slides deck: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters are in a second deck, each tool's code in the speaker notes under its slide: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
     </div>
     <p class="signature"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="34" height="32"><span data-fill>{maker}</span><span aria-hidden="true">·</span><span class="sr-only">License:</span><span class="link-slot" data-link="license" data-label="{license}" data-style="inline"></span></p>
   </div>

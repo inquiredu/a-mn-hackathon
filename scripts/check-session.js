@@ -41,6 +41,16 @@ SESSION.segments.forEach((segment) => {
 Object.entries(SESSION.links).forEach(([name, url]) => {
   if (url && !/^https:\/\//.test(url)) problems.add("The link \"" + name + "\" isn't an https address: " + url);
 });
+Object.entries(SESSION.record || {}).forEach(([name, url]) => {
+  if (name !== "ran" && url && !/^https:\/\//.test(url)) problems.add("The record's \"" + name + "\" isn't an https address: " + url);
+});
+if (/^https?:\/\//.test(SESSION.url)) problems.add("The session's url should be written without https://: " + SESSION.url);
+
+// The session file types the site's own address somewhere other than `url`: write https://{url} instead,
+// so a copy of the kit sends people to its own site (the clock has filled the braces by now, so read the file itself)
+if (/https:\/\/(inquiredu\.org|[\w.-]+\.github\.io)/.test(read("assets/session.js"))) {
+  problems.add("The session file types the site's address; write https://{url} and set `url` once");
+}
 
 // The pages: braces inside data-fill get filled; braces anywhere else show as typed
 const TOKEN = /\{[A-Za-z][\w.]*(?:\s*[+-]\s*\w+)?(?::\w+)?\}/g;

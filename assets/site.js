@@ -23,12 +23,80 @@ const SCRIPTS = {
   multiplier: { name: "The Doc Multiplier", file: "recipes/doc-multiplier.gs" }
 };
 
-// The AI tools people paste into, for the "next step" panel
+// The AI tools people paste into: one source for the "next step" panel and for every page's
+// "Where do I paste it?" block (<div data-where></div>). tip: the one move before pasting, for the panel.
+// where: the same, said in full. code: how to copy the finished code out, for a page that goes on a Google Site.
 const AI_TOOLS = [
-  { id: "gemini", name: "Gemini", url: "https://gemini.google.com/app", tip: "Choose Canvas in the prompt bar (look in the + menu), then paste." },
-  { id: "claude", name: "Claude", url: "https://claude.ai/new", tip: "Paste. It appears beside the chat; if not, turn on artifacts in Settings › Capabilities." },
-  { id: "chatgpt", name: "ChatGPT", url: "https://chatgpt.com/", tip: "Paste, then switch on Preview on the code block." }
+  { id: "gemini", name: "Gemini", url: "https://gemini.google.com/app",
+    tip: "Choose Canvas in the prompt bar (look in the + menu), then paste.",
+    where: "Open gemini.google.com with your school Google account. Before you paste, choose Canvas: a button labelled Canvas under the message box, or in the + menu. (Gemini's Canvas is a workspace beside the chat, not the Canvas learning platform.) Then paste and send.",
+    code: "At the top of the Canvas, choose Code, then the copy icon." },
+  { id: "claude", name: "Claude", url: "https://claude.ai/new",
+    tip: "Paste. It appears beside the chat; if not, turn on artifacts in Settings › Capabilities.",
+    where: "Open claude.ai, paste, and send. The tool opens in a panel beside the chat (Claude calls that panel an artifact). See only code? Turn on Artifacts in Settings › Capabilities.",
+    code: "Open the artifact and choose Copy, or switch it to Code and copy from there." },
+  { id: "chatgpt", name: "ChatGPT", url: "https://chatgpt.com/",
+    tip: "Paste, then switch on Preview on the code block.",
+    where: "Open chatgpt.com, paste, and send. When a grey box of code appears, press Preview at its top, and the tool runs in its place.",
+    code: "Press Copy at the top of the code box." }
 ];
+
+// What success looks like, and the three ways it goes wrong, said once
+const WHERE_NOTES = [
+  "When it worked, you see the tool itself, with buttons you can press, in a panel beside the chat. Press one.",
+  "Only code and no tool? You skipped Canvas or Preview. Start a new chat, switch it on, and paste again.",
+  "Nothing pasted? Your computer may block copying from websites. The copy button then shows the text in a box, right here, to select and copy by hand.",
+  "No Canvas in your school Gemini, or ChatGPT and Claude blocked? Your district decides which tools are on. Ask your technology office, and try another of the three meanwhile. In a Microsoft district, Copilot Pages can build and show small apps too."
+];
+
+
+// Level 3: the scripts' steps, written once for Starters and Three levels (<div data-steps="inventory"></div>).
+// Every step names its place; the permission screen is described as Google shows it.
+const PERMISSION = "The first run asks permission. A box says the project needs your permission: press Review permissions and choose your school account. Google may then say it hasn't verified this app, because you just wrote it: press Advanced, then the link that starts \"Go to\" (it may end in \"(unsafe)\"; that's Google's word for any script it hasn't reviewed, including your own). Then it asks to see, edit, create, and delete your Google Drive files and your Sheets. That's Google's standard wording for any script that touches Drive. ";
+const BLOCKED = "If you see \"blocked by your administrator\" instead, your district doesn't allow scripts; stop there and ask your technology office.";
+const SCRIPT_STEPS = {
+  inventory: {
+    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and does a job in your Drive. Nothing to play. About an hour the first time, fifteen minutes after that.",
+    before: [
+      "A practice folder in Drive with two or three made-up Docs and one folder inside it. Point it at a real folder once you've seen it work."
+    ],
+    steps: [
+      "Press Copy the script.",
+      "Go to script.google.com and press New project. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
+      "Open your practice folder in Drive and look at the address bar: drive.google.com/drive/folders/1AbC…xyz. Copy the letters and numbers after folders/ and stop before any ?. In the script, find the line const FOLDER_ID = \"PASTE_THE_FOLDER_ID_HERE\" and paste over the capital letters, keeping the quote marks.",
+      "Press the Save icon. In the toolbar, the menu beside Run and Debug shows a name: choose inventory. Press Run.",
+      PERMISSION + "This script only reads files and makes one new Sheet; it never deletes. Press Allow. " + BLOCKED,
+      "When it finishes, a panel called Execution log opens below the code. Its last line is \"N files listed. Open the inventory:\" with a link. Click it."
+    ],
+    end: "A new Sheet in My Drive named \"Inventory:\" plus your folder's name, one row per file: its folder, title, type, link, and when it last changed.",
+    breaking: [
+      "Red text in the Execution log: copy it and paste it into your AI chat with \"What went wrong?\"",
+      "\"Unexpected error\" or \"not found\": the folder ID is wrong or incomplete. Copy it again, stopping before any ?.",
+      "A folder with thousands of files can take minutes and may stop before the end. Try a small folder first."
+    ]
+  },
+  multiplier: {
+    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and makes Docs in your Drive. Nothing to play. About an hour the first time, fifteen minutes after that.",
+    before: [
+      "A Doc to copy. Whatever is in it gets copied; a made-up team planning doc is fine.",
+      "A Sheet whose first tab has one made-up name per row in column A, starting in row 2, with a heading like \"Team\" in row 1. Leave column B empty: the script writes each copy's link there, replacing anything in it."
+    ],
+    steps: [
+      "Press Copy the script.",
+      "Go to script.google.com and press New project. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
+      "Open your Doc and look at the address bar: docs.google.com/document/d/1AbC…xyz/edit. Copy the letters and numbers between /d/ and /edit. In the script, find const TEMPLATE_ID = \"PASTE_THE_DOC_ID_HERE\" and paste over the capital letters, keeping the quote marks. Do the same for your Sheet on the SHEET_ID line; its ID sits between /d/ and /edit in the same way.",
+      "Press the Save icon. In the toolbar, the menu beside Run and Debug shows a name: choose multiply. Press Run.",
+      PERMISSION + "This script reads your Doc and Sheet and makes copies in one new folder; it never deletes. Press Allow. " + BLOCKED,
+      "When it finishes, a panel called Execution log opens below the code. Its last line is \"N copies made. Open the folder:\" with a link. Click it."
+    ],
+    end: "A new folder in My Drive named \"Copies of\" plus your Doc's name, one copy per row, each named for its row; and column B of your Sheet now holds a link to each copy. Run it again only if you want a second set.",
+    breaking: [
+      "Red text in the Execution log: copy it and paste it into your AI chat with \"What went wrong?\"",
+      "\"Unexpected error\" or \"not found\": an ID is wrong or incomplete. Copy it again, stopping before /edit.",
+      "Blank Docs with the right names: the Doc you pointed at is empty, or you pasted the Sheet's ID on the Doc's line."
+    ]
+  }
+};
 
 
 // ---------- Small helpers ----------
@@ -258,6 +326,35 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
 });
 
 
+// ---------- Where do I paste it? and the script steps, filled from the lists at the top ----------
+
+document.querySelectorAll("[data-where]").forEach((box) => {
+  const grid = el("div", "tips");
+  AI_TOOLS.forEach((tool) => {
+    const item = el("div");
+    item.append(el("h4", "", tool.name), el("p", "", tool.where));
+    if (box.dataset.where === "code") item.append(el("p", "", "To copy the code out: " + tool.code));
+    grid.append(item);
+  });
+  const notes = el("ul", "where-notes");
+  WHERE_NOTES.forEach((note) => notes.append(el("li", "", note)));
+  box.replaceChildren(grid, notes);
+});
+
+document.querySelectorAll("[data-steps]").forEach((box) => {
+  const plan = SCRIPT_STEPS[box.dataset.steps];
+  if (!plan) return;
+  const list = (items, tag) => { const l = el(tag); items.forEach((text) => l.append(el("li", "", text))); return l; };
+  box.replaceChildren(
+    el("p", "kind", plan.kind),
+    el("h5", "", "Before you start"), list(plan.before, "ul"),
+    el("h5", "", "Steps"), list(plan.steps, "ol"),
+    el("h5", "", "You'll know it worked"), el("p", "", plan.end),
+    el("h5", "", "If it breaks"), list(plan.breaking, "ul")
+  );
+});
+
+
 // ---------- Messages ----------
 // Inside the machine room, messages show in the room; everywhere else, at the bottom of the page.
 
@@ -429,9 +526,11 @@ document.querySelectorAll("[data-copy-script], [data-ask-script]").forEach((butt
   const ask = "askScript" in button.dataset;
   const id = ask ? button.dataset.askScript : button.dataset.copyScript;
   button.addEventListener("click", async () => {
+    const panel = $("next-step");
+    if (panel) panel.hidden = true;   // a panel left open from a starter would say "paste it into your AI chat" under a script
     try {
       const code = await loadScript(id);
-      copyText(ask ? askFor(id, code) : code, ask ? "Copied. Paste it into your AI chat." : "Copied. Paste it into a new Apps Script project.");
+      copyText(ask ? askFor(id, code) : code, ask ? "Copied. Paste it into your AI chat, and it will explain the script line by line." : "Copied. Now go to script.google.com, press New project, delete what's there, and paste.");
     } catch {
       say("Couldn't load that script. Try opening the page from its web link.");
     }

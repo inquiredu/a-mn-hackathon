@@ -354,6 +354,15 @@ button:hover, .button:hover { border-color: var(--ink); background: var(--action
 }
 .remix li button { flex: none; padding: 4px 12px; font-size: .85rem; }
 .remix .note { display: block; margin-top: 4px; font-size: .85rem; color: var(--muted); }
+.cabinet .names { margin: 0 0 12px; font-size: .9rem; color: var(--muted); }
+.cabinet .script-steps { margin-bottom: 14px; font-size: .95rem; }
+.where-notes { margin: 14px 0 0; padding-left: 20px; color: var(--muted); font-size: .95rem; }
+.where-notes li { margin: 5px 0; }
+.script-steps h5 { margin: 14px 0 4px; font-size: .95rem; }
+.script-steps .kind { margin: 0; font-weight: 600; }
+.script-steps ol, .script-steps ul { margin: 4px 0 0; padding-left: 22px; }
+.script-steps li { margin: 6px 0; }
+.script-steps p { margin: 4px 0 0; }
 .level-note { margin: var(--block) 0 10px; padding: 16px 20px; border-left: 4px solid var(--accent); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; }
 .level-note h4 { margin: 0 0 6px; }
 .level-note > summary { cursor: pointer; }

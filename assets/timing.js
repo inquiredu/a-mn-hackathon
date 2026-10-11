@@ -16,6 +16,7 @@
 //   {title} {subtitle} {org}   the session's names; {maker} is who made the kit, {license} its license
 //   {url} {next}               the site's address (no https://), and what comes after this session
 //   {links.planner}            a link from the session file, for chat messages; an empty link reads "(your planner link)"
+//   {record.ran}               the first run, for the record: "Hands On, Friday, October 9, 2026, for …"
 // Add :number or :unit to split a length for big numerals ("2" and "hours"),
 // and start with a capital letter to capitalize: {Length} reads "Two hours".
 
@@ -92,6 +93,7 @@ const TIMES = (() => {
     if (part && (field === "start" || field === "end")) return { time: toMinutes(part[field]) };
     if (part && field === "length") return { length: part.minutes };
     if (id === "links" && field in SESSION.links) return { text: SESSION.links[field] || "(your " + field + " link)" };
+    if (id === "record" && SESSION.record && field in SESSION.record) return { text: SESSION.record[field] };
     return null;
   }
 

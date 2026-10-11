@@ -121,7 +121,15 @@ const KINDS = {
     credit.append(mark, words);
     const parts = [credit];
     if (s.kicker) parts.push(el("p", "kicker", s.kicker));
-    return parts.concat(el("h1", "heading", s.heading), el("p", "body", s.sub));
+    parts.push(el("h1", "heading", s.heading), el("p", "body", s.sub));
+    // For whoever finds the stage cold: what it is and the way out. It steps away once the session is called to order.
+    const note = el("p", "stage-note");
+    note.append("The stage from " + SESSION.title + ", first run as " + ((SESSION.record || {}).ran || "a live session") + ". Press → to look through it, or Back to the site to leave. Running it yourself? ");
+    const hosts = el("a", "", "Hosts has the guide.");
+    hosts.href = "hosts.html";
+    note.append(hosts);
+    parts.push(note);
+    return parts;
   },
   prompt(s) {
     const parts = [el("h1", "heading", s.heading)];
@@ -366,6 +374,7 @@ function show(i) {
 function tick() {
   const now = sessionNow();
   showClock(now);
+  document.querySelectorAll(".stage-note").forEach((n) => { n.hidden = sessionClock(now).state !== "ready"; });
   const state = timerState();
   const box = stage.querySelector(".timer");
   if (state && box) {
@@ -425,8 +434,9 @@ document.addEventListener("fullscreenchange", () => {
 });
 // Back to the site: full screen hides the browser's tabs, so leave it first, then open the site in a new tab
 document.getElementById("site-button").addEventListener("click", () => {
+  // back to the site, in this tab; the stage keeps its place in the address for the way back
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-  window.open("index.html", "_blank", "noopener");
+  location.href = "index.html";
 });
 document.getElementById("now-button").addEventListener("click", jumpToNow);
 document.getElementById("notes-button").addEventListener("click", openNotes);

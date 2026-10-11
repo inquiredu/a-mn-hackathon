@@ -315,3 +315,7 @@ body {
   .sc-wait, .sc-backdrop { animation: none; }
   .keys { animation: none; display: none; }
 }
+
+/* For whoever finds the stage cold: a small line on the title screen, gone once the session is called to order */
+.stage-note { margin-top: 1.2em; font-size: .55em; opacity: .75; max-width: 40em; }
+.stage-note a { color: inherit; }

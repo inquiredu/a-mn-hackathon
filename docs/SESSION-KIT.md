@@ -25,8 +25,8 @@ const SESSION = {
   url: "inquiredu.org/a-mn-hackathon",   // no https://; messages write https://{url}
   links: { meet, planner, gallery, wonder, worry, backup, companion, repo, license },
                                     // the host's own; leave one empty and the page says so in its own words
-  record: { ran, planner, gallery, wonder, worry },  // the first run's shared files, shown folded on Hosts
-  next: "We turn to assessment…",   // what comes after this session, said at the close; empty hides it
+  record: { ran, planner, gallery, wonder, worry, next },  // the first run, for the record: shown folded on Hosts
+  next: "",                         // what comes after this session, said at the close; empty, the close says only thank you
   pace: { nudge: 10, ... },         // cues inside the parts, in minutes
   segments: [ ... ]                 // the parts of the session, in order
 };

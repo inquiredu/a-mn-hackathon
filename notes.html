@@ -33,6 +33,7 @@
   button.primary { background: var(--navy); color: var(--cream-100); }
   button:focus-visible, a:focus-visible { outline: 2px solid var(--sun-700); outline-offset: 3px; box-shadow: none; }
   .status { margin: 0; font-size: .9rem; color: var(--muted); }
+  .intro { margin: 0; font-size: .9rem; color: var(--muted); }
   .restart { display: flex; gap: 8px; flex-wrap: wrap; }
   .restart button { flex: 1 1 200px; padding: 8px; font-size: .9rem; font-weight: 600; border-width: 1.5px; }
   .clock.over { color: var(--status-danger); }
@@ -49,6 +50,7 @@
 </head>
 <body>
 <main class="wrap">
+  <p class="intro">The presenter's notes for First Builds, one per stage screen, for a second window beside <a href="present.html" target="_blank" rel="noopener">the stage</a> (open both in the same browser and they move together). Runs in any video call with breakout rooms; the first run used Google Meet. Try the builds on <a href="index.html" target="_blank" rel="noopener">the site</a>; run it yourself from <a href="hosts.html" target="_blank" rel="noopener">Hosts</a>.</p>
   <p class="top"><span id="count"></span><span class="clock" id="clock" title="Time into the session"></span></p>
   <p class="site-links"><a href="index.html" target="_blank" rel="noopener">Open the site</a><a href="hosts.html" target="_blank" rel="noopener">Hosts</a><a href="present.html" target="_blank" rel="noopener">The stage</a></p>
   <div class="segment"><strong id="segment"></strong><span class="left" id="left"></span></div>
@@ -74,9 +76,10 @@
   </div>
   <p class="status" id="status" aria-live="polite"></p>
   <div class="restart">
-    <button id="start-now" type="button">Call to order now</button>
-    <button id="start-scheduled" type="button">Reset the session clock</button>
+    <button id="start-now" type="button" title="Starts the two-hour clock from this moment, on this computer">Call to order now</button>
+    <button id="start-scheduled" type="button" title="Puts the clock back to waiting for the call to order">Reset the session clock</button>
   </div>
+  <p class="status">Call to order now starts the two-hour clock from this moment, on this computer and the stage beside it. Reset puts it back to waiting. The stage's own keys: T starts or pauses a screen's timer, + and − add or take a minute; click the stage once so it hears them.</p>
 </main>
 
 <script src="assets/session.js"></script>
@@ -145,12 +148,14 @@ function tick() {
   const now = sessionNow();
   const start = STAGE_TIMER.resolveStart(STAGE_TIMER.savedStart(store(), today()), today(), SESSION.day, toSeconds(SESSION.start));
   const two = STAGE_TIMER.sessionClock(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
-  $("clock").textContent = two.display + " " + (two.state === "ready" ? "to go" : two.label);
+  const running = two.state !== "ready" || today() === SESSION.day;
+  $("clock").textContent = running ? two.display + " " + (two.state === "ready" ? "to go" : two.label) : "No session running";
   $("clock").classList.toggle("over", two.over);
   const end = toSeconds(screens[index].segment.end);
   const partStart = toSeconds(screens[index].segment.start);
   const left = Math.ceil((end - now) / 60);
-  $("left").textContent = now < partStart ? " · not started yet"
+  $("left").textContent = !running ? ""
+    : now < partStart ? " · starts after the part before it"
     : left > 0 ? " · " + left + " min left in this part" : " · time to move on";
 }
 setInterval(tick, 1000);

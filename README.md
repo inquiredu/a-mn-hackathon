@@ -8,7 +8,7 @@ A one-link site for a two-hour virtual hackathon hosted by MNGAIA · AI4MN on Fr
 
 | Page | For | What it does |
 | --- | --- | --- |
-| [Home](index.html) | Everyone | Changes with the clock: the invitation before, "Happening now" during, a keepsake after |
+| [Home](index.html) | Everyone | Changes with the clock: the invitation before, "Happening now" during, and after, a front door for anyone: the kit, everything on the site, and how to run it with your own team |
 | [Three levels](levels.html) | Everyone | Three levels of getting started with code: in the chat, on your site, behind the scenes, each with a prompt and its steps |
 | [Starters](starters.html) | Builders | Eight starters across the three levels, to play, copy into an AI tool, and remix |
 | [Grant a wish](wish.html) | Builders | Build something from nothing: a wish builder, a jar of wishes, three moves for when you're stuck |

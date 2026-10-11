@@ -10,7 +10,8 @@
 //   {length} {wish.length}     how long the session or a part runs: "two hours", "40 minutes"
 //   {building}                 all the time in breakout rooms: "57 minutes"
 //   {nudge}                    a pace from the session file: "ten minutes" ([2, 3] reads "two or three minutes")
-//   {weekday} {date} {zone}    "Friday", "October 9", "Central"
+//   {weekday} {date} {year}    "Friday", "October 9", "2026"
+//   {zone}                     "Central"
 //   {parts}                    how many parts: "7"
 //   {title} {subtitle} {org}   the session's names; {maker} is who made the kit
 //   {links.teams}              a link from the session file, for chat messages
@@ -70,6 +71,7 @@ const TIMES = (() => {
   const named = {
     weekday: day.toLocaleDateString("en-US", { weekday: "long", timeZone: "UTC" }),
     date: day.toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "UTC" }),
+    year: day.toLocaleDateString("en-US", { year: "numeric", timeZone: "UTC" }),
     zone: zone ? zone.value.replace(/ Time$/, "") : SESSION.timeZone,
     parts: String(SESSION.segments.length)
   };

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hands On</title>
-<meta name="description" content="A hackathon to play, build, and break things with AI, together. Made by Sean Beaverson; prepared for and presented with MNGAIA · AI4MN.">
+<meta name="description" content="Small tools you can build with AI, and a two-hour session to run with your own team. Prepared for and presented with MNGAIA · AI4MN.">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,15 +54,9 @@
         <p class="hero-meta" data-fill>{weekday}, {date} · {start} to {end} {zone} · on Google Meet</p>
         <p class="hero-lede" data-fill>A month into the school year, a morning to play. {Length} to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
         <p class="hero-actions"><span class="link-slot" data-link="meet" data-label="Join on Google Meet"></span> <a class="button" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
-        <div class="credits">
-          <div class="credit">
-            <picture><source srcset="assets/brand/sean-beaverson-mark-reversed.png" media="(prefers-color-scheme: dark)"><img src="assets/brand/sean-beaverson-mark.png" alt="" width="54" height="52"></picture>
-            <p><span class="label">Made by</span><strong data-fill>{maker}</strong></p>
-          </div>
-          <div class="credit">
-            <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
-            <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
-          </div>
+        <div class="credit credit-lead">
+          <img src="assets/mngaia-mark.png" alt="" width="104" height="90">
+          <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
         </div>
       </div>
     </div>
@@ -81,46 +75,20 @@
     </div>
   </section>
 
-  <!-- AFTER: keep building -->
+  <!-- AFTER: a front door for anyone -->
   <section class="keepsake" data-show="after" aria-labelledby="keepsake-title">
     <div class="hero">
-          <div class="wrap hero-inner">
+      <div class="wrap hero-inner">
         <div class="hero-text">
-          <p class="eyebrow" data-fill>Hands On · {weekday}, {date}</p>
-          <h1 id="keepsake-title">Thank you for building with us</h1>
-          <p class="hero-lede">Everything here stays open. Keep building, and show one person what you made.</p>
-          <div class="credits">
-            <div class="credit">
-              <picture><source srcset="assets/brand/sean-beaverson-mark-reversed.png" media="(prefers-color-scheme: dark)"><img src="assets/brand/sean-beaverson-mark.png" alt="" width="54" height="52"></picture>
-              <p><span class="label">Made by</span><strong data-fill>{maker}</strong></p>
-            </div>
-            <div class="credit">
-              <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
-              <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
-            </div>
+          <p class="eyebrow">Kit · Building with AI</p>
+          <h1 id="keepsake-title">Hands On</h1>
+          <p class="hero-lede">Small tools you can build with AI in an afternoon or less, for people who run classrooms, schools, and meetings. Pick a level, play a starter, or run the whole two-hour session with your own team. No coding background needed, and everything here is free to use and to change.</p>
+          <p class="hero-actions"><a class="button primary" href="levels.html">Start with the three levels</a> <a class="button" href="starters.html">Try a starter</a></p>
+          <div class="credit credit-lead">
+            <img src="assets/mngaia-mark.png" alt="" width="104" height="90">
+            <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong><span class="host" data-fill>First run {weekday}, {date}, {year}</span></p>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="keep-body wrap">
-      <div class="keep-grid">
-        <div class="card">
-          <h2>Show one person</h2>
-          <p>Show it on your screen, then send them this so they can build their own:</p>
-          <div class="copybox">
-            <p id="ripple-note" data-fill>On {weekday} I built a small tool with AI in about 20 minutes. You can make your own here: https://inquiredu.org/a-mn-hackathon</p>
-            <button data-copy-from="ripple-note">Copy</button>
-          </div>
-        </div>
-        <div class="card">
-          <h2>Keep building</h2>
-          <p>The three levels, the starters, and the build path are still here, for you or for anyone you send.</p>
-          <p class="card-actions"><a class="button primary" href="levels.html">The three levels</a> <a class="button" href="starters.html">The starters</a> <a class="button" href="wish.html">Grant a wish</a></p>
-        </div>
-      </div>
-      <div class="next">
-        <h3>Next month</h3>
-        <p>We turn to assessment: what our practices have measured, who they have served, and who they may have held back.</p>
       </div>
     </div>
   </section>
@@ -205,13 +173,34 @@
   <!-- Everything else on the site -->
   <section class="section" data-show="before after">
     <div class="wrap">
-      <h2>Also on the site</h2>
+      <h2>Everything here</h2>
       <div class="also">
         <a class="also-card" href="levels.html"><strong>Three levels</strong><span>Getting started with code: in the chat, on your site, behind the scenes. Each with a prompt to copy, and one with a script.</span><span class="go">Open</span></a>
         <a class="also-card" href="starters.html"><strong>Starters</strong><span>Eight starters across the three levels. Play one, hand it to your AI, make it yours.</span><span class="go">Open</span></a>
         <a class="also-card" href="wish.html"><strong>Grant a wish</strong><span>Build something from nothing: a wish builder, a jar of wishes, and three moves for when you're stuck.</span><span class="go">Open</span></a>
-        <a class="also-card" href="hosts.html"><strong>Hosts</strong><span>Running the morning: the run of show, forming teams, ready-to-paste messages, and safe play.</span><span class="go">Open</span></a>
+        <a class="also-card" href="hosts.html"><strong>Hosts</strong><span>Run the session yourself: the run of show, forming teams, ready-to-paste messages, and safe play.</span><span class="go">Open</span></a>
         <a class="also-card" href="sources.html"><strong>Sources</strong><span>How-tos that take the mystery out of code, cautions worth knowing, and what research says about coding and thinking.</span><span class="go">Open</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTER: run it yourself, and pass it on -->
+  <section class="section band" data-show="after">
+    <div class="wrap">
+      <div class="keep-grid">
+        <div class="card">
+          <h2>Run it with your own team</h2>
+          <p>The whole two-hour session is here as a kit: the run of show, a stage for the main room, speaker notes, and chat messages ready to paste. One session file holds the times, the parts, and the links, so you can copy it and make it yours.</p>
+          <p class="card-actions"><a class="button primary" href="hosts.html">The hosts' guide</a> <span class="link-slot" data-link="repo" data-label="The kit on GitHub" data-style="button"></span></p>
+        </div>
+        <div class="card">
+          <h2>Show one person</h2>
+          <p>Built something? Show it on your screen, then send them this so they can build their own:</p>
+          <div class="copybox">
+            <p id="ripple-note">I built a small tool with AI in about 20 minutes. You can make your own here: https://inquiredu.org/a-mn-hackathon</p>
+            <button data-copy-from="ripple-note">Copy</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>

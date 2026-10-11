@@ -168,6 +168,9 @@ function showMode(mode) {
 function update() {
   const now = phase();
   showMode(now.mode);
+  // After the session the site is a kit for anyone, so the bar that kept the morning's clock steps away
+  const bar = document.querySelector(".nowbar");
+  if (bar) bar.hidden = now.mode === "after";
 
   segments.forEach((s) => {
     if (!s.item) return;
@@ -188,7 +191,6 @@ function update() {
       s.item.classList.add("done");
       s.state.textContent = " (finished)";
     });
-    setNow("Done", "That's a wrap. Thank you for building with us.");
     lastSegment = "after";
     return;
   }

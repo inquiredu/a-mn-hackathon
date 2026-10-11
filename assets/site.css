@@ -148,6 +148,7 @@ a:hover { color: var(--fg-link-hover); }
 /* Keep focused items and anchor jumps clear of the sticky bar */
 html { scroll-padding-top: 76px; }
 @media (max-width: 760px) { html { scroll-padding-top: 124px; } }
+html:has(body[data-mode="after"]) { scroll-padding-top: 12px; }   /* after the session there's no sticky bar to clear */
 @media (max-height: 500px) {
   html { scroll-padding-top: 12px; }
   .nowbar { position: static; }
@@ -175,13 +176,17 @@ html { scroll-padding-top: 76px; }
 .hero-meta { margin: 14px 0 0; font: var(--type-ui); font-size: 1rem; }
 .hero-lede { max-width: 34rem; margin: 16px 0 0; font: var(--type-lead); font-size: clamp(1.125rem, 2.2vw, 1.3125rem); }
 
-/* Who made it, and who it was prepared for and presented with: each mark in its own colors, beside the name */
-.credits { display: flex; flex-wrap: wrap; gap: 20px 44px; margin: 32px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
+/* Credits: a mark in its own colors, beside the name. Home leads with the partner, larger; the author is credited in the footer */
 .credit { display: flex; align-items: center; gap: 14px; margin: 0; }
 .credit img { width: auto; height: 52px; flex: none; }
 .credit p { margin: 0; font-family: var(--font-sans); font-size: .95rem; line-height: 1.4; }
 .credit .label { display: block; margin-bottom: 3px; }
 .credit .host { display: block; margin-top: 2px; font-size: .85rem; }
+.credit-lead { gap: 20px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--line); max-width: 36rem; }
+.credit-lead img { height: 90px; }
+.credit-lead strong { display: block; font-size: clamp(1.3rem, 3vw, 1.6rem); line-height: 1.2; }
+.credit-lead .host { margin-top: 4px; font-size: .9rem; color: var(--muted); }
+@media (max-width: 480px) { .credit-lead img { height: 72px; } }
 
 @media (max-width: 760px) {
   .hero-inner { padding-top: 36px; }
@@ -537,8 +542,6 @@ dialog::backdrop { background: var(--scrim); }
 .also-card .go { margin-top: auto; padding-top: 6px; color: var(--link); font-weight: 600; }
 
 /* ---------- Home: after ---------- */
-.keepsake h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; }
-.keep-body { padding-top: var(--block); padding-bottom: var(--section); }
 .keep-grid { display: grid; gap: 14px; margin-top: 0; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
 .keep-grid .card h2 { font-size: 1.25rem; letter-spacing: 0; }
 .keep-grid .card p { color: var(--ink); }

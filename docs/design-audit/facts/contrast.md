@@ -1,0 +1,42 @@
+# Contrast in the states the October 11 pass skipped
+
+Each visible text run measured against its effective background (opacity and translucent fills composited). Fails are under 4.5:1 (3:1 for large text).
+
+- **Home: the part-changed notice (cue)** (light): 4 runs, lowest 7.79:1, all pass
+- **Home: now bar** (light): 5 runs, lowest 7.79:1, all pass
+- **Home during: Happening now card** (light): 6 runs, lowest 7.79:1, all pass
+- **Starters: open Remix menu** (light): 30 runs, lowest 6.01:1, all pass
+- **Toast** (light): 1 runs, lowest 10.71:1, all pass
+- **Next-step panel** (light): 8 runs, lowest 6.01:1, all pass
+- **Copy-by-hand dialog** (light): 3 runs, lowest 10.71:1, all pass
+- **Play window header** (light): 4 runs, lowest 11.38:1, all pass
+- **Play window code pane and message** (light): 4 runs, lowest 6.01:1, all pass
+- **index.html: every link and button, hover forced** (light): 39 runs, lowest 1.91:1, **4 fail**: "Skip to the main content" 1.91:1 (a.skip, rgb(138, 82, 44) on rgb(32,56,79)); "First Builds" 2.53:1 (a.brand, rgb(139, 83, 45) on rgb(20,36,52)); "Start here" 2.23:1 (a.button, rgb(139, 83, 45) on rgb(26,46,65)); "The hosts' guide" 2.23:1 (a.button, rgb(139, 83, 45) on rgb(26,46,65))
+- **index.html: every link and button, focus-visible forced** (light): 39 runs, lowest 6.01:1, all pass
+- **starters.html: every link and button, hover forced** (light): 94 runs, lowest 1.91:1, **2 fail**: "Skip to the main content" 1.91:1 (a.skip, rgb(138, 82, 44) on rgb(32,56,79)); "First Builds" 2.53:1 (a.brand, rgb(139, 83, 45) on rgb(20,36,52))
+- **starters.html: every link and button, focus-visible forced** (light): 94 runs, lowest 10.28:1, all pass
+- **wish.html: every link and button, hover forced** (light): 32 runs, lowest 1.91:1, **2 fail**: "Skip to the main content" 1.91:1 (a.skip, rgb(138, 82, 44) on rgb(32,56,79)); "First Builds" 2.6:1 (a.brand, rgb(140, 85, 48) on rgb(20,36,52))
+- **wish.html: every link and button, focus-visible forced** (light): 32 runs, lowest 9.6:1, all pass
+- **hosts.html: every link and button, hover forced** (light): 96 runs, lowest 1.91:1, **3 fail**: "Skip to the main content" 1.91:1 (a.skip, rgb(138, 82, 44) on rgb(32,56,79)); "First Builds" 2.53:1 (a.brand, rgb(139, 83, 45) on rgb(20,36,52)); "Present the stage" 2.23:1 (a.button, rgb(139, 83, 45) on rgb(26,46,65))
+- **hosts.html: every link and button, focus-visible forced** (light): 96 runs, lowest 9.6:1, all pass
+- **sources.html: every link and button, hover forced** (light): 253 runs, lowest 1.91:1, **2 fail**: "Skip to the sources" 1.91:1 (a.skip, rgb(138, 82, 44) on rgb(32,56,79)); "First Builds" 2.5:1 (a.brand, rgb(138, 82, 44) on rgb(20,36,52))
+- **sources.html: every link and button, focus-visible forced** (light): 253 runs, lowest 6.01:1, all pass
+- **Home: the part-changed notice (cue)** (dark): 4 runs, lowest 7.79:1, all pass
+- **Home: now bar** (dark): 5 runs, lowest 7.79:1, all pass
+- **Home during: Happening now card** (dark): 6 runs, lowest 7.79:1, all pass
+- **Starters: open Remix menu** (dark): 30 runs, lowest 7.87:1, all pass
+- **Toast** (dark): 1 runs, lowest 8.05:1, all pass
+- **Next-step panel** (dark): 8 runs, lowest 7.87:1, all pass
+- **Copy-by-hand dialog** (dark): 3 runs, lowest 10.71:1, all pass
+- **Play window header** (dark): 4 runs, lowest 10.71:1, all pass
+- **Play window code pane and message** (dark): 4 runs, lowest 7.87:1, all pass
+- **index.html: every link and button, hover forced** (dark): 39 runs, lowest 1.67:1, **3 fail**: "Skip to the main content" 1.81:1 (a.skip, rgb(219, 172, 136) on rgb(244,241,235)); "Start here" 1.67:1 (a.button, rgb(216, 170, 134) on rgb(234,229,219)); "The hosts' guide" 1.67:1 (a.button, rgb(216, 170, 134) on rgb(234,229,219))
+- **index.html: every link and button, focus-visible forced** (dark): 39 runs, lowest 7.87:1, all pass
+- **starters.html: every link and button, hover forced** (dark): 94 runs, lowest 1.8:1, **1 fail**: "Skip to the main content" 1.8:1 (a.skip, rgb(220, 173, 136) on rgb(244,241,235))
+- **starters.html: every link and button, focus-visible forced** (dark): 94 runs, lowest 10.28:1, all pass
+- **wish.html: every link and button, hover forced** (dark): 32 runs, lowest 1.81:1, **1 fail**: "Skip to the main content" 1.81:1 (a.skip, rgb(219, 172, 136) on rgb(244,241,235))
+- **wish.html: every link and button, focus-visible forced** (dark): 32 runs, lowest 8.05:1, all pass
+- **hosts.html: every link and button, hover forced** (dark): 96 runs, lowest 1.63:1, **6 fail**: "Skip to the main content" 1.8:1 (a.skip, rgb(220, 173, 136) on rgb(244,241,235)); "Present the stage" 1.63:1 (a.button, rgb(219, 172, 136) on rgb(234,229,219)); "Speaker notes" 4.49:1 (a.button, rgb(220, 173, 137) on rgb(46,75,102)); "The participant page" 4.49:1 (a.button, rgb(220, 173, 137) on rgb(46,75,102)); "Session slides" 4.49:1 (a.button, rgb(220, 173, 137) on rgb(46,75,102)); "Starter code" 4.49:1 (a.button, rgb(220, 173, 137) on rgb(46,75,102))
+- **hosts.html: every link and button, focus-visible forced** (dark): 96 runs, lowest 8.05:1, all pass
+- **sources.html: every link and button, hover forced** (dark): 253 runs, lowest 1.8:1, **1 fail**: "Skip to the sources" 1.8:1 (a.skip, rgb(220, 173, 136) on rgb(244,241,235))
+- **sources.html: every link and button, focus-visible forced** (dark): 253 runs, lowest 7.87:1, all pass

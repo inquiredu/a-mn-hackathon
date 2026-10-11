@@ -49,7 +49,7 @@
   <section id="wish" class="section">
     <div class="wrap">
       <h1 class="page-title">Grant a wish</h1>
-      <p class="section-lede">Now build something from nothing, at your level. It's the same loop you just used, minus the training wheels. It starts with you, the AI does the heavy lifting, and it comes back to you. Level 2 or 3? <a href="levels.html">Your level's prompt and steps</a> work for a wish too: a different document, a different folder, a different job.</p>
+      <p class="section-lede">Describe a small tool in three short answers, and this page turns them into a request you paste into Gemini, ChatGPT, or Claude. In a few minutes you'll have something you can click. No coding, and nothing to install: it starts with you, the AI does the heavy lifting, and it comes back to you. New to this? Start here. (Building a page for your Google Site or a script for your Drive instead? <a href="levels.html">Those levels' prompts and steps</a> work for a wish too: a different document, a different folder, a different job.)</p>
 
       <ol class="path">
         <li>
@@ -71,7 +71,7 @@
         <li>
           <span class="num hex">2</span>
           <h3>Hand it to your AI</h3>
-          <p>Paste it into Gemini (choose Canvas first), Claude, or ChatGPT (switch on Preview when the code appears). A first version usually shows up in under a minute.</p>
+          <p>Paste it into your AI chat and send: in Gemini, choose Canvas before you paste; in ChatGPT, press Preview when the code appears; in Claude, just paste. A first version usually shows up in under a minute, as a tool with buttons in a panel beside the chat. Only code and no tool? You skipped Canvas or Preview. <a href="#where">Where each switch is, and what you'll see</a>.</p>
         </li>
         <li>
           <span class="num hex">3</span>
@@ -86,6 +86,7 @@
         <li>
           <span class="num hex">5</span>
           <h3>Peek under the hood</h3>
+          <p>Ask the AI to show you how it works. Paste this into the same chat:</p>
           <div class="copybox">
             <p id="peek-prompt">Explain three lines of this code to me like I've never coded before. Pick the three most interesting ones.</p>
             <button data-copy-from="peek-prompt">Copy</button>
@@ -94,12 +95,12 @@
         <li>
           <span class="num hex">6</span>
           <h3>Back to you</h3>
-          <p>Is it what you wished for? Who would you show it to? Pin it to the <a href="#wall">gallery wall</a>.</p>
+          <p>Is it what you wished for? Who would you show it to? <a href="#wall">Keep it, and show one person</a>.</p>
         </li>
       </ol>
 
       <h3 class="subhead" id="jar">No wish yet? Take one from the jar.</h3>
-      <p class="hint" id="jar-hint">Choose one to copy it, then paste it into your AI.</p>
+      <p class="hint" id="jar-hint">Press one and a complete wish is copied, the same shape as the one above, ready to paste into your AI.</p>
       <ul class="jar">
         <li><button data-wish="a countdown to winter break, with snow that falls harder as the day gets closer">Winter break countdown, with snow that falls harder each day</button></li>
         <li><button data-wish="a spinner that picks whose turn it is to bring treats to the staff meeting">A spinner for whose turn it is to bring treats</button></li>
@@ -115,12 +116,17 @@
         <li><button data-wish="a soundboard of ridiculous sound effects for team meetings">A soundboard of ridiculous meeting sound effects</button></li>
       </ul>
 
+      <div class="level-note" id="where">
+        <h4>Where do I paste it, and what you'll see</h4>
+        <div data-where></div>
+      </div>
+
       <div class="stuck">
         <h3>Stuck? Three moves.</h3>
         <ul>
           <li><strong>Describe it.</strong> Tell the AI exactly what you see and what you expected instead.</li>
           <li><strong>Rewind.</strong> "Go back to the version before that one."</li>
-          <li><strong>Ask for help.</strong> In your breakout room, press Meet's <em>Ask for help</em> button. A host gets the message and will pop into your room.</li>
+          <li><strong>Ask for help.</strong> On your own, ask the AI itself: "I'm a teacher who has never coded. Here is what I see: … What should I do?" Still stuck after two tries? Start a new chat and paste your wish again; that counts. In a live session, press <em>Ask for help</em> in your Meet breakout room and a host will join you.</li>
         </ul>
       </div>
     </div>
@@ -129,9 +135,9 @@
   <!-- THE GALLERY WALL: starters.html links here too -->
   <section id="wall" class="section band" aria-labelledby="wall-title">
     <div class="wrap">
-      <h2 id="wall-title">Pin it to the gallery wall</h2>
-      <p class="section-lede">Got something working, even halfway? Put a picture of it on the wall, and link the picture to what you made. Half-built counts. Leaving early? Pin it first, and it stays up for Show &amp; Cheer.</p>
-      <p class="link-slot" data-link="gallery" data-label="Open the gallery wall"></p>
+      <h2 id="wall-title">Keep it, and show one person</h2>
+      <p class="section-lede">Got something working, even halfway? Half-built counts. Copy a link to it so you can open it Monday, take a picture of it, and show one person: paste the picture and the link into an email or a Doc, or just turn your screen toward a colleague. In a live session, the picture goes on the gallery wall your host links in the chat, where everyone can click it to open what you made.</p>
+      <p class="link-slot" data-link="gallery" data-label="Open the gallery wall" data-pending=""></p>
 
       <h3 class="subhead">1. Copy a link to your work</h3>
       <div class="tips">
@@ -141,7 +147,7 @@
         </div>
         <div>
           <h4>Claude</h4>
-          <p>Open the artifact and choose <strong>Publish</strong>, then copy the link. On a school or work plan, choose <strong>Share</strong>, then <strong>Share &amp; copy link</strong>.</p>
+          <p>Click the tool Claude made (the panel beside the chat; Claude calls it an artifact) and choose <strong>Publish</strong>, then copy the link. On a school or work plan, choose <strong>Share</strong>, then <strong>Share &amp; copy link</strong>.</p>
         </div>
         <div>
           <h4>ChatGPT</h4>
@@ -166,18 +172,18 @@
         </div>
         <div>
           <h4>Chromebook</h4>
-          <p>Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Show windows</kbd>, drag a box around your work, and choose <strong>Capture</strong>. It's copied, ready to paste.</p>
+          <p>Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Show windows</kbd> (the key with a rectangle and two lines, above the 6), drag a box around your work, and choose <strong>Capture</strong>. It's copied, ready to paste.</p>
         </div>
       </div>
 
-      <h3 class="subhead">3. Put it on the wall</h3>
+      <h3 class="subhead">3. In a live session: put it on the wall</h3>
       <ol class="wall-steps">
-        <li>Open the gallery wall and click a slide with room on it. There are three; when one fills up, use the next.</li>
+        <li>Open the gallery wall from your host's link in the chat: a Google Slides deck with a few empty slides for pictures. Click a slide with room on it; when one fills up, use the next.</li>
         <li>Paste: <kbd>Ctrl</kbd> + <kbd>V</kbd>, or <kbd>Command</kbd> + <kbd>V</kbd> on a Mac.</li>
         <li>Drag a corner to make it postcard-size, and move it to an open spot.</li>
         <li>With the picture still selected, press <kbd>Ctrl</kbd> + <kbd>K</kbd> (<kbd>Command</kbd> + <kbd>K</kbd> on a Mac), paste your link, and choose <strong>Apply</strong>.</li>
       </ol>
-      <p class="more-link">Now anyone can click your picture to open what you made. The wall is open to anyone with its link, and so is a published link, so keep to made-up data.</p>
+      <p class="more-link">Now anyone can click your picture to open what you made. A wall shared with a whole group is open to everyone in it, and so is a published link, so keep to made-up data. If the wall opens view-only on your school account, your district may block outside files: paste your picture in the Meet chat instead.</p>
     </div>
   </section>
 

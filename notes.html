@@ -4,42 +4,44 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Speaker notes · Hands On</title>
-<link rel="icon" href="assets/favicon.png">
+<link rel="icon" href="assets/favicon.png" sizes="64x64">
+<link rel="icon" href="assets/brand/inquiredu-monogram.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/brand/inquiredu.css">
 <style>
   /* The speaker notes: for the presenter's eyes only. Keep this window out of the shared screen. */
-  :root { --navy: #10345A; --sky: #66C1E7; --ink: #10345A; --muted: #4A6580; --line: #D5E7F2; --tint: #E8F5FC; }
+  /* inquiredu's Ivory theme, from assets/brand/inquiredu.css: a quiet window beside the shared screen */
+  :root { --navy: var(--el-navy-900); --sky: var(--indicator-selected); --ink: var(--fg-1); --muted: var(--fg-2); --line: var(--border-hairline); --tint: var(--surface-water-soft); }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #F6FAFD; color: var(--ink); font: 18px/1.5 "Lexend", system-ui, sans-serif; }
+  body { margin: 0; background: var(--surface-page); color: var(--ink); font: 500 18px/1.5 var(--font-sans); }
   .wrap { padding: 18px 20px 28px; display: grid; gap: 14px; }
   .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; color: var(--muted); font-size: .95rem; }
-  .clock { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .segment { padding: 10px 14px; border-radius: 12px; background: var(--tint); }
+  .clock { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .segment { padding: 10px 14px; border-radius: 8px; background: var(--tint); }
   .segment strong { display: block; }
-  .left { font-weight: 700; color: var(--navy); }
-  .label { margin: 0; font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .left { font-weight: 600; color: var(--navy); }
+  .label { margin: 0; font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   h1 { margin: 2px 0 0; font-size: 1.6rem; line-height: 1.2; }
-  .note { margin: 0; padding: 16px 18px; border-left: 6px solid var(--sky); border-radius: 0 14px 14px 0; background: #FFFFFF; font-size: 1.3rem; line-height: 1.45; }
+  .note { margin: 0; padding: 16px 18px; border-left: 4px solid var(--sky); border-radius: 0 8px 8px 0; background: var(--surface-raised); font: 400 1.35rem/1.45 var(--font-serif); }
   .next { color: var(--muted); }
   .next strong { color: var(--ink); }
   .buttons { display: flex; gap: 8px; }
   button {
-    flex: 1; padding: 12px; font: inherit; font-weight: 700; cursor: pointer;
-    border-radius: 999px; border: 2px solid var(--navy); background: #FFFFFF; color: var(--navy);
+    flex: 1; padding: 12px; font: inherit; font-weight: 600; cursor: pointer;
+    border-radius: 4px; border: 1.5px solid var(--navy); background: var(--surface-raised); color: var(--navy);
   }
-  button.primary { background: var(--navy); color: #FFFFFF; }
-  button:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+  button.primary { background: var(--navy); color: var(--el-ivory-100); }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 3px; box-shadow: none; }
   .status { margin: 0; font-size: .9rem; color: var(--muted); }
   .restart { display: flex; gap: 8px; flex-wrap: wrap; }
   .restart button { flex: 1 1 200px; padding: 8px; font-size: .9rem; font-weight: 600; border-width: 1.5px; }
-  .clock.over { color: #B3261E; }
-  .timer { padding: 12px 14px; border-radius: 12px; background: #FFFFFF; border: 2px solid var(--line); display: grid; gap: 10px; }
+  .clock.over { color: var(--status-danger); }
+  .timer { padding: 12px 14px; border-radius: 8px; background: var(--surface-raised); border: 1px solid var(--line); display: grid; gap: 10px; }
   .timer[hidden] { display: none; }
   .timer-read { display: flex; align-items: baseline; gap: 12px; }
-  .timer-display { font-size: 2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
-  .timer.done .timer-display { color: #B3261E; }
+  .timer-display { font-size: 2rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .timer.done .timer-display { color: var(--status-danger); }
   .timer-status { color: var(--muted); font-size: .95rem; }
   .timer .buttons button { padding: 8px; }
   .site-links { margin: -6px 0 12px; display: flex; flex-wrap: wrap; gap: 14px; font-size: .9rem; }

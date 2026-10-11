@@ -42,7 +42,7 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 
 1. Fork the repo and turn on GitHub Pages for `main`. Add an empty `.nojekyll` if yours lacks one (this repo has it).
 2. Edit `assets/session.js`: the date, the start and end, each part's length, the links to your own Meet, team doc, and decks, and the presenter's screens and notes. `docs/SESSION-KIT.md` explains every field and what `{braces}` can say. Every page, the stage, and the notes read from this one file.
-3. Replace `assets/mngaia-mark.png` with your own mark, and the colors at the top of `assets/site.css` and `assets/present.css` with yours.
+3. Replace the marks with your own: `assets/mngaia-mark.png` (the partner credit) and the inquiredu files in `assets/brand/` (the header, footer, stage rail, and favicon). The colors are named once, as roles, at the top of `assets/site.css` and `assets/present.css`; point them at your palette.
 4. Turn on the hooks (`git config core.hooksPath .githooks`) and run `node scripts/check-all.js`. It tells you about a link the pages name that the session file doesn't have, a brace that nothing fills, and parts that don't add up to the advertised length.
 5. Preview with `node scripts/serve.js`, and walk the morning with `?now=10:50` on any page.
 
@@ -80,4 +80,4 @@ The target is WCAG 2.1 AA, with the WCAG 2.2 focus-not-hidden and target-size it
 
 ## License
 
-[MIT](LICENSE). The MNGAIA mark belongs to MNGAIA · AI4MN and is used with permission; replace it with your own when you reuse the kit.
+[MIT](LICENSE), with two sets of marks excepted: the MNGAIA mark belongs to MNGAIA · AI4MN and is used with permission, and the inquiredu wordmark, lockup, and monogram in `assets/brand/` belong to Sean Beaverson. Replace both with your own when you reuse the kit. The icons in `assets/icons.js` are Lucide's, under the ISC license.

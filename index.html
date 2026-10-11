@@ -1,21 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hands On</title>
-<meta name="description" content="A hackathon to play, build, and break things with AI, together. MNGAIA · AI4MN.">
-<link rel="icon" href="assets/favicon.png">
+<meta name="description" content="A hackathon to play, build, and break things with AI, together. Prepared for and presented with MNGAIA · AI4MN.">
+<link rel="icon" href="assets/favicon.png" sizes="64x64">
+<link rel="icon" href="assets/brand/inquiredu-monogram.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/brand/inquiredu.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to the main content</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
-    <a class="brand" href="index.html"><img src="assets/mngaia-mark.png" alt="" width="44" height="38"><span>Hands On</span></a>
+    <a class="brand" href="index.html"><img src="assets/brand/inquiredu-wordmark-reversed.svg" alt="inquiredu" width="111" height="24"><span class="brand-name">Hands On</span></a>
     <nav aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html" aria-current="page">Home</a></li>
@@ -47,28 +48,18 @@
 
   <!-- BEFORE: the invitation -->
   <section class="hero" data-show="before">
-  <svg class="sparkles" aria-hidden="true" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <path id="star" d="M0,-10 C1,-2 2,-1 10,0 C2,1 1,2 0,10 C-1,2 -2,1 -10,0 C-2,-1 -1,-2 0,-10Z"/>
-    </defs>
-    <use href="#star" class="s1" transform="translate(60 70) scale(2.2)"/>
-    <use href="#star" class="s2" transform="translate(120 160) scale(1.2)"/>
-    <use href="#star" class="s1" transform="translate(40 250) scale(1.6)"/>
-    <use href="#star" class="s2" transform="translate(150 320) scale(2.4)"/>
-    <use href="#star" class="s1" transform="translate(210 60) scale(1)"/>
-    <use href="#star" class="s2" transform="translate(1080 60) scale(1.4)"/>
-    <use href="#star" class="s1" transform="translate(1150 140) scale(2)"/>
-    <use href="#star" class="s2" transform="translate(1110 300) scale(1.1)"/>
-    <use href="#star" class="s1" transform="translate(1020 350) scale(1.6)"/>
-  </svg>
+  <div class="sun" aria-hidden="true"></div>
     <div class="wrap hero-inner">
-      <img class="mark" src="assets/mngaia-mark.png" alt="MNGAIA, AI4MN" width="470" height="406">
       <div class="hero-text">
-        <p class="kicker">MNGAIA · AI4MN</p>
+        <p class="eyebrow" data-fill>{subtitle}</p>
         <h1>Hands On</h1>
-        <p class="ribbon" data-fill>{subtitle} · {date} · {start} to {end}</p>
+        <p class="hero-meta" data-fill>{weekday}, {date} · {start} to {end} {zone} · on Google Meet</p>
         <p class="hero-lede" data-fill>A month into the school year, a morning to play. {Length} to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
         <p class="hero-actions"><span class="link-slot" data-link="meet" data-label="Join on Google Meet"></span> <a class="button" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
+        <div class="credit">
+          <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+          <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
+        </div>
       </div>
     </div>
   </section>
@@ -87,11 +78,22 @@
   </section>
 
   <!-- AFTER: keep building -->
-  <section class="section keepsake" data-show="after" aria-labelledby="keepsake-title">
-    <div class="wrap">
-      <p class="kicker-dark" data-fill>{org} · {date}</p>
-      <h1 id="keepsake-title">Thank you for building with us</h1>
-      <p class="section-lede">Everything here stays open. Keep building, and show one person what you made.</p>
+  <section class="keepsake" data-show="after" aria-labelledby="keepsake-title">
+    <div class="hero">
+      <div class="sun" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow" data-fill>Hands On · {weekday}, {date}</p>
+          <h1 id="keepsake-title">Thank you for building with us</h1>
+          <p class="hero-lede">Everything here stays open. Keep building, and show one person what you made.</p>
+          <div class="credit">
+            <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+            <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="keep-body wrap">
       <div class="keep-grid">
         <div class="card">
           <h2>Show one person</h2>
@@ -149,9 +151,9 @@
       <h2>Show &amp; Cheer</h2>
       <p class="section-lede" data-fill>A few builders share their screens for {share} each. Applause first, emoji welcome. Then one question for each builder: who would you show this to?</p>
       <ul class="awards">
-        <li><span class="award-icon hex" aria-hidden="true">💥</span><strong>Most Delightfully Broken</strong><span>For the most glorious error message of the morning.</span></li>
-        <li><span class="award-icon hex" aria-hidden="true">🛟</span><strong>Best Rescue</strong><span>For the save that made the room cheer.</span></li>
-        <li><span class="award-icon hex" aria-hidden="true">🗓️</span><strong>Most Likely to Actually Get Used</strong><span>For the one somebody will really open next week.</span></li>
+        <li><span class="award-icon" data-icon="bug"></span><strong>Most Delightfully Broken</strong><span>For the most glorious error message of the morning.</span></li>
+        <li><span class="award-icon" data-icon="life-buoy"></span><strong>Best Rescue</strong><span>For the save that made the room cheer.</span></li>
+        <li><span class="award-icon" data-icon="calendar-check"></span><strong>Most Likely to Actually Get Used</strong><span>For the one somebody will really open next week.</span></li>
       </ul>
     </div>
   </section>
@@ -209,9 +211,14 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <img src="assets/mngaia-mark.png" alt="" width="64" height="55">
-    <div>
-      <p><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
+    <div class="footer-brands">
+      <img class="footer-lockup" src="assets/brand/inquiredu-lockup-endorsed-reversed.svg" alt="inquiredu, by Sean Beaverson" width="176" height="51">
+      <div class="credit">
+        <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+        <p><span class="label">Prepared for and presented with</span><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
+      </div>
+    </div>
+    <div class="footer-notes">
       <p class="small"><strong>Safe play:</strong> use made-up names and made-up data. Nothing about real students goes into an AI today.</p>
       <p class="small backups"><strong>Site blocked?</strong> The same morning as slides: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters, with the code in the notes: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
     </div>
@@ -232,6 +239,7 @@
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js"></script>
+<script src="assets/icons.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

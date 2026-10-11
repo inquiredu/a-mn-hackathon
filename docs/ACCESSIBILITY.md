@@ -24,6 +24,8 @@ The site grew into several pages, four starters, the presenter view, the speaker
 
 On October 8 the Oracle got its tripod and the AI4MN mark. The figure is decorative (`aria-hidden`), it moves only while the Oracle thinks and not at all under reduced motion, and it was checked at 375px wide and on a wide, short screen (the shape of the shared tab). Gold on the night background is 9.4:1 and the sky mutterings 8.6:1; the text boxes' gold borders are 6.9:1.
 
+On October 11 the site moved to inquiredu's look. An automated pass over every page and the stage, in both themes and in the before, during, and after states, measured every visible line of text against its real background: all at AA (4.5:1, or 3:1 for large text) once one older bug was fixed, the timeline's current part, whose link was ivory on white in the light theme. The focus ring is the brand's cyan-700 in the light theme (3.3:1 on the page) and cyan-600 on navy, drawn as an outline so it survives high-contrast mode. That pass did not cover the cue, toasts, dialogs, open menus, or hover states.
+
 ## Still needs a person
 
 - A pass with NVDA and Chrome, or ChromeVox, for the messages, the next-step panel, and the Oracle's prophecy

@@ -60,6 +60,16 @@ function recall(key) {
 }
 
 
+// ---------- Icons: the starters' badges and the awards (Home, Starters), from assets/icons.js ----------
+
+if (typeof iconSvg === "function") {
+  document.querySelectorAll("[data-icon]").forEach((spot) => {
+    spot.innerHTML = iconSvg(spot.dataset.icon);
+    spot.setAttribute("aria-hidden", "true");
+  });
+}
+
+
 // ---------- The clock ----------
 // Add ?now=10:50 to any page's address to see it as it will look at that moment on the day.
 

@@ -9,7 +9,7 @@
 const SESSION = {
   title: "Hands On",
   subtitle: "A {weekday} Hackathon",
-  org: "MNGAIA · AI4MN",
+  org: "MNGAIA · AI4MN",            // the partner: "Prepared for and presented with {org}" on Home, the footer, and the stage
   day: "2026-10-09",                 // the clock-driven parts only run on this day
   timeZone: "America/Chicago",
   start: "10:00",                    // when the session starts and ends, as advertised (24-hour)
@@ -65,7 +65,7 @@ const SESSION = {
       hint: "The plan for the morning, then the chat: how much have you built with AI, from 1 to 5, and what was it?",
       link: "index.html#today",
       screens: [
-        { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", kicker: "MNGAIA · AI4MN", heading: "Hands On", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
+        { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", heading: "Hands On", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
         { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Teams doc keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
         { kind: "embed", note: "Share this tab with its sound on. Ask the Oracle two or three questions from the chat. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
         { kind: "plan", note: "Walk the morning in a sentence each. The page has all of it, and so does the chat.", heading: "Here's what we're here to do", url: true },
@@ -173,9 +173,9 @@ const SESSION = {
       screens: [
         { kind: "prompt", note: "Welcome everyone back. Ask for volunteers by raised hand. Applause first, then one question: who would you show this to?", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?", timer: "share" },
         { kind: "awards", note: "Name the builds that earned each award.", heading: "This morning's awards", awards: [
-          { icon: "💥", name: "Most Delightfully Broken", why: "For the most glorious error message of the morning." },
-          { icon: "🛟", name: "Best Rescue", why: "For the save that made the room cheer." },
-          { icon: "🗓️", name: "Most Likely to Actually Get Used", why: "For the one somebody will really open next week." }
+          { icon: "bug", name: "Most Delightfully Broken", why: "For the most glorious error message of the morning." },
+          { icon: "life-buoy", name: "Best Rescue", why: "For the save that made the room cheer." },
+          { icon: "calendar-check", name: "Most Likely to Actually Get Used", why: "For the one somebody will really open next week." }
         ] }
       ],
       host: [

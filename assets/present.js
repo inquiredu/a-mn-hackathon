@@ -106,11 +106,21 @@ function urlPill() {
 
 // One function per kind of screen. Each returns the elements to put on the stage.
 const KINDS = {
+  // The opening: the partner the session was prepared for and presented with, their mark in its own colors;
+  // the inquiredu wordmark is in the rail on every screen
   title(s) {
-    const mark = el("img", "mark");
+    const sun = el("div", "sun");
+    sun.setAttribute("aria-hidden", "true");
+    const mark = el("img");
     mark.src = "assets/mngaia-mark.png";
-    mark.alt = "MNGAIA, AI4MN";
-    return [mark, el("p", "kicker", s.kicker), el("h1", "heading", s.heading), el("p", "body", s.sub)];
+    mark.alt = "";
+    const words = el("span");
+    words.append(el("small", "", "Prepared for and presented with"), SESSION.org);
+    const credit = el("p", "credit");
+    credit.append(mark, words);
+    const parts = [sun, credit];
+    if (s.kicker) parts.push(el("p", "kicker", s.kicker));
+    return parts.concat(el("h1", "heading", s.heading), el("p", "body", s.sub));
   },
   prompt(s) {
     const parts = [el("h1", "heading", s.heading)];
@@ -138,7 +148,8 @@ const KINDS = {
     const list = el("ul", "awards");
     s.awards.forEach((a) => {
       const li = el("li");
-      const icon = el("span", "award-icon", a.icon);
+      const icon = el("span", "award-icon");
+      icon.innerHTML = iconSvg(a.icon);   // a name from assets/icons.js, not text from outside
       icon.setAttribute("aria-hidden", "true");
       li.append(icon, el("strong", "", a.name), el("span", "", a.why));
       list.append(li);

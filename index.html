@@ -4,19 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hands On</title>
-<meta name="description" content="A hackathon to play, build, and break things with AI, together. Prepared for and presented with MNGAIA · AI4MN.">
-<link rel="icon" href="assets/favicon.png" sizes="64x64">
-<link rel="icon" href="assets/brand/inquiredu-monogram.svg" type="image/svg+xml">
+<meta name="description" content="A hackathon to play, build, and break things with AI, together. Made by Sean Beaverson; prepared for and presented with MNGAIA · AI4MN.">
+<link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="assets/brand/inquiredu.css">
+<link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to the main content</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
-    <a class="brand" href="index.html"><img src="assets/brand/inquiredu-wordmark-reversed.svg" alt="inquiredu" width="111" height="24"><span class="brand-name">Hands On</span></a>
+    <a class="brand" href="index.html"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="36" height="34"><span class="brand-name">Hands On</span></a>
     <nav aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html" aria-current="page">Home</a></li>
@@ -48,7 +47,6 @@
 
   <!-- BEFORE: the invitation -->
   <section class="hero" data-show="before">
-  <div class="sun" aria-hidden="true"></div>
     <div class="wrap hero-inner">
       <div class="hero-text">
         <p class="eyebrow" data-fill>{subtitle}</p>
@@ -56,9 +54,15 @@
         <p class="hero-meta" data-fill>{weekday}, {date} · {start} to {end} {zone} · on Google Meet</p>
         <p class="hero-lede" data-fill>A month into the school year, a morning to play. {Length} to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
         <p class="hero-actions"><span class="link-slot" data-link="meet" data-label="Join on Google Meet"></span> <a class="button" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
-        <div class="credit">
-          <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
-          <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
+        <div class="credits">
+          <div class="credit">
+            <picture><source srcset="assets/brand/sean-beaverson-mark-reversed.png" media="(prefers-color-scheme: dark)"><img src="assets/brand/sean-beaverson-mark.png" alt="" width="54" height="52"></picture>
+            <p><span class="label">Made by</span><strong data-fill>{maker}</strong></p>
+          </div>
+          <div class="credit">
+            <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+            <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
+          </div>
         </div>
       </div>
     </div>
@@ -80,15 +84,20 @@
   <!-- AFTER: keep building -->
   <section class="keepsake" data-show="after" aria-labelledby="keepsake-title">
     <div class="hero">
-      <div class="sun" aria-hidden="true"></div>
-      <div class="wrap hero-inner">
+          <div class="wrap hero-inner">
         <div class="hero-text">
           <p class="eyebrow" data-fill>Hands On · {weekday}, {date}</p>
           <h1 id="keepsake-title">Thank you for building with us</h1>
           <p class="hero-lede">Everything here stays open. Keep building, and show one person what you made.</p>
-          <div class="credit">
-            <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
-            <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
+          <div class="credits">
+            <div class="credit">
+              <picture><source srcset="assets/brand/sean-beaverson-mark-reversed.png" media="(prefers-color-scheme: dark)"><img src="assets/brand/sean-beaverson-mark.png" alt="" width="54" height="52"></picture>
+              <p><span class="label">Made by</span><strong data-fill>{maker}</strong></p>
+            </div>
+            <div class="credit">
+              <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+              <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong></p>
+            </div>
           </div>
         </div>
       </div>
@@ -212,10 +221,13 @@
 <footer class="footer">
   <div class="wrap footer-inner">
     <div class="footer-brands">
-      <img class="footer-lockup" src="assets/brand/inquiredu-lockup-endorsed-reversed.svg" alt="inquiredu, by Sean Beaverson" width="176" height="51">
+      <div class="credit">
+        <img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="54" height="52">
+        <p><span class="label">Made by</span><strong data-fill>{maker}</strong><span class="host">Hosted at inquiredu.org</span></p>
+      </div>
       <div class="credit">
         <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
-        <p><span class="label">Prepared for and presented with</span><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
+        <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
       </div>
     </div>
     <div class="footer-notes">

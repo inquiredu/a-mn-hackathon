@@ -1,5 +1,5 @@
 // Icons for the starters and the awards: Lucide outline icons (lucide.dev, ISC license, v0.563.0),
-// copied as plain outlines so the site needs no library. The inquiredu look draws them at stroke 1.75
+// copied as plain outlines so the site needs no library. North Shore draws them at stroke 1.75
 // in the text's own color.
 // A page marks a spot with <span data-icon="timer"></span> and site.js draws it; the stage's awards
 // name theirs in the session file (icon: "bug") and present.js draws them from this same list.

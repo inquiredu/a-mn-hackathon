@@ -106,19 +106,24 @@ function urlPill() {
 
 // One function per kind of screen. Each returns the elements to put on the stage.
 const KINDS = {
-  // The opening: the partner the session was prepared for and presented with, their mark in its own colors;
-  // the inquiredu wordmark is in the rail on every screen
+  // The opening: who made the kit, and the partner it was prepared for and presented with, each mark in its own colors
   title(s) {
-    const sun = el("div", "sun");
-    sun.setAttribute("aria-hidden", "true");
-    const mark = el("img");
-    mark.src = "assets/mngaia-mark.png";
-    mark.alt = "";
-    const words = el("span");
-    words.append(el("small", "", "Prepared for and presented with"), SESSION.org);
-    const credit = el("p", "credit");
-    credit.append(mark, words);
-    const parts = [sun, credit];
+    const credit = (src, label, name) => {
+      const mark = el("img");
+      mark.src = src;
+      mark.alt = "";
+      const words = el("span");
+      words.append(el("small", "", label), name);
+      const line = el("p", "credit");
+      line.append(mark, words);
+      return line;
+    };
+    const credits = el("div", "credits");
+    credits.append(
+      credit("assets/brand/sean-beaverson-mark-reversed.png", "Made by", SESSION.maker),
+      credit("assets/mngaia-mark.png", "Prepared for and presented with", SESSION.org)
+    );
+    const parts = [credits];
     if (s.kicker) parts.push(el("p", "kicker", s.kicker));
     return parts.concat(el("h1", "heading", s.heading), el("p", "body", s.sub));
   },

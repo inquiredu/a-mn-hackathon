@@ -16,7 +16,7 @@ One file describes a whole session, and every view reads it. To run a new sessio
 
 ```js
 const SESSION = {
-  title, subtitle, org,             // names shown on pages and the stage
+  title, subtitle, org, maker,      // names shown on pages and the stage: org is the partner, maker made the kit
   day: "2026-10-09",                // clock-driven features run on this day
   timeZone: "America/Chicago",
   start: "10:00", end: "12:00",     // the advertised start and end, 24-hour
@@ -71,7 +71,7 @@ In a page, mark the element that holds the braces: `<p data-fill>Back at {wish.e
 Every screen has a `kind` and an optional `note` (shown only in the speaker notes). Any screen can also have a `timer`: a `pace` name (`"showTurn"`, `"share"`), a part's id (`"wish"`, as long as that part), `"building"` (all the time in breakout rooms), or a number of minutes. The stage then shows a countdown the presenter starts and stretches live: T starts or pauses it, + and - add or take away a minute without stopping it, and the speaker notes window has the same buttons. A length the presenter changes is remembered in that browser. Screens that name the same `timerKey` share one timer, so a countdown started on one screen keeps counting on the next (the two breakout-room screens do this). The stage never counts down to a clock time: a screen that did would claim a time that stops being true the moment the morning runs long. The stage also carries a session clock: large on the opening screen until the presenter calls the session to order (the button, or T), then counting down in the rail's corner, and large again above the stage on a click or C, with wait-time countdowns. Uncalled, it counts from `start` on the session's `day`. The arithmetic lives in `assets/stage-timer.js`, tested by `node scripts/test-stage-timer.js`.
 | Kind | Fields | Use it for |
 | --- | --- | --- |
-| `title` | `heading`, `sub`, and a `kicker` if you want one; the partner credit comes from `org` | Opening |
+| `title` | `heading`, `sub`, and a `kicker` if you want one; the credits come from `maker` and `org` | Opening |
 | `prompt` | `heading`, `big`, `body`, `url` (true shows the site address), `foot` | A question or call to action |
 | `steps` | `heading`, `steps` (list), `foot` | Instructions before breakout rooms |
 | `link` | `heading`, `body` | Putting the site address on screen |

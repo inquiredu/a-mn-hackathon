@@ -1,11 +1,20 @@
 /* Hands On: A Friday Hackathon
-   The look is inquiredu's (Electric Lake): assets/brand/inquiredu.css loads first and holds the palette,
-   the type, and both themes (Ivory, and Night when the viewer's system is dark: <html data-theme="auto">).
-   This file names the site's own roles in those tokens, so a color here is a role, not a hex value.
-   MNGAIA · AI4MN appear as the partner the session was prepared for and presented with: their mark,
-   in its own colors, on the home page, in the footer, and on the stage's title screen. Never as the UI's palette. */
+   Made by Sean Beaverson, so it wears his North Shore look: assets/brand/north-shore.css loads first with the palette
+   and the type (Montserrat for headings and anything you press, Newsreader for reading). This file names the site's
+   roles in those tokens, so a color here is a role, not a hex value. inquiredu.org is where the site lives, not its look.
+   MNGAIA · AI4MN appear as the partner the session was prepared for and presented with: their mark, in its own colors,
+   beside their name. Never as the interface's palette. */
 
 :root {
+  /* What North Shore leaves unnamed, from its own scales */
+  --control-bg: var(--cream-50);
+  --action-ghost-hover: var(--cream-200);
+  --action-accent: var(--sun-400);       /* a warm fill under navy-900 text (7.8:1) */
+  --action-accent-hover: var(--sun-200);
+  --surface-toast: var(--navy-700);
+  --fg-on-toast: var(--cream-100);
+  --tracking-badge: var(--tracking-label);
+
   --bg: var(--surface-page);
   --surface: var(--surface-raised);
   --tint: var(--surface-water-soft);     /* soft cool fills behind text: copy boxes, chips, the remix menu */
@@ -14,32 +23,32 @@
   --muted: var(--fg-2);
   --line: var(--border-hairline);
   --link: var(--fg-link);
-  --button: var(--action-primary);
-  --button-hover: var(--action-primary-hover);
-  --button-ink: var(--on-action-primary);
-  --accent: var(--indicator-selected);   /* what's selected or on now: violet */
-  --warm: var(--surface-accent);         /* the one warm highlight per view: peach, always with navy text */
-  --warm-ink: var(--fg-on-accent);
-  --focus: var(--border-focus);
-  --control: var(--control-border);
-  --shadow: none;                        /* lines before shadows */
+  --button: var(--navy-700);
+  --button-hover: var(--navy-800);
+  --button-ink: var(--cream-100);
+  --accent: var(--sun-600);              /* what's on now or selected: the copper, as a rule or underline, never as text */
+  --warm: var(--sun-400);                /* the warm tag and the cue, always with navy-900 text */
+  --warm-ink: var(--navy-900);
+  --focus: var(--sun-700);               /* one step darker than North Shore's sun-600 ring, which is 2.9:1 on cream; this is 4:1 */
+  --control: var(--navy-400);
+  --shadow: none;                        /* hairlines first */
 
-  /* The frame: the header, the now bar, and the footer stay navy in both themes */
-  --bar-bg: var(--el-navy-900);
-  --bar-ink: var(--el-ivory-100);
-  --bar-ink-2: var(--el-navy-200);
-  --bar-line: var(--el-navy-700);
-  --bar-focus: var(--el-cyan-600);
+  /* The frame: the header, the now bar, and the footer stay navy-900 in both themes */
+  --bar-bg: var(--navy-900);
+  --bar-ink: var(--cream-100);
+  --bar-ink-2: var(--navy-200);
+  --bar-line: var(--navy-700);
+  --bar-focus: var(--sun-500);
 
   /* Each starter keeps a color of its own, drawn from the same palette (graphics, not text) */
-  --oracle: var(--el-violet-600);
-  --charter: var(--el-navy-700);
-  --syllabus: var(--el-cyan-800);
-  --script: var(--el-peach-900);
-  --timer: var(--el-cyan-800);
+  --oracle: var(--sun-700);
+  --charter: var(--navy-600);
+  --syllabus: var(--water-800);
+  --script: var(--sun-800);
+  --timer: var(--water-700);
   --groups: var(--rust-700);
   --feedback: var(--pine-700);
-  --calendar: var(--el-navy-500);
+  --calendar: var(--navy-500);
 
   /* One scale for every page: the same corners, padding, and gaps everywhere */
   --radius: var(--radius-md);            /* cards, boxes, panels: 8px */
@@ -50,31 +59,53 @@
   --section: 56px;       /* above and below a section */
 }
 
-/* Night: the frame goes one step deeper than the page, and the starters' colors lighten to read on navy */
-[data-theme="dark"] {
-  --bar-bg: var(--el-navy-950);
-  --bar-line: var(--el-navy-800);
-  --oracle: var(--el-violet-300);
-  --charter: var(--el-navy-200);
-  --syllabus: var(--el-cyan-300);
-  --script: var(--el-peach-600);
-  --timer: var(--el-cyan-300);
-  --groups: var(--rust-300);
-  --feedback: var(--pine-300);
-  --calendar: var(--el-navy-200);
-}
+/* Night, when the viewer's system is dark (<html data-theme="auto">). North Shore defines no dark theme, so this one
+   is drawn from its own scales, with no new colors: navy pages, cream text, copper for the warm notes. */
 @media (prefers-color-scheme: dark) {
   [data-theme="auto"] {
-    --bar-bg: var(--el-navy-950);
-    --bar-line: var(--el-navy-800);
-    --oracle: var(--el-violet-300);
-    --charter: var(--el-navy-200);
-    --syllabus: var(--el-cyan-300);
-    --script: var(--el-peach-600);
-    --timer: var(--el-cyan-300);
-    --groups: var(--rust-300);
-    --feedback: var(--pine-300);
-    --calendar: var(--el-navy-200);
+    --surface-page: var(--navy-800);
+    --surface-raised: var(--navy-700);
+    --surface-sunken: var(--navy-900);
+    --surface-inverse: var(--cream-100);
+    --surface-water-soft: var(--navy-600);
+    --fg-1: var(--cream-100);
+    --fg-2: var(--navy-200);
+    --fg-3: var(--navy-300);
+    --fg-on-inverse: var(--navy-700);
+    --fg-on-inverse-2: var(--navy-500);
+    --fg-accent: var(--sun-400);
+    --fg-link: var(--cream-100);
+    --fg-link-hover: var(--sun-400);
+    --border-hairline: var(--navy-600);
+    --border-strong: var(--cream-100);
+    --border-focus: var(--sun-500);
+    --status-success: var(--pine-100); --status-success-bg: var(--navy-600);
+    --status-warning: var(--sun-400);  --status-warning-bg: var(--navy-600);
+    --status-danger: var(--rust-100);  --status-danger-bg: var(--navy-600);
+    --status-info: var(--water-400);   --status-info-bg: var(--navy-600);
+    --shadow-1: 0 1px 2px rgba(0,0,0,.4);
+    --shadow-2: 0 2px 6px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.3);
+    --shadow-3: 0 12px 40px rgba(0,0,0,.5);
+    --scrim: rgba(20,36,52,.72);
+    color-scheme: dark;
+
+    --control-bg: var(--navy-900);
+    --action-ghost-hover: var(--navy-600);
+    --surface-toast: var(--navy-600);
+    --button: var(--cream-100);
+    --button-hover: var(--cream-200);
+    --button-ink: var(--navy-900);
+    --accent: var(--sun-500);
+    --focus: var(--sun-500);
+    --control: var(--navy-300);
+    --oracle: var(--sun-400);
+    --charter: var(--navy-200);
+    --syllabus: var(--water-200);
+    --script: var(--sun-500);
+    --timer: var(--water-400);
+    --groups: var(--rust-100);
+    --feedback: var(--pine-100);
+    --calendar: var(--navy-300);
   }
 }
 
@@ -101,11 +132,11 @@ h4 { font-size: 1.1rem; }
 .nowcard-label { color: inherit; }
 a { color: var(--link); text-decoration-color: var(--accent); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
 a:hover { color: var(--fg-link-hover); }
-/* Focus: the brand's ring (a gap, then cyan) drawn as an outline, so it survives Windows high-contrast mode */
+/* Focus: the brand's ring (a gap, then copper) drawn as an outline, so it survives Windows high-contrast mode */
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; box-shadow: none; }
 .nowbar :focus-visible, .footer :focus-visible, .site-head :focus-visible { outline-color: var(--bar-focus); }
 .small { font-size: .9rem; color: var(--muted); }
-.hex { border-radius: var(--radius-sm); }   /* the hexagon was MNGAIA's shape; inquiredu's number tiles are square */
+.hex { border-radius: var(--radius-sm); }   /* the hexagon was MNGAIA's shape; North Shore's number tiles are square */
 .sr-only {
   position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -130,36 +161,29 @@ html { scroll-padding-top: 76px; }
 .skip:focus { top: 12px; }
 
 /* ---------- Hero ---------- */
-/* The cover: the name large on the page, the brand's sun at the right edge (the horizon bands are cut
-   in the page's own color, so it works in both themes), and the partner credit under the buttons */
-.hero { position: relative; overflow: hidden; background: var(--bg); color: var(--ink); border-bottom: 1px solid var(--line); }
-.sun {
-  position: absolute; right: -5%; top: 50%; transform: translateY(-50%);
-  width: min(34vw, 380px); aspect-ratio: 1; border-radius: 50%; overflow: hidden;
-  background: var(--el-peach-600);
+/* The cover: the name large on the page, who made it and who it was made with, and North Shore's horizon bands
+   across its foot: copper, with flat stripes cut in the page's own color, so it works in both themes */
+.hero { background: var(--bg); color: var(--ink); }
+.hero::after {
+  content: ""; display: block; height: 36px;
+  background: linear-gradient(to bottom, var(--sun-600) 0 12px, var(--bg) 12px 17px, var(--sun-600) 17px 24px, var(--bg) 24px 28px, var(--sun-600) 28px);
 }
-.sun::before, .sun::after { content: ""; position: absolute; left: 0; right: 0; background: var(--bg); }
-.sun::before { top: 56%; height: 4.5%; }
-.sun::after { top: 68%; height: 6.5%; }
-.hero-inner { position: relative; padding-top: clamp(40px, 7vw, 88px); padding-bottom: clamp(36px, 6vw, 72px); }
-/* Text never runs over the sun: ivory on peach would fail contrast in Night */
-.hero-text { max-width: min(36rem, 62vw); }
+.hero-inner { padding-top: clamp(40px, 7vw, 88px); padding-bottom: clamp(36px, 6vw, 64px); }
+.hero-text { max-width: 40rem; }
 .eyebrow { margin: 0 0 14px; font: var(--type-eyebrow); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); }
 .hero h1 { font: var(--type-display); font-size: clamp(2.75rem, 9vw, 4.5rem); letter-spacing: var(--tracking-display); }
 .hero-meta { margin: 14px 0 0; font: var(--type-ui); font-size: 1rem; }
 .hero-lede { max-width: 34rem; margin: 16px 0 0; font: var(--type-lead); font-size: clamp(1.125rem, 2.2vw, 1.3125rem); }
 
-/* Prepared for and presented with: the partner's mark in its own colors, beside its name */
+/* Who made it, and who it was prepared for and presented with: each mark in its own colors, beside the name */
+.credits { display: flex; flex-wrap: wrap; gap: 20px 44px; margin: 32px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
 .credit { display: flex; align-items: center; gap: 14px; margin: 0; }
-.credit img { width: 60px; height: auto; flex: none; }
+.credit img { width: auto; height: 52px; flex: none; }
 .credit p { margin: 0; font-family: var(--font-sans); font-size: .95rem; line-height: 1.4; }
 .credit .label { display: block; margin-bottom: 3px; }
-.hero .credit { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); max-width: 34rem; }
+.credit .host { display: block; margin-top: 2px; font-size: .85rem; }
 
-/* A phone has no room beside the words, so the sun waits for a wider screen */
 @media (max-width: 760px) {
-  .sun { display: none; }
-  .hero-text { max-width: none; }
   .hero-inner { padding-top: 36px; }
 }
 
@@ -377,13 +401,12 @@ kbd { font: inherit; font-size: .88em; font-weight: 600; padding: 1px 6px; borde
 .next { margin-top: var(--block); padding: var(--card-pad) 20px; background: var(--tint); border-radius: var(--radius); }
 .next p { margin: 6px 0 0; font-size: 1.05rem; }
 
-/* Footer: inquiredu's signed lockup, then the partner the session was prepared for and presented with */
+/* Footer: who made it and where it lives, then the partner the session was prepared for and presented with */
 .footer { background: var(--bar-bg); color: var(--bar-ink); padding: 36px 0 44px; }
 .footer-inner { display: grid; gap: 22px; }
 .footer-brands { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; padding-bottom: 24px; border-bottom: 1px solid var(--bar-line); }
-.footer-lockup { width: 176px; height: auto; }
 .footer .credit p { max-width: 32rem; }
-.footer .credit .label { color: var(--bar-ink-2); }
+.footer .credit .label, .footer .credit .host { color: var(--bar-ink-2); }
 .footer p { margin: 2px 0; }
 .footer .small { color: var(--bar-ink-2); }
 .footer .small strong { color: var(--bar-ink); }
@@ -439,13 +462,13 @@ dialog::backdrop { background: var(--scrim); }
 
 /* The cue that slides in when the morning moves to its next part */
 .cue { background: var(--warm); color: var(--warm-ink); }
-.cue :focus-visible { outline-color: var(--el-navy-900); }
+.cue :focus-visible { outline-color: var(--warm-ink); }
 .cue[hidden] { display: none; }
 .cue-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-top: 10px; padding-bottom: 10px; }
 .cue-text { margin: 0; flex: 1 1 18rem; }
 .cue-text strong { font-weight: 600; }
-.cue .button.primary { background: var(--el-navy-900); border-color: var(--el-navy-900); color: var(--el-ivory-100); }
-.cue-close { background: transparent; border-color: var(--el-navy-900); color: var(--el-navy-900); }
+.cue .button.primary { background: var(--warm-ink); border-color: var(--warm-ink); color: var(--bar-ink); }
+.cue-close { background: transparent; border-color: var(--warm-ink); color: var(--warm-ink); }
 
 /* Short screens (a Chromebook at 200% zoom): keep the code editor usable */
 @media (max-height: 500px) {
@@ -455,17 +478,17 @@ dialog::backdrop { background: var(--scrim); }
 }
 
 /* ---------- Site header and navigation (every page) ---------- */
-/* The header is navy, like the now bar under it and the footer: the page is framed in inquiredu navy.
-   The wordmark leads (the reversed file, made for navy), then the session's name after a hairline. */
+/* The header is navy, like the now bar under it and the footer: the page is framed in North Shore navy.
+   Sean Beaverson's mark leads (the reversed file, made for navy), then the session's name after a hairline. */
 .site-head { background: var(--bar-bg); color: var(--bar-ink); border-bottom: 1px solid var(--bar-line); }
 .site-head-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; padding-top: 10px; padding-bottom: 10px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--bar-ink); text-decoration: none; font-family: var(--font-sans); font-weight: 600; font-size: 1.05rem; }
-.brand img { width: auto; height: 24px; }
-.brand-name { padding-left: 12px; border-left: 1px solid var(--bar-line); line-height: 24px; }
+.brand img { width: auto; height: 34px; }   /* the mark's minimum is 32px */
+.brand-name { padding-left: 12px; border-left: 1px solid var(--bar-line); line-height: 28px; }
 .site-nav { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
 .site-nav a { display: block; padding: 6px 12px; border-radius: 999px; color: var(--bar-ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
 .site-nav a:hover { background: rgb(255 255 255 / .12); }
-.site-nav a[aria-current="page"] { background: var(--bar-ink); color: var(--el-navy-900); font-weight: 600; }
+.site-nav a[aria-current="page"] { background: var(--bar-ink); color: var(--bar-bg); font-weight: 600; }
 .site-nav .present-link { border: 1.5px solid var(--bar-ink); padding: 4.5px 12px; font-weight: 600; }
 .site-nav .present-link:hover { background: var(--bar-ink); color: var(--bar-bg); }
 /* On a phone the menu is one row that scrolls sideways, under the name, instead of four rows */

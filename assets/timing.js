@@ -12,7 +12,7 @@
 //   {nudge}                    a pace from the session file: "ten minutes" ([2, 3] reads "two or three minutes")
 //   {weekday} {date} {zone}    "Friday", "October 9", "Central"
 //   {parts}                    how many parts: "7"
-//   {title} {subtitle} {org}   the session's names
+//   {title} {subtitle} {org}   the session's names; {maker} is who made the kit
 //   {links.teams}              a link from the session file, for chat messages
 // Add :number or :unit to split a length for big numerals ("2" and "hours"),
 // and start with a capital letter to capitalize: {Length} reads "Two hours".
@@ -81,7 +81,7 @@ const TIMES = (() => {
     if (name === "building") {
       return { length: SESSION.segments.filter((s) => s.where === "Breakout rooms").reduce((sum, s) => sum + s.minutes, 0) };
     }
-    if (name === "title" || name === "subtitle" || name === "org") return { text: SESSION[name] };
+    if (name === "title" || name === "subtitle" || name === "org" || name === "maker") return { text: SESSION[name] };
     if (name in pace) return { length: pace[name] };
     if (name in named) return { text: named[name] };
     const [id, field] = name.split(".");
@@ -127,7 +127,7 @@ const TIMES = (() => {
 
   // ---------- Fill in the session file, then the page ----------
 
-  ["title", "subtitle", "org"].forEach((key) => { SESSION[key] = fill(SESSION[key]); });
+  ["title", "subtitle", "org", "maker"].forEach((key) => { SESSION[key] = fill(SESSION[key]); });
   (function resolve(node) {
     Object.keys(node).forEach((key) => {
       const value = node[key];

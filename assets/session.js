@@ -9,7 +9,8 @@
 const SESSION = {
   title: "Hands On",
   subtitle: "A {weekday} Hackathon",
-  org: "MNGAIA · AI4MN",            // the partner: "Prepared for and presented with {org}" on Home, the footer, and the stage
+  org: "MNGAIA · AI4MN",            // the partner: "Prepared for and presented with {org}" on Home, every footer, and the stage
+  maker: "Sean Beaverson",          // who made the kit: "Made by {maker}" in the same places (inquiredu.org only hosts it)
   day: "2026-10-09",                 // the clock-driven parts only run on this day
   timeZone: "America/Chicago",
   start: "10:00",                    // when the session starts and ends, as advertised (24-hour)

@@ -37,7 +37,7 @@ What the readers found clear, and should stay: the home page's "Everything here"
 
 ## Decisions for Sean, before any rewriting
 
-Each changes what several pages say. A recommendation is given with each, and the proposed fixes below are written in branches where the decision matters.
+Each changes what several pages say. A recommendation was given with each, and the proposed fixes below are written in branches where the decision matters. **Sean decided all nine on October 11** (recorded in `docs/DECISIONS.md`): 1 A; 2 A; 3 A; 4 A; 5 A; 6 both paths; 7 the doc is renamed **the Breakout Planner**; 8 the tools say names are **anonymized** (they stay in the window; nothing saved or sent) with the made-up names as examples; 9 "For the session" / "After the session." Where a fix below branches, the chosen branch is the one to write.
 
 **1. The event's shared links: Meet, the Teams doc, the walls deck.**
 - A. *Keep them as the record, off the newcomer paths* (recommended). They stay in the session file and appear only on Hosts, in a folded "How the first run went" block, labelled as October 9's, with the Teams doc and walls set to view-only (as `HANDOFF.md` already says). Starters, Three levels, Grant a wish, and the stage lose them; the "pin it to the wall" section on Grant a wish becomes "keep it and show one person," and the live-session version of each page gets its link from whatever the host puts in their own session file.

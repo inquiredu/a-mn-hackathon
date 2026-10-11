@@ -226,10 +226,10 @@ function card(s, headingLevel, position) {
     tags.append(tag);
   });
 
-  const share = el("button", "src-link", "Copy link");
+  const share = el("button", "src-link", "Copy a link to this entry");
   share.type = "button";
-  share.setAttribute("aria-label", "Copy a link to " + s.title);
-  share.addEventListener("click", () => copyText(location.origin + location.pathname + "#" + s.id, "Link copied."));
+  share.setAttribute("aria-label", "Copy a link to this entry: " + s.title);
+  share.addEventListener("click", () => copyText(location.origin + location.pathname + "#" + s.id, "Copied a link to this entry on this page."));
 
   foot.append(toggle, tags, share);
   article.append(heading, meta, take, more, foot);
@@ -248,6 +248,7 @@ function render() {
     const n = SOURCES.filter((s) => (key === "all" || s.section === key) && matches(s, "section")).length;
     button.querySelector(".facet-count").textContent = state.path ? "" : n;
     button.setAttribute("aria-pressed", String(!state.path && state.section === key));
+    button.disabled = !state.path && n === 0 && state.section !== key;   // a tab that would show nothing
   });
   // Topics and their counts. A topic with nothing in this view steps out of the list,
   // unless it's the one chosen, and a group with no topics left goes with it.
@@ -277,6 +278,7 @@ function render() {
   $("count").textContent = state.path
     ? PATHS[state.path].title + " " + list.length + " sources, in reading order."
     : (anyFilter() ? "Showing " + list.length + " of " + SOURCES.length + " sources." : "All " + SOURCES.length + " sources.");
+  $("clear").hidden = !anyFilter();
   const banner = $("path-banner");
   banner.hidden = !state.path;
   if (state.path) {

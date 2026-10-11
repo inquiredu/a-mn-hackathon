@@ -10,7 +10,7 @@ This pass is about content: words, instructions, order, labels, and what each pa
 
 ## Where things stand
 
-- **EXISTS** on the local branch `north-shore-look`, four commits ahead of `origin/main`, **not pushed** (the repo is public, so pushing publishes it; Sean decides): the North Shore look, the front door for anyone, the rename to First Builds, the signature (mark, "s.beaverson", CC BY-NC-SA 4.0) at the lower left, MNGAIA · AI4MN leading the credits. `docs/DECISIONS.md` has every October 11 decision with its reason.
+- **EXISTS** on the local branch `north-shore-look`, ahead of `origin/main` (`git log origin/main..` lists the commits), **not pushed** (the repo is public, so pushing publishes it; Sean decides): the North Shore look, the front door for anyone, the rename to First Builds, the signature (mark, "s.beaverson", CC BY-NC-SA 4.0) at the lower left, MNGAIA · AI4MN leading the credits. `docs/DECISIONS.md` has every October 11 decision with its reason.
 - **EXISTS**: the live site at inquiredu.org/a-mn-hackathon still shows the old MNGAIA look. Nothing on this branch is live.
 - Preview: `node scripts/serve.js`, then http://localhost:4178. With no `?now=`, every page is in its after-the-event state, which is what a newcomer sees. Add `?now=10:50` only to check the event-day states still work.
 

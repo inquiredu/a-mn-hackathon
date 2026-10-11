@@ -47,11 +47,12 @@ const SESSION = {
     planner: "https://docs.google.com/document/d/1X_kzm4zUjvb5ZqlQBZmPgmirchg_bLJlhlGVhbQApGk/edit",
     gallery: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_407",
     wonder: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_144",
-    worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86"
+    worry: "https://docs.google.com/presentation/d/16AH9SRKlTVhr5ZlEQFnxO0C6IiMcbNto0pNX7RZuMcw/edit#slide=id.h481799e189d257a0_0_86",
+    next: "We turn to assessment: what our practices have measured, who they have served, and who they may have held back."   // what the first run said next
   },
 
-  // What comes after this session, said at the close. Leave it empty and the close skips it.
-  next: "We turn to assessment: what our practices have measured, who they have served, and who they may have held back.",
+  // What comes after this session, said at the close. Empty, the close says only thank you.
+  next: "",
 
   // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.
   pace: {
@@ -83,21 +84,22 @@ const SESSION = {
       hint: "The plan for the morning, then the chat: how much have you built with AI, from 1 to 5, and what was it?",
       link: "index.html#today",
       screens: [
-        { kind: "title", note: "Welcome people as they arrive. A month in, this is a morning to play. Nobody here is a developer by trade.", heading: "{title}", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
-        { kind: "prompt", note: "Ask for wishes in the chat and read two or three aloud. Main-room chat won't follow people into breakout rooms, so the Breakout Planner keeps the wishes.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
-        { kind: "embed", note: "Share this tab with its sound on. Ask the Oracle two or three questions from the chat. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
-        { kind: "plan", note: "Walk the morning in a sentence each. The page has all of it, and so does the chat.", heading: "Here's what we're here to do", url: true },
-        { kind: "prompt", note: "Read a few numbers aloud as they come in. Every number is welcome; a room of 1s is a good room. Your co-host notes the 4s and 5s: they're the anchors.", heading: "How much have you built with AI?", big: "1 to 5, in the chat", body: "1: not yet. 5: I'm having a hard time stopping." },
-        { kind: "prompt", note: "Read two or three aloud. Whatever they name, it fits one of the three levels coming next; say so as you read.", heading: "Built something already?", big: "What was it?", body: "One sentence in the chat. We'll ask some of you to show it after the next part." }
+        { kind: "title", note: "Welcome people as they arrive. Say: this is a session to play; nobody here is a developer by trade. (The first run added: a month into the school year. Change it to fit your group.)", heading: "{title}", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
+        { kind: "prompt", note: "Say: finish the sentence in the chat: I wish I had a thing that… A wish is a small tool you wish you had for your work. Read two or three aloud. Co-host: copy each wish into the Wishes list in the Breakout Planner; main-room chat won't follow people into rooms.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
+        { kind: "embed", note: "Do: share the stage tab in Meet with tab audio on (not this notes window). The Oracle is built into this screen: type two or three questions from the chat into its box and press Consult. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
+        { kind: "plan", note: "Do: paste the site's address in the chat if you haven't. Say one sentence per part: Three levels ({levels.length}), Show & Tell ({show.length}), the Remix Arcade ({remix.length}), Grant a wish ({wish.length}), Show & Cheer ({cheer.length}), the close ({close.length}).", heading: "Here's what we're here to do", url: true },
+        { kind: "prompt", note: "Say: a number from 1 to 5 in the chat; 1 is not yet, 5 is I'm having a hard time stopping. Read a few aloud as they come in; every number is welcome, and a room of 1s is a good room. Co-host: list the 4s and 5s. They're the anchors: one per breakout room, who shares their screen first so the room has something to start from. Message each one privately to say so.", heading: "How much have you built with AI?", big: "1 to 5, in the chat", body: "1: not yet. 5: I'm having a hard time stopping." },
+        { kind: "prompt", note: "Say: built something already? One sentence: what was it? Read two or three aloud; whatever they name, it fits one of the three levels coming next, so say so as you read. Co-host: add the builders to the anchors list.", heading: "Built something already?", big: "What was it?", body: "One sentence in the chat. We'll ask some of you to show it after the next part." }
       ],
       host: [
         "Pin the page link in the main chat.",
         "Turn on captions.",
-        "Ask the Oracle two or three questions from the chat.",
-        "Co-host: from the chat, list the 4s, the 5s, and anyone who says what they built. They're the anchors, one for each room."
+        "Ask the Oracle two or three questions from the chat. It's built into the stage screen; share the tab with its sound on.",
+        "Co-host: from the chat, list the 4s, the 5s, and anyone who says what they built. They're the anchors, one for each room.",
+        "Co-host: copy each wish from the chat into the Wishes list in the Breakout Planner; main-room chat won't follow people into rooms."
       ],
       messages: [
-        { to: "Main chat", text: "Welcome! Everything for today is here: https://{url}\nPage blocked on your network? The same morning as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
+        { to: "Main chat", text: "Welcome! Everything for today is here: https://{url}\nPage blocked on your network? The same session as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
         { to: "Main chat", text: "How much have you built with AI? Type a number from 1 to 5.\n1: not yet. 5: I'm having a hard time stopping." },
         { to: "Main chat", text: "Built something already? In one sentence: what was it?" }
       ]
@@ -106,15 +108,15 @@ const SESSION = {
       hint: "In the chat, on your site, behind the scenes: three levels of getting started with code. Your host shows each one live.",
       link: "levels.html", linkLabel: "The three levels",
       screens: [
-        { kind: "ladder", note: "Name the three levels in a sentence each before any tab opens. Every level is a good level; the point is that there's always a next one, and it's closer than it looks.", heading: "Three levels of getting started with code", rungs: [
+        { kind: "ladder", note: "Say, one sentence each, before any tab opens: In the chat, a small tool that runs inside your AI chat, like the Oracle and every starter on the site. On your site, a document you already have becomes a page on your Google Site. Behind the scenes, a short script does a job in your Drive. Every level is a good level; there's always a next one, and it's closer than it looks.", heading: "Three levels of getting started with code", rungs: [
           { name: "In the chat", why: "A small tool that runs right inside your AI chat. The Oracle. Every starter on this site." },
           { name: "On your site", why: "A document you already have becomes an interactive page, pasted into a Google Site." },
           { name: "Behind the scenes", why: "A short script does the work for you: point it at a Drive folder and get an inventory of everything inside." }
         ], foot: "Three tabs are open. Let's go." },
-        { kind: "prompt", note: "Switch your share to Chrome. Tab 1: your AI with the Oracle pasted in. Tab 2: the charter and the infographic prompt in Gemini with Canvas on, and the Google Site open to edit. Tab 3: the Apps Script editor with the inventory script, your folder's ID in place, run once already. Start one, switch while it thinks, start the next. The notes window keeps the clock.", heading: "Three tabs, live", big: "1 · 2 · 3", body: "A starter in the chat. A charter that becomes a page on a Google Site. A script that lists a whole folder.", foot: "Every level is a good level.", timer: "demo" }      ],
+        { kind: "prompt", note: "Do: switch your share to the Chrome window with the three tabs you set up before the day (Hosts, Before the day). Tab 1: your AI with the Oracle starter pasted in and running. Tab 2: Gemini with Canvas on, the Charter Cards prompt and a made-up charter ready to paste, and your Google Site open to edit. Tab 3: the Apps Script editor with the Drive Inventory, a practice folder's ID in place, run once already so no permission screen appears. Start one, switch while it thinks, start the next: about four minutes each. This notes window keeps the clock.", heading: "Three tabs, live", big: "1 · 2 · 3", body: "A starter in the chat. A charter that becomes a page on a Google Site. A script that lists a whole folder.", foot: "Every level is a good level.", timer: "demo" }      ],
       host: [
-        "Before {start}, in Chrome: tab 1, your AI with the Oracle pasted and running. Tab 2, Gemini with Canvas on, the charter ready to paste with the infographic prompt, and your Google Site open to edit in the same tab's history or a tab beside it. Tab 3, the Apps Script editor with the inventory script and your folder's ID pasted in, run once already so the permission screen is behind you.",
-        "Share Chrome as a window, not a single tab, so the switches come through.",
+        "Before the day, in Chrome, the three demo tabs as the Hosts page lists under Before the day: tab 1, your AI with the Oracle starter pasted in and running; tab 2, Gemini with Canvas on, the Charter Cards prompt and a made-up charter ready to paste, and your Google Site open to edit beside it; tab 3, the Apps Script editor with the Drive Inventory and a practice folder's ID in place, run once already so the permission screen is behind you.",
+        "Name the three levels in a sentence each before any tab opens. Then share Chrome as a window, not a single tab, so the switches come through. About four minutes per level.",
         "Back to the stage for Show & Tell."
       ],
       messages: [
@@ -127,8 +129,8 @@ const SESSION = {
       link: "levels.html#pick", linkLabel: "Pick your level",
       shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
-        { kind: "prompt", note: "Open the mic: who has done one of these? Builders press Present now, then A tab. Start the timer (T) when someone starts, stretch it as the conversation goes, and Reset between people.", heading: "Done one of these?", body: "Show it, or tell us about it: which level, what it does, and one thing that went sideways.", timer: "showTurn" },
-        { kind: "steps", note: "Everyone opens the Breakout Planner and adds their name under a level. Your co-host makes the rooms from those lists, up to four to a room, same level together. Say it plainly: any level is a good level, and the one that would stretch you a little is the best one.", heading: "Pick your level", steps: [
+        { kind: "prompt", note: "Say: who has done one of these? Show it, or tell us: which level, what it does, one thing that went sideways. Builders share with Present now, then A tab. Do: stop your own share while they present. On the stage window, T starts the timer when someone starts; + and − stretch it; Reset between people. Share the stage again after.", heading: "Done one of these?", body: "Show it, or tell us about it: which level, what it does, and one thing that went sideways.", timer: "showTurn" },
+        { kind: "steps", note: "Co-host: paste the Breakout Planner's link in the chat now. Say: open it and add your name under the level you want to try, and a partner's name next to yours if you have one. Any level is a good level, and the one that would stretch you a little is the best one. Co-host: make rooms of up to four from each level's list, partners together, an anchor in each where one fits, and write the room numbers in the Room column. Allow about five minutes.", heading: "Pick your level", steps: [
           "Open the Breakout Planner.",
           "Add your name under the level you want to try today: 1, 2, or 3.",
           "Want company? Put a partner's name next to yours, or two."
@@ -138,9 +140,8 @@ const SESSION = {
         "Before you start: in Host controls, keep Share their screen on for everyone. No one needs to be a co-host to present.",
         "Builders share with Present now, then A tab, so their tab's sound comes through.",
         "Start the stage timer when they start; Reset between people.",
-        "Co-host: as names land under the levels in the Breakout Planner, open Breakout rooms and make rooms of up to four from each level's list, partners together. Rooms = names ÷ 4, rounded up, for each level.",
-        "Where you can, put a 4 or a 5 from the Welcome chat in each room. They're the anchors.",
-        "Write each person's room number in the Room column, and set the breakout timer to {building}."
+        "Co-host: paste the Breakout Planner's link in the chat. As names land under the levels, open Breakout rooms and make rooms of up to four from each level's list, partners together. Rooms = names ÷ 4, rounded up, for each level.",
+        "Co-host: put an anchor (a 4, a 5, or someone who said what they built) in each room where one fits, write each person's room number in the Room column, message each anchor privately (\"You're your room's anchor: share your screen first and start a starter together\"), and set the breakout timer to {building}."
       ],
       messages: [
         { to: "Main chat", text: "Done one of these already? Raise your hand and show us. To share: Present now, then A tab, then pick the tab with your tool." },
@@ -153,17 +154,18 @@ const SESSION = {
       link: "starters.html", linkLabel: "Open the starters",
       shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
-        { kind: "steps", note: "Walk the four steps. Anchors share their screen first. Then open the rooms.", heading: "Off to your room", steps: [
+        { kind: "steps", note: "Say the four steps on the screen: find your room number next to your name in the Breakout Planner; your anchor shares their screen and everyone builds along for {buildAlong}; level 1 picks a starter and makes it theirs, levels 2 and 3 run their level's example from Three levels; stuck means Ask for help in Meet. Co-host: open the rooms.", heading: "Off to your room", steps: [
           "Find your room number next to your name in the Breakout Planner.",
           "Your anchor shares their screen. Build along for {buildAlong}.",
           "Level 1: pick a starter and make it yours. Levels 2 and 3: run your level's example, then make it yours.",
           "Stuck? Press Ask for help in Meet."
-        ], foot: "Back in the main room in {building}" },        { kind: "link", note: "Leave this up while the rooms open, and paste the link in the main chat once more.", heading: "Everything is here", body: "The starters, the three levels, the Breakout Planner, and the gallery wall." },
-        { kind: "prompt", note: "Start the timer (T) as the rooms open and nudge it with + and - as the morning goes; the session clock in the corner keeps the big picture. For anyone who stays in the main room: build wishes live with them.", heading: "Rooms are building", body: "Rather watch? Stay here. We're building wishes live in the main room.", timer: 25, timerKey: "building" }      ],
+        ], foot: "Back in the main room in {building}" },        { kind: "link", note: "Do: leave this up while the rooms open, and paste the site's address in the main chat once more. The Remix Arcade: each room picks a starter and changes one thing about it.", heading: "Everything is here", body: "The starters, the three levels, the Breakout Planner, and the gallery wall." },
+        { kind: "prompt", note: "Do: T starts the building timer ({building}) as the rooms open; it keeps counting on the next screen, and + and − nudge it. The session clock in the corner keeps the big picture. You stay in the main room and build a wish from the chat, live, with anyone who stays; the co-host visits rooms and watches for Ask for help.", heading: "Rooms are building", body: "Rather watch? Stay here. We're building wishes live in the main room.", timer: "building", timerKey: "building" }      ],
       host: [
-        "Open the rooms.",
+        "Walk the four steps on the stage: find your room number in the Breakout Planner; your anchor shares their screen and everyone builds along for {buildAlong}; level 1 picks a starter, levels 2 and 3 run their level's example; stuck means Ask for help in Meet.",
+        "Co-host: open the rooms.",
         "Paste the page link into each room's chat as you visit (breakout chats start empty).",
-        "One host stays in the main room, building wishes live."
+        "The presenter stays in the main room, building wishes live with anyone who stays; the co-host visits rooms and watches for Ask for help."
       ],
       messages: [
         { to: "Each breakout room", text: "Everything's here: https://{url}\nLevel 1: the starters. Levels 2 and 3: your example, prompt, and script are at https://{url}/levels.html\nAnchor: share your screen and start one together.\nPage blocked? The starters as slides, code in the notes: {links.companion}" }
@@ -174,10 +176,12 @@ const SESSION = {
       hint: "Same room. Build something from nothing at your level: your own wish, or one from the Breakout Planner.",
       link: "wish.html", linkLabel: "Open Grant a wish",
       shared: [{ link: "gallery", label: "Gallery wall" }],
-      screens: [        { kind: "prompt", note: "The same timer as the last screen, still counting; nudge it with + and - as you go. With {nudge} left, hosts visit each room to say so. Keep building in the main room.", heading: "Grant a wish", body: "Your wish, at your level, or one from the Breakout Planner. Pin something to the gallery wall before you head back.", timer: 25, timerKey: "building" }      ],
+      screens: [        { kind: "prompt", note: "Do: at the switch from the Remix Arcade, the co-host visits each room to say: switch to granting a wish, your own or one from the Breakout Planner (Meet can't message every room at once; the Planner's top line can carry the word too). Same timer as the last screen, still counting; don't reset it. With {nudge} left, visit each room again: pin something to the gallery wall, even half-built. At zero, the co-host closes the rooms. Keep building in the main room meanwhile.", heading: "Grant a wish", body: "Your wish, at your level, or one from the Breakout Planner. Pin something to the gallery wall before you head back.", timer: "building", timerKey: "building" }      ],
       host: [
-        "With {nudge} left, visit each room: pin something to the gallery wall.",
-        "Note one or two builds for Show & Cheer."
+        "At the switch from the Remix Arcade, visit each room to say: switch to granting a wish, your own or one from the Breakout Planner. (Meet can't message every room at once; a line at the top of the Breakout Planner, which everyone has open, carries the word too.)",
+        "With {nudge} left, visit each room again, or change the Planner's top line: pin something to the gallery wall, even half-built.",
+        "Co-host: note one build for each award (Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used), and one or two builders to ask first at Show & Cheer.",
+        "At zero, the co-host closes the rooms; Meet gives everyone a short countdown."
       ],
       messages: [
         { to: "Each breakout room", text: "{Nudge} left! Pin what you have to the gallery wall, even if it's half-built. Half-built counts.\nHow: https://{url}/wish.html#wall" }
@@ -189,16 +193,17 @@ const SESSION = {
       link: "index.html#cheer", linkLabel: "The awards",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
-        { kind: "prompt", note: "Welcome everyone back. Ask for volunteers by raised hand. Applause first, then one question: who would you show this to?", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?", timer: "share" },
-        { kind: "awards", note: "Name the builds that earned each award.", heading: "This morning's awards", awards: [
+        { kind: "prompt", note: "Say: welcome back; raise a hand to share. Applause first, then one question: who would you show this to? About three minutes each, so five or six builds; Reset the timer between builders. Co-host: line up the next builder from the gallery wall.", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?", timer: "share" },
+        { kind: "awards", note: "Say: three awards, on the screen: Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used. Read the co-host's list: the award, then the build and its builders. For fun, not ranking.", heading: "This morning's awards", awards: [
           { icon: "bug", name: "Most Delightfully Broken", why: "For the most glorious error message of the morning." },
           { icon: "life-buoy", name: "Best Rescue", why: "For the save that made the room cheer." },
           { icon: "calendar-check", name: "Most Likely to Actually Get Used", why: "For the one somebody will really open next week." }
         ] }
       ],
       host: [
-        "Builders share with Present now, then A tab, so their tab's sound comes through.",
-        "If sharing fails, share the gallery wall and click their picture to open what they made."
+        "Builders share with Present now, then A tab, so their tab's sound comes through. About three minutes each; Reset the stage timer between builders.",
+        "If sharing fails, share the gallery wall and click their picture to open what they made.",
+        "Read the awards from the co-host's list. For fun, not ranking."
       ],
       messages: [
         { to: "Main chat", text: "Show & Cheer! Want to share? Raise your hand. To share: Present now, then A tab, then pick your AI tab." }
@@ -209,22 +214,23 @@ const SESSION = {
       hint: "One wonder, one worry, one word.",
       link: "index.html#close", linkLabel: "The close",
       shared: [{ link: "wonder", label: "Wonder wall" }, { link: "worry", label: "Worry wall" }],
-      screens: [        { kind: "code", note: "Show the swaps and the list of words. The Oracle didn't know anything: it turned your question around with a few word swaps (a program called ELIZA did the same in 1966), and a person chose what it listens for.", heading: "How did the Oracle know?", code: "SWAPS = { i: \"you\", my: \"your\", am: \"are\" }\n\nlistensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou will be long, and worth it.\",\n  \"The hotdish will contain tater tots. Tot-ally.\"\n]", caption: "A few swaps and a list of words, both chosen by a person. Every machine today started with a person, passed through an AI, and came back to a person." },
-        { kind: "ladder", note: "The three levels from this morning, and the fourth we only wave at: a coding tool that works inside your files. This site was built that way. Not for today; for when level three feels easy.", heading: "Where this goes", rungs: [
+      screens: [        { kind: "code", note: "Say: the Oracle didn't know anything. The screen shows its two tricks. The swaps: it turns I into you and my into your and hands your question back (a program called ELIZA did the same in 1966). The list of words: a handful it listens for, like coffee or lunch, each with a line a person wrote. Point at one swap and one word from a question asked earlier. Every machine today started with a person and came back to a person.", heading: "How did the Oracle know?", code: "SWAPS = { i: \"you\", my: \"your\", am: \"are\" }\n\nlistensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou will be long, and worth it.\",\n  \"The hotdish will contain tater tots. Tot-ally.\"\n]", caption: "A few swaps and a list of words, both chosen by a person. Every machine today started with a person, passed through an AI, and came back to a person." },
+        { kind: "ladder", note: "Say: the three levels from today, and a fourth we only wave at: an app where the AI works inside the files on your computer (Claude Code, Codex, Cursor). This site was built that way. Not for today; for when level three feels easy.", heading: "Where this goes", rungs: [
           { name: "In the chat", why: "A tool inside your AI chat. Twenty minutes." },
           { name: "On your site", why: "A page on your Google Site. An hour." },
           { name: "Behind the scenes", why: "A script in your Drive. An afternoon." },
           { name: "With a workbench", why: "Claude Code, Codex, Cursor: the AI works inside your files. When level three feels easy.", later: true }
         ] },        { kind: "quote", note: "Say it, then let it sit for a moment.", text: "Everything you made today, a seventh grader can make tonight." },
-        { kind: "pair", note: "Post the wonder and worry link in the chat. Give it {wonder}.", heading: "Before you go", cards: [
+        { kind: "pair", note: "Do: post the wonder and worry links in the chat (the closing message on Hosts carries them). Say: one wonder, one worry, on the walls. Give it {wonder}.", heading: "Before you go", cards: [
           { heading: "I wonder...", body: "What did today make you curious about?" },
           { heading: "I worry...", body: "What did today make you uneasy about?" }
         ], foot: "Add yours to the wall. Then one word in the chat for how you're leaving.", timer: "wonder" },
-        { kind: "prompt", note: "Ask for one word in the chat. Thank the anchors by name. Point to next month.", heading: "Next month", body: "We turn to assessment: what our practices have measured, who they have served, and who they may have held back.", foot: "Thank you for building with us." }
+        { kind: "prompt", note: "Say: one word in the chat for how you're leaving. Thank the anchors by name. Then what your group does next, if anything: this screen shows the session file's next line, and says only thank you when that's empty.", heading: "Next time", body: "{next}", foot: "Thank you for building with us." }
       ],
       host: [
-        "Post the wonder and worry link in the chat.",
-        "Thank the anchors by name."
+        "Post the wonder and worry links in the chat; the message below carries them.",
+        "Thank the anchors by name.",
+        "Say what your group does next, if anything. The last screen shows the session file's next line; leave it empty and the screen says only thank you."
       ],
       messages: [
         { to: "Main chat", text: "One wonder, one worry: add yours to the walls.\nI wonder: {links.wonder}\nI worry: {links.worry}\nThen one word in the chat for how you're leaving." }

@@ -83,3 +83,42 @@ SESSION.segments.forEach((segment, s) => {
 
   $("ros").append(card);
 });
+
+
+// ---------- The parts in order, with how far into the session each one starts ----------
+
+if ($("parts-in-order")) {
+  let at = 0;
+  const parts = SESSION.segments.map((s) => {
+    const label = s.title + " at " + Math.floor(at / 60) + ":" + String(at % 60).padStart(2, "0");
+    at += s.minutes;
+    return label;
+  });
+  $("parts-in-order").textContent = "In order, counted from the start: " + parts.join(" · ") + " · ends at " + Math.floor(at / 60) + ":" + String(at % 60).padStart(2, "0") + ".";
+}
+
+// Links straight to the first run's files, where a step names them
+document.querySelectorAll("[data-record-link]").forEach((a) => {
+  const url = (SESSION.record || {})[a.dataset.recordLink];
+  if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
+});
+
+
+// ---------- How the first run went: the record, from the session file ----------
+
+document.querySelectorAll("[data-record]").forEach((box) => {
+  const record = SESSION.record || {};
+  const ran = el("p", "", "Run live as " + (record.ran || "the first session") + ", for about forty K-12 educators and leaders on Google Meet, most of whom had never coded. Its shared files are view-only now, kept so you can see the shape of them and copy them:");
+  const list = el("ul");
+  [["planner", "The Breakout Planner from the first run"], ["gallery", "The walls deck: the gallery wall"], ["wonder", "The walls deck: I wonder"], ["worry", "The walls deck: I worry"]].forEach(([key, label]) => {
+    if (!record[key]) return;
+    const a = linkTo(record[key], label);
+    a.target = "_blank";
+    a.rel = "noopener";
+    const li = el("li");
+    li.append(a);
+    list.append(li);
+  });
+  const lines = el("p", "", "At the close, the first run pointed to its next session: \"" + (record.next || "") + "\" The stage's last screen now says only thank you until a copy of the kit fills its next line; the invitation on Home before the day and the welcome note (\"a month into the school year\") were that day's too.");
+  box.replaceChildren(ran, list, lines);
+});

@@ -42,7 +42,7 @@ Object.entries(SESSION.links).forEach(([name, url]) => {
   if (url && !/^https:\/\//.test(url)) problems.add("The link \"" + name + "\" isn't an https address: " + url);
 });
 Object.entries(SESSION.record || {}).forEach(([name, url]) => {
-  if (name !== "ran" && url && !/^https:\/\//.test(url)) problems.add("The record's \"" + name + "\" isn't an https address: " + url);
+  if (!["ran", "next"].includes(name) && url && !/^https:\/\//.test(url)) problems.add("The record's \"" + name + "\" isn't an https address: " + url);
 });
 if (/^https?:\/\//.test(SESSION.url)) problems.add("The session's url should be written without https://: " + SESSION.url);
 

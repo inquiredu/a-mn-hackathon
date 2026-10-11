@@ -52,6 +52,7 @@ const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", 
   label { display: block; margin: 14px 0 6px; font-weight: 600; }
   label:first-child { margin-top: 0; }
   .hint { font-weight: 400; color: var(--muted); }
+  .foot { margin: 14px 0 0; font-size: .9rem; color: var(--muted); }
   textarea, input {
     width: 100%; padding: 8px 10px; font: inherit;
     border: 2px solid var(--edge); border-radius: 10px; background: var(--card); color: var(--ink);
@@ -92,13 +93,13 @@ const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", 
 
   <div class="layout">
     <form class="card" id="setup">
-      <label for="names">Names, one per line <span class="hint">(made-up for today)</span></label>
+      <label for="names">Names, one per line <span class="hint">(anonymized is fine; the ones here are made-up examples)</span></label>
       <textarea id="names" rows="12" spellcheck="false"></textarea>
 
       <label for="size">People per group</label>
       <input id="size" type="number" min="2" max="10">
 
-      <label for="helpers">Spread these people out, one per group <span class="hint">(optional: hosts or helpers)</span></label>
+      <label for="helpers">Spread these people out, one per group <span class="hint">(optional: leaders, helpers, adults in the room)</span></label>
       <textarea id="helpers" rows="3" spellcheck="false" placeholder="One name per line"></textarea>
 
       <button class="primary" type="submit">Make groups</button>
@@ -116,6 +117,7 @@ const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", 
       <p class="status" id="status" aria-live="polite"></p>
       <div class="groups" id="groups"></div>
       <textarea class="copy-box" id="copy-box" readonly hidden aria-label="The groups as text, ready to copy"></textarea>
+      <p class="foot">Names stay in this window on your computer; nothing is saved or sent. The names above are made-up examples; anonymized ones of your own work the same way.</p>
     </section>
   </div>
 </div>

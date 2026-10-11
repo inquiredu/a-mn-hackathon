@@ -320,6 +320,8 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
     a.target = "_blank";
     a.rel = slot.dataset.link === "license" ? "license noopener" : "noopener";
     slot.append(a);
+  } else if (slot.dataset.pending === "") {
+    slot.hidden = true;   // the page has already said, in its own words, where the link comes from
   } else {
     slot.append(el("span", "pending", TIMES.fill(slot.dataset.pending || "The link is coming soon.")));
   }

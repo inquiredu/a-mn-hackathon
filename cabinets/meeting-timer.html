@@ -83,6 +83,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
 
   .norms { margin-top: 16px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--muted); }
   .norms strong { color: var(--ink); }
+  .foot { margin: 10px 0 0; font-size: .9rem; color: var(--muted); }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   @media (prefers-reduced-motion: reduce) { .bar div { transition: none; } }
@@ -109,7 +110,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
         <button class="primary" id="start" type="button">Start</button>
         <button id="next" type="button">Next item</button>
         <button id="more" type="button">+1 minute</button>
-        <button id="back" type="button">Back</button>
+        <button id="back" type="button">Previous item</button>
       </div>
     </section>
 
@@ -126,6 +127,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
   </div>
 
   <p class="norms" id="norms"></p>
+  <p class="foot">Press Start to run the first item; Next item moves on when you're ready. Made-up team, made-up agenda. To make it yours, close this window and press Copy for my AI.</p>
   <p class="sr-only" id="announce" aria-live="polite"></p>
 </div>
 
@@ -209,7 +211,7 @@ function showClock() {
   let remaining = finished ? 0 : Math.max(secondsLeft, 0);
   for (let i = index + 1; i < AGENDA.length && !finished; i++) remaining += AGENDA[i].minutes * 60;
   const end = new Date(Date.now() + remaining * 1000);
-  $("ends").textContent = "Ends about " + end.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  $("ends").textContent = (running ? "Ends about " : "If you start now, ends about ") + end.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
 function showAgenda() {

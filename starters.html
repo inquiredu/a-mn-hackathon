@@ -50,18 +50,24 @@
     <div class="wrap">
       <p class="kicker-dark">The Remix Arcade</p>
       <h1 class="page-title">Starters</h1>
-      <p class="section-lede">Every starter here already works, and each one is useful on Monday. Play one, hand it to your AI, then make it yours. Four live in the chat, two are pages for your Google Site, and two are scripts that work behind the scenes: <a href="levels.html">the three levels</a>, with a starter or two for each.</p>
+      <p class="section-lede">Eight small tools that already work, each one useful on Monday. Four run inside your AI chat, two are pages for your Google Site, and two are scripts that do a job in your Google Drive (<a href="levels.html">the three levels</a>, with a starter or two for each). Play one, copy it into your AI chat, and ask for a change.</p>
 
       <div class="first">
-        <p><strong>First, find your room.</strong> Open the Breakout Planner: your room number is next to your name.</p>
-        <p class="link-slot" data-link="planner" data-label="Open the Breakout Planner" data-style="button" data-pending="Your host links the Breakout Planner in the chat."></p>
+        <p><strong>On your own?</strong> You need only this page and an AI chat you can sign in to: Gemini with your school Google account, ChatGPT, or Claude. Open it in another tab. <strong>In a live session?</strong> Your host links the Breakout Planner in the chat; your room number is next to your name. <strong>Running it with your own group?</strong> <a href="hosts.html">Hosts</a> has what to check before the day and what each part asks of this page.</p>
+        <p class="link-slot" data-link="planner" data-label="Open the Breakout Planner" data-style="button" data-pending=""></p>
       </div>
 
       <ol class="steps">
         <li><span class="num hex">1</span><strong>Guess, then play.</strong> <span>Pick a starter. Before you press Play, guess what it will do. Then try it.</span></li>
-        <li><span class="num hex">2</span><strong>Hand it to your AI.</strong> <span>Press <em>Copy for my AI</em>, then paste into Gemini, Claude, or ChatGPT.</span></li>
-        <li><span class="num hex">3</span><strong>Remix it.</strong> <span>Copy a change from the remix menu, paste it in the same chat, and see what happens.</span></li>
+        <li><span class="num hex">2</span><strong>Hand it to your AI.</strong> <span>Press <em>Copy for my AI</em>: it copies the tool's whole code with a note asking the AI to run it. In Gemini, choose Canvas first; then paste into your chat and send. In a few seconds the same tool is running beside the chat. Where, in each tool: <a href="#where">just below</a>.</span></li>
+        <li><span class="num hex">3</span><strong>Remix it.</strong> <span>Open the Remix menu, press Copy beside a change, paste it in the same chat, replace each ___ with your own words, and send.</span></li>
+        <li><span class="num hex">4</span><strong>Keep it.</strong> <span>Changes you make in the Play window vanish when you close it. Your AI chat keeps the version you built there: give the chat a name you'll find on Monday. To hand it to someone, <a href="wish.html#wall">copy a link to your work</a>.</span></li>
       </ol>
+
+      <div class="level-note" id="where">
+        <h4>Where do I paste it, and what you'll see</h4>
+        <div data-where="code"></div>
+      </div>
 
       <h3 class="subhead">Level 1 · In the chat</h3>
       <div class="machines four">
@@ -106,8 +112,9 @@
           <div class="badge" data-icon="dices"></div>
           <p class="for">For teachers, coaches, and anyone leading a workshop</p>
           <h4>The Group Maker</h4>
-          <p>Paste names, pick a size, and shuffle. It spreads your helpers out and keeps apart anyone who shouldn't be together.</p>
+          <p>Paste names, pick a size, and shuffle. It spreads your helpers out, one per group. Keeping two people apart is one remix away.</p>
           <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
+          <p class="names">Names typed into the tool here stay in this browser window; nothing is saved or sent. Once the tool runs inside your AI chat, it runs on that company's page, so keep to made-up names there.</p>
           <div class="actions">
             <button class="primary" data-play="groups">Play</button>
             <button data-copy-machine="groups">Copy for my AI</button>
@@ -132,7 +139,6 @@
             <h5>Look inside (no AI needed)</h5>
             <ul>
               <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>GROUP_NAMES</code>, change them to your school's mascots, and press <strong>Run my changes</strong>.</li>
-              <li class="do"><strong>About names:</strong> names typed into the running tool stay on your computer. Names pasted into an AI chat go to that company. Today, stick with the made-up ones.</li>
             </ul>
           </details>
         </article>
@@ -211,7 +217,7 @@
       </div>
 
       <h3 class="subhead" id="level-2">Level 2 · On your site</h3>
-      <p class="hint">A page, not a tool. Play it, hand it to your AI with your own document, then paste the code into a Google Site: <strong>Insert</strong>, <strong>Embed</strong>, <strong>Embed code</strong>.</p>
+      <p class="hint">Pages, not tools: each one ends up on a Google Site you can edit (no Site yet? sites.google.com, then Blank site). Play it, then: 1. Press Copy for my AI and paste into your AI chat (<a href="#where">where, above</a>). 2. Copy a remix line such as "Replace the charter with this document," paste it, and paste your document's text where the ___ is. 3. When it looks right, copy the finished code out (each tool's spot is listed above). 4. In your Site: <strong>Insert</strong>, <strong>Embed</strong>, the <strong>Embed code</strong> tab, paste, <strong>Next</strong>, <strong>Insert</strong>. 5. Drag the box until the whole page shows. Before you publish, read the page against your document; the AI keeps the meaning, and you check every line. You can also put a starter on a Site as it is: press Play, then Show the code, select it all, copy, and paste it into the Embed code tab. The full steps, and what to do when Sites refuses it: <a href="levels.html#site">Three levels, level 2</a>.</p>
       <div class="machines">
 
         <article class="cabinet" style="--c: var(--charter)">
@@ -280,7 +286,7 @@
 
       <details class="level-note">
         <summary><h4>What Google Sites does to pasted code</h4></summary>
-        <p>It runs in a sealed box on your page. That keeps your site safe, and it sets the limits: the page can't remember anything between visits, so saved settings and scores vanish; it can't reach the rest of your site or your visitors' accounts; sound and full screen wait for a tap; and a very long page may be refused or load slowly. One box holds one page, and it shows at the size you drag it to, so build for a box, not a window.</p>
+        <p>Google Sites shows it inside a frame on your page. That keeps your site safe, and it sets the limits: the page can't remember anything between visits, so saved settings and scores vanish; it can't reach the rest of your site or your visitors' accounts; sound and full screen wait for a tap; and a very long page may be refused or load slowly. It shows only as big as you drag the frame. Cut off, or misbehaving? Copy the request below into your AI.</p>
         <p>If what you pasted doesn't fit or doesn't behave, hand your AI this:</p>
         <div class="copybox">
           <p id="sites-stem">Make this one self-contained HTML file for a Google Sites embed box about 800 pixels wide: no outside libraries, fonts, or images; nothing saved between visits; no sound until a tap; large type that works on a phone; and as short as it can be while keeping everything it does.</p>
@@ -288,8 +294,8 @@
         </div>
       </details>
 
-      <h3 class="subhead" id="level-3">Level 3 · Behind the scenes</h3>
-      <p class="hint">Scripts, not pages: nothing to play here. Copy one into a new project at <a href="https://script.google.com" rel="noopener">script.google.com</a>, or hand it to your AI first and have it explained. <a href="levels.html#script">The steps, and the cautions</a>.</p>
+      <h3 class="subhead" id="level-3">Level 3 · Behind the scenes: scripts, not pages</h3>
+      <p class="hint">Nothing to play here. A script is a few instructions Google runs for you inside your Drive, in a tool called Apps Script that's built into every Google account; you approve what it may touch before it runs. Each card has the whole path: what to make first, every step with its place, what you'll see when it worked, and what to do when it breaks. <strong>Copy the script</strong> copies the script alone, for script.google.com. <strong>Copy for my AI</strong> copies it with a note asking your AI to explain it line by line before you run it; when your AI hands back a changed script, paste the whole thing over the old one in your project, save, and run again. A remix line or an error message only makes sense to your AI once it has the script, so Copy for my AI comes first. <a href="levels.html#script">The cautions, on Three levels</a>.</p>
       <div class="machines">
 
         <article class="cabinet" style="--c: var(--script)">
@@ -298,11 +304,7 @@
           <h4>The Drive Inventory</h4>
           <p>Point it at a folder. It reads every folder inside and writes a Sheet: each document, its type, its link, and when it last changed.</p>
           <p class="monday"><strong>Monday:</strong> a whole curriculum folder, one search away.</p>
-          <ol class="steps-in">
-            <li>Paste the script into a new project. Put your folder's ID between the quotes at the top.</li>
-            <li>Choose <strong>inventory</strong>, press <strong>Run</strong>, and read the permission screen: Drive and Sheets.</li>
-            <li>Open the Execution log for the link.</li>
-          </ol>
+          <div class="script-steps" data-steps="inventory"></div>
           <div class="actions">
             <button class="primary" data-copy-script="inventory">Copy the script</button>
             <button data-ask-script="inventory">Copy for my AI</button>
@@ -327,12 +329,8 @@
           <p class="for">For anyone who makes the same Doc many times</p>
           <h4>The Doc Multiplier</h4>
           <p>One template Doc and a Sheet of names. It makes a copy for each row, named for the row, gathers them in a folder, and writes each link back into the Sheet.</p>
-          <p class="monday"><strong>Monday:</strong> a planning doc for every team, made in one press. Practice with made-up names.</p>
-          <ol class="steps-in">
-            <li>Paste the script into a new project. Put the template Doc's ID and the Sheet's ID at the top.</li>
-            <li>Choose <strong>multiply</strong>, press <strong>Run</strong>, and read the permission screen: Drive and Sheets.</li>
-            <li>Open the Execution log for the folder's link.</li>
-          </ol>
+          <p class="monday"><strong>Monday:</strong> a planning doc for every team, made in one press.</p>
+          <div class="script-steps" data-steps="multiplier"></div>
           <div class="actions">
             <button class="primary" data-copy-script="multiplier">Copy the script</button>
             <button data-ask-script="multiplier">Copy for my AI</button>
@@ -354,28 +352,6 @@
 
       </div>
 
-      <details class="fold" id="where">
-      <summary>Where do I paste it?</summary>
-      <div class="tips">
-        <div>
-          <h4>Gemini</h4>
-          <p>Open gemini.google.com. In the prompt bar, choose <strong>Canvas</strong> (look in the + menu or under Tools), then paste.</p>
-        </div>
-        <div>
-          <h4>Claude</h4>
-          <p>Open claude.ai and paste. The starter appears beside the chat as an artifact. Nothing there? Turn on artifacts in <strong>Settings › Capabilities</strong>.</p>
-        </div>
-        <div>
-          <h4>ChatGPT</h4>
-          <p>Open chatgpt.com and paste. When the code appears, switch on <strong>Preview</strong> on the code block.</p>
-        </div>
-        <div>
-          <h4>Microsoft Copilot</h4>
-          <p>In a Microsoft district? Signed in with a school account, <a href="https://support.microsoft.com/en-us/microsoft-365-copilot/build-lightweight-apps-within-microsoft-365-copilot-pages">Copilot Pages</a> can build and preview small apps too.</p>
-        </div>
-      </div>
-      <p class="more-link">Step-by-step help for each tool, checked this week: <a href="sources.html?ask=tools">sources on building in your AI tool</a>.</p>
-      </details>
     </div>
   </section>
 
@@ -410,7 +386,7 @@
     <div class="room-body" id="room-body">
       <iframe id="screen" title="The machine, running" sandbox="allow-scripts allow-forms allow-modals"></iframe>
       <div class="code-pane" id="code-pane" hidden>
-        <label for="code">This is the whole machine. Change something, then press Run my changes.</label>
+        <label for="code">This is the whole tool. Press Ctrl+F (⌘F on a Mac) to find a word, change something, and press Run my changes. Gone blank? You lost a quote mark or a comma: press Start over.</label>
         <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
         <div class="code-actions">
           <button class="primary" id="run">Run my changes</button>

@@ -58,7 +58,7 @@ const permission = (job) => ({
   sub: [
     "A box says the project needs your permission: press *Review permissions* and choose your school account.",
     "Google may say it hasn't verified this app, because you just wrote it: press *Advanced*, then the link that starts “Go to”. It may end in “(unsafe)”: that's Google's word for any script it hasn't reviewed, including your own.",
-    "It asks to see, edit, create, and delete your Google Drive files and your Sheets. That's Google's standard wording for any script that touches Drive. " + job + " Press *Allow*."
+    "It lists what the script may do, each with a box to tick: see, edit, create, and delete your Google Drive files, and your Sheets. That's Google's standard wording for any script that touches Drive. " + job + " Tick every box (or *Select all*), then press the button at the bottom (*Continue* or *Allow*)."
   ],
   stop: "Stop here if you see “blocked by your administrator”: your district doesn't allow scripts. Ask your technology office."
 });
@@ -80,6 +80,7 @@ const SCRIPT_STEPS = {
     end: "A new Sheet in My Drive named “Inventory:” plus your folder's name, one row per file: its folder, title, type, link, and when it last changed.",
     breaking: [
       "Red text in the *Execution log*: copy it and paste it into your AI chat with “What went wrong?”",
+      "Red text about permission or authorization: a box was probably left unticked on the permission screen. Press *Run* again and tick every box if it asks; if it doesn't ask, paste the red text into your AI chat with “What went wrong?”",
       "“Unexpected error” or “not found”: the folder ID is wrong or incomplete. Copy it again, stopping before any `?`.",
       "A folder with thousands of files can take minutes and may stop before the end. Try a small folder first."
     ]
@@ -102,6 +103,7 @@ const SCRIPT_STEPS = {
     end: "A new folder in My Drive named “Copies of” plus your Doc's name, one copy per row, each named for its row; and column B of your Sheet now holds a link to each copy. Run it again only if you want a second set.",
     breaking: [
       "Red text in the *Execution log*: copy it and paste it into your AI chat with “What went wrong?”",
+      "Red text about permission or authorization: a box was probably left unticked on the permission screen. Press *Run* again and tick every box if it asks; if it doesn't ask, paste the red text into your AI chat with “What went wrong?”",
       "“Unexpected error” or “not found”: an ID is wrong or incomplete. Copy it again, stopping before `/edit`.",
       "Blank Docs with the right names: the Doc you pointed at is empty, or you pasted the Sheet's ID on the Doc's line."
     ]
@@ -461,6 +463,11 @@ document.querySelectorAll(".level-bar").forEach((bar) => {
       if (!levels.some((l) => a.hash === "#" + l.id)) return;
       if (a.hash === "#" + level.id) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
     });
+    // The comparison's card for the open level says so, instead of offering to open it again
+    document.querySelectorAll(".compare-foot a").forEach((a) => {
+      a.dataset.label = a.dataset.label || a.textContent;
+      a.textContent = a.hasAttribute("aria-current") ? "Showing below" : a.dataset.label;
+    });
     remember(LEVEL_KEY, level.id);
   };
   const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -606,10 +613,10 @@ document.querySelectorAll("[data-steps]").forEach((box) => {
   end.append(richText(plan.end));
   box.replaceChildren(
     el("p", "kind", plan.kind),
-    el("h5", "", "Before you start"), list(plan.before, "ul"),
-    el("h5", "", "Steps"), list(plan.steps, "ol"),
-    el("h5", "", "You'll know it worked"), end,
-    el("h5", "", "If it breaks"), list(plan.breaking, "ul")
+    el("h4", "", "Before you start"), list(plan.before, "ul"),
+    el("h4", "", "Steps"), list(plan.steps, "ol"),
+    el("h4", "", "You'll know it worked"), end,
+    el("h4", "", "If it breaks"), list(plan.breaking, "ul")
   );
 });
 

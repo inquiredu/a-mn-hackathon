@@ -193,7 +193,7 @@ main p { max-width: var(--measure); }
 .kicker-dark { margin-bottom: 8px; }
 
 /* A section inside a card: what happens, try it, before you start, hosts, ready to paste */
-.level h3, .script-steps h5, .remix h5, .segment h4, .next h3, .src-group, .finder .ask-group > legend, .message .to, .nowcard-label {
+.level h3, .script-steps h4, .remix h5, .segment h4, .next h3, .src-group, .finder .ask-group > legend, .message .to, .nowcard-label {
   margin: 0; font-family: var(--font-sans); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); line-height: 1.3;
 }
 .nowcard-label { color: inherit; }
@@ -602,8 +602,9 @@ dialog[open]::backdrop { background: var(--scrim); }
 [data-theme="dark"] .theme-state::after { content: "On"; }
 .site-nav .theme-item { margin-left: 6px; }
 
-/* A phone: the name and a Menu button; the pages open as full-width rows under the bar */
-@media (max-width: 760px) {
+/* Narrower than the whole menu (about 1000px: it wrapped into two rows on a tablet, "First Builds" over two lines):
+   the name and a Menu button; the pages open as full-width rows under the bar */
+@media (max-width: 999px) {
   .site-head-inner { flex-wrap: nowrap; }
   .site-head-inner > * { min-width: 0; }
   .menu-toggle {
@@ -628,7 +629,7 @@ dialog[open]::backdrop { background: var(--scrim); }
   .site-nav .theme-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
   .site-nav .theme-state { display: inline; margin-left: auto; color: var(--bar-ink-2); font-weight: 500; }
 }
-@media (hover: hover) and (max-width: 760px) {
+@media (hover: hover) and (max-width: 999px) {
   .menu-toggle:hover { background: rgb(255 255 255 / .12); color: var(--bar-ink); border-color: var(--bar-ink); }
 }
 
@@ -721,13 +722,12 @@ dialog[open]::backdrop { background: var(--scrim); }
 .hero-split { display: grid; gap: 32px 56px; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 960px) { .hero-split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; } }
 /* The examples as pictures, two by two, each opening its starter's card */
-.hero-shots { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 34rem; }
+.hero-shots { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 34rem; }
 .hero-shots a { display: grid; gap: 8px; align-content: start; color: var(--ink); text-decoration: none; font-family: var(--font-sans); font-size: .95rem; font-weight: 600; }
 .hero-shots img {
   display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--tint);
   transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
 }
-.hero-shots small { display: block; margin-top: -4px; font-family: var(--font-serif); font-size: .9rem; font-weight: 400; color: var(--muted); }
 @media (hover: hover) {
   .hero-shots a:hover img { transform: var(--lift); box-shadow: var(--shadow-lift); }
   .hero-shots a:hover > span { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent); text-underline-offset: .25em; }
@@ -837,7 +837,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .award-icon { grid-row: span 2; color: var(--ink); }
 .awards strong { display: block; font-size: 1.1rem; }
 .awards span:not(.award-icon) { color: var(--muted); }
-.badge svg, .award-icon svg { width: 28px; height: 28px; }
+.award-icon svg { width: 28px; height: 28px; }
 .two-up { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 24px; }
 .card p { color: var(--muted); }
 .rungs { margin: 12px 0 0; padding-left: 24px; display: grid; gap: 8px; }
@@ -873,21 +873,30 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .compare dd { margin: 2px 0 0; }
 .compare-foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
 .compare-foot .meta { margin: 0; }
+.compare-foot .action-link::after { content: "↓"; }   /* the level opens below, on this page */
 .compare > li:has(a[aria-current]) { border-color: var(--ink); box-shadow: inset 0 3px 0 var(--ink); }
-.compare-foot a[aria-current]::after { content: "↓"; }   /* it's the one open below */
-/* One card to a row but room to spare: each row's label sits beside it, which keeps the cards short */
-@media (min-width: 480px) and (max-width: 879px) {
-  .compare dl > div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+/* A card with a row to itself: each row's label sits beside its value, which keeps the cards short */
+@media (max-width: 879px) {
+  .compare dl > div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 2px 12px; align-items: baseline; }
   .compare dd { margin: 0; }
 }
+@media (min-width: 480px) and (max-width: 879px) { .compare dl > div { grid-template-columns: 8.5rem minmax(0, 1fr); } }
 @media (min-width: 880px) {
   .compare { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .compare > li { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
   .compare dl { grid-row: span 5; display: grid; grid-template-rows: subgrid; }
+  .compare-foot { margin-top: 0; align-self: start; }   /* its divider on one line across the three */
 }
-.habits { margin-top: 16px; }
-.habits h3 { margin: 0; font-size: 1.05rem; }
-.habits p { margin: 6px 0 0; }
+.tips.habits { margin-top: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 880px) { .tips.habits { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.tips.habits > div { padding: var(--card-pad); }
+.habits h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.habits p { margin: 0; }
+/* Level 1's three kinds of code, each named beside what it does */
+.code-kinds { display: grid; gap: 6px; max-width: var(--measure); margin: 10px 0 0; }
+.code-kinds > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.code-kinds dt { font-family: var(--font-sans); font-weight: 600; }
+.code-kinds dd { margin: 0; }
 
 /* A level: on a wide screen, what it is and the steps at reading width on the left, and what it teaches you about
    code beside them, staying in view while you work down the steps. Narrower, the same parts stack in reading order. */
@@ -895,9 +904,11 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .learn { margin-top: 24px; padding: 18px 20px; background: var(--tint); border-radius: var(--radius); }
 .level .learn h3 { margin: 0; }
 .level .learn ul { list-style: none; margin: 10px 0 0; padding: 0; }
-.level .learn li { margin: 0; padding: 10px 0; border-top: 1px solid var(--line); font-size: .97rem; }
+.level .learn li { margin: 0; padding: 10px 0; border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent); font-size: .97rem; }
 .level .learn li:first-child { border-top: 0; padding-top: 4px; }
 .learn li > strong:first-child { display: block; font-family: var(--font-sans); font-size: .95rem; }
+.learn code { background: var(--surface); }
+.level .caution h3 { margin: 0; }   /* the caution's own padding is its top space */
 @media (min-width: 1024px) {
   .level-body { grid-template-columns: minmax(0, 1fr) minmax(260px, 320px); column-gap: 40px; }
   .level-intro, .level-steps { grid-column: 1; }
@@ -909,32 +920,33 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
   .level-side { position: sticky; top: calc(var(--below-level-bar, 64px) + 16px); }
 }
 /* The level bar: the three levels as rungs, a line leading from each to the next, each with its length. It sticks under
-   the now bar; the level that's open is the tinted one, and the line up to it is drawn in ink. */
+   the now bar while a level is on screen (.levels-stage holds both); the open level is tinted and marked on the bar's line. */
 .level-bar {
-  position: sticky; top: 0; z-index: 15; display: flex; gap: 0; margin: var(--block) -16px 0; padding: 6px 16px;
+  position: sticky; top: 0; z-index: 15; display: flex; gap: 0; margin: var(--block) 0 0; padding: 6px 0 0;
   background: var(--bg); border-bottom: 1px solid var(--line);
 }
 .level-bar a {
-  display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 52px; padding: 6px 14px 6px 8px;
-  border-radius: var(--radius-sm); font-family: var(--font-sans); text-decoration: none; color: var(--ink);
+  position: relative; display: flex; flex: none; align-items: center; gap: 10px; min-width: 0; min-height: 52px; margin-bottom: -1px; padding: 6px 14px 6px 8px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0; font-family: var(--font-sans); text-decoration: none; color: var(--ink);
   transition: background-color var(--dur-1) var(--ease-out);
 }
-.level-bar a { flex: none; }
-.lb-line { flex: 1 1 24px; min-width: 16px; height: 2px; margin: 0 6px; align-self: center; border-radius: 1px; background: var(--line); }
-.lb-line:has(~ a[aria-current]) { background: var(--ink); }
+.lb-line { flex: 1 1 24px; min-width: 12px; height: 2px; margin: 0 6px; align-self: center; border-radius: 1px; background: var(--line); }
 .level-bar .num { width: 28px; height: 28px; font-size: .8rem; }
 .level-bar .lb-text { display: grid; min-width: 0; line-height: 1.2; }
 .level-bar .lb-name { font-size: .95rem; font-weight: 600; }
 .level-bar .lb-time { font-size: .8rem; font-weight: 500; color: var(--muted); }
 @media (hover: hover) { .level-bar a:hover { background: var(--action-ghost-hover); color: var(--ink); } }
 .level-bar a[aria-current] { background: var(--tint); box-shadow: inset 0 -3px 0 var(--ink); }
-/* A phone: three equal rungs, short enough to stay out of the way; each level's length is on its card above */
+/* A phone: still three rungs joined by lines, each a number; the open one says its name (the lengths are on the cards).
+   The other names stay for screen readers. */
 @media (max-width: 600px) {
-  .level-bar { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 4px; padding: 4px 12px; margin-inline: -16px; }   /* the longest name gets the most room */
-  .level-bar a { gap: 6px; min-height: 44px; padding: 4px 6px; }
-  .lb-line, .level-bar .lb-time { display: none; }
-  .level-bar .num { width: 24px; height: 24px; font-size: .75rem; }
-  .level-bar .lb-name { font-size: .85rem; line-height: 1.15; }
+  .level-bar { padding-top: 4px; }
+  .level-bar a { gap: 8px; min-height: 44px; padding: 4px 6px; }
+  .lb-line { flex-basis: 16px; margin: 0 4px; }
+  .level-bar a:not([aria-current]) .lb-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .level-bar a[aria-current] { flex: 0 1 auto; }   /* the open name may wrap on the narrowest screens, never push past the edge */
+  .level-bar .lb-time { display: none; }
+  .level-bar .lb-name { font-size: .9rem; line-height: 1.15; }
 }
 .level + .level, .level-bar + .level { margin-top: var(--block); }
 /* A level waiting its turn has no box at all until it's opened; on paper, every level prints */
@@ -956,6 +968,7 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .pager-name { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
 .pager-name .num { width: 26px; height: 26px; font-size: .8rem; }
 @media (hover: hover) { .level-pager a:hover { border-color: var(--control); background: var(--action-ghost-hover); color: var(--ink); } }
+@media (max-width: 600px) { .level-pager a { flex: 1 1 100%; } .level-pager .pager-next { margin-left: 0; } }
 /* Opening another level crossfades, briefly (assets/site.js skips it for anyone who asks for less motion) */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--dur-3); }
 .later-tag { display: inline-block; margin: 0 0 8px; padding: 1px 10px; border: 1px solid var(--control); border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -995,7 +1008,7 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .where-notes { margin: 16px 0 0; padding-left: 20px; color: var(--ink); }
 .where-notes li { margin: 6px 0; max-width: var(--measure); }
 .script-steps { margin-bottom: 14px; }
-.script-steps h5 { margin: 24px 0 6px; }
+.script-steps h4 { margin: 24px 0 6px; }
 .script-steps .kind { margin: 0; color: var(--muted); }
 .script-steps ol, .script-steps ul { margin: 4px 0 0; padding-left: 1.5rem; }
 .script-steps li { margin: 8px 0; max-width: var(--measure); }
@@ -1026,6 +1039,7 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .how-row { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line); }
 .how-row li { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-content: start; gap: 2px 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }   /* rows stay at the top, so the four titles line up when steps differ in length */
 .how-row .num { grid-row: span 2; }
+.how-row li:last-child { border-bottom: 0; }   /* the level below opens with its own rule */
 .how-row strong { font-family: var(--font-sans); font-size: 1.05rem; }
 .how-row span:not(.num) { color: var(--muted); }
 @media (min-width: 900px) {
@@ -1045,36 +1059,46 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 /* The two buttons each script card has, named as terms: words, not button shapes that do nothing */
 .button-look { font-family: var(--font-sans); font-size: .95rem; font-weight: 700; color: var(--ink); }
 
-/* The cards: two to a row on a laptop. Each card's parts sit on rows shared with its neighbor (subgrid), so the
-   Play buttons line up across a row, and an open Remix menu grows only the last row: its neighbor's buttons stay put. */
+/* The cards: two to a row on a laptop. Each card's picture, title, words, and buttons sit on rows shared with its
+   neighbor (subgrid), so the Play buttons line up across a row. Monday, a note, and the Remix menu share the last
+   row, so a card with less to say ends with space at its foot, not a gap in its middle, and an open Remix menu
+   grows only that row: its neighbor's buttons stay put. */
 .machines { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
 @media (min-width: 760px) {
   .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .machines:not(.scripts) { align-items: stretch; }
-  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
+  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
   .machines:not(.scripts) > .cabinet > .shot { grid-row: 1; }
   .machines:not(.scripts) > .cabinet > .cabinet-head { grid-row: 2; }
   .machines:not(.scripts) > .cabinet > p:not([class]) { grid-row: 3; }
-  .machines:not(.scripts) > .cabinet > .monday { grid-row: 4; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .data-note { grid-row: 5; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .actions { grid-row: 6; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .remix { grid-row: 7; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .actions { grid-row: 4; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .cabinet-more { grid-row: 5; align-self: start; }
 }
 @media (min-width: 960px) { .machines.scripts { grid-template-columns: minmax(0, 1fr); } .machines.scripts .cabinet { max-width: 52rem; } }
 .cabinet { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
 /* A starter's picture (scripts/starter-shots.js): the tool just after its first press, or, for a script, what it
    leaves in your Drive. The words beside it say the same, so screen readers skip it. Pressing the picture of a
    starter that plays opens Play; the Play button stays the way in from a keyboard. */
-.shot { margin: 0 0 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--tint); }
+.shot { position: relative; margin: 0 0 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--tint); }
 .shot img { display: block; width: 100%; height: auto; }
-.shot[data-shot] { cursor: pointer; transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out); }
-@media (hover: hover) { .shot[data-shot]:hover { transform: var(--lift); box-shadow: var(--shadow-lift); } }
-.machines.scripts .shot { max-width: 32rem; }   /* a script card runs one to a row: its picture stays a picture, not a banner */
-.cabinet-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
-.badge {
-  display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--c) 12%, var(--surface)); color: var(--c);
+/* A starter that plays: its picture runs to the card's top edges, as the card's image, and says "Play" in its corner */
+.machines:not(.scripts) .shot {
+  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 16px; border: 0; border-bottom: 1px solid var(--line);
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
 }
+.shot[data-shot] { cursor: pointer; }
+.shot-play {
+  position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px 5px 10px;
+  border-radius: var(--radius-pill); background: var(--bar-bg); color: var(--bar-ink); box-shadow: var(--shadow-1);
+  font-family: var(--font-sans); font-size: .85rem; font-weight: 600;
+  transition: background-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+}
+.shot-play svg { width: 14px; height: 14px; }
+@media (hover: hover) { .shot[data-shot]:hover .shot-play { background: var(--button); color: var(--button-ink); } }
+.machines.scripts .shot { max-width: 32rem; }   /* a script card runs one to a row: its picture stays a picture, not a banner */
+/* In Night the pictures step down a little, so a white screenshot doesn't outshine the page's own heading */
+[data-theme="dark"] :is(.shot, .hero-shots) img { filter: brightness(.9); }
+.cabinet-head { display: block; }
 .cabinet h3 { margin-top: 2px; font-size: 1.125rem; }
 .cabinet .for { margin: 2px 0 0; font-size: .95rem; color: var(--muted); }
 .cabinet > p { margin: 12px 0 0; color: var(--ink); }
@@ -1137,6 +1161,8 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 @media (min-width: 960px) {
   .step-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
   .step-list > li:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .step-list > li:last-child:nth-child(odd) { grid-column: 1 / -1; }   /* an odd last step takes the row, not half of it */
+  .step-list > li:nth-last-child(2):has(+ li:last-child:nth-child(odd)) { border-bottom: 0; }
 }
 .stuck ul { margin: 10px 0 0; padding-left: 20px; }
 .stuck li { margin: 8px 0; max-width: var(--measure); }
@@ -1144,13 +1170,14 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .stuck > p { margin: 10px 0 0; }
 /* Invent your own's two helps, where to paste and what to do when stuck: side by side on a wide screen */
 @media (min-width: 1024px) {
-  .help-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); align-items: start; margin-top: var(--block); }
+  .help-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); align-items: stretch; margin-top: var(--block); }
   .help-pair > * { margin-top: 0; }
 }
 .live-note { color: var(--muted); }
 #wall .link-slot { display: block; margin: 18px 0 0; }
 .live-fold { margin-top: var(--block); padding: 4px var(--card-pad) var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .live-fold > summary { font-size: 1.125rem; }
+.live-fold:not([open]) { padding-bottom: 4px; }   /* closed, its label sits in the middle */
 .live-fold p { margin: 10px 0 0; }
 .wall-steps { margin: 10px 0 0; padding-left: 1.4em; max-width: var(--measure); }
 .wall-steps li { margin: 8px 0; }
@@ -1173,8 +1200,9 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .page-rail { display: none; }
 @media (min-width: 1200px) {
   body.has-rail .on-page { display: none; }
-  body.has-rail main .wrap { padding-right: calc(16px + 248px); }
-  .page-rail { display: block; position: sticky; top: 0; z-index: 5; height: 0; max-width: 1080px; margin: 0 auto; }
+  body.has-rail main .wrap { padding-right: calc(16px + 280px); }   /* the rail's 216px and a 64px gap */
+  .page-rail { display: block; position: sticky; top: -80px; z-index: 5; width: 100%; height: 0; max-width: 1080px; margin: 0 auto; }   /* stuck, the list sits 32px from the top; full width even where main is a flex column (on the day) */
+  body[data-mode="during"] .page-rail { top: -16px; }   /* below the now bar, which sticks on the day */
   .page-rail-inner { position: absolute; top: 112px; right: 16px; width: 216px; max-height: calc(100vh - 136px); overflow-y: auto; }
   .page-rail ul { list-style: none; margin: 10px 0 0; padding: 0; border-left: 2px solid var(--line); }
   .page-rail a {
@@ -1186,6 +1214,10 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
   .page-rail a[aria-current] { color: var(--ink); border-left-color: var(--ink); }
 }
 .host-grid { display: grid; gap: var(--gap); margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
+/* The two ways to run it: side by side they're one height, and each ends in its way on, level with the other's */
+.host-grid:has(> .way) { align-items: stretch; }
+.card.way { display: flex; flex-direction: column; }
+.card.way > .card-actions { margin-top: auto; padding-top: 16px; }
 .host-grid .card ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 .way .label { margin-bottom: 6px; }
 .checks ul, .checks .sub-steps { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }

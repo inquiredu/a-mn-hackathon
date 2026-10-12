@@ -16,7 +16,9 @@ Read `docs/HANDOFF.md` first: what's decided, what exists, what's left. `docs/SE
 
 ## Checks
 
-Once per clone: `git config core.hooksPath .githooks`. Then every commit stops on credential files or anything shaped like an API key, and every commit and push runs `node scripts/check-session.js` (the session file and every page's braces and scripts, read the way the browser reads them) and the timer tests. Run them yourself after editing the session file, a page, or a script.
+Once per clone: `git config core.hooksPath .githooks`. Then every commit stops on credential files or anything shaped like an API key, and every commit and push runs `node scripts/check-session.js` (the session file and every page's braces and scripts, read the way the browser reads them, and the pages' stamps) and the timer tests. Run them yourself after editing the session file, a page, or a script.
+
+**After changing any stylesheet or script in `assets/`, run `node scripts/stamp-assets.js`.** Pages load each one as `file?v=` plus a stamp of its contents, so a browser that kept the old file (GitHub Pages lets it, for ten minutes) fetches the new one with the new page instead of showing new markup with old styles. The check stops a commit whose stamps are stale. The session file is never stamped: hosts edit it in the browser.
 
 ## Seeing a change
 

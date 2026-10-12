@@ -422,7 +422,7 @@ input[type="checkbox"]:checked::before, input[type="radio"]:checked::before { tr
 /* ---------- Lists that are steps ---------- */
 .checks { margin: 16px 0 0; padding-left: 22px; display: grid; gap: 10px; max-width: var(--measure); }
 .checks > li { max-width: var(--measure); }
-.pending { font-style: italic; color: var(--muted); }
+.pending { color: var(--ink); }   /* where a link will come from is an instruction, set like one */
 .link-slot:empty { display: none; }
 
 
@@ -660,7 +660,7 @@ dialog[open]::backdrop { background: var(--scrim); }
 .cue-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-top: 8px; padding-bottom: 10px; }
 .cue-text { margin: 0; flex: 1 1 16rem; font-family: var(--font-sans); font-size: .95rem; }
 .cue-text strong { font-weight: 600; color: var(--warm); }
-.cue .button { min-height: 36px; padding: 6px 14px; font-size: .9rem; }
+.cue .button { min-height: 44px; padding: 6px 14px; font-size: .9rem; }   /* the same height as Got it beside it */
 .cue .button.primary { background: var(--warm); border-color: var(--warm); color: var(--warm-ink); }
 .cue-close { background: transparent; border-color: rgb(244 241 235 / .5); color: var(--bar-ink); }
 @media (hover: hover) { .cue-close:hover { background: rgb(255 255 255 / .12); color: var(--bar-ink); border-color: var(--bar-ink); } }
@@ -1233,7 +1233,7 @@ summary.segment-head::after {
 .src { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); scroll-margin-top: 24px; }
 .src.highlight { box-shadow: 0 0 0 2px var(--accent); }
 .src-title { margin: 0; font-size: 1.05rem; line-height: 1.35; }
-.src-title a { text-decoration: none; }
+.src-title a { text-decoration: none; padding-block: 2px; }   /* a one-line title is still a 24px target */
 .src-title a::after { content: " ↗"; font-size: .85em; color: var(--muted); }
 @media (hover: hover) { .src-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; } }
 .src-step { color: var(--ink); }

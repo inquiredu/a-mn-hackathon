@@ -1,6 +1,6 @@
 // Builds one packet per reviewer from the capture manifest: the images it may open, in order, with captions.
 // node packets.js <auditDir>          the first audit's fourteen packets
-// node packets.js <auditDir> re       the re-review's seven packets, two surfaces each where they belong together
+// node packets.js <auditDir> re       the re-review's nine packets, joined where surfaces belong together and a packet stays near 110 images
 const fs = require("node:fs");
 const path = require("node:path");
 const DIR = path.resolve(process.argv[2]);
@@ -114,7 +114,7 @@ LENSES.journeys = {
   items: J
 };
 
-// ---------- The re-review: seven fresh reviewers, two surfaces each where they belong together ----------
+// ---------- The re-review: nine fresh reviewers, joined where surfaces belong together, near 110 images at most ----------
 const REVIEW = {};
 const join = (...lenses) => ({
   prefix: lenses.map((l) => l.prefix).join(" and "),
@@ -126,10 +126,12 @@ const join = (...lenses) => ({
 const noMotionNotes = (l) => ({ ...l, extra: (l.extra || []).filter((f) => !/motion-notes/.test(f)) });   // the first audit's timings, before the fixes
 REVIEW["home-levels"] = join(LENSES.home, LENSES.levels);
 REVIEW["starters-invent"] = join(LENSES.starters, LENSES.invent);
-REVIEW["hosts-sources"] = join(LENSES.hosts, LENSES.sources);
+REVIEW.hosts = LENSES.hosts;          // the longest page, alone
+REVIEW.sources = LENSES.sources;
 REVIEW["stage-notes"] = join(noMotionNotes(LENSES.stage), LENSES.notes);
 REVIEW.play = LENSES.play;
-REVIEW["night-system"] = join({ ...LENSES["night-a"], prefix: "D", title: "Night: Home, Three levels, Starters" }, { ...LENSES["night-b"], prefix: "E", title: "Night: Invent your own, Hosts, Sources" }, LENSES.system);
+REVIEW["night-a-system"] = join(LENSES["night-a"], LENSES.system);
+REVIEW["night-b"] = LENSES["night-b"];
 REVIEW["interaction-journeys"] = join(noMotionNotes(LENSES.interaction), LENSES.journeys);
 
 const RE = process.argv[3] === "re";

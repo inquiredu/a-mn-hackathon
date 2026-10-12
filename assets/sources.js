@@ -213,9 +213,13 @@ function card(s, headingLevel, position) {
   heading.append(link);
 
   const kind = el("p", "src-kind", TYPES[s.type] + (s.peer ? " · Peer-reviewed" : ""));
-  // Each item of the meta line stays whole, so a line never starts with a separator or splits "as of" from its date
+  // The date stays whole, so "as of" never splits from it. The authors and the venue may wrap: a long list or a
+  // conference's name is wider than a phone. Each separator holds to the item before it, so no line starts with one.
   const meta = el("p", "src-meta");
-  [s.who, s.venue, s.when].filter(Boolean).forEach((item, i) => { if (i) meta.append(" · "); meta.append(el("span", "nowrap", item)); });
+  [s.who, s.venue, s.when].filter(Boolean).forEach((item, i) => {
+    if (i) meta.append("\u00a0· ");
+    meta.append(el("span", item === s.when ? "nowrap" : "", item));
+  });
 
   const take = el("p", "src-take");
   take.append(el("strong", "", s.takeLabel + ": "), s.take);

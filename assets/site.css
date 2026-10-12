@@ -948,7 +948,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .audience p { margin: 0; }
 .audience .link-slot { margin-top: 10px; }
 .how-row { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line); }
-.how-row li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 2px 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.how-row li { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-content: start; gap: 2px 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }   /* rows stay at the top, so the four titles line up when steps differ in length */
 .how-row .num { grid-row: span 2; }
 .how-row strong { font-family: var(--font-sans); font-size: 1.05rem; }
 .how-row span:not(.num) { color: var(--muted); }

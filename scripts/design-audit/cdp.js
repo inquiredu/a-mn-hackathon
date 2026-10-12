@@ -3,7 +3,8 @@ const { spawn } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+// Chrome at its usual macOS path; set CHROME to use another (Chromium on Linux, Chrome on Windows)
+const CHROME = process.env.CHROME || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const PORT = 9341;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -12,7 +13,9 @@ async function launch(profileDir) {
   const proc = spawn(CHROME, [
     "--headless=new", `--remote-debugging-port=${PORT}`, `--user-data-dir=${profileDir}`,
     "--hide-scrollbars", "--no-first-run", "--no-default-browser-check", "--disable-extensions",
-    "--force-color-profile=srgb", "--font-render-hinting=none", "about:blank"
+    "--force-color-profile=srgb", "--font-render-hinting=none",
+    ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []),   // Chrome won't run as root without it, as in a container
+    "about:blank"
   ], { stdio: "ignore" });
   for (let i = 0; i < 60; i++) {
     try {
@@ -78,8 +81,9 @@ class Tab {
     await this.eval("document.fonts.ready.then(() => true)");
     await sleep(settle);
   }
-  async shot(file, clip) {
-    const params = { format: "png" };
+  async shot(file, clip, { format = "png", quality } = {}) {
+    const params = { format };
+    if (quality) params.quality = quality;
     if (clip) { params.clip = { ...clip, scale: 1 }; params.captureBeyondViewport = false; }
     const r = await this.send("Page.captureScreenshot", params);
     fs.mkdirSync(path.dirname(file), { recursive: true });

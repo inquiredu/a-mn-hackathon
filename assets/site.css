@@ -767,6 +767,7 @@ summary.segment-head:hover { background: var(--tint); }
 .asks-grid .card h4 { font-size: 1.1rem; }
 .offer-list { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 10px; }
 .offer-list .at, .offer-list .pending { font-size: .85rem; color: var(--muted); }
+.wish-list { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; }
 
 /* The index */
 .res-group { margin: var(--block) 0 0; font-size: 1.2rem; }

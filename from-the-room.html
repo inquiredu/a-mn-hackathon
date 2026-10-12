@@ -54,7 +54,7 @@
       <ul class="recap-sessions" aria-label="Sessions">
         <li><a href="#oct-9"><strong>Hands On, the first run</strong><span>Friday, October 9, 2026 · for MNGAIA · AI4MN</span><span class="go">Questions answered, ideas, quotes, offers, and an index</span></a></li>
       </ul>
-      <p class="recap-how">How these are made: from the recording's transcript, checked against it line by line. People appear by first name, and only for what they showed or said to the whole room; side conversations stay out. Links people posted in the chat are added once they're confirmed, and until then an entry says so. A time like <span class="at">27:44</span> marks the moment in the recording, which the hosts are sending to everyone who was there.</p>
+      <p class="recap-how">How these are made: from the recording's transcript and the meeting's chat, checked line by line. People appear by first name, and only for what they showed or said to the whole room, out loud or in the chat; side conversations stay out. Links are the ones people posted; an entry without one says so. A time like <span class="at">27:44</span> marks the moment in the recording, which the hosts are sending to everyone who was there. The chat's own times run a minute or two apart from the recording's, so chat posts are marked "in the chat" instead.</p>
     </div>
   </section>
 
@@ -87,7 +87,7 @@
     <section class="section" id="oct-9-questions" aria-labelledby="oct-9-questions-title">
       <div class="wrap">
         <h3 class="recap-title" id="oct-9-questions-title">Questions, answered</h3>
-        <p class="section-lede">Asked out loud, raised in a room's report, or answered by a demo. Each answer is what the room said, tightened.</p>
+        <p class="section-lede">Asked out loud, asked in the chat, raised in a room's report, or answered by a demo. Each answer is what the room said, tightened.</p>
         <ol class="qa-list">
 
           <li class="qa" id="oct-9-q-error">
@@ -130,6 +130,13 @@
             <p class="qa-see">Same moment, later: <span class="at"><span class="sr-only">In the recording at </span>1:27:41</span></p>
           </li>
 
+          <li class="qa" id="oct-9-q-roles">
+            <h4>Does student information go into the Sheet behind a script, and who gets to see it?</h4>
+            <p class="qa-who">Patrick asked Paul, in the chat, during Paul's demos</p>
+            <p>Only the pieces the tool needs, and only for the people whose role calls for them. Paul keeps those pieces (a student's name, a guardian's name and email) in a separate protected sheet, and the web app shows each person what their role allows: teachers see only their own students, and administrators a wider group. Patrick's follow-up, whether a hidden, protected sheet with a column on each row decides what the web app shows, didn't get an answer in the chat. It's a good one to ask Paul.</p>
+            <p class="qa-see">More: <a href="sources.html?ask=privacy">student data</a>, on Sources.</p>
+          </li>
+
           <li class="qa" id="oct-9-q-setup">
             <h4>How do I make a tool someone else can set up on their own?</h4>
             <p class="qa-who">Sean, after Ken's report portal · <span class="at"><span class="sr-only">In the recording at </span>1:35:47</span></p>
@@ -139,7 +146,7 @@
           <li class="qa" id="oct-9-q-reports">
             <h4>How do we get score reports to families securely when the student information system can't?</h4>
             <p class="qa-who">Ken · <span class="at"><span class="sr-only">In the recording at </span>1:31:48</span></p>
-            <p>Ken had to send families the actual MCA reports, one PDF per subject per student. Infinite Campus can attach them only one at a time, an add-on didn't make sense for a district his size, and mailing them takes too much time. So he built a portal in about two days with Gemini, as a script bound to a Sheet. The PDFs go in one Drive folder (each file name carries the student's MARSS number, as MCA sends them, and a built-in renamer handles the rest); guardians and their emails go in the Sheet; and the setup steps walk you through deploying it as a web app. Families get the link by email from the student information system, enter their email, receive a one-time six-digit code, and download only their own student's files. Adding a language code to the link shows the page in Spanish or Somali. He has used it for MCA and WIDA reports.</p>
+            <p>As his district's assessment coordinator, Ken had to send families the actual MCA reports, one PDF per subject per student, in a way that keeps to FERPA. Infinite Campus can attach them only one at a time, an add-on didn't make sense for a district his size, and mailing them takes too much time. So he built a portal in about two days with Gemini, as a script bound to a Sheet. The PDFs go in one Drive folder (each file name carries the student's MARSS number, as MCA sends them, and a built-in renamer handles the rest); guardians and their emails go in the Sheet; and the setup steps walk you through deploying it as a web app. Families get the link by email from the student information system, enter their email, receive a one-time six-digit code, and download only their own student's files. Adding a language code to the link shows the page in Spanish or Somali. He has used it for MCA and ACCESS (WIDA) reports.</p>
             <p class="qa-see">More: <a href="#oct-9-r-portal">the report portal</a>, which Ken offered to share.</p>
           </li>
 
@@ -167,7 +174,13 @@
             <h4>What comes after Apps Script?</h4>
             <p class="qa-who">Dan; Sean · <span class="at"><span class="sr-only">In the recording at </span>1:48:19</span></p>
             <p>Version control, first. Dan's rule: before anything else, set up the teacher's computer so everything is undoable, with GitHub. Then the AI can build boldly, you can say "I don't like everything that you did since last Tuesday" and it's undone, and students get stable versions. After that, the desktop: an AI agent (Dan named Claude, ChatGPT, Google Antigravity, Devin, and AI running on your own hardware), an editor to see what it makes (VS Code), and on Windows, the Windows Subsystem for Linux. Plan on about an hour for Windows and twenty minutes for a Mac. It helps to know the idea underneath: a big problem broken into small ones until each has a recipe. Sean is writing a <a href="#oct-9-r-gitguide">guide to GitHub for teachers</a>; for him and Paul, version control was the breakthrough.</p>
-            <p class="qa-see">More: level 4, the workbench, on <a href="levels.html#workbench">Three levels</a>.</p>
+            <p class="qa-see">More: Dan's <a href="https://dmccreary.github.io/prompt-class/appendices/crash-course-talking-to-agents/#diagram-claude-code-setup" target="_blank" rel="noopener">desktop setup</a> (desktop tool, GitHub, VS Code, Unix shell), and level 4, the workbench, on <a href="levels.html#workbench">Three levels</a>.</p>
+          </li>
+
+          <li class="qa" id="oct-9-q-reunify">
+            <h4>Could an event check-in app help with reunification after an emergency evacuation?</h4>
+            <p class="qa-who">Nathaniel, in the chat, after Kate's and Paul's check-in tools</p>
+            <p>Not answered on the day, so it's still open. Kate and Paul are the people to ask what their tools already record, and your district's emergency plan, and whoever owns it, is the place to start before anyone builds on it.</p>
           </li>
 
         </ol>
@@ -183,8 +196,8 @@
 
           <li class="idea">
             <h4>Two districts, one problem: who's at the game?</h4>
-            <p>Kate's team built a check-in tool for after-school events because the ticketing system didn't scan student IDs well. Paul's flex scheduling scans the barcode on a student ID with any camera, and his Spartan Cup app checks students in at home events for points and badges. The same need, solved twice, in two districts. That's the case for sharing.</p>
-            <ul class="threads" aria-label="Draws on"><li><a href="#oct-9-r-checkin">Event check-in</a></li><li><a href="#oct-9-r-flex">Flex scheduling</a></li><li><a href="#oct-9-r-cup">Spartan Cup</a></li></ul>
+            <p>Kate's team built a check-in tool for after-school events because the ticketing system didn't scan student IDs well. Paul's flex scheduling scans the barcode on a student ID with any camera, and his Spartan Cup app checks students in at home events for points and badges. The same need, solved twice, in two districts. That's the case for sharing. And in the chat, Nathaniel took it somewhere new: could a check-in like this help reunify families after an emergency evacuation?</p>
+            <ul class="threads" aria-label="Draws on"><li><a href="#oct-9-r-checkin">Event check-in</a></li><li><a href="#oct-9-r-flex">Flex scheduling</a></li><li><a href="#oct-9-r-cup">Spartan Cup</a></li><li><a href="#oct-9-q-reunify">Reunification</a></li></ul>
           </li>
 
           <li class="idea">
@@ -207,13 +220,13 @@
 
           <li class="idea">
             <h4>Student data is part of every build</h4>
-            <p>Room 2 talked through how they handle privacy in their own districts. Room 4 talked through three audiences who each need it explained. Sean showed a whole inventory for it, Ken's portal uses one-time codes, Ken showed his walkthrough app with fake data, and Dan asked where mastery data should live. Sean's opening reminder: nobody on the planning committee is a software developer, so learning to do this safely is part of the work.</p>
-            <ul class="threads" aria-label="Draws on"><li><a href="#oct-9-q-privacy">Three audiences</a></li><li><a href="#oct-9-r-privacy">Privacy inventory</a></li><li><a href="#oct-9-q-mastery">Mastery data</a></li><li><a href="sources.html?ask=privacy">Sources: student data</a></li></ul>
+            <p>Room 2 talked through how they handle privacy in their own districts. Room 4 talked through three audiences who each need it explained. Sean showed a whole inventory for it, Ken's portal uses one-time codes, Kate and Ken each showed a demo copy with made-up students, Paul keeps student details in a protected sheet that each role sees only part of, and Dan asked where mastery data should live. Sean's opening reminder: nobody on the planning committee is a software developer, so learning to do this safely is part of the work.</p>
+            <ul class="threads" aria-label="Draws on"><li><a href="#oct-9-q-privacy">Three audiences</a></li><li><a href="#oct-9-q-roles">Who sees what</a></li><li><a href="#oct-9-r-privacy">Privacy inventory</a></li><li><a href="#oct-9-q-mastery">Mastery data</a></li><li><a href="sources.html?ask=privacy">Sources: student data</a></li></ul>
           </li>
 
           <li class="idea">
             <h4>Share it, so nobody builds it twice</h4>
-            <p>Sean's hope for the community: take someone's idea, fit it to your place, extend it, and share it back. He pictures a cohort of teachers across the whole state working together. Sheets that carry their scripts make that easy, and GitHub keeps every version. He sees a chance to revive what the Minnesota Partnership for Collaborative Curriculum started with open educational resources, now with code.</p>
+            <p>Sean's hope for the community: take someone's idea, fit it to your place, extend it, and share it back. He pictures a cohort of teachers across the whole state working together. Sheets that carry their scripts make that easy, and GitHub keeps every version. He sees a chance to revive what the Minnesota Partnership for Collaborative Curriculum started with open educational resources, now with code, and Dan already calls his 120-plus books open educational resources.</p>
             <ul class="threads" aria-label="Draws on"><li><a href="#oct-9-q-share">Sharing a script</a></li><li><a href="#oct-9-q-next">Version control</a></li><li><a href="sources.html?ask=sharing">Sources: sharing</a></li></ul>
           </li>
 
@@ -230,8 +243,14 @@
           </li>
 
           <li class="idea">
+            <h4>Hard to stop</h4>
+            <p>A 5 on the 1-to-5 meant "like Sean, I have a difficult time stopping," and the chat agreed. Dan answered 5+ ("I only sleep when my tokens expire!"), Molly a 3 ("just starting to build, but I am losing sleep"), and Sean admitted someone had told him to go to bed the night before. His advice, from the room reports: the hardest part is taking your hands off the code.</p>
+            <ul class="threads" aria-label="Draws on"><li><a href="#oct-9-q-broke">One more feature</a></li><li><a href="#oct-9-heard">Heard in the room</a></li></ul>
+          </li>
+
+          <li class="idea">
             <h4>The ceiling keeps moving</h4>
-            <p>Paul found Apps Script a little over two years ago. He and Sean keep thinking they've hit the ceiling and finding they haven't. Dan: Apps Script is the tip of the iceberg, and a textbook that took about 4,000 hours now takes about 10, as long as a person stays responsible for its quality. His caution sits right beside it: all of this is new, and untested.</p>
+            <p>Paul found Apps Script a little over two years ago. He and Sean keep thinking they've hit the ceiling and finding they haven't. Dan: Apps Script is the tip of the iceberg, and a textbook that took about 4,000 hours now takes about 10, as long as a person stays responsible for its quality. As Paul put it in the chat, the models get better, and you learn a lot along the way. Dan's caution sits right beside it: all of this is new, and untested.</p>
             <ul class="threads" aria-label="Draws on"><li><a href="#oct-9-q-next">After Apps Script</a></li><li><a href="#oct-9-textbooks">Dan's textbooks</a></li></ul>
           </li>
 
@@ -243,11 +262,15 @@
     <section class="section" id="oct-9-heard" aria-labelledby="oct-9-heard-title">
       <div class="wrap">
         <h3 class="recap-title" id="oct-9-heard-title">Heard in the room</h3>
-        <p class="section-lede">The morning in people's own words. Each quote is word for word from the transcript, with ums and repeats taken out and obvious transcription slips fixed; an ellipsis marks anything else left out.</p>
+        <p class="section-lede">The morning in people's own words. Each quote is word for word from the transcript or the chat, with ums and repeats taken out and obvious transcription slips fixed; an ellipsis marks anything else left out.</p>
         <ul class="quotes">
           <li><figure class="quote">
             <blockquote><p>Sean, you had way too much fun designing this interface. I love it.</p><p class="reply"><span class="speaker">Sean:</span> You're right. You're absolutely right.</p></blockquote>
             <figcaption>Elam, as the first wishes came into the chat · <span class="at"><span class="sr-only">In the recording at </span>4:02</span></figcaption>
+          </figure></li>
+          <li><figure class="quote">
+            <blockquote><p>An expert grant writer at my fingertips that would be awarded every time.</p></blockquote>
+            <figcaption>Tia, wishing in the chat</figcaption>
           </figure></li>
           <li><figure class="quote">
             <blockquote><p>There may need to be an intervention where somebody comes in and tells me it's time to take your hands off the code… and go to bed, which perhaps happened last night.</p></blockquote>
@@ -256,6 +279,10 @@
           <li><figure class="quote">
             <blockquote><p>Having a Max account is probably a bad thing for Max sleep as well.</p></blockquote>
             <figcaption>Sean, agreeing with Dan in the chat · <span class="at"><span class="sr-only">In the recording at </span>8:34</span></figcaption>
+          </figure></li>
+          <li><figure class="quote">
+            <blockquote><p>I only sleep when my tokens expire!</p></blockquote>
+            <figcaption>Dan, in the chat, after rating himself 5+</figcaption>
           </figure></li>
           <li><figure class="quote">
             <blockquote><p>When you experience the first one, you're like, this won't work. And you're like, oh my gosh, that works. Then you try the next one and you're like, oh, that works too.</p></blockquote>
@@ -298,6 +325,10 @@
             <figcaption>Sean, on asking his privacy tool for data privacy agreements · <span class="at"><span class="sr-only">In the recording at </span>1:26:35</span></figcaption>
           </figure></li>
           <li><figure class="quote">
+            <blockquote><p>Just when you think you find the limits… the models get better… and you also learn a lot in that process.</p></blockquote>
+            <figcaption>Paul, in the chat, as Sean talked about ceilings</figcaption>
+          </figure></li>
+          <li><figure class="quote">
             <blockquote><p>How can we give teachers some efficiency tools that exist without revamping their entire world in a day?</p></blockquote>
             <figcaption>Kate, on her lookup inside a Sheet teachers already use · <span class="at"><span class="sr-only">In the recording at </span>1:29:45</span></figcaption>
           </figure></li>
@@ -317,13 +348,13 @@
     <section class="section band" id="oct-9-asks" aria-labelledby="oct-9-asks-title">
       <div class="wrap">
         <h3 class="recap-title" id="oct-9-asks-title">Offers and asks</h3>
-        <p class="section-lede">Who offered what, and what people asked for. A link someone posted in the chat is added here once it's confirmed.</p>
+        <p class="section-lede">Who offered what, and what people asked for, out loud and in the chat.</p>
         <div class="asks-grid">
 
           <div class="card">
             <h4>Offered</h4>
             <ul class="offer-list">
-              <li><strong>Dan:</strong> an hour on Google Meet with any Minnesota teacher who wants to explore his books and tools, and mentoring for anyone who wants to make their own textbook. <span class="at"><span class="sr-only">In the recording at </span>1:39:54</span> <span class="pending">How to reach Dan: to come.</span></li>
+              <li><strong>Dan:</strong> an hour on Google Meet with any Minnesota teacher who wants to explore his books and tools, and mentoring for anyone who wants to make their own textbook: a six-week process, an hour a week. <span class="at"><span class="sr-only">In the recording at </span>1:39:54</span> When Meghan asked how to reach him, he shared his <a href="https://www.linkedin.com/in/danmccreary/" target="_blank" rel="noopener">LinkedIn</a>.</li>
               <li><strong>Ken:</strong> a copy of his <a href="#oct-9-r-portal">report portal</a>, as a Sheet with the script inside. He's updating its template from a wide data model to a tall one. <span class="at"><span class="sr-only">In the recording at </span>1:33:49</span></li>
               <li><strong>Ken:</strong> links to his examples, including <a href="#oct-9-r-pbis">Intervention Manager for PBIS and ClassPass</a>. <span class="at"><span class="sr-only">In the recording at </span>1:30:56</span></li>
               <li><strong>Paul:</strong> his Apps Script work, on his GitHub, and his Thought Leader Summit talk on Apps Script; Sean offered them for him. <span class="at"><span class="sr-only">In the recording at </span>28:51</span> <span class="pending">Links to come.</span></li>
@@ -337,15 +368,28 @@
             <ul class="offer-list">
               <li><strong>Dan</strong> is looking for a college or university to run A/B studies of an intelligent textbook against a paper one. So far he hasn't found one. <span class="at"><span class="sr-only">In the recording at </span>1:38:49</span></li>
               <li><strong>Sean</strong> asked builders to share links to what they've made, so others can see it working. <span class="at"><span class="sr-only">In the recording at </span>9:34</span></li>
+              <li><strong>Eric</strong> wants help refining a superintendent email agent that sorts what's for the superintendent, what's for the board, and what other administrators or principals can take on, with a morning brief.</li>
               <li><strong>Room 4</strong> wants a way to give families, staff, and the business office the privacy information each needs; it's Meghan's project for the week after. <a href="#oct-9-q-privacy">Where to start</a>.</li>
-              <li><strong>Wished for in the chat</strong>, when Sean asked what people would build: a Sheet with a script where testing-center teachers enter test information; an expert grant writer; an influence graph for each school and college; and an analysis of time and productivity with recommendations built in. <span class="at"><span class="sr-only">In the recording at </span>5:22</span> Take one to <a href="wish.html">Grant a wish</a>.</li>
+              <li><strong>Wished for in the chat</strong>, when Sean asked what people would build if they could. <a href="wish.html">Grant a wish</a> is the place to start one. <span class="at"><span class="sr-only">In the recording at </span>5:22</span>
+                <ul class="wish-list">
+                  <li><strong>Amanda:</strong> a mileage reimbursement calculated from her calendar.</li>
+                  <li><strong>Troy:</strong> a project tool that tracks progress on goals.</li>
+                  <li><strong>Erin:</strong> a Sheet where testing-center teachers enter the test and the students, which emails them when a test still isn't done after a week.</li>
+                  <li><strong>Tia:</strong> "an expert grant writer at my fingertips that would be awarded every time."</li>
+                  <li><strong>Dan:</strong> an influence graph for every school, college, and university in Minnesota, showing who is for AI and who fears it.</li>
+                  <li><strong>Rachel:</strong> an analysis of time and productivity, with recommendations built in.</li>
+                  <li><strong>Ken:</strong> printable hall passes for testing, made in a batch from the schedule.</li>
+                  <li><strong>Elam:</strong> something that fills in account sign-ups, conference requests, grant applications, and web forms for you.</li>
+                  <li><strong>Eric:</strong> a vetting tool that finds every stakeholder in a project and plans how to communicate and lead the change.</li>
+                </ul>
+              </li>
             </ul>
           </div>
 
           <div class="card">
             <h4>Coming up</h4>
             <ul class="offer-list">
-              <li><strong>November:</strong> MNGAIA · AI4MN turns to assessment, with Donna, the group's assessment expert, building on a national conference in Bloomington: back, as Sean put it, to "what we're actually working on in a day-to-day basis." <span class="at"><span class="sr-only">In the recording at </span>1:56:21</span></li>
+              <li><strong>November:</strong> MNGAIA · AI4MN turns to assessment, with Donna, the group's assessment expert, building on a national conference in Bloomington, NCME's <a href="https://ncme.org/events/classroom-assessment-conference/" target="_blank" rel="noopener">Classroom Assessment Conference</a> (November 12 to 14, 2026), which Dave linked in the chat: back, as Sean put it, to "what we're actually working on in a day-to-day basis." <span class="at"><span class="sr-only">In the recording at </span>1:56:21</span></li>
               <li><strong>Scripts and dips:</strong> Sean's idea for meeting in person to build together. Not scheduled yet. <span class="at"><span class="sr-only">In the recording at </span>1:55:14</span></li>
               <li><strong>The recording</strong> is going to everyone who was there.</li>
             </ul>
@@ -379,16 +423,15 @@
             <p class="res-what">A K-5 principal asked for a Google Form that would email teachers a follow-up after informal walkthroughs; the week before, Ken built this instead, in about twenty minutes in Gemini: an Apps Script web app with a Sheet behind it, shown with fake data. Each visit is timed and logged, the teacher gets a summary by email with a way to ask for a follow-up, and a dashboard made in Gemini Canvas shows staff reached, average length, and content areas by grade.</p>
           </li>
           <li class="res" id="oct-9-r-portal">
-            <p class="res-name">Secure report portal</p>
-            <p class="res-meta">Ken · Offered · <span class="at"><span class="sr-only">In the recording at </span>1:32:48</span></p>
-            <p class="res-what">Families sign in with their email and a one-time code and download their own student's MCA or WIDA reports, in English, Spanish, or Somali. A script bound to a Sheet, with setup steps built in. <a href="#oct-9-q-reports">How it works</a>.</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
+            <p class="res-name"><a href="https://www.griswoldk12.com/solutions#h.5x3w5p2ju59k" target="_blank" rel="noopener">Secure Assessment Report Portal</a></p>
+            <p class="res-meta">Ken · Offered, linked in the chat · <span class="at"><span class="sr-only">In the recording at </span>1:32:48</span></p>
+            <p class="res-what">Families sign in with their email and a one-time code and download their own student's MCA or ACCESS reports, in English, Spanish, or Somali. A script bound to a Sheet, with setup steps built in. <a href="#oct-9-q-reports">How it works</a>.</p>
           </li>
           <li class="res" id="oct-9-r-pbis">
             <p class="res-name">Intervention Manager for PBIS, and ClassPass</p>
-            <p class="res-meta">Ken · Posted in the chat · <span class="at"><span class="sr-only">In the recording at </span>1:30:56</span></p>
-            <p class="res-what">Earlier work, mostly from before AI: tools first built in-house, then developed with one of the regional centers.</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
+            <p class="res-meta">Ken · On his site · <span class="at"><span class="sr-only">In the recording at </span>1:30:56</span></p>
+            <p class="res-what">Earlier work, mostly from before AI: tools first built in-house, then developed with one of the regional centers. Ken pointed people to his website for these, the same site his portal link goes to.</p>
+            <p class="res-link"><a href="https://www.griswoldk12.com/solutions" target="_blank" rel="noopener">Ken's solutions page</a></p>
           </li>
           <li class="res" id="oct-9-r-agenda">
             <p class="res-name">Daily agendas, in one place</p>
@@ -438,52 +481,97 @@
             <p class="res-link"><span class="pending">Link to come.</span></p>
           </li>
           <li class="res" id="oct-9-r-gitguide">
-            <p class="res-name">A guide to GitHub for teachers</p>
-            <p class="res-meta">Sean · In progress · <span class="at"><span class="sr-only">In the recording at </span>1:53:02</span></p>
+            <p class="res-name"><a href="https://inquiredu.org/git-guide" target="_blank" rel="noopener">A guide to GitHub for teachers</a></p>
+            <p class="res-meta">Sean · In progress, linked in the chat · <span class="at"><span class="sr-only">In the recording at </span>1:53:02</span></p>
             <p class="res-what">Walks teachers through getting set up with GitHub and version control. Not finished yet.</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
+          </li>
+        </ul>
+
+        <h4 class="res-group" id="oct-9-chat-built">Also built, from the chat</h4>
+        <p class="res-group-blurb">Answers to "What's the most useful thing you've built?" To ask for a copy, ask the builder.</p>
+        <ul class="res-list">
+          <li class="res" id="oct-9-r-lunch">
+            <p class="res-name">Lunch choices, sent to the office</p>
+            <p class="res-meta">Molly · In the chat</p>
+            <p class="res-what">For a third-grade classroom: students pick their lunch, and the page emails the office the results, with the menu PDF uploaded so they know what's for lunch each day. Sean said a lunch-count tool in his district "went over much bigger than we thought it was going to go over."</p>
+          </li>
+          <li class="res" id="oct-9-r-cashier">
+            <p class="res-name">Cashier practice</p>
+            <p class="res-meta">Ena · In the chat</p>
+            <p class="res-what">Built with a teacher, for center-based and work-based learners to practice taking orders, taking payment, and making change.</p>
+          </li>
+          <li class="res" id="oct-9-r-bookrec">
+            <p class="res-name">Book recommendations for a classroom</p>
+            <p class="res-meta">Amanda · In the chat</p>
+            <p class="res-what">Amanda likes to start from a Google Form that feeds a Google Sheet, so there's room to add more; she built a student book recommender for a classroom that way.</p>
+          </li>
+          <li class="res" id="oct-9-r-todo">
+            <p class="res-name">A nudge for a long to-do list</p>
+            <p class="res-meta">Elam · In the chat</p>
+            <p class="res-what">A simple Apps Script that reminds Elam's admin when items on their to-do list have waited too long.</p>
+          </li>
+          <li class="res" id="oct-9-r-canvas">
+            <p class="res-name">Gemini Canvas, inside Sheets</p>
+            <p class="res-meta">Ken · In the chat</p>
+            <p class="res-what">Using Gemini's Canvas in Sheets to add features to spreadsheets people already have, like attendance tracking for a high school intervention team.</p>
+          </li>
+          <li class="res" id="oct-9-r-whiteboard">
+            <p class="res-name">A whiteboard that kept growing</p>
+            <p class="res-meta">Paul · In the chat · <span class="at"><span class="sr-only">In the recording at </span>12:30</span></p>
+            <p class="res-what">An interactive whiteboard and classroom management tool for teachers in the district. Sean called it "an entire OS that started off as an interactive whiteboard."</p>
+          </li>
+          <li class="res" id="oct-9-r-checklist">
+            <p class="res-name">A morning checklist</p>
+            <p class="res-meta">Kate · In the chat</p>
+            <p class="res-what">A checklist with a timer that counts down to leaving the house: ride the bus, ride with mom, donut Friday.</p>
+          </li>
+          <li class="res" id="oct-9-r-chores">
+            <p class="res-name">Chores, motivated</p>
+            <p class="res-meta">Patrick · In the chat</p>
+            <p class="res-what">"Not education related," but an app to motivate kids to do their chores.</p>
           </li>
         </ul>
 
         <h4 class="res-group" id="oct-9-textbooks">Dan's intelligent textbooks</h4>
-        <p class="res-group-blurb">Interactive textbooks AI builds for teachers to use with students, with MicroSims (small simulations), infographic posters, and teacher guides. Dan posted a list of links in the chat; the newest books, under six months old, are the most interactive. He's not selling anything, and he's clear the books haven't been tested against paper ones yet.</p>
+        <p class="res-group-blurb">Interactive textbooks AI builds for teachers to use with students, with MicroSims (small simulations), infographic posters, and teacher guides. Dan has built a library of AI agent skills that generate them, and in the chat he called the case studies "120+ Open Educational Resources"; his goal, in his words, is "to democratize education for all children on Earth." The newest books, under six months old, are the most interactive. He's not selling anything, and he's clear the books haven't been tested against paper ones yet. Every address below is from <a href="https://docs.google.com/document/d/1mLlZnNUQJADmwooBzrfY_Hb6js2zdPtOBBJHkIVHEYY/edit?usp=sharing" target="_blank" rel="noopener">Dan's list of links</a>, which he posted in the chat.</p>
         <ul class="res-list">
           <li class="res" id="oct-9-r-cases">
-            <p class="res-name">Case studies</p>
-            <p class="res-meta">Dan · Posted in the chat · <span class="at"><span class="sr-only">In the recording at </span>1:38:49</span></p>
+            <p class="res-name"><a href="https://dmccreary.github.io/intelligent-textbooks/case-studies/" target="_blank" rel="noopener">Case studies</a></p>
+            <p class="res-meta">Dan · Linked in the chat · <span class="at"><span class="sr-only">In the recording at </span>1:38:49</span></p>
             <p class="res-what">Every intelligent textbook in one place. Start here.</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
           </li>
           <li class="res" id="oct-9-r-health">
-            <p class="res-name">Health Education</p>
+            <p class="res-name"><a href="https://dmccreary.github.io/health-education/" target="_blank" rel="noopener">Health Education</a></p>
             <p class="res-meta">Dan · Shown · <span class="at"><span class="sr-only">In the recording at </span>1:39:54</span></p>
             <p class="res-what">Built around what Minnesota says to teach in health, grade by grade, with infographic posters students click through to hear the story, like "Families: Many Ways to Care."</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
+            <p class="res-link"><a href="https://dmccreary.github.io/health-education/posters/" target="_blank" rel="noopener">The posters</a></p>
           </li>
           <li class="res" id="oct-9-r-finance">
-            <p class="res-name">Personal finance, and the College Loan Payback MicroSim</p>
-            <p class="res-meta">Dan · Shown · <span class="at"><span class="sr-only">In the recording at </span>1:43:06</span></p>
-            <p class="res-what">For the personal finance course Minnesota requires. Made for a teacher at Edina: change the years in college and the payments, and see how long the loan takes to pay back. Teachers at Washburn set it up in the library while students apply to college.</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
+            <p class="res-name"><a href="https://dmccreary.github.io/personal-finance/" target="_blank" rel="noopener">Personal Finance</a>, with the College Loan Payback MicroSim</p>
+            <p class="res-meta">Dan · Shown, book in progress · <span class="at"><span class="sr-only">In the recording at </span>1:43:06</span></p>
+            <p class="res-what">For the personal finance course Minnesota requires. The MicroSim was made for a teacher at Edina: change the years in college and the payments, and see how long the loan takes to pay back. Teachers at Washburn set it up in the library while students apply to college.</p>
           </li>
           <li class="res" id="oct-9-r-built">
-            <p class="res-name">The Science of the Built Environment</p>
-            <p class="res-meta">Dan · Shown · <span class="at"><span class="sr-only">In the recording at </span>1:44:03</span></p>
+            <p class="res-name"><a href="https://dmccreary.github.io/science-of-the-built-envrionment/" target="_blank" rel="noopener">Science of the Built Environment</a></p>
+            <p class="res-meta">Dan · Shown, linked in the chat · <span class="at"><span class="sr-only">In the recording at </span>1:44:03</span></p>
             <p class="res-what">For Dunwoody College: layered assembly diagrams of heat and moisture moving through a wall, kept consistent across the whole book. Its instructional designers estimated hundreds of hours saved.</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
+            <p class="res-link"><a href="https://dmccreary.github.io/science-of-the-built-envrionment/posters/" target="_blank" rel="noopener">The posters</a></p>
           </li>
           <li class="res" id="oct-9-r-fans">
-            <p class="res-name">A training manual for Twin City Fans</p>
+            <p class="res-name"><a href="https://moroshek.github.io/FanTASTIC-textbook/" target="_blank" rel="noopener">Fan Pedia</a>, a training manual for Twin City Fans</p>
             <p class="res-meta">Dan · Shown · <span class="at"><span class="sr-only">In the recording at </span>1:45:11</span></p>
             <p class="res-what">A 2001 PDF became exploded diagrams, quizzes, and parts you can take apart on screen, for new employees fresh out of high school who install industrial fans. Built in about two hours.</p>
+            <p class="res-link"><a href="https://moroshek.github.io/FanTASTIC-textbook/sims/" target="_blank" rel="noopener">Its MicroSims</a></p>
           </li>
           <li class="res" id="oct-9-r-agents">
-            <p class="res-name">Agent Orchestration, the crash course</p>
+            <p class="res-name"><a href="https://dmccreary.github.io/prompt-class/" target="_blank" rel="noopener">Prompt engineering</a>, and the crash course on agents</p>
             <p class="res-meta">Dan · Shown · <span class="at"><span class="sr-only">In the recording at </span>1:47:22</span></p>
-            <p class="res-what">Dan's course, once called prompt engineering and now about working with AI agents, one step at a time. More is coming over the next three months.</p>
-            <p class="res-link"><span class="pending">Link to come.</span></p>
+            <p class="res-what">Dan's course, once about prompt engineering and now about working with AI agents, one step at a time, with more coming over the next three months. Its crash course starts with the desktop setup he called the key to productivity.</p>
+            <p class="res-link"><a href="https://dmccreary.github.io/prompt-class/appendices/crash-course-talking-to-agents/" target="_blank" rel="noopener">The crash course</a></p>
           </li>
         </ul>
+        <p class="res-group-blurb">Also on Dan's list: <a href="https://dmccreary.github.io/digital-citizenship/" target="_blank" rel="noopener">Digital Citizenship</a> for ISD 197, with its <a href="https://dmccreary.github.io/digital-citizenship/stories/" target="_blank" rel="noopener">graphic novel stories</a>; a <a href="https://dmccreary.github.io/tracking-ai-course/" target="_blank" rel="noopener">course on AI strategy</a>; <a href="https://dmccreary.github.io/learning-sciences/" target="_blank" rel="noopener">learning about learning science</a>; <a href="https://dmccreary.github.io/automating-instructional-design/" target="_blank" rel="noopener">automating instructional design</a>; STEM books (<a href="https://dmccreary.github.io/learning-python/" target="_blank" rel="noopener">Learning Python</a>, <a href="https://dmccreary.github.io/learning-micropython/" target="_blank" rel="noopener">Learning MicroPython</a>, <a href="https://dmccreary.github.io/moving-rainbow/" target="_blank" rel="noopener">Moving Rainbow</a>, <a href="https://dmccreary.github.io/stem-robots/" target="_blank" rel="noopener">STEM Robots</a>, <a href="https://dmccreary.github.io/robot-day/" target="_blank" rel="noopener">Robot Day</a>, <a href="https://dmccreary.github.io/clocks-and-watches/" target="_blank" rel="noopener">Clocks and Watches</a>); and the <a href="https://dmccreary.github.io/book-mascots/list-mascots/" target="_blank" rel="noopener">book mascots</a>.</p>
+
 
         <h4 class="res-group" id="oct-9-site">From this site</h4>
         <ul class="res-list">
@@ -496,19 +584,19 @@
           <li class="res" id="oct-9-r-levels">
             <p class="res-name">Three levels of getting started with code</p>
             <p class="res-meta">The site · How the rooms were formed · <span class="at"><span class="sr-only">In the recording at </span>14:02</span></p>
-            <p class="res-what">In the chat, on your site, behind the scenes: everyone picked one in the Breakout Planner. Room 3 built the Drive inventory script from level 3.</p>
+            <p class="res-what">In the chat, on your site, behind the scenes: everyone picked one in the Breakout Planner, and when the rooms opened, Dave posted this page in the chat. Room 3 built the Drive inventory script from level 3.</p>
             <p class="res-link"><a href="levels.html">Three levels</a></p>
           </li>
           <li class="res" id="oct-9-r-slides">
-            <p class="res-name">The two backup decks</p>
-            <p class="res-meta">The site · Posted in the chat · <span class="at"><span class="sr-only">In the recording at </span>5:22</span></p>
-            <p class="res-what">The session and the starters as Google Slides, for anyone whose school network blocked this site. Room 1 worked from the starter code deck.</p>
-            <p class="res-link"><span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline-link"></span> · <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline-link"></span></p>
+            <p class="res-name">The backup decks</p>
+            <p class="res-meta">The site · Linked in the chat · <span class="at"><span class="sr-only">In the recording at </span>5:22</span></p>
+            <p class="res-what">When Dan's network couldn't reach this site, Dave posted the starter code deck in the chat, and room 1 worked from it. The session slides hold the whole morning, screen by screen.</p>
+            <p class="res-link"><span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline-link"></span> · <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline-link"></span></p>
           </li>
           <li class="res" id="oct-9-r-record">
             <p class="res-name">The Breakout Planner</p>
             <p class="res-meta">The site · Where people signed up · <span class="at"><span class="sr-only">In the recording at </span>28:51</span></p>
-            <p class="res-what">The shared doc with a list under each level, kept with the walls deck as the first run's record, so you can copy their shape.</p>
+            <p class="res-what">The shared doc with a list under each level, which Sean posted in the chat; kept with the walls deck as the first run's record, so you can copy their shape.</p>
             <p class="res-link"><a href="hosts.html#first-run">How the first run went, on Hosts</a></p>
           </li>
         </ul>
@@ -540,11 +628,11 @@
           <summary><span id="oct-9-morning-title">How the morning went, for anyone hosting</span></summary>
           <p>The plan is on <a href="hosts.html">Hosts</a>. Here's what happened instead, in order.</p>
           <ol class="morning">
-            <li>Welcome ran on the chat, as planned, with the stage's wait time doing the counting: a minute for wishes, then the 1-to-5 (mostly ones and twos, some fours; Sean suspected the twos were threes), then three minutes for the most useful thing people had built, which showed a room full of builders. Dan's network blocked the site, so a host posted the backup deck in the chat.</li>
-            <li>The three levels were named, not shown. Sean skipped the live demo ("I'd rather see what some other people are doing"), and Show &amp; Tell grew to three people: Kate, Ken, and Paul.</li>
-            <li>Everyone signed up for a level in the Breakout Planner, so each room would sit in people's zone of proximal development: people who would help them learn, and people they could inspire. Amanda turned level 1 into a room for anyone who couldn't open the site, working from the starter code slides, and Dave made a room for people who hadn't signed up, to talk through how others built things.</li>
+            <li>Welcome ran on the chat, as planned, with the stage's wait time doing the counting: a minute for wishes, then the 1-to-5 (seventeen answers in the chat: four 1s, five 2s, a 2.5, three 3s, three 4s, and a 5+; Sean suspected the 2s were 3s), then three minutes for the most useful thing people had built, which showed a room full of builders. Dan's browser said "this site can't be reached," so Dave posted the starter code deck in the chat.</li>
+            <li>The three levels were named, not shown. Sean skipped the live demo ("I'd rather see what some other people are doing"), and Show &amp; Tell grew to three people: Kate, Ken, and Paul. Builders raised a hand in Meet, and a host made them co-hosts so they could share their screens.</li>
+            <li>Sean posted the Breakout Planner in the chat, and everyone signed up for a level, so each room would sit in people's zone of proximal development: people who would help them learn, and people they could inspire. Amanda turned level 1 into a room for anyone who couldn't open the site, working from the starter code slides, and Dave made a room for people who hadn't signed up, to talk through how others built things. When the rooms opened, Dave posted the Three levels page in the chat.</li>
             <li>The rooms ran about half an hour. One person missed Meet's notice for their room while signing up for a GitHub account, with the notice hidden behind other tabs; moving latecomers took two hosts; and the room timer was set but not started until halfway through.</li>
-            <li>As the rooms came back, Sean's camera broke, so Dave started the room reports while Sean rejoined. Then came four room reports, three more demos, and Dan's textbooks; Sean thanked him afterward "for jumping in, cold." Grant a wish, Show &amp; Cheer, and the wonder and worry walls didn't happen, and the walls deck is still empty.</li>
+            <li>As the rooms came back, Sean's camera broke, so Dave started the room reports while Sean rejoined. Then came four room reports, three more demos (Kate finished a demo copy of her lookup while the reports went on), and Dan's textbooks; Sean thanked him afterward "for jumping in, cold." Grant a wish, Show &amp; Cheer, and the wonder and worry walls didn't happen, and the walls deck is still empty.</li>
             <li>Amanda had invited a cultural family advocate from her district the day before, because he'd been talking about AI. He came.</li>
             <li>Sean, at the close: "It was different than what I imagined, and I think it was great, and it was fun."</li>
           </ol>

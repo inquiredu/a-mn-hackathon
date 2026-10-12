@@ -227,7 +227,7 @@ const SESSION = {
           { heading: "I wonder...", body: "What did today make you curious about?" },
           { heading: "I worry...", body: "What did today make you uneasy about?" }
         ], foot: "Add yours to the wall. Then one word in the chat for how you're leaving.", timer: "wonder" },
-        { kind: "prompt", note: "Say: one word in the chat for how you're leaving. Thank the anchors by name. Then what your group does next, if anything: this screen shows the session file's next line, and says only thank you when that's empty.", heading: "Next time", body: "{next}", foot: "Thank you for building with us." }
+        { kind: "prompt", note: "Say: one word in the chat for how you're leaving. Thank the anchors by name. Then what your group does next, if anything: this screen shows the session file's next line, and says only thank you when that's empty.", heading: "Next time", body: "{next}", foot: "Thank you for building with us.", url: true }
       ],
       host: [
         "Post the wonder and worry links in the chat; the message below carries them.",

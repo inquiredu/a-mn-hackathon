@@ -124,7 +124,7 @@ const KINDS = {
     parts.push(el("h1", "heading", s.heading), el("p", "body", s.sub));
     // For whoever finds the stage cold: what it is and the way out. It steps away once the session is called to order.
     const note = el("p", "stage-note");
-    note.append("The stage from " + SESSION.title + ", first run as " + ((SESSION.record || {}).ran || "a live session") + ". Press → to look through it, or Back to the site to leave. Running it yourself? ");
+    note.append("The stage from " + SESSION.title + ", first run as " + ((SESSION.record || {}).ran || "a live session") + ". Press → to look through it; move the mouse for the controls, Back to the site among them. Running it yourself? ");
     const hosts = el("a", "", "Hosts has the guide.");
     hosts.href = "hosts.html";
     note.append(hosts);
@@ -151,7 +151,9 @@ const KINDS = {
     const frame = el("iframe", "embed");
     frame.src = s.src;
     frame.title = s.heading;
-    return [el("h1", "heading", s.heading), frame, el("p", "caption", s.caption || "")];
+    const head = el("div", "embed-head");
+    head.append(el("h1", "heading", s.heading), el("p", "caption", s.caption || ""));
+    return [head, frame];
   },
   awards(s) {
     const list = el("ul", "awards");
@@ -166,7 +168,10 @@ const KINDS = {
     return [el("h1", "heading", s.heading), list];
   },
   code(s) {
-    return [el("h1", "heading", s.heading), el("pre", "code", s.code), el("p", "caption", s.caption || "")];
+    // The strings are what a person chose, so they wear the accent: drawn as text, never as HTML
+    const pre = el("pre", "code");
+    s.code.split(/("[^"\n]*")/).forEach((part) => pre.append(/^".*"$/.test(part) ? el("span", "str", part) : part));
+    return [el("h1", "heading", s.heading), pre, el("p", "caption", s.caption || "")];
   },
   quote(s) {
     return [el("p", "quote", s.text)];
@@ -223,7 +228,7 @@ function timerBlock() {
   const box = el("div", "timer");
   box.setAttribute("role", "group");
   box.setAttribute("aria-label", "Timer");
-  const buttons = el("div", "timer-buttons");
+  const buttons = el("div", "timer-buttons presenter");
   [["go", "Start", ""], ["minus", "−1 min", "One minute less"], ["plus", "+1 min", "One minute more"], ["reset", "Reset", ""]].forEach(([action, label, aria]) => {
     const b = el("button", "timer-" + action, label);
     b.type = "button";
@@ -248,6 +253,16 @@ function timerAction(action) {
   tick();
 }
 
+// What the timer is timing, in words: one builder's turn, all the time in breakout rooms, or this screen
+const PER_TURN = ["showTurn", "share"];
+function timerLabel(screen, state) {
+  if (state.done) return "Time";
+  const live = state.status === "Running" ? "running" : state.status === "Paused" ? "paused" : state.minutes + " min";
+  if (PER_TURN.includes(screen.timer)) return (state.status === "Ready" ? "Each turn · " : "This turn · ") + live;
+  if (screen.timerKey === "building") return "Breakout rooms · " + live;
+  return state.status === "Ready" ? "Ready · " + state.minutes + " min" : state.status + " · " + state.minutes + " min";
+}
+
 // The timer's state for the stage and the notes window, or null on a screen without one
 function timerState() {
   const screen = screens[index];
@@ -264,10 +279,26 @@ const clockBox = document.getElementById("session-clock");
 let clockOpen = false;
 let wait = null;   // { minutes, run } while a wait-time countdown is on
 
+const stillMotion = matchMedia("(prefers-reduced-motion: reduce)");
 function placeClock() {
-  clockBox.dataset.mode = clockOpen ? "open" : index === 0 ? "hero" : "corner";
+  const mode = clockOpen ? "open" : index === 0 ? "hero" : "corner";
+  const moving = clockBox.dataset.mode && clockBox.dataset.mode !== mode;
+  const first = clockBox.getBoundingClientRect();
+  clockBox.dataset.mode = mode;
   document.getElementById("sc-backdrop").hidden = !clockOpen;
   document.getElementById("sc-face").setAttribute("aria-expanded", String(clockOpen));
+  if (!moving || !first.width) return;
+  const last = clockBox.getBoundingClientRect();
+  if (stillMotion.matches) {
+    clockBox.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 120 });
+    return;
+  }
+  const dx = first.left - last.left, dy = first.top - last.top;
+  const sx = first.width / last.width, sy = first.height / last.height;
+  clockBox.animate([
+    { transformOrigin: "0 0", transform: "translate(" + dx + "px, " + dy + "px) scale(" + sx + ", " + sy + ")" },
+    { transformOrigin: "0 0", transform: "none" }
+  ], { duration: 360, easing: "cubic-bezier(.22, 1, .36, 1)" });
 }
 
 function openClock(open) {
@@ -311,7 +342,7 @@ function showClock(now) {
     waitBox.hidden = true;
   }
   clockBox.classList.toggle("waiting", !!wait);
-  document.getElementById("sc-wait-clear").hidden = !wait;   // nothing to clear until a wait is on
+  document.getElementById("sc-wait-clear").disabled = !wait;   // nothing to clear until a wait is on
   document.querySelectorAll("[data-wait]").forEach((b) => {
     b.setAttribute("aria-pressed", String(!!wait && Number(b.dataset.wait) === wait.minutes));
   });
@@ -322,7 +353,13 @@ document.getElementById("sc-close").addEventListener("click", () => openClock(fa
 document.getElementById("sc-backdrop").addEventListener("click", () => openClock(false));
 document.getElementById("sc-start").addEventListener("click", callToOrder);
 document.getElementById("sc-pause").addEventListener("click", pauseClock);
-document.getElementById("sc-reset").addEventListener("click", resetClock);
+document.getElementById("sc-reset").addEventListener("click", (event) => {
+  const b = event.currentTarget;
+  if (b.classList.contains("confirm")) { clearTimeout(b.confirmTimer); b.classList.remove("confirm"); b.textContent = "Reset the clock"; resetClock(); return; }
+  b.classList.add("confirm");
+  b.textContent = "Press again to reset";
+  b.confirmTimer = setTimeout(() => { b.classList.remove("confirm"); b.textContent = "Reset the clock"; }, 4000);
+});
 document.getElementById("sc-wait-clear").addEventListener("click", () => {
   wait = null;
   tick();
@@ -356,6 +393,11 @@ function show(i) {
   const screen = screens[index];
   stage.className = "stage kind-" + screen.kind;
   stage.replaceChildren(...KINDS[screen.kind](screen));
+  const firstOfPart = index === 0 || screens[index - 1].segment !== screen.segment;
+  const saysPart = screen.heading && screen.heading.toLowerCase().includes(screen.segment.title.toLowerCase());
+  if (firstOfPart && index > 0 && screen.heading && !saysPart && screen.kind !== "quote") {
+    stage.prepend(el("p", "part-kicker", screen.segment.title));
+  }
   if (timerState()) { stage.append(timerBlock()); stage.classList.add("has-timer"); }
   timerWasDone = false;
   history.replaceState(null, "", location.search + "#" + index);
@@ -379,8 +421,9 @@ function tick() {
   const box = stage.querySelector(".timer");
   if (state && box) {
     box.classList.toggle("done", state.done);
+    box.dataset.state = state.status;
     box.querySelector(".timer-display").textContent = state.display;
-    box.querySelector(".timer-status").textContent = state.status + " · " + state.minutes + " min";
+    box.querySelector(".timer-status").textContent = timerLabel(screens[index], state);
     box.querySelector(".timer-go").textContent = state.action;
     if (state.done && !timerWasDone) document.getElementById("status").textContent = "Time.";
     timerWasDone = state.done;
@@ -425,6 +468,29 @@ function toggleFullScreen() {
   if (document.fullscreenElement) document.exitFullscreen();
   else document.documentElement.requestFullscreen().catch(() => {});
 }
+
+// ---------- The presenter's controls: hidden when idle, so the room sees only the slide ----------
+
+let chromeTimer;
+function showChrome() {
+  document.body.classList.add("chrome-on");
+  clearTimeout(chromeTimer);
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  chromeTimer = setTimeout(() => {
+    const focused = document.activeElement && document.activeElement.closest && document.activeElement.closest(".presenter");
+    if (focused) return showChrome();   // keep them while the keyboard is in them
+    document.body.classList.remove("chrome-on");
+  }, coarse ? 4000 : 2500);
+}
+["pointermove", "pointerdown", "keydown", "focusin"].forEach((type) => document.addEventListener(type, showChrome, { passive: true }));
+showChrome();
+
+(() => {
+  const keys = document.getElementById("keys");
+  let seen = false;
+  try { seen = sessionStorage.getItem("hands-on-keys") === "1"; sessionStorage.setItem("hands-on-keys", "1"); } catch { /* private window */ }
+  keys.hidden = seen;
+})();
 
 document.getElementById("next").addEventListener("click", () => show(index + 1));
 document.getElementById("prev").addEventListener("click", () => show(index - 1));

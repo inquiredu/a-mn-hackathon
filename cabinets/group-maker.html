@@ -49,30 +49,31 @@ const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", 
   @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
 
-  label { display: block; margin: 14px 0 6px; font-weight: 600; }
+  label { display: block; margin: 16px 0 2px; font-weight: 600; }
   label:first-child { margin-top: 0; }
-  .hint { font-weight: 400; color: var(--muted); }
+  .hint { margin: 0 0 6px; font-size: .9rem; color: var(--muted); }
   .foot { margin: 14px 0 0; font-size: .9rem; color: var(--muted); }
   textarea, input {
     width: 100%; padding: 8px 10px; font: inherit;
     border: 2px solid var(--edge); border-radius: 10px; background: var(--card); color: var(--ink);
   }
   input[type="number"] { width: 6em; }
+  @media (max-width: 600px) { #names { height: 10.5em; } }   /* a shorter box on a phone, so the groups show sooner */
 
   button {
     padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer;
     border: 2px solid var(--edge); border-radius: 999px; background: var(--card); color: var(--ink);
   }
-  button.primary { margin-top: 16px; background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
   button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
   .results-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
   h2 { margin: 0; font-size: 1.2rem; }
-  .tools { display: flex; flex-wrap: wrap; gap: 8px; }
-  .summary { margin: 8px 0 0; color: var(--muted); }
-  .status { min-height: 1.5em; margin: 4px 0 0; font-weight: 600; }
+  .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .summary { margin: 6px 0 0; color: var(--muted); }
+  .status { font-size: .9rem; font-weight: 600; }   /* beside the buttons, so a message never pushes the groups down */
 
-  .groups { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); margin-top: 12px; }
+  .groups { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr)); margin-top: 12px; }
   .group { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; animation: land .35s ease-out both; }
   .group h3 { margin: 0; padding: 8px 14px; font-size: 1.05rem; background: var(--accent); color: #FFFFFF; }
   .group ul { margin: 0; padding: 10px 14px 12px 32px; }
@@ -93,31 +94,31 @@ const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", 
 
   <div class="layout">
     <form class="card" id="setup">
-      <label for="names">Names, one per line <span class="hint">(anonymized is fine; the ones here are made-up examples)</span></label>
-      <textarea id="names" rows="12" spellcheck="false"></textarea>
+      <label for="names">Names, one per line</label>
+      <p class="hint" id="names-hint">Anonymized is fine; the ones here are made-up examples.</p>
+      <textarea id="names" rows="12" spellcheck="false" aria-describedby="names-hint"></textarea>
 
       <label for="size">People per group</label>
       <input id="size" type="number" min="2" max="10">
 
-      <label for="helpers">Spread these people out, one per group <span class="hint">(optional: leaders, helpers, adults in the room)</span></label>
-      <textarea id="helpers" rows="3" spellcheck="false" placeholder="One name per line"></textarea>
-
-      <button class="primary" type="submit">Make groups</button>
+      <label for="helpers">Spread these people out, one per group</label>
+      <p class="hint" id="helpers-hint">Optional: leaders, helpers, adults in the room.</p>
+      <textarea id="helpers" rows="3" spellcheck="false" placeholder="One name per line" aria-describedby="helpers-hint"></textarea>
     </form>
 
     <section aria-labelledby="results-title">
       <div class="results-head">
         <h2 id="results-title">Groups</h2>
         <div class="tools">
-          <button id="again" type="button">Shuffle again</button>
+          <span class="status" id="status" aria-live="polite"></span>
           <button id="copy" type="button">Copy groups</button>
+          <button class="primary" id="again" type="button">Shuffle</button>
         </div>
       </div>
       <p class="summary" id="summary" aria-live="polite"></p>
-      <p class="status" id="status" aria-live="polite"></p>
       <div class="groups" id="groups"></div>
       <textarea class="copy-box" id="copy-box" readonly hidden aria-label="The groups as text, ready to copy"></textarea>
-      <p class="foot">Names stay in this window on your computer; nothing is saved or sent. The names above are made-up examples; anonymized ones of your own work the same way.</p>
+      <p class="foot">Names stay on this page, on your computer; nothing is saved or sent. The names above are made-up examples; anonymized ones of your own work the same way.</p>
     </section>
   </div>
 </div>
@@ -229,8 +230,9 @@ $("copy").addEventListener("click", async () => {
   }
 });
 
-$("setup").addEventListener("submit", (event) => { event.preventDefault(); makeGroups(); });
+$("setup").addEventListener("submit", (event) => { event.preventDefault(); makeGroups(); });   // Enter in the size box
 $("again").addEventListener("click", makeGroups);
+$("size").addEventListener("change", makeGroups);   // a new size deals new groups right away
 
 // Get started
 $("names").value = SAMPLE_NAMES.join("\n");

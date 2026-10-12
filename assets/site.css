@@ -709,84 +709,131 @@ summary.segment-head:hover { background: var(--tint); }
 .more-link a { font-weight: 600; }
 
 /* ---------- From the room: each session's record, newest first ---------- */
-/* One article per session; inside it, five sections that alternate with the band. Cards are the site's cards. */
-.recap-sessions { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; max-width: 46rem; }
-.recap-sessions a {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; padding: 14px var(--card-pad);
-  background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); color: var(--ink); text-decoration: none;
-}
-.recap-sessions a:hover { border-color: var(--control); }
-.recap-sessions strong { font-size: 1.15rem; }
-.recap-sessions span { color: var(--muted); }
-.recap-sessions .go { flex-basis: 100%; color: var(--link); font-weight: 600; font-size: .9rem; }
-.recap-how { max-width: 46rem; margin: 18px 0 0; color: var(--muted); }
+/* Each session is an article: a short header, a row of tabs (Overview, Questions, Themes, Offers and asks, Index),
+   and one view at a time. assets/recap.js runs the tabs; without it, the views follow one another down the page. */
+.recap-intro { padding: 40px 0 22px; }
+.recap-intro .section-lede { max-width: 40rem; }
+.recap-sessions ul { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.recap-sessions a { display: block; padding: 5px 14px; border-radius: 999px; border: 1.5px solid var(--control); color: var(--ink); text-decoration: none; font-size: .92rem; }
+.recap-sessions a:hover { border-color: var(--accent); }
+.recap-sessions a[aria-current] { border-color: var(--accent); }
+.recap-about { padding: 0 0 var(--section); }
+.recap-how { max-width: 46rem; margin-top: 0; }
+.recap-how > summary { font-size: 1rem; color: var(--muted); }
+.recap-how p { margin: 0; color: var(--muted); }
+.recap-head { padding: 28px 0 22px; }
 .recap-head h2 { font-size: clamp(1.9rem, 4.5vw, 2.4rem); line-height: 1.1; }
-.recap-head .synthesis h3 { font-size: 1.25rem; letter-spacing: 0; }
-.recap-jump { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.recap-jump a {
-  display: block; padding: 5px 14px; border-radius: 999px; border: 1.5px solid var(--control);
-  background: var(--surface); color: var(--ink); text-decoration: none; font-weight: 600; font-size: .9rem;
-}
-.recap-jump a:hover { border-color: var(--accent); }
-.recap-title { font-size: clamp(1.5rem, 3.5vw, 1.875rem); }
-/* A moment in the recording: small, steady figures, never broken across a line */
-.at { font-variant-numeric: tabular-nums; white-space: nowrap; }
-/* Whatever a link jumps to wears the copper ring for a moment's notice, like a highlighted source */
-.qa, .res { scroll-margin-top: 16px; }
-.qa:target, .res:target { box-shadow: 0 0 0 2px var(--accent); }
 
-/* Questions, answered: one column, so each answer reads as a paragraph */
-.qa-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; max-width: 52rem; }
-.qa { padding: var(--card-pad) 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-.qa h4 { font-size: 1.15rem; line-height: 1.3; }
-.qa-who { margin: 4px 0 0; font-size: .85rem; color: var(--muted); }
-.qa > p:not(.qa-who) { margin: 10px 0 0; }
+/* The tabs. After the session they stay in reach as you read; during it, the now bar has the top of the window. */
+.recap-tabs { background: var(--bg); border-bottom: 1px solid var(--line); }
+body[data-mode="after"] .recap-tabs { position: sticky; top: 0; z-index: 15; }
+.recap-tabs [role="tablist"] { display: flex; gap: 6px; padding: 10px 0; overflow-x: auto; scrollbar-width: none; }
+.recap-tabs [role="tablist"]::-webkit-scrollbar { display: none; }
+@media (max-width: 760px) { .recap-tabs [role="tablist"] { margin: 0 -16px; padding: 10px 16px; } }
+.recap-tabs [role="tab"] {
+  flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px;
+  border: 1.5px solid var(--control); background: var(--surface); color: var(--ink);
+  font-weight: 600; font-size: .92rem; text-decoration: none; white-space: nowrap;
+}
+.recap-tabs [role="tab"]:hover { border-color: var(--accent); }
+.recap-tabs [role="tab"][aria-selected="true"] { background: var(--button); border-color: var(--button); color: var(--button-ink); }
+.recap-tabs [role="tab"][aria-selected="true"] .facet-count { color: inherit; }
+.recap-panel { padding: 30px 0 var(--section); }
+.recap-panel + .recap-panel { border-top: 1px solid var(--line); }   /* without the script, the views follow one another */
+.tabs-on .recap-panel + .recap-panel { border-top: 0; }
+.panel-title { margin-bottom: 8px; font-size: clamp(1.5rem, 3.5vw, 1.875rem); }
+.tabs-on .panel-title {   /* the selected tab already names the view */
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.recap-panel > .wrap > .section-lede, .panel-bar .section-lede { margin-top: 0; }
+/* Whatever a link opens lands under the tabs, and wears the copper ring for a moment's notice */
+.recap-panel, .qa, .res, .theme { scroll-margin-top: 76px; }
+.qa:target, .res:target, .theme:target { box-shadow: 0 0 0 2px var(--accent); }
+.at { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Overview */
+.recap-glance { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.recap-glance a { display: block; height: 100%; padding: 16px var(--card-pad); background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); color: var(--ink); text-decoration: none; }
+.recap-glance a:hover { border-color: var(--control); }
+.recap-glance strong { display: block; font-size: 2.4rem; line-height: 1; color: var(--link); }
+.recap-glance span { display: block; margin-top: 6px; color: var(--muted); }
+.recap-start { margin-top: 12px; }
+.recap-start .card h4 { font-size: 1.1rem; }
+.recap-start .card p { color: var(--ink); }
+.recap .fold > summary { font-size: 1.1rem; }
+.recap .fold p { max-width: 46rem; }
+.morning { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: 46rem; }
+
+/* Questions: grouped, folded, so the questions can be scanned and the answers opened one at a time */
+.panel-bar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 24px; }
+.panel-bar .section-lede { flex: 1 1 28rem; }
+.open-all { padding: 6px 14px; font-size: .9rem; }
+.open-all[aria-pressed="true"] { background: var(--button); border-color: var(--button); color: var(--button-ink); }
+.qa-group { margin: 26px 0 10px; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.qa-list { display: grid; gap: 8px; max-width: 52rem; }
+.qa { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.qa > summary {
+  display: flex; align-items: baseline; gap: 14px; padding: 14px 18px; cursor: pointer; list-style: none;
+  font-weight: 600; font-size: 1.05rem; line-height: 1.35;
+}
+.qa > summary::-webkit-details-marker { display: none; }
+.qa > summary::after {   /* a chevron, down when closed, up when open */
+  content: ""; flex: none; margin-left: auto; width: 8px; height: 8px; position: relative; top: -2px;
+  border-right: 2px solid var(--link); border-bottom: 2px solid var(--link); transform: rotate(45deg);
+}
+.qa[open] > summary::after { top: 2px; transform: rotate(-135deg); }
+.qa > summary:hover { color: var(--link); }
+.qa[open] > summary { border-bottom: 1px solid var(--line); }
+.qa-body { padding: 2px 18px 16px; }
+.qa-body > p { margin: 10px 0 0; max-width: 48rem; }
+.qa-who { font-size: .85rem; color: var(--muted); }
 .qa .qa-see { color: var(--muted); font-size: .95rem; }
 
-/* Ideas and connections: cards, each ending in the threads it draws on */
-.ideas { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
-.idea { display: flex; flex-direction: column; padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-.idea h4 { font-size: 1.1rem; line-height: 1.3; }
-.idea > p { margin: 8px 0 0; }
-.threads { list-style: none; margin: 0; padding: 14px 0 0; margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; }
+/* Themes: what kept coming up, in our words, with the room's words beside them */
+.themes { display: grid; gap: 14px; margin-top: 20px; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); }
+.theme { display: flex; flex-direction: column; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.theme h4 { font-size: 1.2rem; line-height: 1.3; }
+.theme > p { margin: 8px 0 0; }
+.theme-quote { margin: 14px 0 0; padding-left: 14px; border-left: 3px solid var(--control); }
+.theme-quote blockquote { margin: 0; }
+.theme-quote p { margin: 0; font-style: italic; font-size: 1.05rem; line-height: 1.45; }
+.theme-quote figcaption { margin-top: 4px; font-family: var(--font-sans); font-size: .8rem; color: var(--muted); }
+.threads { list-style: none; margin: auto 0 0; padding: 16px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .threads a { display: block; padding: 2px 10px; border-radius: 999px; background: var(--tint); color: var(--ink); font-size: .8rem; font-weight: 600; text-decoration: none; }
 .threads a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
 
-/* Heard in the room: quotes of every length, packed in columns, read in order down each one */
-.quotes { list-style: none; margin: 24px 0 0; padding: 0; columns: 3 280px; column-gap: 12px; }
-.quotes > li { break-inside: avoid; margin: 0 0 12px; }
-.quote { margin: 0; padding: var(--card-pad) 20px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--control); border-radius: var(--radius); }
-.quote blockquote { margin: 0; }
-.quote blockquote p { margin: 0; font-size: 1.12rem; line-height: 1.45; }
-.quote blockquote p + p { margin-top: 8px; }
-.quote .speaker { font-family: var(--font-sans); font-size: .85rem; font-weight: 600; }
-.quote figcaption { margin-top: 10px; font-family: var(--font-sans); font-size: .82rem; color: var(--muted); }
-
 /* Offers and asks */
-.asks-grid { display: grid; gap: 12px; margin-top: 24px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
+.asks-grid { display: grid; gap: 12px; margin-top: 20px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
 .asks-grid .card h4 { font-size: 1.1rem; }
 .offer-list { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 10px; }
 .offer-list .at, .offer-list .pending { font-size: .85rem; color: var(--muted); }
+.wish-fold { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.wish-fold > summary { cursor: pointer; }
+.wish-fold > summary:hover { color: var(--link); }
+.wish-fold p { margin: 6px 0 0; }
 .wish-list { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; }
 
-/* The index */
-.res-group { margin: var(--block) 0 0; font-size: 1.2rem; }
-.res-group:first-of-type { margin-top: 20px; }
-.res-group-blurb { max-width: 46rem; margin: 6px 0 0; color: var(--muted); }
-.res-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
-.res { padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
-.res-name { margin: 0; font-weight: 600; font-size: 1.02rem; line-height: 1.3; }
-.res-meta { margin: 3px 0 0; font-size: .82rem; color: var(--muted); }
-.res-what { margin: 6px 0 0; }
-.res-link { margin: 8px 0 0; font-size: .95rem; }
-.morning { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: 46rem; }
-.recap .fold p { max-width: 46rem; }
+/* The index: one line each, filtered by kind */
+.res-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; }
+.res-filter button { padding: 6px 14px; font-size: .9rem; }
+.res-filter button .facet-count { margin-left: 6px; }
+.res-filter button[aria-pressed="true"] { background: var(--button); border-color: var(--button); color: var(--button-ink); }
+.res-filter button[aria-pressed="true"] .facet-count { color: inherit; }
+.res-group { margin: 26px 0 0; font-size: 1.15rem; }
+.res-group-blurb { max-width: 48rem; margin: 6px 0 0; color: var(--muted); }
+.res-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+.res { padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.res-name { margin: 0; font-weight: 600; font-size: 1rem; line-height: 1.3; }
+.res-meta { margin: 2px 0 0; font-size: .8rem; color: var(--muted); }
+.res-what { margin: 6px 0 0; font-size: .98rem; line-height: 1.45; }
+.res-link { margin: 6px 0 0; font-size: .92rem; }
 
 /* ---------- The interface face, last so it wins over the font: inherit above ---------- */
 /* Everything you press, scan, or count is Montserrat, the interface face; reading text stays Newsreader */
 button, .button, input, select, textarea, .builder input, .calc input, .finder input, summary, kbd, .site-nav, .nowbar, .cue, .toast, .num, .length, .tag, .type, .tag-chip,
 .facet-count, .count, .path-count, .go, .soon-tag, .where, .calc-out, .finder-label, .finder legend, .builder label, .builder-label,
 .timeline strong, .steps strong, .awards strong, .also-card strong, .path-card strong, .shape strong, .glance strong, .card-title,
-.recap-sessions strong, .recap-jump, .at, .qa-who, .threads, .res-name, .res-meta {
+.recap-sessions, .recap-tabs, .recap-glance strong, .at, .qa-who, .qa-group, .qa > summary, .threads, .res-name, .res-meta {
   font-family: var(--font-sans);
 }

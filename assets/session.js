@@ -116,7 +116,7 @@ const SESSION = {
         ], foot: "Three tabs are open. Let's go." },
         { kind: "prompt", note: "Do: switch your share to the Chrome window with the three tabs you set up before the day (Hosts, Before the day). Tab 1: your AI with the Oracle starter pasted in and running. Tab 2: Gemini with Canvas on, the Charter Cards prompt and a made-up charter ready to paste, and your Google Site open to edit. Tab 3: the Apps Script editor with the Drive Inventory, a practice folder's ID in place, run once already so no permission screen appears. Start one, switch while it thinks, start the next: about four minutes each. This notes window keeps the clock. Then share the stage's tab again.", heading: "Three tabs, live", big: "1 · 2 · 3", body: "A starter in the chat. A charter that becomes a page on a Google Site. A script that lists a whole folder.", foot: "Every level is a good level.", timer: "demo" }      ],
       host: [
-        "Before the day, in Chrome, the three demo tabs as the Hosts page lists under Before the day: tab 1, your AI with the Oracle starter pasted in and running; tab 2, Gemini with Canvas on, the Charter Cards prompt and a made-up charter ready to paste, and your Google Site open to edit beside it; tab 3, the Apps Script editor with the Drive Inventory and a practice folder's ID in place, run once already so the permission screen is behind you.",
+        "Have the three demo tabs open in one Chrome window, set up as Hosts lists under Before the day.",
         "Name the three levels in a sentence each before any tab opens. Then share Chrome as a window, not a single tab, so the switches come through. About four minutes per level.",
         "Back to the stage for Show & Tell."
       ],

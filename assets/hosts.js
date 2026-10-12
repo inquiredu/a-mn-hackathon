@@ -26,6 +26,38 @@ showPlan();
 
 // Each part folds. During the session the part that's on opens by itself; any other time, all start closed, so the run of show reads as a list.
 const live = phase();
+
+function cueLines(note) {
+  const box = el("span", "note");
+  note.split(/(?=\b(?:Say|Do|Co-host):)/).forEach((part) => {
+    const m = part.match(/^(Say|Do|Co-host):\s*([\s\S]*)$/);
+    const line = el("span", "cue-line");
+    if (m) line.append(el("span", "cue-who", m[1]), m[2].trim());
+    else line.append(part.trim());
+    if (line.textContent.trim()) box.append(line);
+  });
+  return box;
+}
+
+// A ready-to-paste message: its blanks, like "(your planner link)", stand out, and the box says how many there are
+function messageText(text) {
+  const pre = el("pre");
+  const parts = text.split(/(\(your [a-z]+ link\))/);
+  parts.forEach((part) => pre.append(/^\(your [a-z]+ link\)$/.test(part) ? el("span", "blank-chip", part) : part));
+  return { pre, blanks: (parts.length - 1) / 2 };
+}
+
+// The run of show as one bar, each part as long as its minutes: main room and breakout rooms told apart
+if ($("ros-bar")) {
+  let at = 0;
+  SESSION.segments.forEach((segment) => {
+    const part = el("span", "ros-part" + (segment.where === "Breakout rooms" ? " rooms" : ""));
+    part.style.flexGrow = segment.minutes;
+    part.append(el("span", "ros-name", segment.title), el("span", "ros-at", Math.floor(at / 60) + ":" + String(at % 60).padStart(2, "0")));
+    at += segment.minutes;
+    $("ros-bar").append(part);
+  });
+}
 let screenNumber = 0;
 SESSION.segments.forEach((segment, s) => {
   const card = el("details", "segment" + (segment.where === "Breakout rooms" ? " rooms" : ""));
@@ -33,17 +65,17 @@ SESSION.segments.forEach((segment, s) => {
   card.open = live.mode === "during" && live.index === s;
 
   const head = el("summary", "segment-head");
-  head.append(el("span", "length", segment.minutes + " min"), el("h3", "", segment.title), el("span", "where", segment.where));
+  const progress = el("span", "progress");
+  head.append(el("span", "length", segment.minutes + " min"), el("h3", "", segment.title), el("span", "where", segment.where), progress);
   card.append(head, el("p", "participants", "Participants see: " + segment.hint));
 
   // On the stage: each screen, linked to the presenter view at that screen
   card.append(el("h4", "", "On the stage"));
-  const stage = el("ol", "stage-list");
-  stage.start = screenNumber + 1;
+  const stage = el("ul", "stage-list");
   segment.screens.forEach((screen) => {
     const li = el("li");
-    li.append(linkTo("present.html#" + screenNumber, screen.heading || screen.text));
-    if (screen.note) li.append(el("span", "note", screen.note));
+    li.append(el("span", "screen-no", "Screen " + (screenNumber + 1)), linkTo("present.html#" + screenNumber, screen.heading || screen.text));
+    if (screen.note) li.append(cueLines(screen.note));
     stage.append(li);
     screenNumber++;
   });
@@ -51,14 +83,21 @@ SESSION.segments.forEach((segment, s) => {
 
   // Hosts' checklist, remembered in this browser
   if (segment.host && segment.host.length) {
-    card.append(el("h4", "", "Hosts"));
+    const title = el("h4", "", "Checklist");
+    card.append(title);
     const list = el("ul", "checklist");
+    const count = () => {
+      const done = list.querySelectorAll("input:checked").length;
+      const text = done + " of " + segment.host.length + " done";
+      progress.textContent = done ? text : "";
+      title.textContent = "Checklist · " + text;
+    };
     segment.host.forEach((task, t) => {
       const key = "hands-on-check-" + s + "-" + t;
       const box = el("input");
       box.type = "checkbox";
       box.checked = recall(key) === "1";
-      box.addEventListener("change", () => remember(key, box.checked ? "1" : "0"));
+      box.addEventListener("change", () => { remember(key, box.checked ? "1" : "0"); count(); });
       const label = el("label");
       label.append(box, el("span", "", task));
       const li = el("li");
@@ -66,6 +105,7 @@ SESSION.segments.forEach((segment, s) => {
       list.append(li);
     });
     card.append(list);
+    count();
   }
 
   // Messages, ready to paste
@@ -75,9 +115,14 @@ SESSION.segments.forEach((segment, s) => {
       const box = el("div", "message");
       const copy = el("button", "", "Copy");
       copy.type = "button";
-      copy.setAttribute("aria-label", "Copy the message for " + message.to);
-      copy.addEventListener("click", () => copyText(message.text, null, copy));
-      box.append(el("p", "to", "To: " + message.to), el("pre", "", message.text), copy);
+      const filled = TIMES.fill(message.text);
+      copy.setAttribute("aria-label", "Copy the message for " + message.to + ": " + filled.split("\n")[0].slice(0, 60));
+      copy.addEventListener("click", () => copyText(filled, null, copy));
+      const { pre, blanks } = messageText(filled);
+      const head = el("div", "message-head");
+      head.append(el("p", "to", "To: " + message.to), copy);
+      box.append(head, pre);
+      if (blanks) box.append(el("p", "blank-note", blanks === 1 ? "Has a blank: paste your own link over it after copying." : "Has " + blanks + " blanks: paste your own links over them after copying."));
       card.append(box);
     });
   }

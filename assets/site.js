@@ -181,6 +181,21 @@ document.querySelectorAll(".menu-toggle").forEach((button) => {
 });
 
 
+// ---------- A link to a place inside a closed fold opens the fold ----------
+
+function openTo(hash) {
+  const target = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
+  if (!target) return;
+  for (let node = target; node; node = node.parentElement) if (node.tagName === "DETAILS") node.open = true;
+}
+document.addEventListener("click", (event) => {
+  const a = event.target.closest && event.target.closest('a[href^="#"]');
+  if (a) openTo(a.hash);
+});
+addEventListener("hashchange", () => openTo(location.hash));
+openTo(location.hash);
+
+
 // ---------- The clock ----------
 // Add ?now=10:50 to any page's address to see it as it will look at that moment on the day.
 
@@ -710,8 +725,24 @@ document.querySelectorAll("[data-copy-machine]").forEach((button) => {
 
 // ---------- Remix menus, copy boxes, and the builder on Invent your own ----------
 
+// A Remix menu says how many changes it holds, and each blank to fill shows as a blank that never splits from its comma
+document.querySelectorAll(".remix").forEach((menu) => {
+  const n = menu.querySelectorAll("li:not(.do)").length;
+  const summary = menu.querySelector("summary");
+  if (n && summary) summary.append(el("span", "count", "· " + n + " changes"));
+});
+document.querySelectorAll(".remix li:not(.do) > span").forEach((line) => {
+  const text = line.firstChild;
+  if (!text || text.nodeType !== 3 || !text.textContent.includes("___")) return;
+  const frag = document.createDocumentFragment();
+  text.textContent.split(/(___[.,:;?]?)/).forEach((part) => frag.append(/^___/.test(part) ? el("span", "slot", part) : part));
+  line.replaceChild(frag, text);
+});
+
 document.querySelectorAll(".remix li:not(.do)").forEach((item) => {
-  const text = item.querySelector("span").firstChild.textContent.trim();
+  const line = item.querySelector("span").cloneNode(true);
+  line.querySelectorAll(".note").forEach((note) => note.remove());   // a line's explanatory note isn't part of what's copied
+  const text = line.textContent.trim();
   const button = el("button", "", "Copy");
   button.type = "button";
   button.setAttribute("aria-label", "Copy: " + text);

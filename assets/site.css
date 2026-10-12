@@ -877,24 +877,73 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .script-steps p { margin: 4px 0 0; }
 
 /* ---------- Starters ---------- */
-.first { margin-top: 24px; padding: var(--card-pad); background: var(--tint); border-radius: var(--radius); }
-.first p { margin: 0; }
-.first .link-slot { margin-top: 10px; }
+/* The top: which level, who you are, how it works in four short steps; then each level shaped the same */
+.level-index { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.level-index a {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 14px 6px 6px;
+  border: 1.5px solid var(--line); border-radius: var(--radius-pill); background: var(--surface);
+  font-family: var(--font-sans); font-weight: 600; text-decoration: none; color: var(--ink);
+  transition: border-color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out);
+}
+.level-index .num { width: 28px; height: 28px; font-size: .8rem; }
+.level-index .count { margin-left: 4px; font-weight: 500; font-size: .85rem; color: var(--muted); }
+@media (hover: hover) { .level-index a:hover { border-color: var(--control); background: var(--action-ghost-hover); color: var(--ink); } }
+.audience { display: grid; gap: 0 24px; margin-top: 24px; padding: 4px var(--card-pad); background: var(--tint); border-radius: var(--radius); grid-template-columns: minmax(0, 1fr); }
+.audience > div { padding: 14px 0; }
+.audience > div + div { border-top: 1px solid var(--line); }
+@media (min-width: 900px) {
+  .audience { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .audience > div + div { border-top: 0; border-left: 1px solid var(--line); padding-left: 24px; }
+}
+.audience-title { margin: 0 0 4px; font-family: var(--font-sans); font-weight: 600; }
+.audience p { margin: 0; }
+.audience .link-slot { margin-top: 10px; }
+.how-row { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line); }
+.how-row li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 2px 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.how-row .num { grid-row: span 2; }
+.how-row strong { font-family: var(--font-sans); font-size: 1.05rem; }
+.how-row span:not(.num) { color: var(--muted); }
+@media (min-width: 900px) {
+  .how-row { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 24px; border-bottom: 1px solid var(--line); }
+  .how-row li { border-bottom: 0; grid-template-columns: minmax(0, 1fr); }
+  .how-row .num { grid-row: auto; margin-bottom: 6px; }
+}
+.level-header { margin-top: calc(var(--section) - 8px); padding-top: 24px; border-top: 1px solid var(--line); }
+.level-header h2 { font-size: clamp(1.5rem, 3.4vw, 1.875rem); }
+.level-summary { margin: 8px 0 0; color: var(--ink); }
+.level-header .level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
+.level-header + .machines { margin-top: 20px; }
+.button-legend { margin: 16px 0 0; display: grid; gap: 10px; max-width: var(--measure); }
+.button-legend > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
+@media (min-width: 700px) { .button-legend > div { grid-template-columns: 170px minmax(0, 1fr); gap: 16px; align-items: start; } }
+.button-legend dd { margin: 0; }
+.button-look {
+  display: inline-flex; align-items: center; min-height: 32px; padding: 4px 12px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--control); background: var(--surface); font-family: var(--font-sans); font-size: .85rem; font-weight: 600;
+}
+.button-look.primary { background: var(--button); border-color: var(--button); color: var(--button-ink); }
+
+/* The cards: two to a row on a laptop, each its own height, so an open Remix menu never stretches its neighbors */
 .machines { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
-@media (min-width: 600px) { .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 760px) { .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 960px) { .machines.scripts { grid-template-columns: minmax(0, 1fr); } .machines.scripts .cabinet { max-width: 52rem; } }
 .cabinet { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
+.cabinet-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
 .badge {
-  display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 12px; border-radius: var(--radius-sm);
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--c) 12%, var(--surface)); color: var(--c);
 }
-.cabinet h4 { font-size: 1.125rem; }
-.cabinet .for { margin: 4px 0 0; font-size: .95rem; color: var(--muted); }
-.cabinet > p { margin: 8px 0 0; color: var(--ink); }
+.cabinet h3 { margin-top: 2px; font-size: 1.125rem; }
+.cabinet .for { margin: 2px 0 0; font-size: .95rem; color: var(--muted); }
+.cabinet > p { margin: 12px 0 0; color: var(--ink); }
 .cabinet .monday { margin: 12px 0 0; padding: 8px 12px; border-radius: var(--radius-sm); background: var(--tint); font-size: .95rem; }
-.cabinet .names { margin: 12px 0 0; font-size: .9rem; color: var(--muted); }
-.cabinet .script-steps { font-size: .95rem; }
+.cabinet .meta { margin-top: 12px; }
+.data-note { margin: 12px 0 0; padding: 4px 0 4px 12px; border-left: 3px solid var(--control); font-size: .95rem; color: var(--ink); }
+.cabinet .script-steps { margin-top: 8px; font-size: .97rem; }
+.cabinet .script-steps .kind { display: none; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.remix { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 4px; }
+.remix { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 2px; }
+.remix > summary .count { margin-left: 4px; font-weight: 500; color: var(--muted); }
 .remix h5 { margin: 16px 0 6px; }
 .remix ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .remix li {
@@ -902,6 +951,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 8px 8px 12px; font-size: .95rem;
 }
 .remix li button { flex: none; }
+.remix li .slot { white-space: nowrap; color: var(--accent-ink); font-weight: 600; letter-spacing: .05em; }
 .remix .note { display: block; margin-top: 4px; font-size: .85rem; color: var(--muted); }
 .remix li.do { display: block; background: transparent; border-style: dashed; }
 

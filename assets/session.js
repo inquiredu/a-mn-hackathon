@@ -71,7 +71,8 @@ const SESSION = {
   //   minutes      how long it runs
   //   where        "Main room" or "Breakout rooms"
   //   hint         one line for participants
-  //   link         which page (and place) to send people to; linkLabel names the button
+  //   link         which page (and place) to send people to; linkLabel names the button, a verb first
+  //   also         other pages this part sends some people to, shown beside its button: { link, label }
   //   shared       links from `links` above that this part uses, shown with it: { link: "planner", label: "Breakout Planner" }
   //   screens      what the presenter view shows, in order (note: what the presenter says or does,
   //                timer: a pace name, "building", or minutes for a countdown the presenter starts and adjusts live;
@@ -106,7 +107,7 @@ const SESSION = {
     },
     {      id: "levels", minutes: 12, title: "Three levels of getting started", where: "Main room",
       hint: "In the chat, on your site, behind the scenes: three levels of getting started with code. Your host shows each one live.",
-      link: "levels.html", linkLabel: "The three levels",
+      link: "levels.html", linkLabel: "Open Three levels",
       screens: [
         { kind: "ladder", note: "Say, one sentence each, before any tab opens: In the chat, a small tool that runs inside your AI chat, like the Oracle and every starter on the site. On your site, a document you already have becomes a page on your Google Site. Behind the scenes, a short script does a job in your Drive. Every level is a good level; there's always a next one, and it's closer than it looks.", heading: "Three levels of getting started with code", rungs: [
           { name: "In the chat", why: "A small tool that runs right inside your AI chat. The Oracle. Every starter on this site." },
@@ -152,6 +153,7 @@ const SESSION = {
       id: "remix", minutes: 17, title: "The Remix Arcade", where: "Breakout rooms",
       hint: "The hosts move you into a breakout room with others at your level, and you stay in it for Invent your own. Level 1 (in the chat): pick a starter and make it yours. Levels 2 (on your site) and 3 (behind the scenes): open your level on Three levels, get its example working, then make it yours.",
       link: "starters.html", linkLabel: "Open the starters",
+      also: [{ link: "levels.html#site", label: "Levels 2 and 3: open Three levels" }],
       shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
         { kind: "steps", note: "Say the four steps on the screen: find your room number next to your name in the Breakout Planner; your anchor shares their screen and everyone builds along for {buildAlong}; level 1 picks a starter and makes it theirs, levels 2 and 3 run their level's example from Three levels; stuck means Ask for help in Meet. Co-host: open the rooms as this screen ends.", heading: "Off to your room", steps: [
@@ -190,7 +192,7 @@ const SESSION = {
     {
       id: "cheer", minutes: 22, title: "Show & Cheer", where: "Main room",
       hint: "Back in the main room. A few builders share their screens, two or three minutes each. Applause first.",
-      link: "index.html#cheer", linkLabel: "The awards",
+      link: "index.html#cheer", linkLabel: "See the awards",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
         { kind: "prompt", note: "Say: welcome back; raise a hand to share. Applause first, then one question: who would you show this to? About three minutes each, so five or six builds; Reset the timer between builders. Co-host: line up the next builder from the gallery wall.", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?", timer: "share" },
@@ -212,7 +214,7 @@ const SESSION = {
     {
       id: "close", minutes: 13, title: "What did we just do?", where: "Main room",
       hint: "One wonder, one worry, one word.",
-      link: "index.html#close", linkLabel: "The close",
+      link: "index.html#close", linkLabel: "Add your wonder and worry",
       shared: [{ link: "wonder", label: "Wonder wall" }, { link: "worry", label: "Worry wall" }],
       screens: [        { kind: "code", note: "Say: the Oracle didn't know anything. The screen shows its two tricks. The swaps: it turns I into you and my into your and hands your question back (a program called ELIZA did the same in 1966). The list of words: a handful it listens for, like coffee or lunch, each with a line a person wrote. Point at one swap and one word from a question asked earlier. Every machine today started with a person and came back to a person.", heading: "How did the Oracle know?", code: "SWAPS = { i: \"you\", my: \"your\", am: \"are\" }\n\nlistensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou will be long, and worth it.\",\n  \"The hotdish will contain tater tots. Tot-ally.\"\n]", caption: "A few swaps and a list of words, both chosen by a person. Every machine today started with a person, passed through an AI, and came back to a person." },
         { kind: "ladder", note: "Say: the three levels from today, and a fourth we only wave at: an app where the AI works inside the files on your computer (Claude Code, Codex, Cursor). This site was built that way. Not for today; for when level three feels easy.", heading: "Where this goes", rungs: [

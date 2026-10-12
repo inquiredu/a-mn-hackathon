@@ -672,6 +672,31 @@ dialog[open]::backdrop { background: var(--scrim); }
 @media (max-width: 480px) { .credit-lead img { height: 72px; } }
 @media (max-width: 760px) { .hero-inner { padding-top: 36px; } }
 
+/* The front door: the kit on the left, the first twenty minutes on the right */
+.hero-split { display: grid; gap: 32px 56px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) { .hero-split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; } }
+.hero-list { margin: 16px 0 0; padding-left: 1.2em; display: grid; gap: 4px; max-width: 34rem; font-size: 1.05rem; }
+.hero-list li::marker { color: var(--accent); }
+.hero-note { margin: 14px 0 0; font-family: var(--font-sans); font-size: .95rem; font-weight: 600; color: var(--muted); }
+.first-steps { padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.first-steps h2 { font-size: 1.375rem; }
+.first-steps > p { margin: 8px 0 0; color: var(--muted); }
+.mini-steps { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 0; }
+.mini-steps li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.mini-steps strong { display: block; font-family: var(--font-sans); font-size: 1.05rem; }
+.mini-steps span:not(.num) { display: block; margin-top: 2px; }
+.mini-steps .action-link { min-height: 36px; }
+.first-steps .hint { margin: 4px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
+/* The invitation: the shape of the morning as one row, and how to join said plainly */
+.shape-row { margin-top: 20px; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 600px) { .shape-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.shape-row li { padding: 12px 14px; }
+.shape-row strong { font-size: 1.75rem; }
+.shape-row span { font-size: .9rem; }
+.join { margin: 20px 0 0; }
+.join .pending { display: inline-block; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-family: var(--font-sans); font-style: normal; font-weight: 600; color: var(--ink); }
+.join:has(a) + .hero-actions .try { background: var(--surface); border-color: var(--control); color: var(--ink); }
+
 /* ---------- Home: happening now ---------- */
 .nowcard-wrap { padding-bottom: 8px; }
 .nowcard { padding: clamp(20px, 4vw, 36px); border-radius: var(--radius); background: var(--feature); color: var(--feature-ink); border-top: 4px solid var(--accent); }
@@ -685,6 +710,19 @@ dialog[open]::backdrop { background: var(--scrim); }
 .nowcard .button.primary { background: var(--action-accent); border-color: var(--action-accent); color: var(--fg-on-accent); }
 @media (hover: hover) { .nowcard .button.primary:hover { background: var(--action-accent-hover); border-color: var(--action-accent-hover); color: var(--fg-on-accent); } }
 .nowcard-next { margin: 16px 0 0; font-family: var(--font-sans); font-weight: 600; color: var(--bar-ink-2); }
+.nowcard-action #nowcard-also { display: contents; }
+
+/* During the session: the part that's on comes right under the card, then the schedule, with finished parts as one line */
+body[data-mode="during"] main { display: flex; flex-direction: column; }
+body[data-mode="during"] #today { order: 1; }
+/* The card above already names the part, so its section's own title is for screen readers only */
+body[data-mode="during"] :is(#cheer, #close) > .wrap > h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+body[data-mode="during"] :is(#cheer, #close) > .wrap > .section-lede { margin-top: 0; }
+.timeline li.done > div > span, .timeline li.done > div > a { display: none; }
+.timeline li.done { padding-top: 10px; padding-bottom: 10px; }
+.timeline li.done .length::after { content: "Done"; display: block; width: max-content; margin-top: 4px; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 600px) { .timeline li.done .length::after { display: inline-block; margin: 0 0 0 8px; } }
+body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] .timeline li.done > div > a { display: initial; }
 
 /* The schedule */
 .timeline { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; }
@@ -725,12 +763,19 @@ dialog[open]::backdrop { background: var(--scrim); }
 .shape strong { display: block; font-size: 2.5rem; font-weight: 700; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
 .shape span { display: block; margin-top: 6px; color: var(--muted); }
 .also { display: grid; gap: var(--gap); margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); }
+@media (min-width: 960px) { .also { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .also-card strong { font-size: 1.125rem; }
 .also-card span { color: var(--muted); }
 .also-card .go { margin-top: auto; padding-top: 6px; color: var(--link); font-weight: 600; font-size: .95rem; }
 .also-card .go::after { content: " →"; }
 
 /* The awards and the close */
+.three-up { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); margin-top: 24px; align-items: start; }
+.three-up .card { display: grid; gap: 8px; }
+.three-up .card p { margin: 0; }
+.three-up .link-slot { margin-top: 4px; }
+.beyond { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); max-width: var(--measure); }
+.beyond p { margin: 6px 0 0; }
 .awards { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .awards li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 4px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
 .award-icon { grid-row: span 2; color: var(--ink); }
@@ -748,6 +793,13 @@ dialog[open]::backdrop { background: var(--scrim); }
 .keep-grid .card h2 { font-size: 1.25rem; letter-spacing: 0; }
 .keep-grid .card p { color: var(--ink); }
 .card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.rows { margin: 16px 0 0; display: grid; gap: 0; }
+.rows > div { padding: 12px 0; border-top: 1px solid var(--line); }
+.rows dt { font-family: var(--font-sans); font-weight: 600; }
+.rows dd { margin: 4px 0 0; }
+.quiet-fold { margin-top: 4px; border-top: 1px solid var(--line); }
+.quiet-fold > summary { font-size: .95rem; color: var(--muted); }
+.quiet-fold p { margin: 4px 0 10px; }
 
 /* ---------- Three levels ---------- */
 .level { margin-top: var(--block); padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }

@@ -343,6 +343,7 @@ function update() {
     const go = $("nowcard-go");
     go.hidden = !current.linkLabel;
     if (current.linkLabel) { go.href = current.link; go.textContent = current.linkLabel; }
+    $("nowcard-also").replaceChildren(...(current.also || []).map((a) => { const link = linkTo(a.link, a.label); link.className = "button"; return link; }));
     $("nowcard-shared").replaceChildren(...sharedLinks(current, "button"));
     $("nowcard-next").textContent = next ? "Next: " + next.title + " · " + next.minutes + " min" : "Last part of the morning.";
   }

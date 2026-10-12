@@ -1,10 +1,54 @@
 # Design audit: First Builds
 
-Written October 11, 2026, on the branch `north-shore-look`, after the content pass. This is the audit only. Nothing on the site has changed. The short version and the decisions for Sean come first, then the verified Breaks, then the system changes that fix the most at once, then the findings surface by surface. The last sections hold what to keep, the review findings this audit corrects, and the order of work once the decisions are made.
+Written October 11, 2026, on the branch `north-shore-look`, after the content pass. As first written this was the audit only; the fixes and a cold re-review followed the same day, and "After the fixes" below says where things stand. The short version and the decisions for Sean come first, then the verified Breaks, then the system changes that fix the most at once, then the findings surface by surface. The last sections hold what to keep, the review findings this audit corrects, and the order of work once the decisions are made.
 
 **The bar**, in Sean's words: an elegant and easy-to-use experience; every design choice intentional; smooth interaction, clear intention; no portion of any page simply allowed to be.
 
 **Fixed for this pass** (the reviewers were told): North Shore's palette and type, the credits (partner first, Sean's mark lower left), WCAG 2.1 AA, plain HTML/CSS/JS, made-up data, and the words from the content pass, though how text is structured was in scope. **Open:** layout, navigation, hierarchy, components, spacing, states, motion, phone layouts, and whether a region should exist.
+
+## After the fixes: the cold re-review
+
+Sean took the recommended option on all twelve decisions and renamed Grant a wish to Invent your own (later the same day he also dropped the credit phrase "Prepared for and presented with" and asked for a Light/Night toggle). The fixes ran in the order below, each committed on its own. Then every surface was captured again (872 screenshots, with the same tools, `scripts/design-audit/`) and read by nine fresh reviewers. Each saw only `docs/design-audit/brief.md` and one packet: not the code, this audit, or what had changed. Their reports are in `docs/design-audit/reviews-re/`.
+
+**The first audit's fifteen verified Breaks** (B1–B15 below): none came back as written. Two came back in a new form and were fixed again: the stage on a phone (B13: the part name under the clock pill, a running wait over the credit, content under the rail) and the Starters grid (B14: unequal card heights and Play buttons out of line).
+
+**The re-review's Breaks**: 28 rows across nine reports, about twenty distinct problems once duplicates are merged. Each was checked in the browser or the code:
+
+| Found | What | Outcome |
+|---|---|---|
+| H1, J1, D5 | The part-changed notice says one part while the now bar says another | The capture forced the notice without moving the clock; on the day both update together. The notice's 36px button now matches Got it at 44px |
+| H2, J3 | At the close, "Add your wonder and worry" leads to cards that say the links will come in the chat | The button says "Where your wonder and worry go" until the walls have links (`linkLabelPending`); the cards' line is set as an instruction, not an italic placeholder |
+| L1 | "Read the script" at 375 wraps mid-identifier and loses its indentation | The readable script keeps its lines and scrolls sideways |
+| I1, Y1 (play P1) | After Run my changes on a phone, a blank frame and no message | A bar above the tool and the code says your version is running, that Copy for my AI copies it, and holds Back to the original |
+| I2, V2 | Invent's empty copy signals by color alone; the message is out of view | The message sits at the top of the fields; each empty field says "answer this one" beside its label; the page brings the fields into view |
+| V1 | The builder's examples look like typed answers | "e.g." and italics |
+| V5, NB2 | A jar idea's third line is cut off | The box grows with its content |
+| I3 | No toast after a remix copy | None by design (the button says Copied, and a live region announces it); a line under the copied item now says where to paste it |
+| I4 | Targets under 24px | Hosts' checklist rows are 39px and the whole row is the target (passes); source titles and the notes' license link now reach 24px |
+| HO1 | The run-of-show bar isn't proportional | Each part's width is its minutes alone (8.6px a minute at 1280) |
+| HO2, NB1 | The bar's breakout times are 3.5:1 | 5.97:1 |
+| S5, X1 | The Level 3 key draws inert buttons | Bold terms, not button shapes |
+| SRC1 | The phone filter button looks like a search field | A bordered button with a chevron; the panel opens as a card, its Show button docked at its foot |
+| SRC4 | A shared `?path=` link looks like it did nothing | It opens on the list, under the path's banner |
+| Y2 (play P2) | The code doesn't wrap | It wraps, at every width |
+| Y3 (play P3), P4 | The Oracle is cut off in the Play window in Night and on the stage | It takes two columns in any wide, short window; the Play frame has one edge in both themes; the stage's embed frame is taller |
+| P1, P2, P3 | The stage on a phone: part name under the clock, the wait over the credit, content under the rail | The name clears the pill; the wait sits beside the clock in the rail; plan rows in two lines |
+| P9 | The room's text is 17–22px at 1280 | 28px for the rungs, awards, and caption (the screen-1 note, for whoever finds the stage cold, stays small and hides at the call to order) |
+
+**Friction and Polish taken in the same round**: selected and pressed states are the tint with an ink edge, never the primary's solid fill (two reviewers); the Play window's phone header in two rows; the copy-by-hand box sized to its contents; card rows shared by subgrid; a remix Copy that keeps its width; the open clock's wait as the big number; ready timers at full strength; copper for Say only in the notes; Night's cautions keep their warmth; the account caution on Three levels before the script it guards; the level strip fits a phone; the starters' Chime and Sound as outlined switches, the timer's running and paused label, Group Maker's tinted headers and plain count, Syllabus's open edge; the address on the four stage screens that ask people to open something.
+
+**Contrast**, re-measured after all of it: 60 groups (every page, the notes, three stage screens with their controls showing, the Hosts bar, the cautions, the builder's error state), hover and focus forced on every control, light and Night: all at AA (`docs/design-audit/facts/contrast-after.md`).
+
+**Counts**: the first audit's fourteen reviewers wrote 44 Break, 220 Friction, and 128 Polish rows; the re-review's nine wrote 28, 137, and 134. Every re-review Break is fixed or explained above. Most of its Friction and Polish rows were not taken in this pass. The larger ones are restructures that change what a page holds, so they are Sean's to choose:
+
+- **Starters**: fold the audience box and how-to so the first starter is on the first screen (S1, J2); script cards in two columns at 1024 and wider (S6, S8); the next-step panel inline under the button that opened it at 768 and wider (S13); remix blanks as fields filled before copying (S9).
+- **Invent your own**: the jar above the three fields (V3); Steps 2–6 as one numbered column, each holding its own help (V6, V7); one tool-tab pattern for both places, Copilot included (V8).
+- **Sources**: the tabs as a section index with all filtering in one place (SRC3); denser cards (SRC5); a shorter way in to Start here (SRC6).
+- **Hosts**: one block per stage screen holding its notes, checks, and message (HO15, HO16); a sticky section index (HO6, HO7); the first step, not Present, as the hero's primary (HO3, HO4); "Your links" as inputs that fill every message's blanks (HO12).
+- **Home and Three levels**: trim the front door's repetition (H4); one level chooser instead of two (L2, L3).
+- **The stage**: a fixed slot for the timer on timed screens (P6); one title treatment (P8); copper only for over time (P14).
+- **The notes**: Call to order in the status bar until it's used (N3); the part band and title merged (N4); the timer's labels matching the stage's (N6); pace as "On time" or "3 min over" (N10).
+- **The system**: one disclosure style, one callout style, a copper budget, and fewer type styles (X4–X9, D3); Night's surfaces kept to one role each (D1, NB5).
 
 ## How it was made
 

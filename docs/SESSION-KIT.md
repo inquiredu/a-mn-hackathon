@@ -1,13 +1,13 @@
 # The session kit
 
-One file describes a whole session, and every view reads it. To run a new session, copy `assets/session.js`, change what's inside, and change the session-specific pages (Starters, Grant a wish) if the new session needs different ones.
+One file describes a whole session, and every view reads it. To run a new session, copy `assets/session.js`, change what's inside, and change the session-specific pages (Starters, Invent your own) if the new session needs different ones.
 
 ## What reads the session file
 
 | View | File | Uses |
 | --- | --- | --- |
 | Every page | `assets/timing.js` | Lays out the parts and fills in every time, date, and length |
-| Participant pages | `index.html`, `starters.html`, `wish.html` with `assets/site.js` | The day, the parts of the morning, the links |
+| Participant pages | `index.html`, `levels.html`, `starters.html`, `invent.html` with `assets/site.js` | The day, the parts of the morning, the links |
 | Hosts page | `hosts.html` with `assets/hosts.js` | Everything, including checklists, messages, and speaker notes |
 | Presenter view | `present.html` with `assets/present.js` | The screens |
 | Speaker notes | `notes.html` | The screens and their notes |
@@ -36,7 +36,7 @@ Each segment:
 
 | Field | What it's for |
 | --- | --- |
-| `id` | A short name to use in braces: `{wish.end}` |
+| `id` | A short name to use in braces: `{invent.end}` |
 | `minutes` | How long it runs. The parts run end to end from `start`, so changing one moves every part after it |
 | `title`, `where` | Its name, and "Main room" or "Breakout rooms" |
 | `hint` | One line for participants |
@@ -48,16 +48,16 @@ Each segment:
 
 ## Times live only in the session file
 
-The pages and the stage show each part's length ("35 min"), not its clock time; only the session's own `{start}` and `{end}` appear as times. Prefer lengths in new copy too: `{building}`, `{wish.length}`, "with {nudge} left".
+The pages and the stage show each part's length ("35 min"), not its clock time; only the session's own `{start}` and `{end}` appear as times. Prefer lengths in new copy too: `{building}`, `{invent.length}`, "with {nudge} left".
 
 No page or message types out a time, date, or length. Write it in braces instead, in any text in the session file or in a page element marked `data-fill`, and `assets/timing.js` fills it in:
 
 | Write | Reads (for this session) | What it is |
 | --- | --- | --- |
 | `{start}`, `{end}` | 10:00, noon | The session's start and end |
-| `{wish.start}`, `{wish.end}` | 10:45, 11:25 | When a part starts or ends, by its `id` |
-| `{wish.end - nudge}` | 11:15 | A time moved by some minutes, or by a `pace` value |
-| `{length}`, `{wish.length}` | two hours, 40 minutes | How long the session or a part runs |
+| `{invent.start}`, `{invent.end}` | 10:45, 11:25 | When a part starts or ends, by its `id` |
+| `{invent.end - nudge}` | 11:15 | A time moved by some minutes, or by a `pace` value |
+| `{length}`, `{invent.length}` | two hours, 40 minutes | How long the session or a part runs |
 | `{building}` | 57 minutes | All the time in breakout rooms |
 | `{nudge}`, `{share}` | ten minutes, two or three minutes | A `pace` value (a pair like `[2, 3]` reads as a range) |
 | `{weekday}`, `{date}`, `{zone}` | Friday, October 9, Central | From `day` and `timeZone` |
@@ -70,10 +70,10 @@ Add `:number` or `:unit` to split a length for big numerals (`{length:number}` i
 
 A mistyped name stays on the page in braces and shows an error in the browser console. Parts that run past `end` show a warning there too.
 
-In a page, mark the element that holds the braces: `<p data-fill>Back at {wish.end}</p>`. The page's link preview text (`<title>` and the description) can't be filled in, because previews don't run the page's code, so keep times out of those.
+In a page, mark the element that holds the braces: `<p data-fill>Back at {invent.end}</p>`. The page's link preview text (`<title>` and the description) can't be filled in, because previews don't run the page's code, so keep times out of those.
 
 ## Kinds of screen
-Every screen has a `kind` and an optional `note` (shown only in the speaker notes). Any screen can also have a `timer`: a `pace` name (`"showTurn"`, `"share"`), a part's id (`"wish"`, as long as that part), `"building"` (all the time in breakout rooms), or a number of minutes. The stage then shows a countdown the presenter starts and stretches live: T starts or pauses it, + and - add or take away a minute without stopping it, and the speaker notes window has the same buttons. A length the presenter changes is remembered in that browser. Screens that name the same `timerKey` share one timer, so a countdown started on one screen keeps counting on the next (the two breakout-room screens do this). The stage never counts down to a clock time: a screen that did would claim a time that stops being true the moment the morning runs long. The stage also carries a session clock: large on the opening screen until the presenter calls the session to order (the button, or T), then counting down in the rail's corner, and large again above the stage on a click or C, with wait-time countdowns. Uncalled, it counts from `start` on the session's `day`. The arithmetic lives in `assets/stage-timer.js`, tested by `node scripts/test-stage-timer.js`.
+Every screen has a `kind` and an optional `note` (shown only in the speaker notes). Any screen can also have a `timer`: a `pace` name (`"showTurn"`, `"share"`), a part's id (`"invent"`, as long as that part), `"building"` (all the time in breakout rooms), or a number of minutes. The stage then shows a countdown the presenter starts and stretches live: T starts or pauses it, + and - add or take away a minute without stopping it, and the speaker notes window has the same buttons. A length the presenter changes is remembered in that browser. Screens that name the same `timerKey` share one timer, so a countdown started on one screen keeps counting on the next (the two breakout-room screens do this). The stage never counts down to a clock time: a screen that did would claim a time that stops being true the moment the morning runs long. The stage also carries a session clock: large on the opening screen until the presenter calls the session to order (the button, or T), then counting down in the rail's corner, and large again above the stage on a click or C, with wait-time countdowns. Uncalled, it counts from `start` on the session's `day`. The arithmetic lives in `assets/stage-timer.js`, tested by `node scripts/test-stage-timer.js`.
 | Kind | Fields | Use it for |
 | --- | --- | --- |
 | `title` | `heading`, `sub`, and a `kicker` if you want one; the credits come from `maker` and `org` | Opening |

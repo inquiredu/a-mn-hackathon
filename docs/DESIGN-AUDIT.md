@@ -44,7 +44,7 @@ What the reviewers found strong, and should stay, is listed under [Keep](#keep).
 
 ## Decisions for Sean
 
-Each changes how several pages look or behave. A recommendation comes first in each.
+Each changes how several pages look or behave. A recommendation comes first in each. **Sean decided all twelve on October 11: the recommended option (a) in every case**, and added a thirteenth: Grant a wish becomes **Invent your own**, everywhere, to avoid the myth that this is magic; that page is tuned to invention (recorded in `docs/DECISIONS.md`).
 
 1. **The phone menu.** (a) **Recommended:** a Menu button beside "First Builds" that opens the pages as full-width 48px rows, the current page marked, Present and GitHub grouped last. One 56px header row; nothing cut off. (b) Wrap the pills onto two rows (about 120px of header, everything visible). (c) Keep the sideways strip, contained, with the current page scrolled into view and the next item half-showing as the cue.
 2. **Present and GitHub in the menu.** Both stay in every page's menu (decided October 9 and 11). Open: their emphasis. (a) **Recommended:** plain items after a thin divider, GitHub marked as leaving the site (↗); the Hosts page keeps its big "Present the stage" button. (b) Keep Present as the outlined pill, the loudest item in the header after the current page.

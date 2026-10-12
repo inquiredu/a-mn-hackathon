@@ -95,6 +95,17 @@ const STAGE_TIMER = (() => {
     return { state: "over", display: "+" + hms(-left), label: "over", pct: 100, over: true };
   }
 
+  // One part against the clock, for the speaker notes: the part's place in the schedule, moved to when the
+  // session actually began, so a late start, or a run on another day, doesn't read as running late.
+  // start is the call to order (a second of the day) or null; sessionStart, partStart, partEnd are the schedule's.
+  function partClock(now, start, sessionStart, partStart, partEnd) {
+    if (start === null) return { state: "waiting", minutesLeft: null };
+    const shift = start - sessionStart;
+    if (now < partStart + shift) return { state: "before", minutesLeft: null };
+    const left = Math.ceil((partEnd + shift - now) / 60);
+    return left > 0 ? { state: "on", minutesLeft: left } : { state: "over", minutesLeft: 0 };
+  }
+
   // When the two hours began: the presenter's call to order if there was one today, otherwise the
   // advertised start on the session's own day, otherwise not yet (so a rehearsal waits for the call).
   function resolveStart(saved, today, eventDay, scheduled) {
@@ -114,7 +125,7 @@ const STAGE_TIMER = (() => {
     try { at === null ? storage?.removeItem(START_KEY) : storage?.setItem(START_KEY, JSON.stringify({ day: today, at })); } catch { /* private window */ }
   }
 
-  return { startingMinutes, clampMinutes, secondsLeft, view, toggle, adjust, createStore, sessionClock, resolveStart, savedStart, saveStart, MIN, MAX };
+  return { startingMinutes, clampMinutes, secondsLeft, view, toggle, adjust, createStore, sessionClock, partClock, resolveStart, savedStart, saveStart, MIN, MAX };
 })();
 
 if (typeof module !== "undefined") module.exports = STAGE_TIMER;

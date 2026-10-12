@@ -151,12 +151,12 @@ function tick() {
   const running = two.state !== "ready" || today() === SESSION.day;
   $("clock").textContent = running ? two.display + " " + (two.state === "ready" ? "to go" : two.label) : "No session running";
   $("clock").classList.toggle("over", two.over);
-  const end = toSeconds(screens[index].segment.end);
-  const partStart = toSeconds(screens[index].segment.start);
-  const left = Math.ceil((end - now) / 60);
-  $("left").textContent = !running ? ""
-    : now < partStart ? " · starts after the part before it"
-    : left > 0 ? " · " + left + " min left in this part" : " · time to move on";
+  // The part against the clock, from the call to order (or the advertised start on the day), not the first run's times
+  const seg = screens[index].segment;
+  const part = STAGE_TIMER.partClock(now, start, toSeconds(SESSION.start), toSeconds(seg.start), toSeconds(seg.end));
+  $("left").textContent = !running || part.state === "waiting" ? ""
+    : part.state === "before" ? " · starts after the part before it"
+    : part.state === "on" ? " · " + part.minutesLeft + " min left in this part" : " · time to move on";
 }
 setInterval(tick, 1000);
 

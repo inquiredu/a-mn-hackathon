@@ -48,7 +48,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
   .ends { margin: 0; color: var(--muted); }
 
   .layout { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); margin-top: 16px; }
-  @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .layout { grid-template-columns: minmax(0, 1fr); } }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
 
   .label { margin: 0; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }

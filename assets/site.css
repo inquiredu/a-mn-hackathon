@@ -31,6 +31,7 @@
   --warm-ink: var(--navy-900);
   --focus: var(--sun-700);               /* one step darker than North Shore's sun-600 ring, which is 2.9:1 on cream; this is 4:1 */
   --control: var(--navy-400);
+  --placeholder: var(--navy-500);       /* 5.6:1 on cream-50; the browser's own grey was 4.3:1 */
   --shadow: none;                        /* hairlines first */
 
   /* The frame: the header, the now bar, and the footer stay navy-900 in both themes */
@@ -98,6 +99,7 @@
     --accent: var(--sun-500);
     --focus: var(--sun-500);
     --control: var(--navy-300);
+    --placeholder: var(--navy-300);     /* 6.9:1 on navy-900; the browser's grey was 3.4:1 */
     --oracle: var(--sun-400);
     --charter: var(--navy-200);
     --syllabus: var(--water-200);
@@ -142,6 +144,25 @@ a:hover { color: var(--fg-link-hover); }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
+::placeholder { color: var(--placeholder); opacity: 1; }
+
+/* Checkboxes and radios: drawn here, because the browser's own turn grey on navy (3.3:1) and blue when checked */
+input[type="checkbox"], input[type="radio"] {
+  appearance: none; -webkit-appearance: none; flex: none;
+  display: inline-grid; place-content: center;
+  width: 20px; height: 20px; margin: 0;
+  border: 1.5px solid var(--control); border-radius: var(--radius-sm); background: var(--control-bg);
+  cursor: pointer;
+}
+input[type="radio"] { border-radius: 50%; }
+input[type="checkbox"]::before {
+  content: ""; width: 11px; height: 11px; transform: scale(0); background: var(--button-ink);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+input[type="radio"]::before { content: ""; width: 8px; height: 8px; border-radius: 50%; transform: scale(0); background: var(--button-ink); }
+input[type="checkbox"]:checked, input[type="radio"]:checked { background: var(--button); border-color: var(--button); }
+input[type="checkbox"]:checked::before, input[type="radio"]:checked::before { transform: scale(1); }
+
 /* Text with {braces} waits until assets/timing.js fills in the times */
 [data-fill]:not(.filled) { visibility: hidden; }
 
@@ -160,6 +181,7 @@ html:has(body[data-mode="after"]) { scroll-padding-top: 12px; }   /* after the s
   padding: 10px 16px; border-radius: var(--radius-sm); font-weight: 600; font-family: var(--font-sans);
 }
 .skip:focus { top: 12px; }
+.skip:hover { color: var(--button-ink); }
 
 /* ---------- Hero ---------- */
 /* The cover: the name large on the page, who made it and who it was made with, and North Shore's horizon bands
@@ -270,8 +292,10 @@ html:has(body[data-mode="after"]) { scroll-padding-top: 12px; }   /* after the s
 }
 .copybox p { margin: 0; color: var(--ink); }
 .copybox button { flex: none; }
-/* A folded copybox: the Copy button shows, the words wait behind "Read it" */
+/* A folded copybox: its buttons first, then the words behind "Read it", opening to the box's full width */
 .copybox details { flex: 1; min-width: 0; }
+.copybox.fold { display: grid; gap: 10px; }
+.copy-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .copybox summary { cursor: pointer; font-weight: 600; color: var(--link); padding: 4px 0; }
 .copybox details[open] summary { margin-bottom: 8px; }
 .fold { margin-top: var(--block); }
@@ -279,7 +303,7 @@ html:has(body[data-mode="after"]) { scroll-padding-top: 12px; }   /* after the s
 .fold > summary:hover { color: var(--link); }
 .fold[open] > summary { margin-bottom: 14px; }
 .fold .hint { margin-top: 0; }
-.copybox pre { flex: 1; min-width: 0; margin: 0; max-height: 420px; overflow: auto; white-space: pre; color: var(--ink); font: .82rem/1.45 var(--font-mono); }
+.copybox pre { flex: 1; min-width: 0; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); font: .82rem/1.45 var(--font-mono); }
 
 /* The three levels */
 /* The opening: the three levels across the page, each a step down to its section */
@@ -316,9 +340,9 @@ button, .button {
   border: 1.5px solid var(--control); background: var(--surface); color: var(--ink);
   cursor: pointer; text-decoration: none;
 }
-button:hover, .button:hover { border-color: var(--ink); background: var(--action-ghost-hover); }
+button:hover, .button:hover { border-color: var(--ink); background: var(--action-ghost-hover); color: var(--ink); }
 .primary { background: var(--button); border-color: var(--button); color: var(--button-ink); }
-.primary:hover { background: var(--button-hover); border-color: var(--button-hover); }
+.primary:hover { background: var(--button-hover); border-color: var(--button-hover); color: var(--button-ink); }
 
 /* Machines */
 /* Cards in a row are the same height, and their buttons and Remix menu sit on the same line */
@@ -499,6 +523,7 @@ dialog::backdrop { background: var(--scrim); }
    The kit's name alone: the author signs at the foot of the page, not here. */
 .site-head { background: var(--bar-bg); color: var(--bar-ink); border-bottom: 1px solid var(--bar-line); }
 .site-head-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; padding-top: 10px; padding-bottom: 10px; }
+.brand:hover { color: var(--bar-ink); }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--bar-ink); text-decoration: none; font-family: var(--font-sans); font-weight: 600; font-size: 1.05rem; }
 .site-nav { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
 .site-nav a { display: block; padding: 6px 12px; border-radius: 999px; color: var(--bar-ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
@@ -508,7 +533,9 @@ dialog::backdrop { background: var(--scrim); }
 .site-nav .present-link:hover { background: var(--bar-ink); color: var(--bar-bg); }
 /* On a phone the menu is one row that scrolls sideways, under the name, instead of four rows */
 @media (max-width: 760px) {
-  .site-head-inner { flex-direction: column; align-items: stretch; gap: 4px; padding-bottom: 6px; }
+  /* One line, not wrapping: in a wrapping flex column each line takes its widest item's width, which made every page 770px wide */
+  .site-head-inner { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 4px; padding-bottom: 6px; }
+  .site-head-inner > * { min-width: 0; }
   .site-nav { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px; padding: 4px 16px; scrollbar-width: none; }
   .site-nav::-webkit-scrollbar { display: none; }
   .site-nav a { white-space: nowrap; }
@@ -605,10 +632,10 @@ summary.segment-head:hover { background: var(--tint); }
 .stage-list .note { display: block; color: var(--muted); font-size: .92rem; }
 .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .checklist label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
-.checklist input { width: 18px; height: 18px; margin-top: 4px; accent-color: var(--link); flex: none; }
+.checklist input { margin-top: 3px; }
 .message { margin-top: 8px; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--tint); }
 .message .to { margin: 0 0 4px; }
-.message pre { margin: 0 0 8px; white-space: pre-wrap; font: inherit; }
+.message pre { margin: 0 0 8px; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
 .calc { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
 .calc input { width: 6em; padding: 8px 10px; font: inherit; border: 1.5px solid var(--control); border-radius: var(--radius-sm); background: var(--control-bg); color: var(--ink); }
 .calc-out { margin: 10px 0 0; font-size: 1.15rem; font-weight: 600; }
@@ -662,7 +689,7 @@ summary.segment-head:hover { background: var(--tint); }
 .finder .ask-group { margin-top: 12px; }
 .finder .ask-group > legend { margin-bottom: 2px; }
 .choice { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
-.choice input { width: 18px; height: 18px; margin: 0; flex: none; accent-color: var(--link); }
+
 .choice label { flex: 1; display: flex; justify-content: space-between; gap: 8px; cursor: pointer; font-size: .95rem; }
 .choice.empty label { color: var(--muted); }
 .facet-count { color: var(--muted); font-size: .85rem; font-variant-numeric: tabular-nums; }

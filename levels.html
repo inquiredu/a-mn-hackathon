@@ -97,11 +97,11 @@
           <li>Open your Google Site to edit it. Choose <strong>Insert</strong>, then <strong>Embed</strong>, then the <strong>Embed code</strong> tab. Paste, choose <strong>Next</strong>, then <strong>Insert</strong>.</li>
           <li>Drag the box's corner until the whole page shows. <strong>Preview</strong> shows it to you; <strong>Publish</strong> shows it to whoever your Site is shared with, and Sites asks you who that is.</li>
         </ol>
-        <div class="copybox">
+        <div class="copybox fold">
+          <div class="copy-actions"><button data-copy-from="site-prompt">Copy the prompt</button></div>
           <details><summary>Read the prompt</summary>
           <p id="site-prompt">Here is a document my team already uses. Turn it into an interactive infographic as a single HTML page: each section becomes a card that opens when clicked or tapped, the key commitments become a row of badges, in plain language and large type, and it works on a phone. Keep the document's meaning exactly; don't add anything it doesn't say. No outside libraries, images, or fonts. The document is below.</p>
           </details>
-          <button data-copy-from="site-prompt">Copy the prompt</button>
         </div>
         <h3>If it breaks</h3>
         <ul>
@@ -120,19 +120,18 @@
         <p>A Drive folder with folders inside it, and a script that reads all of them and writes a Sheet: every document, its type, and a link to open it. A whole curriculum, one search away.</p>
         <h3>Two ways to get the script</h3>
         <p>Start from ours, the Drive Inventory, with the steps below. Or ask your AI for one with the prompt here, then follow the same steps: the prompt asks the AI to name the main function <strong>inventory</strong>, so they match; if your AI chose another name, choose that one. (The Starters page has a second script, <a href="starters.html#level-3">the Doc Multiplier</a>, which makes one Doc for every row of a Sheet. Try it after this one.)</p>
-        <div class="copybox">
+        <div class="copybox fold">
+          <div class="copy-actions"><button data-copy-from="script-prompt">Copy the prompt</button></div>
           <details><summary>Read the prompt</summary>
           <p id="script-prompt">Write a Google Apps Script that lists every file in one Google Drive folder and all of its subfolders in a new Google Sheet: one row per file, with the folder path, the file's title, its type in plain words (Doc, Sheet, Slides, PDF), its link, and when it last changed. Use only DriveApp and SpreadsheetApp. Put the folder ID in one clearly marked line at the top, and name the main function inventory. Then tell me, in plain language, what the first run will ask permission for and why.</p>
           </details>
-          <button data-copy-from="script-prompt">Copy the prompt</button>
         </div>
         <h3>Our script: the Drive Inventory</h3>
-        <div class="copybox">
+        <div class="copybox fold">
+          <div class="copy-actions"><button data-copy-script="inventory">Copy the script</button> <button data-ask-script="inventory">Copy for my AI</button></div>
           <details><summary>Read the script</summary>
           <pre id="inventory-script" data-script="inventory"></pre>
           </details>
-          <button data-copy-script="inventory">Copy the script</button>
-          <button data-ask-script="inventory">Copy for my AI</button>
         </div>
         <div class="script-steps" data-steps="inventory"></div>
         <div class="caution">

@@ -385,6 +385,8 @@ const PROPHECIES = [
     border: 2px solid #E6B84FB3;
   }
   .sound[aria-pressed="false"] { opacity: .75; text-decoration: line-through; }
+  /* On a narrow screen the page starts below the switch, so the title never sits under it */
+  @media (max-width: 560px) { body { padding-top: 64px; } }
 
   .asked { min-height: 1.4em; margin: 0; font-style: italic; opacity: .8; }
   .prophecy {

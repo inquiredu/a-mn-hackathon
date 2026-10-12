@@ -95,8 +95,8 @@
   :root { --card-pad: 24px; --section: 72px; }
 }
 
-/* Night: <html data-theme="dark">, set by assets/theme.js from the visitor's own choice (the header's sun and moon)
-   or, until they make one, their system's. North Shore defines no dark theme, so this one is drawn from its own
+/* Night: <html data-theme="dark">, the default, set by assets/theme.js until the visitor chooses Light (the header's
+   sun and moon). North Shore defines no dark theme, so this one is drawn from its own
    scales, with no new colors: navy pages, cream text, copper for the warm notes. */
 [data-theme="dark"] {
   --surface-page: var(--navy-800);

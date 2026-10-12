@@ -153,7 +153,7 @@
   --calendar: var(--navy-300);
 }
 /* Night's notes and cautions sit on navy-600, where sun-400 is 4.4:1; a link hovered there steps up to sun-200 (6.6:1) */
-[data-theme="dark"] :is(.note-box, .level-note, .stuck, .pick, .synthesis, .next, .caution, .audience, .message, .src-says, .builder-out, .monday) {
+[data-theme="dark"] :is(.note-box, .level-note, .stuck, .pick, .synthesis, .next, .caution, .audience, .message, .src-says, .builder-out, .monday, .learn) {
   --fg-link-hover: var(--sun-200);
 }
 /* While the theme switches, one frame without transitions, so every color changes together (assets/theme.js) */
@@ -858,18 +858,53 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .quiet-fold p { margin: 4px 0 10px; }
 
 /* ---------- Three levels ---------- */
-.chooser-lead { margin: 24px 0 0; font-family: var(--font-sans); font-weight: 600; }
-.chooser { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
-.chooser .card-link { height: 100%; }
-.chooser .card-link strong { margin-top: 6px; font-family: var(--font-sans); font-size: 1.125rem; }
-.chooser .card-link span:not(.num):not(.meta) { color: var(--muted); }
+.levels-part { margin-top: var(--section); font-size: clamp(1.375rem, 3vw, 1.625rem); }
+.chooser-lead { margin: 8px 0 0; font-family: var(--font-sans); font-weight: 600; }
 .meta { margin: 6px 0 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); }
-.chooser .meta { margin-top: auto; padding-top: 8px; }
 .first-run { margin: 14px 0 0; }
-@media (max-width: 600px) {
-  .chooser .card-link { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 2px 12px; }
-  .chooser .card-link .num { grid-row: span 3; }
-  .chooser .card-link strong { margin-top: 2px; }
+/* How the three differ: a card per level with the same five rows, and where there's room, each row lines up across
+   the three (subgrid), so the page reads as a comparison as well as a way in */
+.compare { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); }
+.compare > li { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
+.compare h3 { margin: 0; font-size: 1.125rem; }
+.compare h3 a { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration-color: var(--line); }
+.compare dl { margin: 14px 0 0; }
+.compare dl > div { padding: 8px 0; border-top: 1px solid var(--line); }
+.compare dt { font-family: var(--font-sans); font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.compare dd { margin: 2px 0 0; }
+.compare .meta { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+/* One card to a row but room to spare: each row's label sits beside it, which keeps the cards short */
+@media (min-width: 480px) and (max-width: 879px) {
+  .compare dl > div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+  .compare dd { margin: 0; }
+}
+@media (min-width: 880px) {
+  .compare { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .compare > li { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
+  .compare dl { grid-row: span 5; display: grid; grid-template-rows: subgrid; }
+}
+.habits { margin-top: 16px; }
+.habits h3 { margin: 0; font-size: 1.05rem; }
+.habits p { margin: 6px 0 0; }
+
+/* A level: on a wide screen, what it is and the steps at reading width on the left, and what it teaches you about
+   code beside them, staying in view while you work down the steps. Narrower, the same parts stack in reading order. */
+.level-body { display: grid; grid-template-columns: minmax(0, 1fr); }
+.learn { margin-top: 24px; padding: 18px 20px; background: var(--tint); border-radius: var(--radius); }
+.level .learn h3 { margin: 0; }
+.level .learn ul { list-style: none; margin: 10px 0 0; padding: 0; }
+.level .learn li { margin: 0; padding: 10px 0; border-top: 1px solid var(--line); font-size: .97rem; }
+.level .learn li:first-child { border-top: 0; padding-top: 4px; }
+.learn li > strong:first-child { display: block; font-family: var(--font-sans); font-size: .95rem; }
+@media (min-width: 1024px) {
+  .level-body { grid-template-columns: minmax(0, 1fr) minmax(260px, 320px); column-gap: 40px; }
+  .level-intro, .level-steps { grid-column: 1; }
+  .level-side { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
+  .level-side .learn { margin-top: 6px; }
+}
+/* Tall enough to keep it all in view: the panel stays beside the steps, just under the level bar */
+@media (min-width: 1024px) and (min-height: 760px) {
+  .level-side { position: sticky; top: calc(var(--below-level-bar, 64px) + 16px); }
 }
 .level-bar {
   position: sticky; top: 0; z-index: 15; display: flex; gap: 4px; margin: var(--block) -16px 0; padding: 8px 16px;
@@ -970,7 +1005,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .level-header { margin-top: calc(var(--section) - 8px); padding-top: 24px; border-top: 1px solid var(--line); }
 .level-header h2 { font-size: clamp(1.5rem, 3.4vw, 1.875rem); }
 .level-summary { margin: 8px 0 0; color: var(--ink); }
-.level-header .level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
+.level-header .level-note, .level details.level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
 .level-header + .machines { margin-top: 20px; }
 .button-legend { margin: 16px 0 0; display: grid; gap: 10px; max-width: var(--measure); }
 .button-legend > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
@@ -1016,7 +1051,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .cabinet .meta { margin-top: 12px; }
 .data-note { margin: 12px 0 0; padding: 4px 0 4px 12px; border-left: 3px solid var(--control); font-size: .95rem; color: var(--ink); }
 .cabinet .script-steps { margin-top: 8px; font-size: .97rem; }
-.cabinet .script-steps .kind { display: none; }
+.cabinet .script-steps .kind, .level .script-steps .kind { display: none; }   /* the card or the level already says what a script is */
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .remix { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 2px; }
 .remix > summary .count { margin-left: 4px; font-weight: 500; color: var(--muted); }

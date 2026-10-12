@@ -98,7 +98,7 @@ const PAGES = [
     { state: "after", q: "", note: "Default (any day)." }, { state: "during", q: "?now=10:12", note: "During the event: the now bar shows." } ] },
   { id: "starters", file: "starters.html", states: [
     { state: "after", q: "", note: "Default (any day)." }, { state: "during", q: "?now=10:30", note: "During the event: the now bar shows." } ] },
-  { id: "wish", file: "wish.html", states: [
+  { id: "invent", file: "invent.html", states: [
     { state: "after", q: "", note: "Default (any day)." }, { state: "during", q: "?now=10:50", note: "During the event: the now bar shows." } ] },
   { id: "hosts", file: "hosts.html", states: [
     { state: "after", q: "", note: "Default (any day)." }, { state: "during", q: "?now=10:30", note: "During the event: the now bar shows and the current part's fold opens." } ] },
@@ -107,6 +107,10 @@ const PAGES = [
 ];
 
 const JOBS = {};
+
+// The stage's presenter controls fade when idle: ROOM shows what the room sees, PRESENTER what the presenter sees after a mouse move
+const ROOM = `document.body.classList.remove("chrome-on"); document.getAnimations().forEach((a) => a.finish()); true`;
+const PRESENTER = `document.body.classList.add("chrome-on"); document.getAnimations().forEach((a) => a.finish()); true`;
 
 // 1. Every page, every state, both widths, both themes, scrolled top to bottom
 JOBS.pages = async (tab) => {
@@ -184,17 +188,21 @@ JOBS.states = async (tab) => {
       await sleep(300);
       await slices(tab, S, `levels-folds-open-${tag}`, m("levels", "every fold open", "Three levels with every Read the prompt / Read the script fold opened."), { max: 30 });
 
-      // Grant a wish: the builder filled in; Copy with an empty field; a wish from the jar
-      await tab.go(BASE + "wish.html");
-      await tab.eval(`document.getElementById("wb-what").scrollIntoView({ block: "center", behavior: "instant" }); document.getElementById("wb-copy").click(); true`);
+      // Invent your own: Copy with an empty field; the builder filled in, then copied; an idea from the jar
+      await tab.go(BASE + "invent.html");
+      await tab.eval(`document.getElementById("idea-what").scrollIntoView({ block: "center", behavior: "instant" }); document.getElementById("idea-copy").click(); true`);
       await sleep(700);
-      await tab.shot(path.join(S, `wish-empty-copy-${tag}.png`)); rec(path.join(S, `wish-empty-copy-${tag}.png`), m("wish", "builder: copy with nothing filled in", "Pressing the builder's copy button with the three answers empty."));
-      await tab.eval(`[["wb-what","a hall pass tracker"],["wb-who","my seventh graders"],["wb-does","show who is out of the room and for how long"]].forEach(([id,v]) => { const e = document.getElementById(id); e.value = v; e.dispatchEvent(new Event("input")); }); document.getElementById("wb-out").scrollIntoView({ block: "center", behavior: "instant" }); true`);
+      await tab.shot(path.join(S, `invent-empty-copy-${tag}.png`)); rec(path.join(S, `invent-empty-copy-${tag}.png`), m("invent", "builder: copy with nothing filled in", "Pressing the builder's copy button with the three answers empty."));
+      await tab.eval(`[["idea-what","a hall pass tracker"],["idea-who","my seventh graders"],["idea-does","show who is out of the room and for how long"]].forEach(([id,v]) => { const e = document.getElementById(id); e.value = v; e.dispatchEvent(new Event("input")); }); document.getElementById("idea-out").scrollIntoView({ block: "center", behavior: "instant" }); true`);
       await sleep(300);
-      await tab.shot(path.join(S, `wish-builder-filled-${tag}.png`)); rec(path.join(S, `wish-builder-filled-${tag}.png`), m("wish", "builder filled in", "The wish builder with three answers typed."));
-      await tab.eval(`const b = document.querySelector("[data-wish]"); b.scrollIntoView({ block: "center", behavior: "instant" }); b.click(); true`);
+      await tab.shot(path.join(S, `invent-builder-filled-${tag}.png`)); rec(path.join(S, `invent-builder-filled-${tag}.png`), m("invent", "builder filled in", "The builder with three answers typed: the request takes shape below them."));
+      await tab.eval(`document.getElementById("idea-copy").click(); true`);
       await sleep(900);
-      await tab.shot(path.join(S, `wish-jar-next-step-${tag}.png`)); rec(path.join(S, `wish-jar-next-step-${tag}.png`), m("wish", "wish jar pressed", "After pressing a wish in the jar: the next-step panel."));
+      await tab.shot(path.join(S, `invent-copied-next-step-${tag}.png`)); rec(path.join(S, `invent-copied-next-step-${tag}.png`), m("invent", "builder copied", "After copying the filled builder: the button's done state and the next-step panel."));
+      await tab.go(BASE + "invent.html");
+      await tab.eval(`const b = document.querySelector("[data-idea]"); b.scrollIntoView({ block: "center", behavior: "instant" }); b.click(); true`);
+      await sleep(900);
+      await tab.shot(path.join(S, `invent-jar-fills-${tag}.png`)); rec(path.join(S, `invent-jar-fills-${tag}.png`), m("invent", "an idea from the jar", "After pressing an idea in the jar: it fills the builder's three answers."));
 
       // Sources: a path, a topic filter, a search with nothing found
       await tab.go(BASE + "sources.html?path=leaders");
@@ -214,7 +222,7 @@ JOBS.states = async (tab) => {
       await tab.shot(path.join(S, `home-cue-${tag}.png`)); rec(path.join(S, `home-cue-${tag}.png`), m("home", "the part-changed notice", "During the event, when the clock moves to the next part while the page is open, this notice appears under the now bar."));
 
       // Header menu at the top of every page: the current page marked
-      for (const p of ["levels", "starters", "wish", "hosts", "sources"]) {
+      for (const p of ["levels", "starters", "invent", "hosts", "sources"]) {
         await tab.go(BASE + p + ".html");
         const f = path.join(S, `header-${p}-${tag}.png`);
         await tab.shot(f, { x: 0, y: 0, width: w, height: 160 }); rec(f, m(p, "header", "The top of the page: the site header with this page marked."));
@@ -264,23 +272,36 @@ JOBS.stage = async (tab) => {
     for (let i = 0; i < count; i++) {
       await tab.eval(`show(${i}); scrollTo({ top: 0, behavior: "instant" }); true`);
       await sleep(i === 2 ? 2200 : 500);   // the Oracle embed loads in a frame
+      await tab.eval(ROOM);   // what the room sees: the presenter's controls faded
       const meta = { surface: "stage", state: `screen ${i + 1} of ${count}`, width: vw, theme: "stage", note: await tab.eval(`(() => { const s = screens[${i}]; return s.kind + " · " + s.segment.title + " · " + (s.heading || s.text || ""); })()`) };
       if (mobile) await slices(tab, D, `screen-${String(i + 1).padStart(2, "0")}-${size}`, meta, { max: 4 });
       else { const f = path.join(D, `screen-${String(i + 1).padStart(2, "0")}-${size}.png`); await tab.shot(f); rec(f, meta); }
+    }
+    // The presenter's view of three screens: the controls showing, as they do when the mouse moves
+    for (const i of [0, 8, 12]) {
+      await tab.eval(`show(${i}); scrollTo({ top: 0, behavior: "instant" }); true`); await sleep(500);
+      await tab.eval(PRESENTER); await sleep(150);
+      const f = path.join(D, `presenter-screen-${String(i + 1).padStart(2, "0")}-${size}.png`); await tab.shot(f);
+      rec(f, { surface: "stage", state: `presenter view, screen ${i + 1}`, width: vw, theme: "stage", note: "The same screen with the presenter's controls showing (after a mouse move or a key press); they fade after a few idle seconds." });
     }
     // The clock: called to order (corner), open, a wait running, a screen timer running, over time
     const m = (state, note) => ({ surface: "stage", state, width: vw, theme: "stage", note });
     await tab.go("about:blank", 100);
     await tab.go(BASE + "present.html", 900);
-    let f = path.join(D, `clock-ready-${size}.png`); await tab.shot(f); rec(f, m("clock waiting", "Screen 1 before the call to order: the two hours shown large, with Call to order."));
+    await tab.eval(PRESENTER);
+    let f = path.join(D, `clock-ready-${size}.png`); await tab.shot(f); rec(f, m("clock waiting, presenter view", "Screen 1 before the call to order: the two hours shown large, with Call to order (a presenter control)."));
     await tab.eval(`document.getElementById("sc-start").click(); true`); await sleep(800);
     f = path.join(D, `clock-called-hero-${size}.png`); await tab.shot(f); rec(f, m("clock called, screen 1", "Just after Call to order, still on screen 1."));
     await tab.eval(`show(4); true`); await sleep(1200);
     f = path.join(D, `clock-corner-${size}.png`); await tab.shot(f); rec(f, m("clock in the corner", "Called to order, on a later screen: the clock has moved to the corner of the rail."));
     await tab.eval(`openClock(true); true`); await sleep(900);
-    f = path.join(D, `clock-open-${size}.png`); await tab.shot(f); rec(f, m("clock open", "The clock opened large (C or a click): frosted glass over the dimmed slide, with wait-time buttons."));
+    await tab.eval(PRESENTER);
+    f = path.join(D, `clock-open-${size}.png`); await tab.shot(f); rec(f, m("clock open, presenter view", "The clock opened large (C or a click): frosted glass over the dimmed slide, with the presenter's wait-time buttons beneath it."));
     await tab.eval(`document.querySelector('[data-wait="2"]').click(); true`); await sleep(1500);
-    f = path.join(D, `clock-open-wait-${size}.png`); await tab.shot(f); rec(f, m("clock open, wait running", "A 2-minute wait running inside the open clock."));
+    await tab.eval(PRESENTER);
+    f = path.join(D, `clock-open-wait-${size}.png`); await tab.shot(f); rec(f, m("clock open, wait running, presenter view", "A 2-minute wait running inside the open clock."));
+    await tab.eval(ROOM);
+    f = path.join(D, `clock-open-wait-room-${size}.png`); await tab.shot(f); rec(f, m("clock open, wait running, room view", "The same moment as the room sees it, with the presenter's buttons faded."));
     await tab.eval(`openClock(false); true`); await sleep(900);
     f = path.join(D, `clock-corner-wait-${size}.png`); await tab.shot(f); rec(f, m("corner clock with a wait", "The wait follows the clock to the corner as a small pill."));
     await tab.eval(`document.getElementById("sc-wait-clear").click(); show(8); true`); await sleep(800);
@@ -314,6 +335,18 @@ JOBS.notes = async (tab) => {
   await slices(tab, D, `with-stage-screen07-560`, { surface: "notes", state: "following the stage, screen 7", width: 560, theme: "notes", note: "The notes window beside a stage on screen 7, Three levels of getting started (no timer on this screen); the clock not called to order." }, { max: 4 });
   await stage.eval(`show(9); true`); await sleep(1200);
   await slices(tab, D, `with-stage-screen10-560`, { surface: "notes", state: "following the stage, screen 10", width: 560, theme: "notes", note: "The notes window beside a stage on screen 10, Pick your level." }, { max: 4 });
+  // The screen list, opened from the screen number in the status bar
+  await tab.eval(`document.getElementById("jump").click(); true`); await sleep(500);
+  let f = path.join(D, `jump-list-560.png`); await tab.shot(f); rec(f, { surface: "notes", state: "the screen list open", width: 560, theme: "notes", note: "After pressing the screen number in the status bar: every screen under its part; choosing one moves the stage." });
+  await tab.eval(`document.getElementById("jump-list").close(); true`);
+  // Full size, beside the stage, and in Night
+  await stage.eval(`show(8); true`); await sleep(800);
+  await tab.viewport(1280, 800, { dpr: 1, theme: "light" });
+  await tab.go(BASE + "notes.html", 1500);
+  await slices(tab, D, `with-stage-screen09-1280`, { surface: "notes", state: "following the stage, full size", width: 1280, theme: "notes", note: "The notes at 1280 wide beside a stage on screen 9 (a timed screen)." }, { max: 3 });
+  await tab.viewport(560, 780, { dpr: 2, theme: "dark" });
+  await tab.go(BASE + "notes.html", 1500);
+  await slices(tab, D, `with-stage-screen09-560-night`, { surface: "notes", state: "following the stage, Night", width: 560, theme: "notes-night", note: "The notes in the site's Night theme, beside a stage on screen 9." }, { max: 3 });
   await stage.close();
 };
 
@@ -325,11 +358,15 @@ JOBS.timerfix = async (tab) => {
     await tab.go("about:blank", 100);
     await tab.go(BASE + "present.html", 900);
     await tab.eval(`localStorage.clear(); document.getElementById("sc-start").click(); show(8); true`); await sleep(1000);
-    await tab.eval(`timerAction("toggle"); true`); await sleep(7000);   // past the six-second key hints
+    await tab.eval(`timerAction("toggle"); true`); await sleep(3000);
     const m = (state, note) => ({ surface: "stage", state, width: vw, theme: "stage", note });
-    let f = path.join(D, `timer-running-${size}.png`); await tab.shot(f); rec(f, m("screen timer running", "Screen 9, Show & Tell (\"Done one of these?\"): its 4-minute turn timer started (T), session called to order."));
+    await tab.eval(ROOM);
+    let f = path.join(D, `timer-running-${size}.png`); await tab.shot(f); rec(f, m("screen timer running, room view", "Screen 9, Show & Tell (\"Done one of these?\"): its 4-minute turn timer started (T), session called to order, as the room sees it."));
+    await tab.eval(PRESENTER);
+    f = path.join(D, `timer-running-presenter-${size}.png`); await tab.shot(f); rec(f, m("screen timer running, presenter view", "The same moment with the presenter's controls showing."));
     await tab.eval(`timerAction("toggle"); true`); await sleep(600);
-    f = path.join(D, `timer-paused-${size}.png`); await tab.shot(f); rec(f, m("screen timer paused", "The same timer, paused."));
+    await tab.eval(PRESENTER);
+    f = path.join(D, `timer-paused-${size}.png`); await tab.shot(f); rec(f, m("screen timer paused, presenter view", "The same timer, paused."));
     await tab.eval(`localStorage.clear(); true`);
   }
 };
@@ -361,11 +398,11 @@ JOBS.cabinets = async (tab) => {
   const D = path.join(OUT, "cabinets");
   const acts = {
     "meeting-timer": `document.getElementById("start").click()`,
-    "group-maker": `document.querySelector("form button[type=submit], button.primary").click()`,
+    "group-maker": `document.getElementById("again").click()`,
     "feedback-builder": `(() => { const r = document.querySelectorAll("input[type=radio], button[data-level], .level button"); r.forEach((x, i) => { if (i % 3 === 1) x.click(); }); })()`,
     "oracle": `(() => { const q = document.querySelector("input, textarea"); q.value = "Will the copier work on Monday?"; q.dispatchEvent(new Event("input", { bubbles: true })); document.getElementById("go").click(); })()`,
-    "charter-cards": `(() => { const c = document.querySelector("details, button, [role=button]"); c && c.click(); })()`,
-    "syllabus-page": `(() => { const c = document.querySelector("details summary, button"); c && c.click(); })()`
+    "charter-cards": `document.querySelectorAll(".card")[1].click()`,
+    "syllabus-page": `document.querySelectorAll(".units button")[1].click()`
   };
   for (const name of Object.keys(acts)) {
     for (const [size, vw, vh, dpr, mobile] of [["960", 960, 640, 1, false], ["375", 375, 812, 2, true]]) {

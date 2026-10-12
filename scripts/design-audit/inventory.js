@@ -10,7 +10,7 @@ const { launch, Tab, sleep } = require("./cdp.js");
 const REPO = path.resolve(process.argv[2]);
 const OUT = path.resolve(process.argv[3]);
 const BASE = "http://localhost:4179/";
-const PAGES = ["index.html", "levels.html", "starters.html", "wish.html", "hosts.html", "sources.html", "notes.html", "present.html#4", "present.html#0"];
+const PAGES = ["index.html", "levels.html", "starters.html", "invent.html", "hosts.html", "sources.html", "notes.html", "present.html#4", "present.html#0"];
 const SEL = 'a[href], button, summary, input, textarea, select, [role="tab"], [tabindex]:not([tabindex="-1"])';
 const PROPS = ["color", "background-color", "border-top-color", "border-top-width", "border-top-style", "border-radius", "box-shadow",
   "outline-style", "outline-width", "outline-color", "outline-offset", "text-decoration-line", "text-decoration-color", "text-decoration-thickness", "text-underline-offset",

@@ -1,5 +1,6 @@
 // Builds one packet per reviewer from the capture manifest: the images it may open, in order, with captions.
-// node packets.js <auditDir>
+// node packets.js <auditDir>          the first audit's fourteen packets
+// node packets.js <auditDir> re       the re-review's seven packets, two surfaces each where they belong together
 const fs = require("node:fs");
 const path = require("node:path");
 const DIR = path.resolve(process.argv[2]);
@@ -15,21 +16,21 @@ function caption(m) {
 const pick = (fn) => man.filter(fn);
 const byFile = (re) => pick((m) => re.test(m.file));
 
-const sitePages = ["home", "levels", "starters", "wish", "hosts", "sources"];
+const sitePages = ["home", "levels", "starters", "invent", "hosts", "sources"];
 const LENSES = {};
 
 const surfaceTask = {
   home: "Home, in every state it has: after (the default today: a front door for anyone), before (the morning of the event: an invitation), and during (three moments of the live event). Also the notice that slides in when the event moves to its next part.",
   levels: "Three levels, with its folds closed and open, and the top of the page during the event.",
   starters: "Starters: the page, its Remix menus, the panel that appears after Copy for my AI, the confirmation message, and the copy-by-hand dialog. (The Play window itself has its own reviewer; judge only how the page leads into it.)",
-  wish: "Grant a wish: the page, the wish builder empty and filled, and what happens when someone copies a wish.",
+  invent: "Invent your own: the page, the builder empty and filled, what happens when someone copies their request, and an idea from the jar filling the builder.",
   hosts: "Hosts: the guide for whoever runs the session, with folds closed and open, and during the event.",
   sources: "Sources: the page, a start-here path, a topic filter, and a search that finds nothing."
 };
 for (const p of sitePages) {
   LENSES[p] = {
-    prefix: { home: "H", levels: "L", starters: "S", wish: "W", hosts: "O", sources: "R" }[p],
-    title: { home: "Home", levels: "Three levels", starters: "Starters", wish: "Grant a wish", hosts: "Hosts", sources: "Sources" }[p],
+    prefix: { home: "H", levels: "L", starters: "S", invent: "V", hosts: "O", sources: "R" }[p],
+    title: { home: "Home", levels: "Three levels", starters: "Starters", invent: "Invent your own", hosts: "Hosts", sources: "Sources" }[p],
     task: surfaceTask[p] + " Light theme only: the dark theme has its own reviewer. Judge both widths: 375px (a phone) and 1280px (a laptop).",
     items: [
       ...pick((m) => m.surface === p && m.theme === "light" && m.file.startsWith(p + "/")),
@@ -70,8 +71,8 @@ function nightItems(pages, stateRe) {
 }
 LENSES["night-a"] = { prefix: "D", title: "Night (the dark theme): Home, Three levels, Starters", task: nightTask + " This half: Home, Three levels, and Starters (with its Remix menu, the next-step panel, the toast, the copy-by-hand dialog, and the Play window's frame around one starter).",
   items: nightItems(["home", "levels", "starters"], /(home-|levels-|starters-|fallback-|play-timer)/) };
-LENSES["night-b"] = { prefix: "E", title: "Night (the dark theme): Grant a wish, Hosts, Sources", task: nightTask + " This half: Grant a wish, Hosts, and Sources, with their interactive states.",
-  items: nightItems(["wish", "hosts", "sources"], /(wish-|hosts-|sources-)/) };
+LENSES["night-b"] = { prefix: "E", title: "Night (the dark theme): Invent your own, Hosts, Sources", task: nightTask + " This half: Invent your own, Hosts, and Sources, with their interactive states.",
+  items: nightItems(["invent", "hosts", "sources"], /(invent-|hosts-|sources-)/) };
 
 // The system: consistency across the site
 const sys = [];
@@ -93,7 +94,7 @@ LENSES.interaction = {
   task: "How the site behaves: hover, focus, pressed, selected, and disabled states; transitions and their timing; what appears when you act (panels, dialogs, messages) and how it arrives and leaves; target sizes on a phone; keyboard focus visibility. You have the measured inventory (facts/inventory.md: every interactive element's look in its default, hover, focus-visible, and pressed states, forced in DevTools; its transition; targets under 44px at 375px; animations), frame strips of the transitions people see (screenshots sampled every 30–80 ms after an action, with times), and screenshots of the states those actions lead to. Judge it against 'smooth interaction, clear intention' and the brand's motion rules (quiet, 120–360ms, ease-out, fades and short slides, no bounce; hover darkens fills one step or adds a ghost fill; links shift to copper with a copper underline; clickable cards lift 2px; press nudges 1px down; focus is a 2px copper ring).",
   items: [
     ...pick((m) => m.file.startsWith("motion/") && m.surface !== "stage"),
-    ...pick((m) => m.file.startsWith("states/") && m.theme === "light" && /(remix-open|next-step|toast|fallback|play-timer-|wish-empty|wish-jar|sources-no-results|home-cue)/.test(m.file))
+    ...pick((m) => m.file.startsWith("states/") && m.theme === "light" && /(remix-open|next-step|toast|fallback|play-timer-|invent-empty|invent-copied|invent-jar|sources-no-results|home-cue)/.test(m.file))
   ],
   extra: [path.join(DIR, "facts", "inventory.md"), path.join(DIR, "facts", "motion-notes.md")]
 };
@@ -102,7 +103,7 @@ LENSES.interaction = {
 const J = [];
 const first = (surface, state, width, theme, n) => pick((m) => m.surface === surface && m.state === state && m.width === width && m.theme === theme && m.file.startsWith(surface + "/") && (!n || m.slice <= n));
 J.push({ heading: "Journey 1 · A teacher who got a link from a colleague, on a phone, any day. Goal: try a starter in their own AI chat." });
-J.push(...first("home", "after", 375, "light"), ...first("starters", "after", 375, "light", 4), ...byFile(/^states\/starters-next-step-375-light/), ...byFile(/^states\/play-timer-375-light/), ...first("wish", "after", 375, "light", 3));
+J.push(...first("home", "after", 375, "light"), ...first("starters", "after", 375, "light", 4), ...byFile(/^states\/starters-next-step-375-light/), ...byFile(/^states\/play-timer-375-light/), ...first("invent", "after", 375, "light", 3));
 J.push({ heading: "Journey 2 · An instructional coach who wants to run the session with their staff, on a laptop. Goal: understand what running it takes, then open the stage and the notes." });
 J.push(...first("home", "after", 1280, "light"), ...first("hosts", "after", 1280, "light", 5), ...byFile(/^stage\/clock-ready-1280/), ...byFile(/^stage\/screen-0[1-4]-1280/), ...byFile(/^notes\/alone-screen01-560/));
 J.push({ heading: "Journey 3 · A participant during the live event, on a phone beside Google Meet. Goal: know what's happening now and get to it." });
@@ -113,11 +114,31 @@ LENSES.journeys = {
   items: J
 };
 
-fs.mkdirSync(path.join(DIR, "packets"), { recursive: true });
+// ---------- The re-review: seven fresh reviewers, two surfaces each where they belong together ----------
+const REVIEW = {};
+const join = (...lenses) => ({
+  prefix: lenses.map((l) => l.prefix).join(" and "),
+  title: lenses.map((l) => l.title).join(" · "),
+  task: lenses.map((l) => `**${l.title}** (finding IDs ${l.prefix}1, ${l.prefix}2, ...). ${l.task}`).join("\n\n"),
+  items: lenses.flatMap((l) => [{ heading: l.title }, ...l.items]),
+  extra: [...new Set(lenses.flatMap((l) => l.extra || []))]
+});
+const noMotionNotes = (l) => ({ ...l, extra: (l.extra || []).filter((f) => !/motion-notes/.test(f)) });   // the first audit's timings, before the fixes
+REVIEW["home-levels"] = join(LENSES.home, LENSES.levels);
+REVIEW["starters-invent"] = join(LENSES.starters, LENSES.invent);
+REVIEW["hosts-sources"] = join(LENSES.hosts, LENSES.sources);
+REVIEW["stage-notes"] = join(noMotionNotes(LENSES.stage), LENSES.notes);
+REVIEW.play = LENSES.play;
+REVIEW["night-system"] = join({ ...LENSES["night-a"], prefix: "D", title: "Night: Home, Three levels, Starters" }, { ...LENSES["night-b"], prefix: "E", title: "Night: Invent your own, Hosts, Sources" }, LENSES.system);
+REVIEW["interaction-journeys"] = join(noMotionNotes(LENSES.interaction), LENSES.journeys);
+
+const RE = process.argv[3] === "re";
+const SET = RE ? REVIEW : LENSES;
+fs.mkdirSync(path.join(DIR, RE ? "packets-re" : "packets"), { recursive: true });
 const summary = {};
-for (const [name, L] of Object.entries(LENSES)) {
+for (const [name, L] of Object.entries(SET)) {
   const lines = [`# Packet: ${L.title}`, "", L.task, "", "Open only these files.", ""];
-  if (L.extra) { lines.push("## Facts", ""); L.extra.forEach((f) => lines.push(`- ${f}`)); lines.push(""); }
+  if (L.extra && L.extra.length) { lines.push("## Facts", ""); L.extra.forEach((f) => lines.push(`- ${f}`)); lines.push(""); }
   lines.push("## Images, in order", "");
   let n = 0;
   L.items.forEach((m) => {
@@ -126,7 +147,7 @@ for (const [name, L] of Object.entries(LENSES)) {
     n++;
     lines.push(`${n}. ${abs(m.file)}  \n   ${caption(m)}`);
   });
-  fs.writeFileSync(path.join(DIR, "packets", name + ".md"), lines.join("\n") + "\n");
+  fs.writeFileSync(path.join(DIR, RE ? "packets-re" : "packets", name + ".md"), lines.join("\n") + "\n");
   summary[name] = n;
 }
 console.log(summary);

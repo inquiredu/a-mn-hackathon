@@ -16,11 +16,11 @@ Surfaces:
 - **Home**: changes with the clock. Before the event, an invitation; during, "Happening now" and the plan; after (any day since), a front door for anyone.
 - **Three levels**: three ways to start with code: in the chat (a tool runs inside the AI chat), on your site (a page pasted into a Google Site), behind the scenes (a short Google Apps Script). Steps, prompts, a script.
 - **Starters**: eight small working tools. Play one in a window, copy it into your AI chat with one button, then remix it with suggested changes.
-- **Grant a wish**: build something new: a three-question builder turns answers into a request to paste into the AI; a jar of ready wishes; what to do when stuck; how to share your work on a shared slide deck (the gallery wall).
+- **Invent your own**: build something new: a three-question builder turns answers into a request to paste into the AI; a jar of ready ideas that fill the builder; what to do when stuck; how to share your work on a shared slide deck (the gallery wall).
 - **Hosts**: a guide for whoever runs the session with their own group: roles, setup before the day, the run of show with checklists and ready-to-paste chat messages, what to do when things break, a record of the first run.
 - **Sources**: 45 checked links: AI tool help pages, student data and safety cautions, research on learning to code. Paths, tabs, filters, search.
-- **The stage** (`present.html`): a full-screen slideshow the presenter shares in Google Meet (as a browser tab, so usually seen at about 1280×720, often smaller in participants' video windows). Navy, one idea per screen, a session clock, live timers. Presenter controls sit at the top right.
-- **Speaker notes** (`notes.html`): a small second window (opened at 560×780) beside the stage; it follows the stage and can move it.
+- **The stage** (`present.html`): a full-screen slideshow the presenter shares in Google Meet (as a browser tab, so usually seen at about 1280×720, often smaller in participants' video windows). Navy, one idea per screen, a session clock, live timers. The presenter's controls (top right, and the buttons of the timers and the clock) appear only when the presenter moves the mouse or presses a key, and fade after a few seconds, so the room sees only the screen and the clock; screenshots labeled "presenter view" show them.
+- **Speaker notes** (`notes.html`): a small second window (opened at 560×780) beside the stage; it follows the stage, drives it, and mirrors its timer. It follows the site's Night theme.
 - **The Play window and the six starters**: a dialog on Starters that runs a starter in a frame; each starter is also a single HTML file people paste into their AI, so it must look good on its own, in an AI tool's preview panel, and on a Google Site.
 
 ## Fixed: don't propose changing these

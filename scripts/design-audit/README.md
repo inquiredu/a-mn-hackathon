@@ -14,6 +14,8 @@ node scripts/design-audit/packets.js ~/fb-audit
 
 `packets.js` writes one packet per reviewer: the images that reviewer may open, in order, with captions. A reviewer gets `docs/design-audit/brief.md` and one packet, and nothing else.
 
+`node scripts/design-audit/packets.js ~/fb-audit re` writes the re-review's seven packets instead (in `packets-re/`): the same images, joined two surfaces to a reviewer where they belong together (Home and Three levels, Starters and Invent your own, Hosts and Sources, the stage and the notes, the Play window, Night with the system, interaction with the journeys). The first audit's `motion-notes.md` is left out of them, since its timings are from before the fixes. Stage screenshots are taken as the room sees them, with the presenter's controls faded; the ones labeled "presenter view" show the controls.
+
 Four traps, each hit once on October 11, 2026:
 
 - Chrome's phone emulation (`mobile: true`) widens the layout viewport when a page is wider than the screen, which hides the bottom of the page from screenshots. Site pages are captured with `mobile: false` plus touch; overflow is measured as `scrollWidth > clientWidth`.

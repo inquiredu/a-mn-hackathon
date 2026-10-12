@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Presenter · Hands On</title>
+<title>Presenter · First Builds</title>
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/present.css">
 </head>
 <body>
@@ -15,17 +15,16 @@
 <main class="stage" id="stage"></main>
 
 <footer class="rail">
-  <p class="rail-left"><img src="assets/mngaia-mark.png" alt="" class="rail-mark"><span id="rail-segment"></span></p>
+  <p class="rail-left"><span class="rail-sign"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" class="rail-mark" width="38" height="36"><span id="rail-sign"></span></span><span id="rail-segment"></span></p>
   <p class="rail-right"><span id="rail-count"></span></p>
 </footer>
 
-<nav class="controls" aria-label="Presenter controls">
-  <button id="prev" type="button" aria-label="Previous screen">←</button>
-  <button id="now-button" type="button">Jump to now</button>
-  <button id="notes-button" type="button">Speaker notes</button>
-  <button id="site-button" type="button" title="Leaves full screen and opens the site in a new tab">Open the site</button>
-  <button id="full" type="button">Full screen</button>
-  <button id="next" type="button" aria-label="Next screen">→</button>
+<nav class="controls presenter" aria-label="Presenter controls" title="For whoever runs the session. These change only this screen.">
+  <button id="site-button" class="away" type="button" title="Leaves full screen and goes back to the site">Back to the site</button>
+  <button id="now-button" type="button" title="During the session: the screen the clock says is on (N)">Jump to now</button>
+  <button id="notes-button" type="button" title="The speaker notes, in a second window (S). Keep it off the shared screen.">Speaker notes</button>
+  <button id="full" type="button" title="Full screen (F); Esc leaves it">Full screen</button>
+  <span class="pair-buttons"><button id="prev" type="button" aria-label="Previous screen">←</button><button id="next" type="button" aria-label="Next screen">→</button></span>
 </nav>
 <div class="sc-backdrop" id="sc-backdrop" hidden></div>
 <section class="session-clock" id="session-clock" data-mode="hero" aria-label="Session clock">
@@ -35,28 +34,29 @@
   <div class="sc-wait" id="sc-wait" hidden>
     <span class="sc-wait-label">Wait time</span><span class="sc-wait-time" id="sc-wait-time"></span>
   </div>
-  <div class="sc-actions">
+  <div class="sc-actions presenter">
     <div class="sc-clock-row">
-      <button class="sc-start" id="sc-start" type="button">Call to order</button>
+      <button class="sc-start" id="sc-start" type="button" title="Starts the two-hour clock now, on this screen">Call to order</button>
       <button id="sc-pause" type="button" hidden>Pause</button>
-      <button id="sc-reset" type="button" hidden>Reset</button>
+      <button id="sc-reset" type="button" hidden>Reset the clock</button>
     </div>
-    <div class="sc-waits" role="group" aria-label="Wait time">
+    <div class="sc-waits" role="group" aria-label="Wait time" title="A short countdown on screen, for think time or while people arrive">
       <span>Wait time</span>
       <button type="button" data-wait="1">1 min</button>
       <button type="button" data-wait="2">2 min</button>
       <button type="button" data-wait="3">3 min</button>
       <button type="button" data-wait="5">5 min</button>
-      <button type="button" id="sc-wait-clear">Clear</button>
+      <button type="button" id="sc-wait-clear" disabled>Clear</button>
     </div>
-    <button class="sc-close" id="sc-close" type="button">Back to the corner</button>
+    <button class="sc-close" id="sc-close" type="button">Make the clock small</button>
   </div>
 </section>
-<p class="keys" aria-hidden="true">→ next · ← back · F full screen · N jump to now · S speaker notes · C clock · P pause the clock · T timer</p>
+<p class="keys" id="keys" aria-hidden="true" hidden><kbd>←</kbd> <kbd>→</kbd> screens · <kbd>T</kbd> timer · <kbd>+</kbd> <kbd>−</kbd> a minute · <kbd>C</kbd> clock · <kbd>N</kbd> now · <kbd>S</kbd> notes · <kbd>F</kbd> full screen · move the mouse for the controls</p>
 <p class="sr-only" id="status" aria-live="polite"></p>
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js"></script>
+<script src="assets/icons.js"></script>
 <script src="assets/stage-timer.js"></script>
 <script src="assets/present.js"></script>
 </body>

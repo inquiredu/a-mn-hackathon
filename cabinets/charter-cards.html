@@ -35,23 +35,33 @@ const SECTIONS = [
     --card: #FFFFFF;
     --ink: #10345A;
     --muted: #4A6580;
-    --line: #D5E7F2;
+    --line: #B4CADC;     /* a closed card's edge */
+    --tag: #E3EDF5;      /* the commitments' fill */
   }
   * { box-sizing: border-box; }
   body { margin: 0; padding: 20px 16px 32px; background: var(--page); color: var(--ink); font: 18px/1.5 system-ui, sans-serif; }
   main { max-width: 760px; margin: 0 auto; }
   h1 { margin: 0; font-size: clamp(1.5rem, 4.5vw, 2.2rem); line-height: 1.15; }
   .tagline { margin: 6px 0 16px; font-size: 1.1rem; color: var(--muted); }
+  .badges-label { margin: 0 0 6px; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; padding: 0; list-style: none; }
-  .badges li { padding: 6px 14px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-weight: 700; font-size: .95rem; }
+  /* The commitments are words on a wall, not buttons: a light tag, no edge */
+  .badges li { padding: 3px 12px; border-radius: 999px; background: var(--tag); color: var(--ink); font-weight: 600; font-size: .85rem; }
   .cards { display: grid; gap: 10px; }
   .card { width: 100%; text-align: left; font: inherit; color: inherit; padding: 16px 18px; background: var(--card); border: 2px solid var(--line); border-radius: 14px; cursor: pointer; }
   .card:hover { border-color: var(--sky); }
   .card:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
   .card h2 { margin: 0; font-size: 1.15rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .card h2::after { content: "+"; font-size: 1.4rem; color: var(--muted); }
+  /* A plus drawn from two bars; opening turns it and folds the upright bar away, into a minus */
+  .card h2::after {
+    content: ""; flex: none; width: 16px; height: 16px; color: var(--muted);
+    background: linear-gradient(currentColor, currentColor) center / 16px 2px no-repeat,
+                linear-gradient(currentColor, currentColor) center / 2px 16px no-repeat;
+    transition: transform .18s ease-out, background-size .18s ease-out;
+  }
   .card[aria-expanded="true"] { border-color: var(--accent); }
-  .card[aria-expanded="true"] h2::after { content: "–"; }
+  .card[aria-expanded="true"] h2::after { transform: rotate(180deg); background-size: 16px 2px, 2px 0; }
+  @media (prefers-reduced-motion: reduce) { .card h2::after { transition: none; } }
   .card p { margin: 10px 0 0; color: var(--muted); }
   .card p[hidden] { display: none; }
   .foot { margin: 22px 0 0; font-size: .9rem; color: var(--muted); }
@@ -61,7 +71,8 @@ const SECTIONS = [
 <main>
   <h1 id="title"></h1>
   <p class="tagline" id="tagline"></p>
-  <ul class="badges" id="badges" aria-label="Our commitments"></ul>
+  <p class="badges-label" id="badges-label">Our commitments</p>
+  <ul class="badges" id="badges" aria-labelledby="badges-label"></ul>
   <div class="cards" id="cards"></div>
   <p class="foot">Tap a card to open it. Made-up department, made-up charter.</p>
 </main>

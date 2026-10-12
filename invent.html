@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invent your own · First Builds</title>
+<meta name="description" content="Invent a small tool from nothing: three short answers become a request for your AI, a jar of ideas if you have none, and three moves for when you're stuck.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="assets/theme.js"></script>
+<link rel="stylesheet" href="assets/brand/north-shore.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-jump="#builder" data-jump-label="Jump to the builder">
+<a class="skip" href="#main">Skip to the main content</a>
+<header class="site-head">
+  <div class="wrap site-head-inner">
+    <a class="brand" href="index.html">First Builds</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Site">
+      <ul class="site-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="levels.html">Three levels</a></li>
+        <li><a href="starters.html">Starters</a></li>
+        <li><a href="invent.html" aria-current="page">Invent your own</a></li>
+        <li><a href="hosts.html">Hosts</a></li>
+        <li><a href="sources.html">Sources</a></li>
+        <li class="host-item host-first"><a href="present.html">Present</a></li>
+        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
+        <li class="theme-item"><button class="theme-toggle" type="button" aria-pressed="false" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="nowbar" role="region" aria-label="What's happening now">
+  <div class="wrap nowbar-inner">
+    <p class="now" id="now"></p>
+  </div>
+  <div class="cue" id="cue" hidden>
+    <div class="wrap cue-inner">
+      <p class="cue-text" id="cue-text" role="status"></p>
+      <a class="button primary" id="cue-go" href="index.html">Take me there</a>
+      <button class="cue-close" id="cue-close" aria-label="Dismiss this notice">Got it</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- INVENT YOUR OWN -->
+  <section id="invent" class="section">
+    <div class="wrap">
+      <p class="kicker-dark">Start from nothing</p>
+      <h1 class="page-title">Invent your own</h1>
+      <p class="section-lede">Describe a small tool in three short answers, and this page turns them into a request for Gemini, ChatGPT, or Claude. In a few minutes you'll have something you can click. You're the inventor: the idea and the judgment are yours, and the AI writes the code.</p>
+
+      <!-- Step 1: the one thing to do on this page -->
+      <div class="invent-card" id="builder" aria-labelledby="builder-title">
+        <p class="step-label">Step 1</p>
+        <h2 id="builder-title">Describe your invention</h2>
+        <div class="invent-layout">
+          <div class="builder" role="group" aria-labelledby="builder-title">
+            <p class="builder-status" id="idea-status" role="status"></p>
+            <p class="field-error" id="idea-error" role="alert"></p>
+            <label for="idea-what">What is it?</label>
+            <input id="idea-what" autocomplete="off" placeholder="e.g. a countdown timer">
+            <label for="idea-who">Who is it for?</label>
+            <input id="idea-who" autocomplete="off" placeholder="e.g. my fourth graders">
+            <label for="idea-does">What should it do?</label>
+            <textarea id="idea-does" rows="3" autocomplete="off" placeholder="e.g. count down to recess and play a sound at the end"></textarea>
+          </div>
+          <div class="request">
+            <p class="builder-label" id="idea-label">Your request so far:</p>
+            <p class="builder-out" id="idea-out" aria-labelledby="idea-label" aria-live="polite"></p>
+            <button class="primary" id="idea-copy" type="button">Copy my request</button>
+          </div>
+        </div>
+        <div class="jar-box">
+          <h3 class="jar-title" id="jar">No idea yet? Take one from the jar.</h3>
+          <p class="hint" id="jar-hint">Press one and its three answers fill the builder, so you can change them before you copy.</p>
+          <ul class="jar">
+            <li><button type="button" data-idea="a countdown to winter break|my class|count down the days, with snow that falls harder as the day gets closer">Winter break countdown, with snow that falls harder each day</button></li>
+            <li><button type="button" data-idea="a spinner|our staff meetings|pick whose turn it is to bring treats">A spinner for whose turn it is to bring treats</button></li>
+            <li><button type="button" data-idea="a bell-schedule clock|my classroom|show how many minutes are left in this period">A bell-schedule clock: minutes left this period</button></li>
+            <li><button type="button" data-idea="a fraction pizza|my fourth graders|slice a pizza into fractions with a slider and show the fraction as you go">A pizza you slice into fractions with a slider</button></li>
+            <li><button type="button" data-idea="staff-meeting bingo|my team|make a fresh bingo card every time I press a button">Staff-meeting bingo, new card every time</button></li>
+            <li><button type="button" data-idea="a brain-break picker|my class|choose an activity and start a big countdown timer">A brain-break picker with a big timer</button></li>
+            <li><button type="button" data-idea="a choose-your-path story|my class's novel unit|tell a story set in the novel we're reading, with three choices at each step">A choose-your-path story for a class novel</button></li>
+            <li><button type="button" data-idea="a &quot;Which Minnesota lake are you?&quot; quiz|my advisory group|ask a few playful questions and name a lake at the end">"Which Minnesota lake are you?" quiz</button></li>
+            <li><button type="button" data-idea="a visual timer|my students|count down and end with a rocket launch">A visual timer that ends in a rocket launch</button></li>
+            <li><button type="button" data-idea="an office-hours helper|students in a made-up course|answer questions from a made-up course syllabus">An office-hours helper for a made-up syllabus</button></li>
+            <li><button type="button" data-idea="a color-coded calendar explorer|our district office|show made-up events from several calendars, with filters">A color-coded explorer for made-up district calendars</button></li>
+            <li><button type="button" data-idea="a soundboard of ridiculous sound effects|our team meetings|play a ridiculous sound effect when I press a button">A soundboard of ridiculous meeting sound effects</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Steps 2 to 6: what happens after you copy, as a list -->
+      <ol class="step-list" start="2">
+        <li>
+          <p class="step-label">Step 2</p>
+          <h3>Build the first version</h3>
+          <p>Paste your request into your AI chat and send. A first version usually shows up in under a minute, as a tool with buttons in a panel beside the chat. Only code and no tool? You skipped Canvas or Preview: <a href="#where">where each switch is, and what you'll see</a>.</p>
+        </li>
+        <li>
+          <p class="step-label">Step 3</p>
+          <h3>Make it yours</h3>
+          <p>Ask for one change at a time. "Make the buttons bigger." "Add a sound when I win." "Use our school colors."</p>
+        </li>
+        <li>
+          <p class="step-label">Step 4</p>
+          <h3>Break it, fix it</h3>
+          <p>Something will go sideways. Tell the AI exactly what you see: "When I press Start, nothing happens."</p>
+        </li>
+        <li>
+          <p class="step-label">Step 5</p>
+          <h3>Peek under the hood</h3>
+          <p>Ask the AI to show you how it works. Paste this into the same chat:</p>
+          <div class="copybox">
+            <p id="peek-prompt">Explain three lines of this code to me like I've never coded before. Pick the three most interesting ones.</p>
+            <button data-copy-from="peek-prompt" type="button">Copy</button>
+          </div>
+        </li>
+        <li>
+          <p class="step-label">Step 6</p>
+          <h3>Back to you</h3>
+          <p>Is it what you set out to make? Who would you show it to? <a href="#wall">Keep it, and show one person</a>.</p>
+        </li>
+      </ol>
+
+      <div class="level-note" id="where">
+        <h3>Where do I paste it, and what you'll see</h3>
+        <div data-where></div>
+      </div>
+
+      <div class="stuck">
+        <h3>Stuck? Three moves.</h3>
+        <ul>
+          <li><strong>Describe it.</strong> Tell the AI exactly what you see and what you expected instead.</li>
+          <li><strong>Rewind.</strong> "Go back to the version before that one."</li>
+          <li><strong>Ask for help.</strong> On your own, ask the AI itself, in plain words:
+            <div class="copybox">
+              <p id="help-prompt">I'm a teacher who has never coded. Here is what I see: … What should I do?</p>
+              <button data-copy-from="help-prompt" type="button">Copy</button>
+            </div>
+          </li>
+        </ul>
+        <p>Still stuck after two tries? Start a new chat and paste your request again; that counts.</p>
+        <p class="live-note"><strong>In a live session:</strong> press <em>Ask for help</em> in your Meet breakout room, and a host will join you.</p>
+      </div>
+
+      <p class="more-link">Inventing a page for your Google Site, or a script for your Drive? The prompts and steps on <a href="levels.html#site">level 2, on your site</a>, and <a href="levels.html#script">level 3, behind the scenes</a>, work for your own idea too: a different document, a different folder, a different job.</p>
+    </div>
+  </section>
+
+  <!-- THE GALLERY WALL: starters.html links here too -->
+  <section id="wall" class="section band" aria-labelledby="wall-title">
+    <div class="wrap">
+      <h2 id="wall-title">Keep it, and show one person</h2>
+      <p class="section-lede">Got something working, even halfway? Half-built counts. Copy a link to it so you can open it Monday, take a picture of it, and show one person: paste both into an email or a Doc, or turn your screen toward a colleague.</p>
+      <p class="link-slot" data-link="gallery" data-label="Open the gallery wall" data-pending=""></p>
+
+      <h3 class="subhead">Copy a link to your work</h3>
+      <div class="tips">
+        <div>
+          <h4>Gemini</h4>
+          <p>At the top right of the canvas, choose <strong>Share &amp; export</strong>, then <strong>Share</strong>, then <strong>Copy link</strong>.</p>
+        </div>
+        <div>
+          <h4>Claude</h4>
+          <p>Click the tool Claude made (the panel beside the chat; Claude calls it an artifact) and choose <strong>Publish</strong>, then copy the link. On a school or work plan, choose <strong>Share</strong>, then <strong>Share &amp; copy link</strong>.</p>
+        </div>
+        <div>
+          <h4>ChatGPT</h4>
+          <p>At the top of the chat, choose <strong>Share</strong>, then <strong>Create link</strong> or <strong>Copy link</strong>. The link opens the conversation, code and all.</p>
+        </div>
+        <div>
+          <h4>Microsoft Copilot</h4>
+          <p>On your page, choose <strong>Share</strong> at the top right, then <strong>Copy link</strong>.</p>
+        </div>
+      </div>
+      <p class="more-link">A link from a school account may open only for people in your district. A picture shows your work to everyone either way. <a href="sources.html?ask=sharing">Each tool's own help on sharing</a>.</p>
+
+      <h3 class="subhead">Take a picture of it</h3>
+      <div class="tips">
+        <div>
+          <h4>Windows</h4>
+          <p>Press <span class="keys"><kbd>Windows</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd></span> and drag a box around your work. It's copied, ready to paste.</p>
+        </div>
+        <div>
+          <h4>Mac</h4>
+          <p>Press <span class="keys"><kbd>Command</kbd> + <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>4</kbd></span> and drag a box around your work. It's copied, ready to paste.</p>
+        </div>
+        <div>
+          <h4>Chromebook</h4>
+          <p>Press <span class="keys"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Show windows</kbd></span> (the key with a rectangle and two lines, above the 6), drag a box around your work, and choose <strong>Capture</strong>. It's copied, ready to paste.</p>
+        </div>
+      </div>
+
+      <details class="live-fold" data-open-during>
+        <summary>In a live session: put it on the gallery wall</summary>
+        <p>The gallery wall is a Google Slides deck your host links in the chat, where everyone can click a picture to open what someone made.</p>
+        <ol class="wall-steps">
+          <li>Open the gallery wall from your host's link in the chat. Click a slide with room on it; when one fills up, use the next.</li>
+          <li>Paste: <span class="keys"><kbd>Ctrl</kbd> + <kbd>V</kbd></span>, or <span class="keys"><kbd>Command</kbd> + <kbd>V</kbd></span> on a Mac.</li>
+          <li>Drag a corner to make it postcard-size, and move it to an open spot.</li>
+          <li>With the picture still selected, press <span class="keys"><kbd>Ctrl</kbd> + <kbd>K</kbd></span> (<span class="keys"><kbd>Command</kbd> + <kbd>K</kbd></span> on a Mac), paste your link, and choose <strong>Apply</strong>.</li>
+        </ol>
+        <p>Now anyone can click your picture to open what you made. If the wall opens view-only on your school account, your district may block outside files: paste your picture in the Meet chat instead.</p>
+      </details>
+
+      <div class="caution">
+        <h3>Keep to made-up data</h3>
+        <p>A wall shared with a whole group is open to everyone in it, and so is a published link. Nothing about real students goes into a tool you share.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="credit">
+      <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+      <p><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
+    </div>
+    <div class="footer-notes">
+      <p class="small"><strong>Safe play:</strong> made-up names and made-up data, every time. Nothing about real students goes into an AI.</p>
+      <p class="small backups"><strong>Site blocked at school?</strong> The same steps are in a Google Slides deck: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters are in a second deck, each tool's code in the speaker notes under its slide: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
+    </div>
+    <p class="signature"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="34" height="32"><span data-fill>{maker}</span><span aria-hidden="true">·</span><span class="sr-only">License:</span><span class="link-slot" data-link="license" data-label="{license}" data-style="inline"></span></p>
+  </div>
+</footer>
+
+<dialog id="fallback" aria-labelledby="fallback-title" aria-describedby="fallback-how">
+  <div class="fallback-inner">
+    <h2 id="fallback-title">Copy this by hand</h2>
+    <p id="fallback-how">Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.</p>
+    <textarea id="fallback-text" readonly rows="10" aria-labelledby="fallback-title"></textarea>
+    <div class="fallback-actions"><button class="primary" id="fallback-select" type="button">Select all</button> <button id="fallback-close" type="button">Done</button></div>
+  </div>
+</dialog>
+
+
+<p id="toast" class="toast" role="status" aria-live="polite"></p>
+
+<script src="assets/session.js"></script>
+<script src="assets/timing.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

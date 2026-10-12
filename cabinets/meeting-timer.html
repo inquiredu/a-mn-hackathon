@@ -43,35 +43,51 @@ const SOUND_ON = true;        // change to false to start with the sound off
   body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
   .wrap { max-width: 1000px; margin: 0 auto; padding: 20px 16px 32px; }
 
-  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+  header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px 16px; }
+  header > div { min-width: 0; }
   h1 { margin: 0; font-size: 1.6rem; }
   .ends { margin: 0; color: var(--muted); }
 
-  .layout { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); margin-top: 16px; }
-  @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } }
+  .layout { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; margin-top: 16px; }
+  @media (max-width: 760px) { .layout { grid-template-columns: minmax(0, 1fr); } }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
 
   .label { margin: 0; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .current { margin: 4px 0 0; font-size: clamp(1.4rem, 4vw, 2rem); }
-  .clock { margin: 8px 0; font-size: clamp(4rem, 16vw, 7.5rem); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  .clock { margin: 8px 0 4px; font-size: clamp(4rem, 16vw, 7.5rem); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
   .clock.soon { color: var(--soon); }
   .clock.over { color: var(--over); }
-  .note { min-height: 1.5em; margin: 0 0 12px; color: var(--muted); }
+  .note { min-height: 1.5em; margin: 0 0 8px; color: var(--muted); }
   .bar { height: 12px; border-radius: 999px; background: #E3E9F0; overflow: hidden; }
   .bar div { width: 0; height: 100%; background: var(--accent); transition: width .25s linear; }
 
-  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  /* The three that move through the agenda stay together; +1 minute, which changes the time, sits apart */
+  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 16px; }
+  .agenda-buttons { display: flex; gap: 8px; }
+  #start { min-width: 7.5em; }          /* wide enough for "Start over", so the buttons beside it never move */
+  /* On a phone: Start across the top, Previous beside Next under it, then +1 minute */
+  @media (max-width: 480px) {
+    .controls { display: grid; gap: 8px; }
+    .agenda-buttons { display: grid; grid-template-columns: 1fr 1fr; }
+    #start { grid-column: 1 / -1; order: -1; }
+    #more { justify-self: start; }
+    .controls button { padding-left: 12px; padding-right: 12px; }
+  }
   button {
     padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer;
     border: 2px solid var(--edge); border-radius: 999px; background: var(--card); color: var(--ink);
   }
   button.primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+  #sound { flex: none; min-width: 7.6em; border-width: 1.5px; font-weight: 600; }
+  #sound[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }   /* the accent edge when the chime is on; never filled like Start */
+  .label.running { color: var(--accent); }
   button:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
   h2 { margin: 0 0 10px; font-size: 1.1rem; }
-  .agenda { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 6px; }
-  .agenda li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; }
-  .agenda li.now { border: 2px solid var(--accent); font-weight: 700; }
+  .agenda { list-style: none; margin: 0 0 20px; padding: 0; }
+  .agenda li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  .agenda li:last-child { border-bottom: 0; }
+  .agenda li.now { box-shadow: inset 3px 0 0 var(--accent); font-weight: 700; }   /* a bar at the left marks the item that's on */
   .agenda li.done { color: var(--muted); text-decoration: line-through; }
   .agenda .mins { color: var(--muted); font-weight: 400; white-space: nowrap; }
 
@@ -83,6 +99,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
 
   .norms { margin-top: 16px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--muted); }
   .norms strong { color: var(--ink); }
+  .foot { margin: 10px 0 0; font-size: .9rem; color: var(--muted); }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   @media (prefers-reduced-motion: reduce) { .bar div { transition: none; } }
@@ -95,7 +112,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
       <h1 id="meeting-name">Meeting</h1>
       <p class="ends" id="ends"></p>
     </div>
-    <button id="sound" type="button" aria-pressed="true"><span aria-hidden="true">🔔</span> Chime</button>
+    <button id="sound" type="button" aria-pressed="true" aria-label="Chime">Chime: <span aria-hidden="true" id="sound-state">on</span></button>
   </header>
 
   <div class="layout">
@@ -106,10 +123,12 @@ const SOUND_ON = true;        // change to false to start with the sound off
       <p class="note" id="note"></p>
       <div class="bar" aria-hidden="true"><div id="progress"></div></div>
       <div class="controls">
-        <button class="primary" id="start" type="button">Start</button>
-        <button id="next" type="button">Next item</button>
+        <div class="agenda-buttons">
+          <button id="back" type="button">Previous item</button>
+          <button class="primary" id="start" type="button">Start</button>
+          <button id="next" type="button">Next item</button>
+        </div>
         <button id="more" type="button">+1 minute</button>
-        <button id="back" type="button">Back</button>
       </div>
     </section>
 
@@ -126,6 +145,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
   </div>
 
   <p class="norms" id="norms"></p>
+  <p class="foot">Press Start to run the first item; Next item moves on when you're ready. Made-up team, made-up agenda.</p>
   <p class="sr-only" id="announce" aria-live="polite"></p>
 </div>
 
@@ -204,12 +224,16 @@ function showClock() {
     $("progress").style.width = Math.min(100, (used / plannedSeconds) * 100) + "%";
   }
   $("start").textContent = running ? "Pause" : finished ? "Start over" : "Start";
+  // Running or paused, readable from across the table
+  const started = running || (!finished && secondsLeft < plannedSeconds);
+  $("now-label").textContent = running ? "Now · running" : started ? "Now · paused" : "Now";
+  $("now-label").classList.toggle("running", running);
 
   // When will the meeting end, at this pace?
   let remaining = finished ? 0 : Math.max(secondsLeft, 0);
   for (let i = index + 1; i < AGENDA.length && !finished; i++) remaining += AGENDA[i].minutes * 60;
   const end = new Date(Date.now() + remaining * 1000);
-  $("ends").textContent = "Ends about " + end.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  $("ends").textContent = (running ? "Ends about " : "If you start now, ends about ") + end.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
 function showAgenda() {
@@ -298,7 +322,7 @@ $("more").addEventListener("click", () => {
 // The sound switch
 function showSound() {
   $("sound").setAttribute("aria-pressed", String(soundOn));
-  $("sound").firstElementChild.textContent = soundOn ? "🔔" : "🔕";
+  $("sound-state").textContent = soundOn ? "on" : "off";
 }
 $("sound").addEventListener("click", () => { soundOn = !soundOn; showSound(); });
 

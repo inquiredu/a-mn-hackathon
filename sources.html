@@ -1,31 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sources · Hands On</title>
+<title>Sources · First Builds</title>
 <meta name="description" content="How-tos that take the mystery out of building with AI, cautions worth knowing, and what research says about learning to code and thinking.">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="assets/theme.js"></script>
+<link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 <a class="skip" href="#browse-title">Skip to the sources</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
-    <a class="brand" href="index.html"><img src="assets/mngaia-mark.png" alt="" width="44" height="38"><span>Hands On</span></a>
-    <nav aria-label="Site">
+    <a class="brand" href="index.html">First Builds</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="levels.html">Three levels</a></li>
         <li><a href="starters.html">Starters</a></li>
-        <li><a href="wish.html">Grant a wish</a></li>
+        <li><a href="invent.html">Invent your own</a></li>
         <li><a href="hosts.html">Hosts</a></li>
         <li><a href="sources.html" aria-current="page">Sources</a></li>
-        <li><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
+        <li class="host-item host-first"><a href="present.html">Present</a></li>
+        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
+        <li class="theme-item"><button class="theme-toggle" type="button" aria-pressed="false" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></li>
       </ul>
     </nav>
   </div>
@@ -47,13 +50,31 @@
 
   <section class="section sources-intro">
     <div class="wrap">
-      <p class="kicker-dark">Sources and research</p>
+      <p class="kicker-dark">Checked October 7 and 8, 2026</p>
       <h1 class="page-title">Sources</h1>
-      <p class="section-lede">How-tos that take the mystery out of building with AI, cautions worth knowing, and what research says about learning to code. Every source here was opened and checked on October 7 or 8, 2026.</p>
+      <p class="section-lede">How-tos that take the mystery out of building with AI, cautions worth knowing, and what research says about learning to code. This page is the background reading.</p>
+      <p class="route"><a class="action-link" href="index.html#start">Here to build? Start on Home</a> <a class="action-link" href="hosts.html">Hosting? Start on Hosts</a></p>
+      <details class="quiet-fold reading">
+        <summary>How to read a card</summary>
+        <ul>
+          <li><strong>The title</strong> opens the source itself, in a new tab.</li>
+          <li><strong>What it says</strong> opens our two-line summary, here.</li>
+          <li><strong>For the session</strong> or <strong>The habit</strong> is what it means for you. "The session" is the two-hour session, whoever runs it; these notes were gathered for its first run, <span data-fill>{record.ran}</span>, and apply whenever you build.</li>
+          <li><strong>A topic</strong> under a card shows every source on that topic.</li>
+        </ul>
+      </details>
 
       <div class="synthesis">
         <h2>The short version</h2>
-        <p>Learning to code reliably builds coding skill, and a large meta-analysis found moderate links to creative thinking, math, and metacognition, though those links shrink when compared with other active teaching. The research is stronger on how to begin: run something that works, change it, then make your own. Early studies of AI and beginners suggest AI help need not hurt learning when people still change code by hand and read what the AI made. The main risks are over-reliance, confident mistakes, and data going places it shouldn't, and each has a simple habit that answers it.</p>
+        <p><strong>What coding builds.</strong> Learning to code reliably builds coding skill, and a large meta-analysis found moderate links to creative thinking, math, and metacognition, though those links shrink when compared with other active teaching.</p>
+        <p><strong>How to begin.</strong> The research is stronger here: run something that works, change it, then make your own. Early studies of AI and beginners suggest AI help need not hurt learning when people still change code by hand and read what the AI made.</p>
+        <p><strong>The risks.</strong> Over-reliance, confident mistakes, and data going places it shouldn't. Each has a simple habit that answers it, under <a href="#browse-title">Proceed with care</a>.</p>
+      </div>
+
+      <div class="card friday-design">
+        <h2>How the session is built on this</h2>
+        <p>The session follows a path researchers call Use-Modify-Create (Lee and colleagues, 2011), later developed into PRIMM: predict, run, investigate, modify, make (Sentance and colleagues, 2019). You start with a starter that works, guess what it does, run it, look inside, change it by hand, remix it with AI, and then invent your own. Brennan and Resnick (2012) name "reusing and remixing" as a core practice of computational thinking, and their suggestions for assessing it lead straight into the conversation about assessment that followed the first run.</p>
+        <p class="card-actions"><a class="button sm" href="sources.html?ask=starting#browse-title">See the sources on starting</a> <a class="button sm" href="sources.html?ask=assessment#browse-title">See the sources on assessment</a></p>
       </div>
 
       <h2 class="subhead-2" id="paths-title">Start here</h2>
@@ -73,7 +94,7 @@
           <button class="finder-toggle" id="finder-toggle" type="button" aria-expanded="false" aria-controls="finder-panel">Search and filter</button>
           <div class="finder-panel" id="finder-panel">
             <label class="finder-label" for="q">Search</label>
-            <input id="q" type="search" autocomplete="off" placeholder="Gemini, privacy, PRIMM...">
+            <input id="q" type="search" autocomplete="off" placeholder="Gemini, student data…">
 
             <fieldset>
               <legend>I want to know about...</legend>
@@ -84,6 +105,7 @@
               <legend>Kind of source</legend>
               <div class="kinds" id="kinds"></div>
             </fieldset>
+            <button class="primary finder-done" id="finder-done" type="button">Show the sources</button>
           </div>
         </aside>
 
@@ -95,19 +117,10 @@
               <button id="clear" type="button">Clear filters</button>
             </div>
           </div>
+          <div class="active-filters" id="active" hidden></div>
           <div class="path-banner" id="path-banner" hidden></div>
           <div id="results"></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <div class="card friday-design">
-        <h2 data-fill>How {weekday} is built on this</h2>
-        <p>The morning follows a path researchers call Use-Modify-Create (Lee and colleagues, 2011), later developed into PRIMM: predict, run, investigate, modify, make (Sentance and colleagues, 2019). You start with a starter that works, guess what it does, run it, look inside, change it by hand, remix it with AI, and then build your own wish. Brennan and Resnick (2012) name "reusing and remixing" as a core practice of computational thinking, and their suggestions for assessing it lead straight into next month's conversation.</p>
-        <p class="card-actions"><a class="button" href="sources.html?ask=starting">How beginners should start</a> <a class="button" href="sources.html?ask=assessment">What it means for assessment</a></p>
       </div>
     </div>
   </section>
@@ -116,21 +129,25 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <img src="assets/mngaia-mark.png" alt="" width="64" height="55">
-    <div>
-      <p><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
-      <p class="small">Sources checked October 7, 2026. Help pages for AI tools change often; if a step doesn't match what you see, the tool may have changed.</p>
-      <p class="small backups"><strong>Site blocked?</strong> The same morning as slides: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters, with the code in the notes: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
+    <div class="credit">
+      <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+      <p><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
     </div>
+    <div class="footer-notes">
+      <p class="small"><strong>Safe play:</strong> made-up names and made-up data, every time. Nothing about real students goes into an AI.</p>
+      <p class="small backups"><strong>Site blocked at school?</strong> The same steps are in a Google Slides deck: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters are in a second deck, each tool's code in the speaker notes under its slide: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
+      <p class="small">Help pages for AI tools change often; if a step doesn't match what you see, the tool may have changed: the tool's own help page is right, and this summary is behind.</p>
+    </div>
+    <p class="signature"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="34" height="32"><span data-fill>{maker}</span><span aria-hidden="true">·</span><span class="sr-only">License:</span><span class="link-slot" data-link="license" data-label="{license}" data-style="inline"></span></p>
   </div>
 </footer>
 
-<dialog id="fallback" aria-labelledby="fallback-title">
+<dialog id="fallback" aria-labelledby="fallback-title" aria-describedby="fallback-how">
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
-    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
-    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
-    <div><button class="primary" id="fallback-close">Done</button></div>
+    <p id="fallback-how">Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.</p>
+    <textarea id="fallback-text" readonly rows="10" aria-labelledby="fallback-title"></textarea>
+    <div class="fallback-actions"><button class="primary" id="fallback-select" type="button">Select all</button> <button id="fallback-close" type="button">Done</button></div>
   </div>
 </dialog>
 <p id="toast" class="toast" role="status" aria-live="polite"></p>

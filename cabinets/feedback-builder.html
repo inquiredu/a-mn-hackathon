@@ -87,13 +87,15 @@ const STARTING_CHOICES = [2, 1, 1, 2];
 
   fieldset { margin: 0 0 14px; padding: 0; border: 0; }
   legend { margin-bottom: 6px; padding: 0; font-weight: 700; }
-  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  /* Each row of choices is an even scale, read left to right; choosing one never moves the others */
+  .pills { display: grid; grid-template-columns: repeat(var(--count, 4), minmax(0, 1fr)); gap: 6px; }
+  @media (max-width: 480px) { .pills.levels { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .pills input { position: absolute; opacity: 0; width: 1px; height: 1px; }
   .pills label {
-    padding: 6px 14px; cursor: pointer; font-size: .95rem;
+    padding: 6px 6px; cursor: pointer; font-size: .95rem; font-weight: 600; text-align: center;
     border: 2px solid var(--edge); border-radius: 999px; background: var(--card);
   }
-  .pills input:checked + label { background: var(--accent); border-color: var(--accent); color: #FFFFFF; font-weight: 600; }
+  .pills input:checked + label { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
   .pills input:focus-visible + label { outline: 3px solid var(--ink); outline-offset: 2px; }
 
   .note-label { display: block; margin: 4px 0 6px; font-weight: 700; }
@@ -104,7 +106,20 @@ const STARTING_CHOICES = [2, 1, 1, 2];
   }
 
   h2 { margin: 0 0 10px; font-size: 1.2rem; }
-  .feedback { min-height: 12em; margin: 0; padding: 14px; white-space: pre-wrap; border-radius: 12px; background: var(--page); font-size: 1.02rem; }
+  .feedback { min-height: 12em; padding: 14px; border-radius: 12px; background: var(--page); font-size: 1.02rem; }
+  .feedback p { margin: 0 0 6px; }
+  .feedback .gap { height: 8px; margin: 0; }
+
+  /* On a phone the feedback is below the choices, so a bar at the foot says when it changes and goes to it */
+  .dock { display: none; }
+  @media (max-width: 800px) {
+    .dock {
+      position: sticky; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin: 16px -16px -32px; padding: 10px 16px; background: var(--card); border-top: 1px solid var(--line);
+    }
+    .dock[hidden] { display: none; }
+    .dock a { color: var(--accent); font-weight: 700; }
+  }
   .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   button {
     padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer;
@@ -130,16 +145,16 @@ const STARTING_CHOICES = [2, 1, 1, 2];
         <legend>Tone</legend>
         <div class="pills" id="tones"></div>
       </fieldset>
-      <label class="note-label" for="note">A personal note <span class="hint">(optional, no names)</span></label>
+      <label class="note-label" for="note">A personal note <span class="hint">(optional)</span></label>
       <textarea id="note" rows="3"></textarea>
     </form>
 
     <section class="card" aria-labelledby="feedback-title">
       <h2 id="feedback-title">Feedback</h2>
-      <p class="feedback" id="feedback"></p>
+      <div class="feedback" id="feedback"></div>
       <div class="tools">
         <button class="primary" id="copy" type="button">Copy feedback</button>
-        <button id="clear" type="button">Start over</button>
+        <button id="clear" type="button">Clear choices</button>
       </div>
       <p class="status" id="status" aria-live="polite"></p>
       <textarea class="copy-box" id="copy-box" readonly hidden aria-label="The feedback as text, ready to copy"></textarea>
@@ -147,6 +162,7 @@ const STARTING_CHOICES = [2, 1, 1, 2];
   </div>
 
   <p class="foot">Feedback, not a score. Everything you choose stays on this page.</p>
+  <div class="dock" id="dock"><span id="dock-status" role="status">Feedback ready.</span><a href="#feedback-title" aria-label="See the feedback">See it ↓</a></div>
 </div>
 
 <script>
@@ -160,6 +176,7 @@ const $ = (id) => document.getElementById(id);
 function pillRow(name, options, checkedIndex) {
   const row = document.createElement("div");
   row.className = "pills";
+  row.style.setProperty("--count", options.length);   // one even column per choice
   options.forEach((option, i) => {
     const input = document.createElement("input");
     input.type = "radio";
@@ -180,10 +197,13 @@ RUBRIC.forEach((part, i) => {
   const set = document.createElement("fieldset");
   const legend = document.createElement("legend");
   legend.textContent = part.criterion;
-  set.append(legend, pillRow("part" + i, LEVELS, STARTING_CHOICES[i] ?? -1));
+  const row = pillRow("part" + i, LEVELS, STARTING_CHOICES[i] ?? -1);
+  row.classList.add("levels");
+  set.append(legend, row);
   $("criteria").append(set);
 });
 $("tones").append(...pillRow("tone", Object.keys(TONES), 0).childNodes);
+$("tones").style.setProperty("--count", Object.keys(TONES).length);
 
 function chosen(name) {
   const picked = document.querySelector('input[name="' + name + '"]:checked');
@@ -214,8 +234,29 @@ function buildFeedback() {
   return lines.join("\n");
 }
 
+// Show the feedback with each part's name in bold (the copy stays plain text)
+function showFeedback(text) {
+  const names = RUBRIC.map((part) => part.criterion + ": ");
+  $("feedback").replaceChildren(...text.split("\n").map((line) => {
+    const p = document.createElement("p");
+    if (!line) { p.className = "gap"; return p; }
+    const name = names.find((n) => line.startsWith(n));
+    if (name) {
+      const strong = document.createElement("strong");
+      strong.textContent = name;
+      p.append(strong, line.slice(name.length));
+    } else {
+      p.textContent = line;
+    }
+    return p;
+  }));
+}
+
+let firstUpdate = true;
 function update() {
-  $("feedback").textContent = buildFeedback();
+  showFeedback(buildFeedback());
+  if (!firstUpdate) $("dock-status").textContent = "Feedback updated.";
+  firstUpdate = false;
   $("status").textContent = "";
   $("copy-box").hidden = true;
 }
@@ -244,6 +285,11 @@ $("copy").addEventListener("click", async () => {
     $("status").textContent = "Copy the feedback from the box below.";
   }
 });
+
+// The bar at the foot steps aside while the feedback itself is on screen
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver(([entry]) => { $("dock").hidden = entry.isIntersecting; }).observe($("feedback"));
+}
 
 // Get started
 $("assignment").textContent = ASSIGNMENT;

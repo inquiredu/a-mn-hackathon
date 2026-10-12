@@ -1,31 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hands On</title>
-<meta name="description" content="A hackathon to play, build, and break things with AI, together. MNGAIA · AI4MN.">
+<title>First Builds</title>
+<meta name="description" content="Small tools you can build with AI, and a two-hour session to run with your own team. First run with MNGAIA · AI4MN.">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="assets/theme.js"></script>
+<link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to the main content</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
-    <a class="brand" href="index.html"><img src="assets/mngaia-mark.png" alt="" width="44" height="38"><span>Hands On</span></a>
-    <nav aria-label="Site">
+    <a class="brand" href="index.html">First Builds</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="levels.html">Three levels</a></li>
         <li><a href="starters.html">Starters</a></li>
-        <li><a href="wish.html">Grant a wish</a></li>
+        <li><a href="invent.html">Invent your own</a></li>
         <li><a href="hosts.html">Hosts</a></li>
         <li><a href="sources.html">Sources</a></li>
-        <li><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
+        <li class="host-item host-first"><a href="present.html">Present</a></li>
+        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
+        <li class="theme-item"><button class="theme-toggle" type="button" aria-pressed="false" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></li>
       </ul>
     </nav>
   </div>
@@ -47,28 +50,24 @@
 
   <!-- BEFORE: the invitation -->
   <section class="hero" data-show="before">
-  <svg class="sparkles" aria-hidden="true" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <path id="star" d="M0,-10 C1,-2 2,-1 10,0 C2,1 1,2 0,10 C-1,2 -2,1 -10,0 C-2,-1 -1,-2 0,-10Z"/>
-    </defs>
-    <use href="#star" class="s1" transform="translate(60 70) scale(2.2)"/>
-    <use href="#star" class="s2" transform="translate(120 160) scale(1.2)"/>
-    <use href="#star" class="s1" transform="translate(40 250) scale(1.6)"/>
-    <use href="#star" class="s2" transform="translate(150 320) scale(2.4)"/>
-    <use href="#star" class="s1" transform="translate(210 60) scale(1)"/>
-    <use href="#star" class="s2" transform="translate(1080 60) scale(1.4)"/>
-    <use href="#star" class="s1" transform="translate(1150 140) scale(2)"/>
-    <use href="#star" class="s2" transform="translate(1110 300) scale(1.1)"/>
-    <use href="#star" class="s1" transform="translate(1020 350) scale(1.6)"/>
-  </svg>
     <div class="wrap hero-inner">
-      <img class="mark" src="assets/mngaia-mark.png" alt="MNGAIA, AI4MN" width="470" height="406">
       <div class="hero-text">
-        <p class="kicker">MNGAIA · AI4MN</p>
-        <h1>Hands On</h1>
-        <p class="ribbon" data-fill>{subtitle} · {date} · {start} to {end}</p>
+        <p class="eyebrow" data-fill>{subtitle}</p>
+        <h1>First Builds</h1>
+        <p class="hero-meta" data-fill>{weekday}, {date} · {start} to {end} {zone} · on Google Meet</p>
         <p class="hero-lede" data-fill>A month into the school year, a morning to play. {Length} to build working tools with AI, break a few on purpose, and leave with something worth showing a colleague on Monday. Nobody here is a software developer by trade. We're all learners, and that's the point.</p>
-        <p class="hero-actions"><span class="link-slot" data-link="meet" data-label="Join on Google Meet"></span> <a class="button" href="starters.html">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
+        <ul class="shape shape-row" aria-label="The shape of the morning">
+          <li data-fill><strong>{length:number}</strong><span>{length:unit}, start to finish</span></li>
+          <li><strong>3</strong><span>levels of getting started with code</span></li>
+          <li><strong>8</strong><span>starters to play and remix</span></li>
+          <li><strong>4</strong><span>people at most in each breakout room</span></li>
+        </ul>
+        <p class="join"><span class="link-slot" data-link="meet" data-label="Join on Google Meet" data-pending="To join: the Meet link comes from whoever invited you."></span></p>
+        <p class="hero-actions"><a class="button primary try" href="starters.html#level-1">Try a starter</a> <a class="button" href="#today">See the plan</a></p>
+        <div class="credit credit-lead">
+          <img src="assets/mngaia-mark.png" alt="" width="104" height="90">
+          <p><strong data-fill>{org}</strong></p>
+        </div>
       </div>
     </div>
   </section>
@@ -80,37 +79,109 @@
         <p class="nowcard-label">Happening now <span id="nowcard-where"></span></p>
         <h1 class="nowcard-title" id="nowcard-title"></h1>
         <p class="nowcard-hint" id="nowcard-hint"></p>
-        <p class="nowcard-action"><a class="button primary" id="nowcard-go" href="#today" hidden></a><span id="nowcard-shared"></span></p>
+        <p class="nowcard-action"><a class="button primary" id="nowcard-go" href="#today" hidden></a><span id="nowcard-also"></span><span id="nowcard-shared"></span></p>
         <p class="nowcard-next" id="nowcard-next"></p>
       </div>
     </div>
   </section>
 
-  <!-- AFTER: keep building -->
-  <section class="section keepsake" data-show="after" aria-labelledby="keepsake-title">
-    <div class="wrap">
-      <p class="kicker-dark" data-fill>{org} · {date}</p>
-      <h1 id="keepsake-title">Thank you for building with us</h1>
-      <p class="section-lede">Everything here stays open. Keep building, and show one person what you made.</p>
-      <div class="keep-grid">
-        <div class="card">
-          <h2>Show one person</h2>
-          <p>Show it on your screen, then send them this so they can build their own:</p>
-          <div class="copybox">
-            <p id="ripple-note" data-fill>On {weekday} I built a small tool with AI in about 20 minutes. You can make your own here: https://inquiredu.org/a-mn-hackathon</p>
-            <button data-copy-from="ripple-note">Copy</button>
+  <!-- AFTER: a front door for anyone, with the first twenty minutes beside it -->
+  <section class="keepsake" data-show="after" aria-labelledby="keepsake-title">
+    <div class="hero">
+      <div class="wrap hero-inner hero-split">
+        <div class="hero-text">
+          <p class="eyebrow">Kit · Building with AI</p>
+          <h1 id="keepsake-title">First Builds</h1>
+          <p class="hero-lede">Small tools you can build with AI in twenty minutes to an afternoon, for people who run classrooms, schools, and meetings. You copy and paste and ask for changes; the AI writes the code.</p>
+          <ul class="hero-list" aria-label="For example">
+            <li>A meeting timer</li>
+            <li>A group maker</li>
+            <li>A page for your Google Site</li>
+            <li>A script that tidies a folder: a few instructions Google runs for you inside your Drive, after you approve them</li>
+          </ul>
+          <p class="hero-note">Works on your own, any day. Free to use and to change.</p>
+          <p class="hero-actions"><a class="button primary" href="starters.html#level-1">Play a starter</a> <a class="action-link" href="hosts.html">Running it for a group?</a></p>
+          <div class="credit credit-lead">
+            <img src="assets/mngaia-mark.png" alt="" width="104" height="90">
+            <p><strong data-fill>{org}</strong><span class="host" data-fill>First run live as Hands On, {weekday}, {date}, {year}</span></p>
           </div>
         </div>
+        <aside class="first-steps" id="start" aria-labelledby="start-title">
+          <h2 id="start-title">On your own? Start here</h2>
+          <p>Twenty minutes, a laptop or Chromebook, and an AI chat you can sign in to: Gemini with your school Google account, ChatGPT, or Claude. Open it in another tab first. Use made-up names and made-up data in everything you try.</p>
+          <ol class="mini-steps">
+            <li><span class="num">1</span><div><strong>Play a starter</strong><span>A small tool that already works: a meeting timer, a group maker, a feedback builder. Press Play and try it.</span><a class="action-link" href="starters.html#level-1">Open the starters</a></div></li>
+            <li><span class="num">2</span><div><strong>Hand it to your AI</strong><span>Press Copy for my AI, paste into your chat, and send. In a few seconds the same tool is running beside the conversation, and it's yours to change.</span><a class="action-link" href="starters.html#where">Where to paste it</a></div></li>
+            <li><span class="num">3</span><div><strong>Ask for one change</strong><span>"Use our school colors." Then another. When it breaks, tell the AI exactly what you see. Still broken after two tries? Start a new chat and paste the starter again; that counts.</span><a class="action-link" href="invent.html">Then invent your own</a></div></li>
+          </ol>
+          <p class="hint">Want more than the chat? <a href="levels.html">The three levels</a> go from a tool in your chat, to a page on your Google Site, to a script that works inside your Drive.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- DURING: the part that's on, right under the card -->
+  <section id="cheer" class="section band" data-show="during" data-from="cheer">
+    <div class="wrap">
+      <h2>Show &amp; Cheer</h2>
+      <p class="section-lede" data-fill>A few builders share their screens for {share} each. Applause first, emoji welcome. Then one question for each builder: who would you show this to?</p>
+      <ul class="awards">
+        <li><span class="award-icon" data-icon="bug"></span><strong>Most Delightfully Broken</strong><span>For the most glorious error message of the morning.</span></li>
+        <li><span class="award-icon" data-icon="life-buoy"></span><strong>Best Rescue</strong><span>For the save that made the room cheer.</span></li>
+        <li><span class="award-icon" data-icon="calendar-check"></span><strong>Most Likely to Actually Get Used</strong><span>For the one somebody will really open next week.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="close" class="section" data-show="during" data-from="close">
+    <div class="wrap">
+      <h2>What did we just do?</h2>
+      <p class="section-lede">Every machine today started with a person, passed through an AI, and came back to a person who decided whether it was any good.</p>
+      <div class="three-up">
         <div class="card">
-          <h2>Keep building</h2>
-          <p>The three levels, the starters, and the build path are still here, for you or for anyone you send.</p>
-          <p class="card-actions"><a class="button primary" href="levels.html">The three levels</a> <a class="button" href="starters.html">The starters</a> <a class="button" href="wish.html">Grant a wish</a></p>
+          <h3>I wonder…</h3>
+          <p>What did today make you curious about?</p>
+          <p class="link-slot" data-link="wonder" data-label="Add yours to the wonder wall" data-style="button" data-pending="Your host posts the wonder wall's link in the chat."></p>
+        </div>
+        <div class="card">
+          <h3>I worry…</h3>
+          <p>What did today make you uneasy about?</p>
+          <p class="link-slot" data-link="worry" data-label="Add yours to the worry wall" data-style="button" data-pending="Your host posts the worry wall's link in the chat."></p>
+        </div>
+        <div class="card">
+          <h3>One word</h3>
+          <p>In the chat: one word for how you're leaving.</p>
         </div>
       </div>
-      <div class="next">
-        <h3>Next month</h3>
-        <p>We turn to assessment: what our practices have measured, who they have served, and who they may have held back.</p>
+      <h3 class="subhead">Where this goes</h3>
+      <ol class="rungs">
+        <li><strong>In the chat.</strong> A tool inside your AI chat. Twenty minutes.</li>
+        <li><strong>On your site.</strong> A page on your Google Site. An hour.</li>
+        <li><strong>Behind the scenes.</strong> A script in your Drive. An afternoon.</li>
+      </ol>
+      <div class="beyond">
+        <p class="label">Beyond the three</p>
+        <p><strong>With a workbench.</strong> An app where the AI edits the files on your computer instead of chatting (Claude Code, Codex, Cursor). For when level three feels easy, and usually not allowed on a district laptop.</p>
       </div>
+      <p class="more-link">Each level, with its prompt and its script: <a href="levels.html">the three levels</a>.</p>
+      <div class="next">
+        <h3>Next time</h3>
+        <p data-fill>{next}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE: what to bring -->
+  <section class="section band" data-show="before">
+    <div class="wrap">
+      <h2>Before you come</h2>
+      <ul class="checks">
+        <li><strong>A laptop or Chromebook.</strong> Building needs a keyboard. On a phone, you can watch and cheer.</li>
+        <li data-fill><strong>An AI tool you can log in to.</strong> Gemini with your school Google account, Claude, or ChatGPT. Check that you can open it before {weekday}.</li>
+        <li><strong>An idea.</strong> Something small you'd want for your work. No idea yet? We have a jar of them.</li>
+        <li><strong>A level in mind, maybe.</strong> <a href="levels.html">Three levels of getting started with code</a>: in the chat, on your site, behind the scenes. You pick on the day, and any level is a good level.</li>
+        <li><strong>A backup, in case this site is blocked on your school network.</strong> The same session and the same starters, as Google Slides: <span class="link-slot" data-link="backup" data-label="session slides" data-style="inline-link"></span> and <span class="link-slot" data-link="companion" data-label="starter code" data-style="inline-link"></span>.</li>
+      </ul>
     </div>
   </section>
 
@@ -122,85 +193,46 @@
     </div>
   </section>
 
-  <!-- BEFORE: what to bring, the shape of the morning, ways in -->
-  <section class="section band" data-show="before">
-    <div class="wrap">
-      <h2>Before you come</h2>
-      <ul class="checks">
-        <li><strong>A laptop or Chromebook.</strong> Building needs a keyboard. On a phone, you can watch and cheer.</li>
-        <li data-fill><strong>An AI tool you can log in to.</strong> Gemini with your school Google account, Claude, or ChatGPT. Check that you can open it before {weekday}.</li>
-        <li><strong>A wish.</strong> Something small you wish existed for your work. No wish? We have a jar of them.</li>
-        <li><strong>A level in mind, maybe.</strong> <a href="levels.html">Three levels of getting started with code</a>: in the chat, on your site, behind the scenes. You pick on the day, and any level is a good level.</li>
-        <li><strong>A backup, in case this site is blocked on your school network.</strong> The same morning and the same starters, as Google Slides: <span class="link-slot" data-link="backup" data-label="session slides" data-style="inline-link"></span> and <span class="link-slot" data-link="companion" data-label="starter code" data-style="inline-link"></span>.</li>
-      </ul>
-      <h2 class="subhead-2">The shape of the morning</h2>
-      <ul class="shape">
-        <li data-fill><strong>{length:number}</strong><span>{length:unit}, start to finish</span></li>
-        <li><strong>3</strong><span>levels of getting started with code: in the chat, on your site, behind the scenes</span></li>
-        <li><strong>8</strong><span>starters: four in the chat, two for your site, two behind the scenes</span></li>
-        <li><strong>4</strong><span>people at most in each breakout room</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- SHOW & CHEER -->
-  <section id="cheer" class="section band" data-show="during" data-from="cheer">
-    <div class="wrap">
-      <h2>Show &amp; Cheer</h2>
-      <p class="section-lede" data-fill>A few builders share their screens for {share} each. Applause first, emoji welcome. Then one question for each builder: who would you show this to?</p>
-      <ul class="awards">
-        <li><span class="award-icon hex" aria-hidden="true">💥</span><strong>Most Delightfully Broken</strong><span>For the most glorious error message of the morning.</span></li>
-        <li><span class="award-icon hex" aria-hidden="true">🛟</span><strong>Best Rescue</strong><span>For the save that made the room cheer.</span></li>
-        <li><span class="award-icon hex" aria-hidden="true">🗓️</span><strong>Most Likely to Actually Get Used</strong><span>For the one somebody will really open next week.</span></li>
-      </ul>
-    </div>
-  </section>
-
-
-  <!-- THE CLOSE -->
-  <section id="close" class="section" data-show="during" data-from="close">
-    <div class="wrap">
-      <h2>What did we just do?</h2>
-      <p class="section-lede">Every machine today started with a person, passed through an AI, and came back to a person who decided whether it was any good.</p>
-      <h3 class="subhead">Where this goes</h3>
-      <ol class="rungs">
-        <li><strong>In the chat.</strong> A tool inside your AI chat. Twenty minutes.</li>
-        <li><strong>On your site.</strong> A page on your Google Site. An hour.</li>
-        <li><strong>Behind the scenes.</strong> A script in your Drive. An afternoon.</li>
-        <li class="later"><strong>With a workbench.</strong> Claude Code, Codex, Cursor: the AI works inside your files. When level three feels easy.</li>
-      </ol>
-      <p class="more-link">Each level, with its prompt and its script: <a href="levels.html">the three levels</a>.</p>
-      <div class="two-up">
-        <div class="card">
-          <h3>I wonder…</h3>
-          <p>What did today make you curious about?</p>
-        </div>
-        <div class="card">
-          <h3>I worry…</h3>
-          <p>What did today make you uneasy about?</p>
-        </div>
-      </div>
-      <p class="link-slot" data-link="wonder" data-label="Add yours to the wonder wall"></p>
-      <p class="link-slot" data-link="worry" data-label="Add yours to the worry wall"></p>
-      <p>Then one word in the chat for how you're leaving.</p>
-      <div class="next">
-        <h3>Next month</h3>
-        <p>We turn to assessment: what our practices have measured, who they have served, and who they may have held back.</p>
-      </div>
-    </div>
-  </section>
-
-
   <!-- Everything else on the site -->
   <section class="section" data-show="before after">
     <div class="wrap">
-      <h2>Also on the site</h2>
+      <h2>Everything here</h2>
       <div class="also">
-        <a class="also-card" href="levels.html"><strong>Three levels</strong><span>Getting started with code: in the chat, on your site, behind the scenes. Each with a prompt to copy, and one with a script.</span><span class="go">Open</span></a>
-        <a class="also-card" href="starters.html"><strong>Starters</strong><span>Eight starters across the three levels. Play one, hand it to your AI, make it yours.</span><span class="go">Open</span></a>
-        <a class="also-card" href="wish.html"><strong>Grant a wish</strong><span>Build something from nothing: a wish builder, a jar of wishes, and three moves for when you're stuck.</span><span class="go">Open</span></a>
-        <a class="also-card" href="hosts.html"><strong>Hosts</strong><span>Running the morning: the run of show, forming teams, ready-to-paste messages, and safe play.</span><span class="go">Open</span></a>
-        <a class="also-card" href="sources.html"><strong>Sources</strong><span>How-tos that take the mystery out of code, cautions worth knowing, and what research says about coding and thinking.</span><span class="go">Open</span></a>
+        <a class="also-card card-link" href="levels.html"><strong>Three levels</strong><span>Three ways to start, from easiest: a tool inside your AI chat, a page on your Google Site, and a short script that does a job in your Google Drive. Each with its steps and a prompt to copy.</span><span class="go">Open</span></a>
+        <a class="also-card card-link" href="starters.html"><strong>Starters</strong><span>Eight small tools that already work. Play one, copy it into your AI chat, and ask for a change. Two are pages for a Google Site; two are scripts for your Drive.</span><span class="go">Open</span></a>
+        <a class="also-card card-link" href="invent.html"><strong>Invent your own</strong><span>Make something from nothing: three short answers become a request you paste into your AI, a jar of ideas if you have none, and three moves for when you're stuck.</span><span class="go">Open</span></a>
+        <a class="also-card card-link" href="sources.html"><strong>Sources</strong><span>Help pages for each AI tool, cautions worth knowing about student data and safety, and what research says about learning to code.</span><span class="go">Open</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTER: run it yourself, and pass it on -->
+  <section class="section band" data-show="after">
+    <div class="wrap">
+      <div class="keep-grid">
+        <div class="card">
+          <h2>Run it with your own team</h2>
+          <p>The whole two-hour session is here, written for people who don't code, with the co-host's part spelled out.</p>
+          <dl class="rows">
+            <div><dt>What's here</dt><dd>The run of show, a full-screen slideshow with its own timers to share in your video call, <a href="notes.html">speaker notes</a> that follow it from a second window, and chat messages ready to paste.</dd></div>
+            <div><dt>Run it as it is</dt><dd>On any day: the slideshow moves when you press next, and you post your own Meet link and your own copies of two Google files, the Breakout Planner and the walls deck, in the chat.</dd></div>
+            <div><dt>What you give up</dt><dd>On a day other than the first run's, this home page shows your group the kit, not your schedule, so your chat says what's next.</dd></div>
+          </dl>
+          <details class="quiet-fold">
+            <summary>Make it yours on GitHub (optional)</summary>
+            <p>For someone comfortable with GitHub: copy the kit and change one text file of times and links, and the clock, the links, and the names on every page become yours, at your own web address.</p>
+            <p><span class="link-slot" data-link="repo" data-label="The kit on GitHub" data-style="button"></span></p>
+          </details>
+          <p class="card-actions"><a class="button primary" href="hosts.html">The hosts' guide</a> <a class="button" href="present.html">Preview the stage</a></p>
+        </div>
+        <div class="card">
+          <h2>Show one person</h2>
+          <p>Built something? Show it on your screen, then send them this so they can build their own:</p>
+          <div class="copybox">
+            <p id="ripple-note" data-fill>I built a small tool with AI in about 20 minutes. You can make your own here: https://{url}</p>
+            <button data-copy-from="ripple-note" type="button">Copy</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -209,21 +241,24 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <img src="assets/mngaia-mark.png" alt="" width="64" height="55">
-    <div>
-      <p><strong>MNGAIA · AI4MN</strong> · Boldly advancing education, grounded in deep humanity.</p>
-      <p class="small"><strong>Safe play:</strong> use made-up names and made-up data. Nothing about real students goes into an AI today.</p>
-      <p class="small backups"><strong>Site blocked?</strong> The same morning as slides: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters, with the code in the notes: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
+    <div class="credit">
+      <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
+      <p><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
     </div>
+    <div class="footer-notes">
+      <p class="small"><strong>Safe play:</strong> made-up names and made-up data, every time. Nothing about real students goes into an AI.</p>
+      <p class="small backups"><strong>Site blocked at school?</strong> The same steps are in a Google Slides deck: <span class="link-slot" data-link="backup" data-label="Session slides" data-style="inline"></span>. The starters are in a second deck, each tool's code in the speaker notes under its slide: <span class="link-slot" data-link="companion" data-label="Starter code" data-style="inline"></span>.</p>
+    </div>
+    <p class="signature"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="34" height="32"><span data-fill>{maker}</span><span aria-hidden="true">·</span><span class="sr-only">License:</span><span class="link-slot" data-link="license" data-label="{license}" data-style="inline"></span></p>
   </div>
 </footer>
 
-<dialog id="fallback" aria-labelledby="fallback-title">
+<dialog id="fallback" aria-labelledby="fallback-title" aria-describedby="fallback-how">
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
-    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
-    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
-    <div><button class="primary" id="fallback-close">Done</button></div>
+    <p id="fallback-how">Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.</p>
+    <textarea id="fallback-text" readonly rows="10" aria-labelledby="fallback-title"></textarea>
+    <div class="fallback-actions"><button class="primary" id="fallback-select" type="button">Select all</button> <button id="fallback-close" type="button">Done</button></div>
   </div>
 </dialog>
 
@@ -232,6 +267,7 @@
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js"></script>
+<script src="assets/icons.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

@@ -319,6 +319,7 @@ const PROPHECIES = [
   main { width: 100%; max-width: 34rem; text-align: center; }
   h1 { font-size: clamp(1.6rem, 5vw, 2.3rem); margin: 0 0 4px; }
   .tagline { margin: 0; font-style: italic; opacity: .85; }
+  .foot { margin: 14px 0 0; font-size: .85rem; opacity: .8; }
 
   /* The crystal ball on its tripod. The drawing is in the <svg> below; this is how it moves. */
   .orb {
@@ -357,7 +358,7 @@ const PROPHECIES = [
     font: inherit;
     border: 2px solid #E6B84FB3;
     border-radius: 999px;
-    background: #FFFFFF14;
+    background: #0F2238;   /* solid, so the stars behind the page never show through the words */
     color: var(--text);
   }
   input::placeholder { color: #EAF6FCAA; }
@@ -374,20 +375,23 @@ const PROPHECIES = [
   button:disabled { opacity: .6; cursor: wait; }
   input:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
-  /* The sound switch, top right */
+  /* The sound switch, in its own row above the title, so it never sits on top of anything */
+  .top { display: flex; justify-content: flex-end; margin-bottom: 8px; }
   .sound {
-    position: fixed; top: 12px; right: 12px;
+    min-width: 7.5em;
     padding: 6px 14px;
     font-size: .9rem;
+    font-weight: normal;
     background: transparent;
-    color: var(--text);
-    border: 2px solid #E6B84FB3;
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
   }
-  .sound[aria-pressed="false"] { opacity: .75; text-decoration: line-through; }
+  .sound[aria-pressed="false"] { color: var(--text); border-color: #EAF6FC59; }   /* quieter when it's off */
 
   .asked { min-height: 1.4em; margin: 0; font-style: italic; opacity: .8; }
+  /* Room for a three-line answer, held from the start, so the reveal doesn't shift the page */
   .prophecy {
-    min-height: 2.9em;
+    min-height: 4.35em;
     margin: 6px 0 20px;
     font-size: 1.3rem;
     line-height: 1.45;
@@ -397,12 +401,13 @@ const PROPHECIES = [
     transition: opacity .8s, transform .8s;
   }
   .prophecy.revealed { opacity: 1; transform: none; }
+  .prophecy.waiting { font-size: 1.05rem; font-style: italic; color: var(--sky); }   /* before the first question */
 
   /* Wide, short screens (a shared tab, a laptop): the orb sits beside the words */
-  @media (min-aspect-ratio: 4/3) and (max-height: 640px) {
+  @media (min-aspect-ratio: 4/3) and (max-height: 760px) {
     body { padding: 12px 16px; }
     main { max-width: 46rem; display: grid; grid-template-columns: auto 1fr; gap: 0 28px; align-items: center; text-align: left; }
-    .orb { grid-column: 1; grid-row: 1 / span 6; height: min(82vh, 330px); margin: 0; }
+    .orb { grid-column: 1; grid-row: 1 / span 8; height: min(82vh, 330px); margin: 0; }   /* beside all eight lines of words */
     main > :not(.orb) { grid-column: 2; }
     form { justify-content: flex-start; }
   }
@@ -422,8 +427,8 @@ const PROPHECIES = [
 </style>
 </head>
 <body>
-<button class="sound" id="sound" type="button" aria-pressed="true"><span aria-hidden="true">🔊</span> Sound</button>
 <main>
+  <div class="top"><button class="sound" id="sound" type="button" aria-pressed="true" aria-label="Sound">Sound: <span aria-hidden="true" id="sound-state">on</span></button></div>
   <h1>The Teacher's Lounge Oracle</h1>
   <p class="tagline">Ask anything. The Oracle sees all. (Mostly the copier.)</p>
 
@@ -494,13 +499,14 @@ const PROPHECIES = [
 
   <p class="status" id="status"></p>
   <p class="asked" id="asked"></p>
-  <p class="prophecy" id="prophecy" aria-live="polite"></p>
+  <p class="prophecy waiting revealed" id="prophecy" aria-live="polite">The orb is listening.</p>
 
   <form id="ask">
     <label for="question">What do you wish to know?</label>
     <input id="question" placeholder="Will the copier work today?" autocomplete="off">
     <button id="go" type="submit">Consult the Oracle</button>
   </form>
+  <p class="foot">Just for fun. The answers come from a list on this page; nothing you type leaves it.</p>
 </main>
 
 <script>
@@ -709,7 +715,7 @@ let soundOn = SOUND_ON;
 const soundSwitch = document.getElementById("sound");
 function showSound() {
   soundSwitch.setAttribute("aria-pressed", String(soundOn));
-  soundSwitch.firstElementChild.textContent = soundOn ? "🔊" : "🔇";
+  document.getElementById("sound-state").textContent = soundOn ? "on" : "off";
 }
 showSound();
 soundSwitch.addEventListener("click", () => { soundOn = !soundOn; showSound(); });
@@ -717,7 +723,7 @@ soundSwitch.addEventListener("click", () => { soundOn = !soundOn; showSound(); }
 document.getElementById("ask").addEventListener("submit", (event) => {
   event.preventDefault();
   button.disabled = true;
-  prophecyLine.classList.remove("revealed");
+  prophecyLine.classList.remove("revealed", "waiting");
   askedLine.textContent = question.value ? `You asked: "${question.value}"` : "";
   orb.classList.add("thinking");
 

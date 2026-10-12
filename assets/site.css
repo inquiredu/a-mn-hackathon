@@ -602,8 +602,9 @@ dialog[open]::backdrop { background: var(--scrim); }
 [data-theme="dark"] .theme-state::after { content: "On"; }
 .site-nav .theme-item { margin-left: 6px; }
 
-/* A phone: the name and a Menu button; the pages open as full-width rows under the bar */
-@media (max-width: 760px) {
+/* Narrower than the whole menu (about 1000px: it wrapped into two rows on a tablet, "First Builds" over two lines):
+   the name and a Menu button; the pages open as full-width rows under the bar */
+@media (max-width: 999px) {
   .site-head-inner { flex-wrap: nowrap; }
   .site-head-inner > * { min-width: 0; }
   .menu-toggle {
@@ -628,7 +629,7 @@ dialog[open]::backdrop { background: var(--scrim); }
   .site-nav .theme-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
   .site-nav .theme-state { display: inline; margin-left: auto; color: var(--bar-ink-2); font-weight: 500; }
 }
-@media (hover: hover) and (max-width: 760px) {
+@media (hover: hover) and (max-width: 999px) {
   .menu-toggle:hover { background: rgb(255 255 255 / .12); color: var(--bar-ink); border-color: var(--bar-ink); }
 }
 
@@ -1038,6 +1039,7 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .how-row { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line); }
 .how-row li { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-content: start; gap: 2px 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }   /* rows stay at the top, so the four titles line up when steps differ in length */
 .how-row .num { grid-row: span 2; }
+.how-row li:last-child { border-bottom: 0; }   /* the level below opens with its own rule */
 .how-row strong { font-family: var(--font-sans); font-size: 1.05rem; }
 .how-row span:not(.num) { color: var(--muted); }
 @media (min-width: 900px) {
@@ -1159,6 +1161,8 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 @media (min-width: 960px) {
   .step-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
   .step-list > li:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .step-list > li:last-child:nth-child(odd) { grid-column: 1 / -1; }   /* an odd last step takes the row, not half of it */
+  .step-list > li:nth-last-child(2):has(+ li:last-child:nth-child(odd)) { border-bottom: 0; }
 }
 .stuck ul { margin: 10px 0 0; padding-left: 20px; }
 .stuck li { margin: 8px 0; max-width: var(--measure); }
@@ -1166,13 +1170,14 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .stuck > p { margin: 10px 0 0; }
 /* Invent your own's two helps, where to paste and what to do when stuck: side by side on a wide screen */
 @media (min-width: 1024px) {
-  .help-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); align-items: start; margin-top: var(--block); }
+  .help-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); align-items: stretch; margin-top: var(--block); }
   .help-pair > * { margin-top: 0; }
 }
 .live-note { color: var(--muted); }
 #wall .link-slot { display: block; margin: 18px 0 0; }
 .live-fold { margin-top: var(--block); padding: 4px var(--card-pad) var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .live-fold > summary { font-size: 1.125rem; }
+.live-fold:not([open]) { padding-bottom: 4px; }   /* closed, its label sits in the middle */
 .live-fold p { margin: 10px 0 0; }
 .wall-steps { margin: 10px 0 0; padding-left: 1.4em; max-width: var(--measure); }
 .wall-steps li { margin: 8px 0; }
@@ -1195,8 +1200,9 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .page-rail { display: none; }
 @media (min-width: 1200px) {
   body.has-rail .on-page { display: none; }
-  body.has-rail main .wrap { padding-right: calc(16px + 248px); }
-  .page-rail { display: block; position: sticky; top: 0; z-index: 5; height: 0; max-width: 1080px; margin: 0 auto; }
+  body.has-rail main .wrap { padding-right: calc(16px + 280px); }   /* the rail's 216px and a 64px gap */
+  .page-rail { display: block; position: sticky; top: -80px; z-index: 5; width: 100%; height: 0; max-width: 1080px; margin: 0 auto; }   /* stuck, the list sits 32px from the top; full width even where main is a flex column (on the day) */
+  body[data-mode="during"] .page-rail { top: -16px; }   /* below the now bar, which sticks on the day */
   .page-rail-inner { position: absolute; top: 112px; right: 16px; width: 216px; max-height: calc(100vh - 136px); overflow-y: auto; }
   .page-rail ul { list-style: none; margin: 10px 0 0; padding: 0; border-left: 2px solid var(--line); }
   .page-rail a {
@@ -1208,6 +1214,10 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
   .page-rail a[aria-current] { color: var(--ink); border-left-color: var(--ink); }
 }
 .host-grid { display: grid; gap: var(--gap); margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
+/* The two ways to run it: side by side they're one height, and each ends in its way on, level with the other's */
+.host-grid:has(> .way) { align-items: stretch; }
+.card.way { display: flex; flex-direction: column; }
+.card.way > .card-actions { margin-top: auto; padding-top: 16px; }
 .host-grid .card ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 .way .label { margin-bottom: 6px; }
 .checks ul, .checks .sub-steps { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }

@@ -11,24 +11,24 @@ Each visible text run measured against its effective background (opacity and tra
 - **Copy-by-hand dialog** (light): 4 runs, lowest 10.71:1, all pass
 - **Play window header** (light): 5 runs, lowest 6.01:1, all pass
 - **Play window code pane and message** (light): 4 runs, lowest 6.01:1, all pass
-- **Speaker notes: all text** (light): 48 runs, lowest 5.35:1, all pass
-- **Stage screen 1: all text, controls showing** (light): 20 runs, lowest 5.96:1, all pass
-- **Stage screen 9: all text, controls showing** (light): 20 runs, lowest 5.96:1, all pass
-- **Stage screen 13: all text, controls showing** (light): 20 runs, lowest 5.96:1, all pass
-- **index.html: every link and button, hover forced** (light): 37 runs, lowest 5.63:1, all pass
-- **index.html: every link and button, focus-visible forced** (light): 37 runs, lowest 6.01:1, all pass
-- **levels.html: every link and button, hover forced** (light): 52 runs, lowest 5.8:1, all pass
-- **levels.html: every link and button, focus-visible forced** (light): 52 runs, lowest 6.01:1, all pass
-- **starters.html: every link and button, hover forced** (light): 116 runs, lowest 5.08:1, all pass
-- **starters.html: every link and button, focus-visible forced** (light): 116 runs, lowest 6.01:1, all pass
-- **invent.html: every link and button, hover forced** (light): 37 runs, lowest 5.06:1, all pass
-- **invent.html: every link and button, focus-visible forced** (light): 37 runs, lowest 9.6:1, all pass
-- **hosts.html: every link and button, hover forced** (light): 110 runs, lowest 5.06:1, all pass
-- **hosts.html: every link and button, focus-visible forced** (light): 110 runs, lowest 9.61:1, all pass
-- **sources.html: every link and button, hover forced** (light): 255 runs, lowest 5.08:1, all pass
-- **sources.html: every link and button, focus-visible forced** (light): 255 runs, lowest 6.01:1, all pass
-- **notes.html: every link and button, hover forced** (light): 15 runs, lowest 5.65:1, all pass
-- **notes.html: every link and button, focus-visible forced** (light): 15 runs, lowest 5.65:1, all pass
+- **Speaker notes: all text** (light): 49 runs, lowest 5.35:1, all pass
+- **Stage screen 1: all text, controls showing** (light): 19 runs, lowest 5.96:1, all pass
+- **Stage screen 9: all text, controls showing** (light): 19 runs, lowest 5.96:1, all pass
+- **Stage screen 13: all text, controls showing** (light): 19 runs, lowest 5.96:1, all pass
+- **index.html: every link and button, hover forced** (light): 38 runs, lowest 5.71:1, all pass
+- **index.html: every link and button, focus-visible forced** (light): 38 runs, lowest 6.01:1, all pass
+- **levels.html: every link and button, hover forced** (light): 53 runs, lowest 5.71:1, all pass
+- **levels.html: every link and button, focus-visible forced** (light): 53 runs, lowest 6.01:1, all pass
+- **starters.html: every link and button, hover forced** (light): 117 runs, lowest 5.08:1, all pass
+- **starters.html: every link and button, focus-visible forced** (light): 117 runs, lowest 6.01:1, all pass
+- **invent.html: every link and button, hover forced** (light): 38 runs, lowest 5.13:1, all pass
+- **invent.html: every link and button, focus-visible forced** (light): 38 runs, lowest 9.6:1, all pass
+- **hosts.html: every link and button, hover forced** (light): 111 runs, lowest 5.06:1, all pass
+- **hosts.html: every link and button, focus-visible forced** (light): 111 runs, lowest 9.61:1, all pass
+- **sources.html: every link and button, hover forced** (light): 256 runs, lowest 5.08:1, all pass
+- **sources.html: every link and button, focus-visible forced** (light): 256 runs, lowest 6.01:1, all pass
+- **notes.html: every link and button, hover forced** (light): 16 runs, lowest 5.63:1, all pass
+- **notes.html: every link and button, focus-visible forced** (light): 16 runs, lowest 5.65:1, all pass
 - **Home: the part-changed notice (cue)** (dark): 4 runs, lowest 7.79:1, all pass
 - **Home: now bar** (dark): 6 runs, lowest 7.79:1, all pass
 - **Home during: Happening now card** (dark): 7 runs, lowest 7.79:1, all pass
@@ -38,21 +38,21 @@ Each visible text run measured against its effective background (opacity and tra
 - **Copy-by-hand dialog** (dark): 4 runs, lowest 10.71:1, all pass
 - **Play window header** (dark): 5 runs, lowest 7.87:1, all pass
 - **Play window code pane and message** (dark): 4 runs, lowest 7.87:1, all pass
-- **Speaker notes: all text** (dark): 48 runs, lowest 5.91:1, all pass
-- **Stage screen 1: all text, controls showing** (dark): 20 runs, lowest 5.96:1, all pass
-- **Stage screen 9: all text, controls showing** (dark): 20 runs, lowest 5.96:1, all pass
-- **Stage screen 13: all text, controls showing** (dark): 20 runs, lowest 5.96:1, all pass
-- **index.html: every link and button, hover forced** (dark): 37 runs, lowest 5.97:1, all pass
-- **index.html: every link and button, focus-visible forced** (dark): 37 runs, lowest 7.87:1, all pass
-- **levels.html: every link and button, hover forced** (dark): 52 runs, lowest 6.01:1, all pass
-- **levels.html: every link and button, focus-visible forced** (dark): 52 runs, lowest 7.87:1, all pass
-- **starters.html: every link and button, hover forced** (dark): 116 runs, lowest 5.91:1, all pass
-- **starters.html: every link and button, focus-visible forced** (dark): 116 runs, lowest 7.87:1, all pass
-- **invent.html: every link and button, hover forced** (dark): 37 runs, lowest 6.93:1, all pass
-- **invent.html: every link and button, focus-visible forced** (dark): 37 runs, lowest 10.28:1, all pass
-- **hosts.html: every link and button, hover forced** (dark): 110 runs, lowest 5.79:1, all pass
-- **hosts.html: every link and button, focus-visible forced** (dark): 110 runs, lowest 8.05:1, all pass
-- **sources.html: every link and button, hover forced** (dark): 255 runs, lowest 5.91:1, all pass
-- **sources.html: every link and button, focus-visible forced** (dark): 255 runs, lowest 7.87:1, all pass
-- **notes.html: every link and button, hover forced** (dark): 15 runs, lowest 6.93:1, all pass
-- **notes.html: every link and button, focus-visible forced** (dark): 15 runs, lowest 9.06:1, all pass
+- **Speaker notes: all text** (dark): 49 runs, lowest 5.91:1, all pass
+- **Stage screen 1: all text, controls showing** (dark): 19 runs, lowest 5.96:1, all pass
+- **Stage screen 9: all text, controls showing** (dark): 19 runs, lowest 5.96:1, all pass
+- **Stage screen 13: all text, controls showing** (dark): 19 runs, lowest 5.96:1, all pass
+- **index.html: every link and button, hover forced** (dark): 38 runs, lowest 6.01:1, all pass
+- **index.html: every link and button, focus-visible forced** (dark): 38 runs, lowest 7.87:1, all pass
+- **levels.html: every link and button, hover forced** (dark): 53 runs, lowest 6.01:1, all pass
+- **levels.html: every link and button, focus-visible forced** (dark): 53 runs, lowest 7.87:1, all pass
+- **starters.html: every link and button, hover forced** (dark): 117 runs, lowest 5.91:1, all pass
+- **starters.html: every link and button, focus-visible forced** (dark): 117 runs, lowest 7.87:1, all pass
+- **invent.html: every link and button, hover forced** (dark): 38 runs, lowest 6.87:1, all pass
+- **invent.html: every link and button, focus-visible forced** (dark): 38 runs, lowest 10.28:1, all pass
+- **hosts.html: every link and button, hover forced** (dark): 111 runs, lowest 5.88:1, all pass
+- **hosts.html: every link and button, focus-visible forced** (dark): 111 runs, lowest 8.05:1, all pass
+- **sources.html: every link and button, hover forced** (dark): 256 runs, lowest 5.91:1, all pass
+- **sources.html: every link and button, focus-visible forced** (dark): 256 runs, lowest 7.87:1, all pass
+- **notes.html: every link and button, hover forced** (dark): 16 runs, lowest 6.93:1, all pass
+- **notes.html: every link and button, focus-visible forced** (dark): 16 runs, lowest 9.06:1, all pass

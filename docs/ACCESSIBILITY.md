@@ -33,6 +33,7 @@ The design pass (October 11, `docs/DESIGN-AUDIT.md`) changed how several things 
 - Toggles show their state in shape and words, not color alone: the Meeting Timer's Chime and the Oracle's Sound say on or off, and the speaker notes mark "following the stage" with a filled dot and "not open" with a hollow one on a button.
 - Two-step confirmations (the stage's Reset the clock, the notes' Reset the session clock) keep a fixed width across their two labels, and the notes' reset can be undone for eight seconds.
 - Motion (the clock's move, dialogs, folds, the notes' arrival fade, the starters' plus-to-minus) is off under reduced motion.
+- A Light/Night toggle: a button named "Night theme" with `aria-pressed`, at the end of the header (in the Menu on a phone, where it also says On or Off) and in the speaker notes' foot. It follows the system setting until pressed, sets the theme before the page paints (no flash), and switches every color at once.
 - Contrast re-measured after the pass: 54 groups, every page plus the notes and three stage screens with controls showing, in light and Night, hover and focus forced on every control: all at AA (`docs/design-audit/facts/contrast-after.md`).
 
 ## Still needs a person

@@ -95,70 +95,69 @@
   :root { --card-pad: 24px; --section: 72px; }
 }
 
-/* Night, when the viewer's system is dark (<html data-theme="auto">). North Shore defines no dark theme, so this one
-   is drawn from its own scales, with no new colors: navy pages, cream text, copper for the warm notes. */
-@media (prefers-color-scheme: dark) {
-  [data-theme="auto"] {
-    --surface-page: var(--navy-800);
-    --surface-raised: var(--navy-700);
-    --surface-sunken: var(--navy-900);
-    --surface-inverse: var(--cream-100);
-    --surface-water-soft: var(--navy-600);
-    --fg-1: var(--cream-100);
-    --fg-2: var(--navy-200);
-    --fg-3: var(--navy-300);
-    --fg-on-inverse: var(--navy-700);
-    --fg-on-inverse-2: var(--navy-500);
-    --fg-accent: var(--sun-400);
-    --fg-link: var(--cream-100);
-    --fg-link-hover: var(--sun-400);
-    --border-hairline: var(--navy-600);
-    --border-strong: var(--cream-100);
-    --border-focus: var(--sun-500);
-    --status-success: var(--pine-100); --status-success-bg: var(--navy-600);
-    --status-warning: var(--sun-400);  --status-warning-bg: var(--navy-600);
-    --status-danger: var(--rust-100);  --status-danger-bg: var(--navy-600);
-    --status-info: var(--water-400);   --status-info-bg: var(--navy-600);
-    --shadow-1: 0 1px 2px rgba(0,0,0,.4);
-    --shadow-2: 0 2px 6px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.3);
-    --shadow-3: 0 12px 40px rgba(0,0,0,.5);
-    --shadow-lift: 0 6px 18px rgba(0,0,0,.35);
-    --scrim: rgba(20,36,52,.72);
-    color-scheme: dark;
+/* Night: <html data-theme="dark">, set by assets/theme.js from the visitor's own choice (the header's sun and moon)
+   or, until they make one, their system's. North Shore defines no dark theme, so this one is drawn from its own
+   scales, with no new colors: navy pages, cream text, copper for the warm notes. */
+[data-theme="dark"] {
+  --surface-page: var(--navy-800);
+  --surface-raised: var(--navy-700);
+  --surface-sunken: var(--navy-900);
+  --surface-inverse: var(--cream-100);
+  --surface-water-soft: var(--navy-600);
+  --fg-1: var(--cream-100);
+  --fg-2: var(--navy-200);
+  --fg-3: var(--navy-300);
+  --fg-on-inverse: var(--navy-700);
+  --fg-on-inverse-2: var(--navy-500);
+  --fg-accent: var(--sun-400);
+  --fg-link: var(--cream-100);
+  --fg-link-hover: var(--sun-400);
+  --border-hairline: var(--navy-600);
+  --border-strong: var(--cream-100);
+  --border-focus: var(--sun-500);
+  --status-success: var(--pine-100); --status-success-bg: var(--navy-600);
+  --status-warning: var(--sun-400);  --status-warning-bg: var(--navy-600);
+  --status-danger: var(--rust-100);  --status-danger-bg: var(--navy-600);
+  --status-info: var(--water-400);   --status-info-bg: var(--navy-600);
+  --shadow-1: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-2: 0 2px 6px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.3);
+  --shadow-3: 0 12px 40px rgba(0,0,0,.5);
+  --shadow-lift: 0 6px 18px rgba(0,0,0,.35);
+  --scrim: rgba(20,36,52,.72);
+  color-scheme: dark;
 
-    --control-bg: var(--navy-900);
-    --action-ghost-hover: var(--navy-600);
-    --action-press: var(--navy-500);
-    --overlay: var(--navy-600);            /* a step above the card, with a hairline, so it lifts off the page */
-    --overlay-line: rgba(244, 241, 235, .2);
-    --feature: var(--navy-900);            /* the Happening card stays dark in Night, with a copper rule */
-    --link-line: var(--navy-400);
-    --button: var(--cream-100);
-    --button-hover: var(--cream-200);
-    --button-press: var(--cream-300);
-    --button-ink: var(--navy-900);
-    --accent: var(--sun-500);
-    --accent-ink: var(--sun-400);
-    --focus: var(--sun-500);
-    --control: var(--navy-300);
-    --placeholder: var(--navy-300);        /* 6.9:1 on navy-900; the browser's grey was 3.4:1 */
-    --invalid: var(--sun-400);
-    --oracle: var(--sun-400);
-    --charter: var(--navy-200);
-    --syllabus: var(--water-200);
-    --script: var(--sun-500);
-    --timer: var(--water-400);
-    --groups: var(--rust-100);
-    --feedback: var(--pine-100);
-    --calendar: var(--navy-300);
-  }
+  --control-bg: var(--navy-900);
+  --action-ghost-hover: var(--navy-600);
+  --action-press: var(--navy-500);
+  --overlay: var(--navy-600);            /* a step above the card, with a hairline, so it lifts off the page */
+  --overlay-line: rgba(244, 241, 235, .2);
+  --feature: var(--navy-900);            /* the Happening card stays dark in Night, with a copper rule */
+  --link-line: var(--navy-400);
+  --button: var(--cream-100);
+  --button-hover: var(--cream-200);
+  --button-press: var(--cream-300);
+  --button-ink: var(--navy-900);
+  --accent: var(--sun-500);
+  --accent-ink: var(--sun-400);
+  --focus: var(--sun-500);
+  --control: var(--navy-300);
+  --placeholder: var(--navy-300);        /* 6.9:1 on navy-900; the browser's grey was 3.4:1 */
+  --invalid: var(--sun-400);
+  --oracle: var(--sun-400);
+  --charter: var(--navy-200);
+  --syllabus: var(--water-200);
+  --script: var(--sun-500);
+  --timer: var(--water-400);
+  --groups: var(--rust-100);
+  --feedback: var(--pine-100);
+  --calendar: var(--navy-300);
 }
 /* Night's notes and cautions sit on navy-600, where sun-400 is 4.4:1; a link hovered there steps up to sun-200 (6.6:1) */
-@media (prefers-color-scheme: dark) {
-  [data-theme="auto"] :is(.note-box, .level-note, .stuck, .pick, .synthesis, .next, .caution, .audience, .message, .src-says, .builder-out, .monday) {
-    --fg-link-hover: var(--sun-200);
-  }
+[data-theme="dark"] :is(.note-box, .level-note, .stuck, .pick, .synthesis, .next, .caution, .audience, .message, .src-says, .builder-out, .monday) {
+  --fg-link-hover: var(--sun-200);
 }
+/* While the theme switches, one frame without transitions, so every color changes together (assets/theme.js) */
+.theme-switching *, .theme-switching *::before, .theme-switching *::after { transition: none !important; }
 
 
 /* ======================================================================================================
@@ -300,7 +299,7 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] {
   min-height: 32px; padding: 4px 12px; font-size: .85rem;
 }
 /* A toggle: pressed means on */
-button[aria-pressed="true"]:not(.path-card):not(.tab) { background: var(--button); border-color: var(--button); color: var(--button-ink); }
+button[aria-pressed="true"]:not(.path-card):not(.tab):not(.theme-toggle) { background: var(--button); border-color: var(--button); color: var(--button-ink); }   /* the theme toggle shows its state by its icon */
 /* Done: the button says it worked, for two seconds, without changing width */
 button.is-done, .button.is-done { background: var(--tint); border-color: var(--ink); color: var(--ink); }
 button.is-done::before { content: ""; width: 12px; height: 12px; background: currentColor; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); }
@@ -518,9 +517,7 @@ dialog[open]::backdrop { background: var(--scrim); }
 .code-actions .reset-code { margin-left: auto; }
 .room-status { margin: 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); min-height: 1.3em; }
 /* In Night the starter keeps its own light look, set inside the window like a screen in a frame */
-@media (prefers-color-scheme: dark) {
-  [data-theme="auto"] .room-frame { margin: 8px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--overlay-line); }
-}
+[data-theme="dark"] .room-frame { margin: 8px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--overlay-line); }
 /* A phone: the window fills the screen, the code is a tab, and Close sits top right */
 @media (max-width: 760px) {
   #room { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; border-radius: 0; border: 0; }
@@ -566,6 +563,29 @@ dialog[open]::backdrop { background: var(--scrim); }
 .site-nav .host-first { margin-left: 10px; padding-left: 10px; border-left: 1px solid rgb(244 241 235 / .24); }
 .menu-toggle { display: none; }
 
+/* Light or Night: the last item in the menu. The icon shows the theme that's on, from data-theme, with no script;
+   assets/theme.js says whether it's pressed (Night is "pressed") and saves the choice. Lucide's sun and moon (ISC). */
+:root {
+  --icon-sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41'/%3E%3C/svg%3E");
+  --icon-moon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z'/%3E%3C/svg%3E");
+}
+.theme-toggle {
+  min-height: 36px; width: 36px; padding: 0; gap: 12px; border: 0; border-radius: var(--radius-pill);
+  background: transparent; color: var(--bar-ink);
+}
+@media (hover: hover) { .theme-toggle:hover { background: rgb(255 255 255 / .12); color: var(--bar-ink); } }
+.theme-toggle:active { background: rgb(255 255 255 / .2); }
+.theme-icon {
+  flex: none; width: 20px; height: 20px; background: currentColor;
+  -webkit-mask: var(--icon-sun) center / contain no-repeat; mask: var(--icon-sun) center / contain no-repeat;
+}
+[data-theme="dark"] .theme-icon { -webkit-mask-image: var(--icon-moon); mask-image: var(--icon-moon); }
+.theme-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.theme-state { display: none; }
+.theme-state::after { content: "Off"; }
+[data-theme="dark"] .theme-state::after { content: "On"; }
+.site-nav .theme-item { margin-left: 6px; }
+
 /* A phone: the name and a Menu button; the pages open as full-width rows under the bar */
 @media (max-width: 760px) {
   .site-head-inner { flex-wrap: nowrap; }
@@ -586,6 +606,11 @@ dialog[open]::backdrop { background: var(--scrim); }
   .site-nav a { min-height: 48px; border-radius: var(--radius-sm); padding: 10px 12px; font-size: 1rem; }
   .site-nav .host-first { margin: 8px 0 0; padding: 8px 0 0; border-left: 0; border-top: 1px solid rgb(244 241 235 / .24); }
   .site-nav .host-item { margin-left: 0; }
+  /* In the menu the toggle is a row of its own, after a divider: the moon or sun, its name, and On or Off */
+  .site-nav .theme-item { margin: 8px 0 0; padding: 8px 0 0; border-top: 1px solid rgb(244 241 235 / .24); }
+  .site-nav .theme-toggle { width: 100%; min-height: 48px; justify-content: flex-start; padding: 10px 12px; border-radius: var(--radius-sm); font-size: 1rem; }
+  .site-nav .theme-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+  .site-nav .theme-state { display: inline; margin-left: auto; color: var(--bar-ink-2); font-weight: 500; }
 }
 @media (hover: hover) and (max-width: 760px) {
   .menu-toggle:hover { background: rgb(255 255 255 / .12); color: var(--bar-ink); border-color: var(--bar-ink); }

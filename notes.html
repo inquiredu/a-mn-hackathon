@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="auto">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,6 +8,7 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="assets/theme.js"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 <style>
@@ -144,6 +145,8 @@
   .notes-foot p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
   .notes-foot img { height: 32px; width: auto; }
   .notes-foot .partner-line img { height: 24px; }
+  /* Light or Night: the same button and the same choice as the site's header */
+  .notes-foot-end { display: flex; align-items: center; gap: 8px 12px; }
 
   /* ---------- The screen list ---------- */
   #jump-list { width: min(520px, calc(100vw - 24px)); height: auto; max-height: calc(100dvh - 48px); }
@@ -256,7 +259,8 @@
 <footer class="notes-foot">
   <div class="notes-foot-inner">
     <p class="signature-line"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="34" height="32"><span data-fill>{maker}</span><span aria-hidden="true">·</span><span class="sr-only">License:</span><a id="foot-license" href="#" target="_blank" rel="noopener" data-fill>{license}</a></p>
-    <p class="partner-line"><img src="assets/mngaia-mark.png" alt="" width="28" height="24"><span data-fill>{org}</span></p>
+    <div class="notes-foot-end"><p class="partner-line"><img src="assets/mngaia-mark.png" alt="" width="28" height="24"><span data-fill>{org}</span></p>
+    <button class="theme-toggle" type="button" aria-pressed="false" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></div>
   </div>
 </footer>
 

@@ -25,6 +25,7 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 | `assets/session.js` | The session file |
 | `assets/timing.js` | The clock: lays out the parts and fills in every `{time}` on the site from the session file |
 | `assets/site.js`, `assets/site.css` | The participant pages and the Hosts page |
+| `assets/theme.js` | Light or Night: the visitor's choice, or their system's, set before each page paints |
 | `assets/hosts.js` | The run of show and the room calculator |
 | `assets/sources-data.js`, `assets/sources.js` | The sources as data (add one entry to add a source), and the page that filters them |
 | `assets/present.js`, `assets/present.css`, `notes.html` | The stage and the speaker notes |
@@ -82,7 +83,7 @@ The speaker notes, in a window beside the stage in the same browser, keep three 
 
 ## Accessibility and privacy
 
-The target is WCAG 2.1 AA, with the WCAG 2.2 focus-not-hidden and target-size items, in light and dark themes and at 320px wide. [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) says what was checked, what was fixed, and what still needs a person with a screen reader. The site sets no cookies, loads no analytics, and sends nothing anywhere; the Copy buttons use the clipboard and nothing else. The starters use made-up names and made-up data, and ask you to do the same.
+The target is WCAG 2.1 AA, with the WCAG 2.2 focus-not-hidden and target-size items, in light and dark themes and at 320px wide. The site follows each visitor's system theme until they choose one with the sun or moon at the end of the header (in the Menu on a phone); the choice is kept in that browser and reaches the speaker notes too. [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) says what was checked, what was fixed, and what still needs a person with a screen reader. The site sets no cookies, loads no analytics, and sends nothing anywhere; the Copy buttons use the clipboard and nothing else. The starters use made-up names and made-up data, and ask you to do the same.
 
 ## License
 

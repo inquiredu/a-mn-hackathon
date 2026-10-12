@@ -1,5 +1,5 @@
 /* A plain spreadsheet, for pictures of what the two Apps Scripts make. Not a copy of any product's look:
-   a grid, column letters, row numbers, a frozen first row. Captured by scripts/starter-shots.js at 800 by 500. */
+   a grid, column letters, row numbers, a frozen first row. Captured by scripts/starter-shots.js 560 by 350, zoomed. */
 :root { --page: #f6f7f9; --ink: #1f2933; --muted: #5f6b7a; --line: #d9dee5; --head: #eef1f5; --link: #1a5fb4; --pick: #e7f0fb; --accent: #1e7a4c; }
 * { box-sizing: border-box; }
 html, body { height: 100%; }

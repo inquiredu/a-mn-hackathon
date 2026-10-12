@@ -64,8 +64,16 @@ const MEASURE = (rootSel) => `(() => {
       await report("Play window header", "#room .room-head");
       await tab.eval(`document.getElementById("toggle-code").click(); document.getElementById("run").click(); true`); await sleep(500);
       await report("Play window code pane and message", "#room .code-pane, #room .toast");
-      // Hover and focus, forced, on every control on a few pages
-      for (const page of ["index.html", "starters.html", "wish.html", "hosts.html", "sources.html"]) {
+      // The speaker notes and the stage, every visible line at rest (the stage with its controls showing)
+      await tab.go(BASE + "notes.html"); await sleep(300);
+      await report("Speaker notes: all text", "body");
+      for (const n of [0, 8, 12]) {
+        await tab.go(BASE + "present.html#" + n); await sleep(400);
+        await tab.eval(`document.body.classList.add("chrome-on"); document.getAnimations().forEach((a) => a.finish()); true`); await sleep(100);
+        await report("Stage screen " + (n + 1) + ": all text, controls showing", "body");
+      }
+      // Hover and focus, forced, on every control on every page
+      for (const page of ["index.html", "levels.html", "starters.html", "invent.html", "hosts.html", "sources.html", "notes.html"]) {
         await tab.go(BASE + page);
         await tab.eval(`document.querySelectorAll("details").forEach((d) => d.open = true); true`);
         const { root } = await tab.send("DOM.getDocument", { depth: -1 });

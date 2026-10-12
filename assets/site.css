@@ -153,6 +153,12 @@
     --calendar: var(--navy-300);
   }
 }
+/* Night's notes and cautions sit on navy-600, where sun-400 is 4.4:1; a link hovered there steps up to sun-200 (6.6:1) */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] :is(.note-box, .level-note, .stuck, .pick, .synthesis, .next, .caution, .audience, .message, .src-says, .builder-out, .monday) {
+    --fg-link-hover: var(--sun-200);
+  }
+}
 
 
 /* ======================================================================================================
@@ -688,11 +694,12 @@ dialog[open]::backdrop { background: var(--scrim); }
 .mini-steps .action-link { min-height: 36px; }
 .first-steps .hint { margin: 4px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
 /* The invitation: the shape of the morning as one row, and how to join said plainly */
-.shape-row { margin-top: 20px; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-@media (min-width: 600px) { .shape-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.shape-row li { padding: 12px 14px; }
-.shape-row strong { font-size: 1.75rem; }
-.shape-row span { font-size: .9rem; }
+/* .shape.shape-row: the general .shape rules come later in this file, so the row names both to win */
+.shape.shape-row { margin-top: 20px; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 600px) { .shape.shape-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.shape.shape-row li { padding: 12px 14px; }
+.shape.shape-row strong { font-size: 1.75rem; }
+.shape.shape-row span { font-size: .9rem; }
 .join { margin: 20px 0 0; }
 .join .pending { display: inline-block; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-family: var(--font-sans); font-style: normal; font-weight: 600; color: var(--ink); }
 .join:has(a) + .hero-actions .try { background: var(--surface); border-color: var(--control); color: var(--ink); }

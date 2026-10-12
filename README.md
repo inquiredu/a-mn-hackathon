@@ -13,7 +13,7 @@ Small tools you can build with AI in an afternoon or less, for people who run cl
 | [Starters](starters.html) | Builders | Eight starters across the three levels, to play, copy into an AI tool, and remix |
 | [Grant a wish](wish.html) | Builders | Build something from nothing: a wish builder, a jar of wishes, three moves for when you're stuck |
 | [Hosts](hosts.html) | Hosts and anchors | Forming teams, a room calculator, the run of show, before, during, and after |
-| [From the room](from-the-room.html) | Anyone, after a session | Each session's record, newest first, in tabs: an overview, questions answered, themes, offers and asks, and an index of everything shown and shared |
+| [From the room](from-the-room.html) | Anyone, after a session | Each session's record, newest first, in tabs: an overview, questions answered (some researched afterward, with sources), themes, offers and asks, and an index of everything shown and shared |
 | [Sources](sources.html) | Anyone curious | How-tos, cautions, and research on learning to code |
 | [Present](present.html) | The presenter | The main-room stage, with a session clock to call the morning to order and live timers; S opens speaker notes in a second window |
 

@@ -789,6 +789,18 @@ body[data-mode="after"] .recap-tabs { position: sticky; top: 0; z-index: 15; }
 .qa-body > p { margin: 10px 0 0; max-width: 48rem; }
 .qa-who { font-size: .85rem; color: var(--muted); }
 .qa .qa-see { color: var(--muted); font-size: .95rem; }
+/* Researched after the session: marked as ours, not the room's, with what each answer rests on */
+.qa-group-note { max-width: 52rem; margin: -4px 0 12px; color: var(--muted); }
+.qa-tag { flex: none; align-self: center; padding: 1px 9px; border-radius: 999px; background: var(--tint); color: var(--ink); font-size: .72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.qa > summary .qa-q { flex: 1; }
+@media (max-width: 600px) {   /* on a phone the tag rides above the question, so the question keeps the width */
+  .qa.researched > summary { flex-wrap: wrap; row-gap: 6px; }
+  .qa-tag { order: -1; }
+  .qa.researched > summary .qa-q { flex-basis: calc(100% - 40px); }
+}
+.qa-sources { margin-top: 12px; padding: 10px 14px; border-radius: var(--radius-sm); background: var(--tint); }
+.qa-sources p { margin: 0; font-family: var(--font-sans); font-size: .8rem; font-weight: 600; color: var(--muted); }
+.qa-sources ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: .95rem; }
 
 /* Themes: what kept coming up, in our words, with the room's words beside them */
 .themes { display: grid; gap: 14px; margin-top: 20px; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); }

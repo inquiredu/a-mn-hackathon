@@ -195,6 +195,17 @@ document.addEventListener("click", (event) => {
 addEventListener("hashchange", () => openTo(location.hash));
 openTo(location.hash);
 
+// A link from another page: the browser scrolls to its place before the fonts arrive and the now bar steps away,
+// which moves everything above it. Once the page has settled, land there again, unless the visitor has started moving.
+if (location.hash.length > 1) {
+  let moved = false;
+  ["wheel", "touchstart", "keydown", "mousedown"].forEach((type) => addEventListener(type, () => { moved = true; }, { once: true, passive: true }));
+  addEventListener("load", () => document.fonts.ready.then(() => requestAnimationFrame(() => {
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target && !moved && target.getClientRects().length) target.scrollIntoView({ block: "start", behavior: "instant" });
+  })));
+}
+
 
 // ---------- The clock ----------
 // Add ?now=10:50 to any page's address to see it as it will look at that moment on the day.
@@ -416,12 +427,18 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
 });
 
 
-// ---------- The level bar on Three levels: it sticks under the now bar and marks the level you're reading ----------
+// ---------- Three levels: one level at a time ----------
+// The level bar sticks under the now bar. One level shows at a time; the others wait as hidden="until-found", so the
+// browser's find-in-page still finds their words and opens the level they're in. A link to a level, or to a place
+// inside one (a fold, a step), opens that level first, with a short crossfade where the browser has view transitions
+// and the visitor hasn't asked for less motion. Back and forward follow; the level you last opened is remembered.
+// Without scripts, every level shows, one after another.
+
+const LEVEL_KEY = "first-builds-level";
 
 document.querySelectorAll(".level-bar").forEach((bar) => {
-  const links = [...bar.querySelectorAll("a")];
   const nowbar = document.querySelector(".nowbar");
-  // Its own place, and, for anything that sticks below it (a level's side panel), where the bar ends
+  // Its own place, and, for anything that sticks or scrolls to just below it, where the bar ends
   const place = () => {
     const top = nowbar && !nowbar.hidden && getComputedStyle(nowbar).position === "sticky" ? nowbar.offsetHeight : 0;
     bar.style.top = top + "px";
@@ -430,18 +447,50 @@ document.querySelectorAll(".level-bar").forEach((bar) => {
   place();
   addEventListener("resize", place);
   setInterval(place, 15000);
-  if (!("IntersectionObserver" in window)) return;
-  const watch = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      links.forEach((a) => {
-        const on = a.hash === "#" + entry.target.id;
-        a.toggleAttribute("aria-current", on);
-        if (on) bar.scrollTo({ left: a.offsetLeft - 16, behavior: "smooth" });   // on a phone, the level you're reading slides into view
-      });
+
+  const levels = [...document.querySelectorAll("article.level:not(.later)")];
+  if (!levels.length) return;
+  const levelOf = (hash) => {
+    const target = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
+    return target ? levels.find((level) => level.contains(target)) : null;
+  };
+  const show = (level) => {
+    levels.forEach((l) => { if (l === level) l.removeAttribute("hidden"); else l.setAttribute("hidden", "until-found"); });
+    // Every link to a level says which one is open: the bar, the comparison's cards, the back and next links
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      if (!levels.some((l) => a.hash === "#" + l.id)) return;
+      if (a.hash === "#" + level.id) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
     });
-  }, { rootMargin: "-30% 0px -60% 0px" });
-  links.forEach((a) => { const target = document.querySelector(a.hash); if (target) watch.observe(target); });
+    remember(LEVEL_KEY, level.id);
+  };
+  const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.addEventListener("click", (event) => {
+    const a = event.target.closest && event.target.closest('a[href^="#"]');
+    const level = a && levelOf(a.hash);
+    if (!level || !level.hidden) return;   // already open: the browser scrolls there as usual
+    if (!document.startViewTransition || reduced()) { show(level); return; }   // then the browser scrolls to it
+    event.preventDefault();
+    document.startViewTransition(() => {
+      show(level);
+      history.pushState({ level: level.id }, "", a.hash);
+      openTo(a.hash);
+      document.getElementById(decodeURIComponent(a.hash.slice(1))).scrollIntoView({ block: "start", behavior: "instant" });
+    });
+  });
+  // Back and forward: each step in the history knows the level it had open, or its address says
+  const follow = (event) => {
+    const id = event && event.state && event.state.level;
+    const level = (id && document.getElementById(id)) || levelOf(location.hash);
+    if (level && level.hidden) show(level);
+  };
+  addEventListener("hashchange", follow);
+  addEventListener("popstate", follow);
+  levels.forEach((level) => level.addEventListener("beforematch", () => show(level)));   // find-in-page found a word in it
+
+  const first = levelOf(location.hash) || levels.find((l) => l.id === recall(LEVEL_KEY)) || levels[0];
+  show(first);
+  history.replaceState({ ...history.state, level: first.id }, "");
 });
 
 

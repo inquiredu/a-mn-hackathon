@@ -58,7 +58,7 @@
       <p class="chooser-lead" data-show="before after">Pick one and start; there's nothing to sign up for.</p>
       <ul class="compare" aria-label="The three levels">
         <li>
-          <h3><a href="#chat"><span class="num">1</span>In the chat</a></h3>
+          <h3><span class="num">1</span>In the chat</h3>
           <dl>
             <div><dt>You make</dt><dd>A small tool you can press: a timer, a picker, a quiz</dd></div>
             <div><dt>The code runs</dt><dd>Inside your AI chat</dd></div>
@@ -66,10 +66,10 @@
             <div><dt>It can reach</dt><dd>Nothing outside the chat</dd></div>
             <div><dt>It teaches you</dt><dd>Code is text you can read and change</dd></div>
           </dl>
-          <p class="meta">Twenty minutes · an AI chat</p>
+          <div class="compare-foot"><p class="meta">Twenty minutes · an AI chat</p><a class="action-link" href="#chat">Open level 1</a></div>
         </li>
         <li>
-          <h3><a href="#site"><span class="num">2</span>On your site</a></h3>
+          <h3><span class="num">2</span>On your site</h3>
           <dl>
             <div><dt>You make</dt><dd>A page from a document you already have</dd></div>
             <div><dt>The code runs</dt><dd>In a box on your Google Site</dd></div>
@@ -77,10 +77,10 @@
             <div><dt>It can reach</dt><dd>Nothing outside its box</dd></div>
             <div><dt>It teaches you</dt><dd>Code lives somewhere, and the place sets the rules</dd></div>
           </dl>
-          <p class="meta">An hour · a Google Site you can edit</p>
+          <div class="compare-foot"><p class="meta">An hour · a Google Site you can edit</p><a class="action-link" href="#site">Open level 2</a></div>
         </li>
         <li>
-          <h3><a href="#script"><span class="num">3</span>Behind the scenes</a></h3>
+          <h3><span class="num">3</span>Behind the scenes</h3>
           <dl>
             <div><dt>You make</dt><dd>A job done for you in your Drive</dd></div>
             <div><dt>The code runs</dt><dd>On Google's computers, signed in as you</dd></div>
@@ -88,7 +88,7 @@
             <div><dt>It can reach</dt><dd>What you allow the first time it runs</dd></div>
             <div><dt>It teaches you</dt><dd>Code can act for you, so it asks first</dd></div>
           </dl>
-          <p class="meta">An hour the first time · your Google Drive</p>
+          <div class="compare-foot"><p class="meta">An hour the first time · your Google Drive</p><a class="action-link" href="#script">Open level 3</a></div>
         </li>
       </ul>
       <p class="small first-run" data-fill>First run live as {record.ran}; everything here works on your own, any day.</p>
@@ -109,10 +109,12 @@
         <div><h3>Change one thing</h3><p>One request at a time, then say what changed. When it breaks, describe what's on the screen in plain words. That's what programmers do too.</p></div>
       </div>
 
-      <nav class="level-bar" aria-label="Levels on this page">
-        <a href="#chat"><span class="num">1</span>In the chat</a>
-        <a href="#site"><span class="num">2</span>On your site</a>
-        <a href="#script"><span class="num">3</span>Behind the scenes</a>
+      <nav class="level-bar" aria-label="Levels">
+        <a href="#chat"><span class="num">1</span><span class="lb-text"><span class="lb-name">In the chat</span><span class="lb-time">20 min</span></span></a>
+        <span class="lb-line" aria-hidden="true"></span>
+        <a href="#site"><span class="num">2</span><span class="lb-text"><span class="lb-name">On your site</span><span class="lb-time">1 hour</span></span></a>
+        <span class="lb-line" aria-hidden="true"></span>
+        <a href="#script"><span class="num">3</span><span class="lb-text"><span class="lb-name">Behind the scenes</span><span class="lb-time">1 hour</span></span></a>
       </nav>
 
       <!-- LEVEL 1 -->
@@ -155,7 +157,9 @@
         <p>A timer that knows your bell schedule. A spinner for whose turn it is. A quiz on this week's words. Anything you'd put on the board and press.</p>
         </div>
         </div>
-        <p class="next-level"><a class="action-link" href="#site">Next: level 2, on your site</a></p>
+        <nav class="level-pager" aria-label="More levels">
+          <a class="pager-next" href="#site"><span class="pager-dir">Next</span><span class="pager-name"><span class="num">2</span>On your site</span></a>
+        </nav>
       </article>
 
       <!-- LEVEL 2 -->
@@ -189,9 +193,13 @@
           <li>A document to turn into a page: a charter, a syllabus, a handbook page, the norms on the wall. Made-up or your own; nothing about students. A poster? Type its words into a Doc first. A PDF? Open it and copy the text.</li>
           <li>A Google Site you can edit. No Site yet? Go to sites.google.com, choose <strong>Blank site</strong>, and give it a name. You don't have to publish it to try this: <strong>Preview</strong> shows it working.</li>
         </ul>
+        <details class="level-note" id="where-site">
+          <summary>Where do I paste it, and what you'll see</summary>
+          <div data-where="code"></div>
+        </details>
         <h3>Try it</h3>
         <ol>
-          <li>Copy the prompt. In your AI chat, switch on Canvas (Gemini) or get ready to press Preview (ChatGPT), as in <a href="#where">Where do I paste it</a>, then paste the prompt. Don't send yet.
+          <li>Copy the prompt. In your AI chat, switch on Canvas (Gemini) or get ready to press Preview (ChatGPT), as in <a href="#where-site">Where do I paste it</a>, then paste the prompt. Don't send yet.
             <div class="copybox fold">
               <div class="copy-actions"><button class="primary" data-copy-from="site-prompt" type="button">Copy the prompt</button></div>
               <details><summary>Read the prompt</summary>
@@ -200,7 +208,7 @@
             </div>
           </li>
           <li>Open your document, select all of its text (<span class="keys"><kbd>Ctrl</kbd> + <kbd>A</kbd></span>, or <span class="keys"><kbd>⌘</kbd> + <kbd>A</kbd></span> on a Mac), copy it, and paste it under the prompt in the same message. Send.</li>
-          <li>When the page looks right, copy its code. The code is the text that makes the page work; it starts with <code>&lt;!doctype html&gt;</code>. Each tool has its own copy spot (<a href="#where">listed above</a>). Copy all of it, first line to last.</li>
+          <li>When the page looks right, copy its code. The code is the text that makes the page work; it starts with <code>&lt;!doctype html&gt;</code>. Each tool has its own copy spot (<a href="#where-site">listed above</a>). Copy all of it, first line to last.</li>
           <li>Open your Google Site to edit it. Choose <strong>Insert</strong>, then <strong>Embed</strong>, then the <strong>Embed code</strong> tab. Paste, choose <strong>Next</strong>, then <strong>Insert</strong>.</li>
           <li>Drag the box's corner until the whole page shows. <strong>Preview</strong> shows it to you; <strong>Publish</strong> shows it to whoever your Site is shared with, and Sites asks you who that is.</li>
         </ol>
@@ -215,7 +223,10 @@
         <p>A syllabus that opens section by section. A family-handbook page people actually read. A "who to call" card for your department. Anything that's a document now and should be a page.</p>
         </div>
         </div>
-        <p class="next-level"><a class="action-link" href="#script">Next: level 3, behind the scenes</a></p>
+        <nav class="level-pager" aria-label="More levels">
+          <a class="pager-prev" href="#chat"><span class="pager-dir">Back</span><span class="pager-name"><span class="num">1</span>In the chat</span></a>
+          <a class="pager-next" href="#script"><span class="pager-dir">Next</span><span class="pager-name"><span class="num">3</span>Behind the scenes</span></a>
+        </nav>
       </article>
 
       <!-- LEVEL 3 -->
@@ -276,6 +287,9 @@
         <p>An inventory of a curriculum folder, so the right lesson is one search away. A Sheet that fills in a Doc for every row. A reminder that writes itself on Friday afternoon. Anything you do by hand in Workspace, again and again. The Starters page has a second script, <a href="starters.html#level-3">the Doc Multiplier</a>, which makes one Doc for every row of a Sheet: try it after this one.</p>
         </div>
         </div>
+        <nav class="level-pager" aria-label="More levels">
+          <a class="pager-prev" href="#site"><span class="pager-dir">Back</span><span class="pager-name"><span class="num">2</span>On your site</span></a>
+        </nav>
       </article>
 
       <!-- LATER, A GLIMPSE -->

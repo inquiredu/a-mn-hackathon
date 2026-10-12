@@ -802,6 +802,43 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .quiet-fold p { margin: 4px 0 10px; }
 
 /* ---------- Three levels ---------- */
+.chooser-lead { margin: 24px 0 0; font-family: var(--font-sans); font-weight: 600; }
+.chooser { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
+.chooser .card-link { height: 100%; }
+.chooser .card-link strong { margin-top: 6px; font-family: var(--font-sans); font-size: 1.125rem; }
+.chooser .card-link span:not(.num):not(.meta) { color: var(--muted); }
+.meta { margin: 6px 0 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); }
+.chooser .meta { margin-top: auto; padding-top: 8px; }
+.first-run { margin: 14px 0 0; }
+@media (max-width: 600px) {
+  .chooser .card-link { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 2px 12px; }
+  .chooser .card-link .num { grid-row: span 3; }
+  .chooser .card-link strong { margin-top: 2px; }
+}
+.level-bar {
+  position: sticky; top: 0; z-index: 15; display: flex; gap: 4px; margin: var(--block) -16px 0; padding: 8px 16px;
+  background: var(--bg); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none;
+}
+.level-bar::-webkit-scrollbar { display: none; }
+.level-bar a {
+  display: inline-flex; align-items: center; gap: 8px; flex: none; min-height: 40px; padding: 4px 12px 4px 6px;
+  border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: .95rem; font-weight: 600; text-decoration: none; color: var(--ink);
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+.level-bar .num { width: 26px; height: 26px; font-size: .8rem; }
+@media (max-width: 600px) { .level-bar a { padding-right: 10px; font-size: .9rem; } }
+@media (hover: hover) { .level-bar a:hover { background: var(--action-ghost-hover); color: var(--ink); } }
+.level-bar a[aria-current] { background: var(--button); color: var(--button-ink); }
+.level-bar a[aria-current] .num { border-color: var(--button-ink); color: var(--button-ink); }
+.level + .level, .level-bar + .level { margin-top: var(--block); }
+.next-level { margin: 24px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+.later-tag { display: inline-block; margin: 0 0 8px; padding: 1px 10px; border: 1px solid var(--control); border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.copy-note { margin: 0; font-size: .95rem; color: var(--muted); }
+.sub-steps { margin: 8px 0 0; padding-left: 1.5rem; }
+.sub-steps li { margin: 6px 0; }
+.stop-note { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: var(--status-warning-bg); font-size: .95rem; }
+.script-steps code { white-space: normal; overflow-wrap: anywhere; }
+.level .quiet-fold { margin-top: 20px; }
 .level { margin-top: var(--block); padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .level-head { display: flex; align-items: center; gap: 12px; }
 .level-head h2 { margin: 0; }
@@ -810,7 +847,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .level .level-what { font-size: 1.05rem; }
 .level ol, .level ul { margin: 6px 0 0; padding-left: 1.5rem; }
 .level li { margin: 6px 0; max-width: var(--measure); }
-.level.later .num { border-color: var(--muted); color: var(--muted); }
+.level.later { border-style: dashed; }
 .pick h2 { margin: 0; font-size: 1.25rem; }
 .pick p { margin: 10px 0 0; }
 

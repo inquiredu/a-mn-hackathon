@@ -52,51 +52,72 @@ const WHERE_NOTES = [
 
 // Level 3: the scripts' steps, written once for Starters and Three levels (<div data-steps="inventory"></div>).
 // Every step names its place; the permission screen is described as Google shows it.
-const PERMISSION = "The first run asks permission. A box says the project needs your permission: press Review permissions and choose your school account. Google may then say it hasn't verified this app, because you just wrote it: press Advanced, then the link that starts \"Go to\" (it may end in \"(unsafe)\"; that's Google's word for any script it hasn't reviewed, including your own). Then it asks to see, edit, create, and delete your Google Drive files and your Sheets. That's Google's standard wording for any script that touches Drive. ";
-const BLOCKED = "If you see \"blocked by your administrator\" instead, your district doesn't allow scripts; stop there and ask your technology office.";
+// In the text, `backticks` mark exact words to find or type (shown as code), and *asterisks* the name of a button or menu.
+const permission = (job) => ({
+  text: "The first run asks permission:",
+  sub: [
+    "A box says the project needs your permission: press *Review permissions* and choose your school account.",
+    "Google may say it hasn't verified this app, because you just wrote it: press *Advanced*, then the link that starts “Go to”. It may end in “(unsafe)”: that's Google's word for any script it hasn't reviewed, including your own.",
+    "It asks to see, edit, create, and delete your Google Drive files and your Sheets. That's Google's standard wording for any script that touches Drive. " + job + " Press *Allow*."
+  ],
+  stop: "Stop here if you see “blocked by your administrator”: your district doesn't allow scripts. Ask your technology office."
+});
 const SCRIPT_STEPS = {
   inventory: {
-    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and does a job in your Drive. Nothing to play. About an hour the first time, fifteen minutes after that.",
+    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and does a job in your Drive. Nothing to play.",
     before: [
       "A practice folder in Drive with two or three made-up Docs and one folder inside it. Point it at a real folder once you've seen it work."
     ],
     steps: [
-      "Press Copy the script.",
-      "Go to script.google.com and press New project. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
-      "Open your practice folder in Drive and look at the address bar: drive.google.com/drive/folders/1AbC…xyz. Copy the letters and numbers after folders/ and stop before any ?. In the script, find the line const FOLDER_ID = \"PASTE_THE_FOLDER_ID_HERE\" and paste over the capital letters, keeping the quote marks.",
-      "Press the Save icon. In the toolbar, the menu beside Run and Debug shows a name: choose inventory. Press Run.",
-      PERMISSION + "This script only reads files and makes one new Sheet; it never deletes. Press Allow. " + BLOCKED,
-      "When it finishes, a panel called Execution log opens below the code. Its last line is \"N files listed. Open the inventory:\" with a link. Click it."
+      "Press *Copy the script*.",
+      "Go to `script.google.com` and press *New project*. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
+      "Open your practice folder in Drive and look at the address bar: `drive.google.com/drive/folders/1AbC…xyz`. Copy the letters and numbers after `folders/`, and stop before any `?`.",
+      "In the script, find the line `const FOLDER_ID = \"PASTE_THE_FOLDER_ID_HERE\"` and paste over the capital letters, keeping the quote marks.",
+      "Press the *Save* icon. In the toolbar, the menu beside *Run* and *Debug* shows a name: choose `inventory`. Press *Run*.",
+      permission("This script only reads files and makes one new Sheet; it never deletes."),
+      "When it finishes, a panel called *Execution log* opens below the code. Its last line is “N files listed. Open the inventory:” with a link. Click it."
     ],
-    end: "A new Sheet in My Drive named \"Inventory:\" plus your folder's name, one row per file: its folder, title, type, link, and when it last changed.",
+    end: "A new Sheet in My Drive named “Inventory:” plus your folder's name, one row per file: its folder, title, type, link, and when it last changed.",
     breaking: [
-      "Red text in the Execution log: copy it and paste it into your AI chat with \"What went wrong?\"",
-      "\"Unexpected error\" or \"not found\": the folder ID is wrong or incomplete. Copy it again, stopping before any ?.",
+      "Red text in the *Execution log*: copy it and paste it into your AI chat with “What went wrong?”",
+      "“Unexpected error” or “not found”: the folder ID is wrong or incomplete. Copy it again, stopping before any `?`.",
       "A folder with thousands of files can take minutes and may stop before the end. Try a small folder first."
     ]
   },
   multiplier: {
-    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and makes Docs in your Drive. Nothing to play. About an hour the first time, fifteen minutes after that.",
+    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and makes Docs in your Drive. Nothing to play.",
     before: [
       "A Doc to copy. Whatever is in it gets copied; a made-up team planning doc is fine.",
-      "A Sheet whose first tab has one made-up name per row in column A, starting in row 2, with a heading like \"Team\" in row 1. Leave column B empty: the script writes each copy's link there, replacing anything in it."
+      "A Sheet whose first tab has one made-up name per row in column A, starting in row 2, with a heading like “Team” in row 1. Leave column B empty: the script writes each copy's link there, replacing anything in it."
     ],
     steps: [
-      "Press Copy the script.",
-      "Go to script.google.com and press New project. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
-      "Open your Doc and look at the address bar: docs.google.com/document/d/1AbC…xyz/edit. Copy the letters and numbers between /d/ and /edit. In the script, find const TEMPLATE_ID = \"PASTE_THE_DOC_ID_HERE\" and paste over the capital letters, keeping the quote marks. Do the same for your Sheet on the SHEET_ID line; its ID sits between /d/ and /edit in the same way.",
-      "Press the Save icon. In the toolbar, the menu beside Run and Debug shows a name: choose multiply. Press Run.",
-      PERMISSION + "This script reads your Doc and Sheet and makes copies in one new folder; it never deletes. Press Allow. " + BLOCKED,
-      "When it finishes, a panel called Execution log opens below the code. Its last line is \"N copies made. Open the folder:\" with a link. Click it."
+      "Press *Copy the script*.",
+      "Go to `script.google.com` and press *New project*. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
+      "Open your Doc and look at the address bar: `docs.google.com/document/d/1AbC…xyz/edit`. Copy the letters and numbers between `/d/` and `/edit`. In the script, find `const TEMPLATE_ID = \"PASTE_THE_DOC_ID_HERE\"` and paste over the capital letters, keeping the quote marks.",
+      "Do the same for your Sheet on the `SHEET_ID` line; its ID sits between `/d/` and `/edit` in the same way.",
+      "Press the *Save* icon. In the toolbar, the menu beside *Run* and *Debug* shows a name: choose `multiply`. Press *Run*.",
+      permission("This script reads your Doc and Sheet and makes copies in one new folder; it never deletes."),
+      "When it finishes, a panel called *Execution log* opens below the code. Its last line is “N copies made. Open the folder:” with a link. Click it."
     ],
-    end: "A new folder in My Drive named \"Copies of\" plus your Doc's name, one copy per row, each named for its row; and column B of your Sheet now holds a link to each copy. Run it again only if you want a second set.",
+    end: "A new folder in My Drive named “Copies of” plus your Doc's name, one copy per row, each named for its row; and column B of your Sheet now holds a link to each copy. Run it again only if you want a second set.",
     breaking: [
-      "Red text in the Execution log: copy it and paste it into your AI chat with \"What went wrong?\"",
-      "\"Unexpected error\" or \"not found\": an ID is wrong or incomplete. Copy it again, stopping before /edit.",
+      "Red text in the *Execution log*: copy it and paste it into your AI chat with “What went wrong?”",
+      "“Unexpected error” or “not found”: an ID is wrong or incomplete. Copy it again, stopping before `/edit`.",
       "Blank Docs with the right names: the Doc you pointed at is empty, or you pasted the Sheet's ID on the Doc's line."
     ]
   }
 };
+
+// The steps' small markup, drawn as text nodes, code, and strong: never parsed as HTML
+function richText(text) {
+  const frag = document.createDocumentFragment();
+  text.split(/(`[^`]+`|\*[^*]+\*)/).forEach((part) => {
+    if (/^`.+`$/.test(part)) frag.append(el("code", "", part.slice(1, -1)));
+    else if (/^\*.+\*$/.test(part)) frag.append(el("strong", "", part.slice(1, -1)));
+    else if (part) frag.append(part);
+  });
+  return frag;
+}
 
 
 // ---------- Small helpers ----------
@@ -374,6 +395,30 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
 });
 
 
+// ---------- The level bar on Three levels: it sticks under the now bar and marks the level you're reading ----------
+
+document.querySelectorAll(".level-bar").forEach((bar) => {
+  const links = [...bar.querySelectorAll("a")];
+  const nowbar = document.querySelector(".nowbar");
+  const place = () => { bar.style.top = (nowbar && !nowbar.hidden && getComputedStyle(nowbar).position === "sticky" ? nowbar.offsetHeight : 0) + "px"; };
+  place();
+  addEventListener("resize", place);
+  setInterval(place, 15000);
+  if (!("IntersectionObserver" in window)) return;
+  const watch = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      links.forEach((a) => {
+        const on = a.hash === "#" + entry.target.id;
+        a.toggleAttribute("aria-current", on);
+        if (on) bar.scrollTo({ left: a.offsetLeft - 16, behavior: "smooth" });   // on a phone, the level you're reading slides into view
+      });
+    });
+  }, { rootMargin: "-30% 0px -60% 0px" });
+  links.forEach((a) => { const target = document.querySelector(a.hash); if (target) watch.observe(target); });
+});
+
+
 // ---------- Where do I paste it? One tool at a time, the visitor's own remembered ----------
 
 document.querySelectorAll("[data-where]").forEach((box, n) => {
@@ -433,12 +478,25 @@ document.querySelectorAll("[data-where]").forEach((box, n) => {
 document.querySelectorAll("[data-steps]").forEach((box) => {
   const plan = SCRIPT_STEPS[box.dataset.steps];
   if (!plan) return;
-  const list = (items, tag) => { const l = el(tag); items.forEach((text) => l.append(el("li", "", text))); return l; };
+  const item = (step) => {
+    const li = el("li");
+    if (typeof step === "string") { li.append(richText(step)); return li; }
+    li.append(richText(step.text));
+    const sub = el("ol", "sub-steps");
+    sub.type = "a";
+    step.sub.forEach((text) => { const s2 = el("li"); s2.append(richText(text)); sub.append(s2); });
+    li.append(sub);
+    if (step.stop) { const stop = el("p", "stop-note"); stop.append(richText(step.stop)); li.append(stop); }
+    return li;
+  };
+  const list = (items, tag) => { const l = el(tag); items.forEach((step) => l.append(item(step))); return l; };
+  const end = el("p");
+  end.append(richText(plan.end));
   box.replaceChildren(
     el("p", "kind", plan.kind),
     el("h5", "", "Before you start"), list(plan.before, "ul"),
     el("h5", "", "Steps"), list(plan.steps, "ol"),
-    el("h5", "", "You'll know it worked"), el("p", "", plan.end),
+    el("h5", "", "You'll know it worked"), end,
     el("h5", "", "If it breaks"), list(plan.breaking, "ul")
   );
 });

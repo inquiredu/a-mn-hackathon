@@ -273,6 +273,7 @@ document.querySelectorAll(".next").forEach((card) => { card.hidden = !SESSION.ne
 
 function showMode(mode) {
   document.body.dataset.mode = mode;
+  document.querySelectorAll("details[data-open-during]").forEach((fold) => { if (mode === "during") fold.open = true; });
   document.querySelectorAll("[data-show]").forEach((section) => {
     section.hidden = !section.dataset.show.split(" ").includes(mode);
   });
@@ -648,7 +649,7 @@ document.querySelectorAll("[data-copy-machine]").forEach((button) => {
 });
 
 
-// ---------- Remix menus, copy boxes, the wish jar, and the wish builder ----------
+// ---------- Remix menus, copy boxes, and the builder on Invent your own ----------
 
 document.querySelectorAll(".remix li:not(.do)").forEach((item) => {
   const text = item.querySelector("span").firstChild.textContent.trim();
@@ -701,31 +702,46 @@ document.querySelectorAll("[data-copy-from]").forEach((button) => {
   button.addEventListener("click", () => copyText(source.textContent.trim(), null, button));
 });
 
-document.querySelectorAll("[data-wish]").forEach((button) => {
-  button.setAttribute("aria-describedby", "jar-hint");
-  button.addEventListener("click", () => {
-    const prompt = "Build me a small web app: " + button.dataset.wish + ". Make it simple, colorful, and fun to use. Use made-up data.";
-    copyText(prompt, () => nextStep(button.textContent, button), button);
-  });
-});
-
-// The wish builder: three short answers become a prompt
-if ($("wb-out")) {
-  const fields = ["wb-what", "wb-who", "wb-does"].map($);
-  const wishText = () => {
-    const [what, who, does] = fields.map((f) => f.value.trim());
-    return "Build me a small web app: " + (what || "[what it is]") + " for " + (who || "[who it's for]") +
-      ". It should " + (does || "[what it does]") + ". Make it simple, colorful, and fun to use. Use made-up data.";
+// Invent your own: three short answers become a request for an AI; an idea from the jar fills the three in,
+// so the visitor sees it and can change it before copying. An empty answer is marked where it is, not in a message.
+if ($("idea-out")) {
+  const fields = ["idea-what", "idea-who", "idea-does"].map($);
+  const blanks = ["what it is", "who it's for", "what it does"];
+  const values = () => fields.map((f) => f.value.trim());
+  const request = () => {
+    const [what, who, does] = values();
+    return "Build me a small web app: " + what + " for " + who + ". It should " + does + ". Make it simple, colorful, and fun to use. Use made-up data.";
   };
-  const show = () => { $("wb-out").textContent = wishText(); };
-  fields.forEach((f) => f.addEventListener("input", show));
-  show();
-  $("wb-copy").addEventListener("click", () => {
-    if (fields.some((f) => !f.value.trim())) {
-      say("Fill in all three answers first, or take one from the wish jar.");
+  const render = () => {
+    const v = values();
+    const part = (i) => v[i] ? document.createTextNode(v[i]) : el("span", "blank", blanks[i]);
+    $("idea-out").replaceChildren("Build me a small web app: ", part(0), " for ", part(1), ". It should ", part(2),
+      ". Make it simple, colorful, and fun to use. Use made-up data.");
+    $("idea-label").textContent = v.every(Boolean) ? "Your request, ready to paste:" : "Your request so far:";
+  };
+  const clearErrors = () => { fields.forEach((f) => f.removeAttribute("aria-invalid")); $("idea-error").textContent = ""; };
+  fields.forEach((f) => f.addEventListener("input", () => { f.removeAttribute("aria-invalid"); if (!fields.some((x) => x.getAttribute("aria-invalid"))) $("idea-error").textContent = ""; render(); }));
+  render();
+  $("idea-copy").addEventListener("click", () => {
+    const empty = fields.filter((f) => !f.value.trim());
+    if (empty.length) {
+      empty.forEach((f) => f.setAttribute("aria-invalid", "true"));
+      $("idea-error").textContent = empty.length === 3 ? "Answer the three questions first, or take an idea from the jar." : "Answer " + (empty.length === 1 ? "the last question" : "the other questions") + " first.";
+      empty[0].focus();
       return;
     }
-    copyText(wishText(), () => nextStep("your wish", $("wb-copy")), $("wb-copy"));
+    copyText(request(), () => nextStep("your request", $("idea-copy")), $("idea-copy"));
+  });
+  document.querySelectorAll("[data-idea]").forEach((button) => {
+    button.setAttribute("aria-describedby", "jar-hint");
+    button.addEventListener("click", () => {
+      button.dataset.idea.split("|").forEach((answer, i) => { fields[i].value = answer; });
+      clearErrors();
+      render();
+      markDone(button, "In the builder");
+      $("builder").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      fields[0].focus({ preventScroll: true });
+    });
   });
 }
 

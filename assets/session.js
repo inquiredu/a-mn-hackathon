@@ -3,7 +3,7 @@
 // To run a new session, copy this file and change what's inside.
 //
 // Times live only here. Anywhere in this file's text, or in a page element marked data-fill,
-// write a time, date, or length in braces: {start}, {wish.end - nudge}, {Length}, {weekday}.
+// write a time, date, or length in braces: {start}, {invent.end - nudge}, {Length}, {weekday}.
 // assets/timing.js fills them in, and lists everything you can write.
 
 const SESSION = {
@@ -54,7 +54,7 @@ const SESSION = {
   // What comes after this session, said at the close. Empty, the close says only thank you.
   next: "",
 
-  // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {wish.end - nudge}.
+  // Cues inside the parts, in minutes. Write one as {nudge}, or move a time by it: {invent.end - nudge}.
   pace: {
     showTurn: 4,       // each builder's turn at Show & Tell (the stage timer starts here)
     roomsReady: 2,     // the co-host has the rooms ready this long before they open
@@ -67,7 +67,7 @@ const SESSION = {
 
   // The morning, in order. The parts run end to end from the start, so changing one part's
   // minutes moves every part after it. Each part has:
-  //   id           a short name for braces: {remix.start}, {wish.end}, {wish.length}
+  //   id           a short name for braces: {remix.start}, {invent.end}, {invent.length}
   //   minutes      how long it runs
   //   where        "Main room" or "Breakout rooms"
   //   hint         one line for participants
@@ -85,9 +85,9 @@ const SESSION = {
       link: "index.html#today",
       screens: [
         { kind: "title", note: "Welcome people as they arrive. Say: this is a session to play; nobody here is a developer by trade. (The first run added: a month into the school year. Change it to fit your group.)", heading: "{title}", sub: "{subtitle}. {Length} to play, build, and break things with AI, together." },
-        { kind: "prompt", note: "Say: finish the sentence in the chat: I wish I had a thing that… A wish is a small tool you wish you had for your work. Read two or three aloud. Co-host: copy each wish into the Wishes list in the Breakout Planner (the shared Google Doc you made from Hosts, Before the day; its link goes in the chat at Pick your level); main-room chat won't follow people into rooms.", heading: "While we gather", big: "I wish I had a thing that...", body: "Finish the sentence in the chat. Any wish counts." },
+        { kind: "prompt", note: "Say: finish the sentence in the chat: I'd invent a thing that… An invention here is a small tool you'd want for your work. Read two or three aloud. Co-host: copy each idea into the Ideas list in the Breakout Planner (the shared Google Doc you made from Hosts, Before the day; its link goes in the chat at Pick your level); main-room chat won't follow people into rooms.", heading: "While we gather", big: "I'd invent a thing that...", body: "Finish the sentence in the chat. Any idea counts." },
         { kind: "embed", note: "Do: share the stage tab in Meet with tab audio on (not this notes window). The Oracle is built into this screen: type two or three questions from the chat into its box and press Consult. Don't explain how it knows yet; that's the close.", heading: "Ask the Oracle", src: "cabinets/oracle.html", caption: "Questions from the chat, answered live." },
-        { kind: "plan", note: "Do: paste the site's address in the chat if you haven't. Say one sentence per part: Three levels ({levels.length}), Show & Tell ({show.length}), the Remix Arcade ({remix.length}), Grant a wish ({wish.length}), Show & Cheer ({cheer.length}), the close ({close.length}).", heading: "Here's what we're here to do", url: true },
+        { kind: "plan", note: "Do: paste the site's address in the chat if you haven't. Say one sentence per part: Three levels ({levels.length}), Show & Tell ({show.length}), the Remix Arcade ({remix.length}), Invent your own ({invent.length}), Show & Cheer ({cheer.length}), the close ({close.length}).", heading: "Here's what we're here to do", url: true },
         { kind: "prompt", note: "Say: a number from 1 to 5 in the chat; 1 is not yet, 5 is I'm having a hard time stopping. Read a few aloud as they come in; every number is welcome, and a room of 1s is a good room. Co-host: list the 4s and 5s. They're the anchors: one per breakout room, who shares their screen first so the room has something to start from. Message each one privately to say so.", heading: "How much have you built with AI?", big: "1 to 5, in the chat", body: "1: not yet. 5: I'm having a hard time stopping." },
         { kind: "prompt", note: "Say: built something already? One sentence: what was it? Read two or three aloud; whatever they name, it fits one of the three levels coming next, so say so as you read. Co-host: add the builders to the anchors list.", heading: "Built something already?", big: "What was it?", body: "One sentence in the chat. We'll ask some of you to show it after the next part." }
       ],
@@ -96,10 +96,10 @@ const SESSION = {
         "Turn on captions.",
         "Ask the Oracle two or three questions from the chat. It's built into the stage screen; share the tab with its sound on.",
         "Co-host: from the chat, list the 4s, the 5s, and anyone who says what they built. They're the anchors, one for each room.",
-        "Co-host: copy each wish from the chat into the Wishes list in the Breakout Planner; main-room chat won't follow people into rooms."
+        "Co-host: copy each idea from the chat into the Ideas list in the Breakout Planner; main-room chat won't follow people into rooms."
       ],
       messages: [
-        { to: "Main chat", text: "Welcome! Everything for today is here: https://{url}\nPage blocked on your network? The same session as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I wish I had a thing that..." },
+        { to: "Main chat", text: "Welcome! Everything for today is here: https://{url}\nPage blocked on your network? The same session as slides: {links.backup}\nWhile we gather, finish this sentence in the chat: I'd invent a thing that..." },
         { to: "Main chat", text: "How much have you built with AI? Type a number from 1 to 5.\n1: not yet. 5: I'm having a hard time stopping." },
         { to: "Main chat", text: "Built something already? In one sentence: what was it?" }
       ]
@@ -150,7 +150,7 @@ const SESSION = {
     },
     {
       id: "remix", minutes: 17, title: "The Remix Arcade", where: "Breakout rooms",
-      hint: "The hosts move you into a breakout room with others at your level, and you stay in it for Grant a wish. Level 1 (in the chat): pick a starter and make it yours. Levels 2 (on your site) and 3 (behind the scenes): open your level on Three levels, get its example working, then make it yours.",
+      hint: "The hosts move you into a breakout room with others at your level, and you stay in it for Invent your own. Level 1 (in the chat): pick a starter and make it yours. Levels 2 (on your site) and 3 (behind the scenes): open your level on Three levels, get its example working, then make it yours.",
       link: "starters.html", linkLabel: "Open the starters",
       shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
@@ -160,31 +160,31 @@ const SESSION = {
           "Level 1: pick a starter and make it yours. Levels 2 and 3: run your level's example, then make it yours.",
           "Stuck? Press Ask for help in Meet."
         ], foot: "Back in the main room in {building}" },        { kind: "link", note: "Do: leave this up for a minute as the rooms open, and paste the site's address in the main chat once more for anyone still there. The Remix Arcade: each room picks a starter and changes one thing about it.", heading: "Everything is here", body: "The starters, the three levels, the Breakout Planner, and the gallery wall." },
-        { kind: "prompt", note: "Do: T starts the building timer ({building}) as the rooms open; it keeps counting on the next screen, and + and − nudge it. The session clock in the corner keeps the big picture. You stay in the main room and build a wish from the chat, live, with anyone who stays; the co-host visits rooms and watches for Ask for help.", heading: "Rooms are building", body: "Rather watch? Stay here. We're building wishes live in the main room.", timer: "building", timerKey: "building" }      ],
+        { kind: "prompt", note: "Do: T starts the building timer ({building}) as the rooms open; it keeps counting on the next screen, and + and − nudge it. The session clock in the corner keeps the big picture. You stay in the main room and invent from an idea in the chat, live, with anyone who stays; the co-host visits rooms and watches for Ask for help.", heading: "Rooms are building", body: "Rather watch? Stay here. We're inventing live in the main room, from your ideas.", timer: "building", timerKey: "building" }      ],
       host: [
         "Walk the four steps on the stage: find your room number in the Breakout Planner; your anchor shares their screen and everyone builds along for {buildAlong}; level 1 picks a starter, levels 2 and 3 run their level's example; stuck means Ask for help in Meet.",
         "Co-host: open the rooms.",
         "Paste the page link into each room's chat as you visit (breakout chats start empty).",
-        "The presenter stays in the main room, building wishes live with anyone who stays; the co-host visits rooms and watches for Ask for help."
+        "The presenter stays in the main room, inventing live from the chat's ideas with anyone who stays; the co-host visits rooms and watches for Ask for help."
       ],
       messages: [
         { to: "Each breakout room", text: "Everything's here: https://{url}\nLevel 1: the starters. Levels 2 and 3: your example, prompt, and script are at https://{url}/levels.html\nAnchor: share your screen and start one together.\nPage blocked? The starters as slides, code in the notes: {links.companion}" }
       ]
     },
     {
-      id: "wish", minutes: 40, title: "Grant a wish", where: "Breakout rooms",
-      hint: "Same room. Build something from nothing at your level: your own wish, or one from the Breakout Planner.",
-      link: "wish.html", linkLabel: "Open Grant a wish",
+      id: "invent", minutes: 40, title: "Invent your own", where: "Breakout rooms",
+      hint: "Same room. Invent something from nothing at your level: your own idea, or one from the Breakout Planner.",
+      link: "invent.html", linkLabel: "Start your invention",
       shared: [{ link: "gallery", label: "Gallery wall" }],
-      screens: [        { kind: "prompt", note: "Do: when the building timer shows {wish.length} left, the Remix Arcade is over: the co-host visits each room to say switch to granting a wish, your own or one from the Breakout Planner (Meet can't message every room at once; the Planner's top line can carry the word too). Same timer as the last screen, still counting; don't reset it. With {nudge} left, visit each room again: pin something to the gallery wall (the walls deck you made from Hosts, linked in the chat), even half-built. Co-host: while visiting, note one build for each award: Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used. At zero, the co-host closes the rooms. Keep building in the main room meanwhile.", heading: "Grant a wish", body: "Your wish, at your level, or one from the Breakout Planner. Pin something to the gallery wall before you head back.", timer: "building", timerKey: "building" }      ],
+      screens: [        { kind: "prompt", note: "Do: when the building timer shows {invent.length} left, the Remix Arcade is over: the co-host visits each room to say switch to inventing your own: your own idea, or one from the Breakout Planner (Meet can't message every room at once; the Planner's top line can carry the word too). Same timer as the last screen, still counting; don't reset it. With {nudge} left, visit each room again: pin something to the gallery wall (the walls deck you made from Hosts, linked in the chat), even half-built. Co-host: while visiting, note one build for each award: Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used. At zero, the co-host closes the rooms. Keep building in the main room meanwhile.", heading: "Invent your own", body: "Your own idea, at your level, or one from the Breakout Planner. Pin something to the gallery wall before you head back.", timer: "building", timerKey: "building" }      ],
       host: [
-        "At the switch from the Remix Arcade, visit each room to say: switch to granting a wish, your own or one from the Breakout Planner. (Meet can't message every room at once; a line at the top of the Breakout Planner, which everyone has open, carries the word too.)",
+        "At the switch from the Remix Arcade, visit each room to say: switch to inventing your own: your own idea, or one from the Breakout Planner. (Meet can't message every room at once; a line at the top of the Breakout Planner, which everyone has open, carries the word too.)",
         "With {nudge} left, visit each room again, or change the Planner's top line: pin something to the gallery wall, even half-built.",
         "Co-host: note one build for each award (Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used), and one or two builders to ask first at Show & Cheer.",
         "At zero, the co-host closes the rooms; Meet gives everyone a short countdown."
       ],
       messages: [
-        { to: "Each breakout room", text: "{Nudge} left! Pin what you have to the gallery wall, even if it's half-built. Half-built counts.\nHow: https://{url}/wish.html#wall" }
+        { to: "Each breakout room", text: "{Nudge} left! Pin what you have to the gallery wall, even if it's half-built. Half-built counts.\nHow: https://{url}/invent.html#wall" }
       ]
     },
     {

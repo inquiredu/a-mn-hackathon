@@ -817,26 +817,51 @@ dialog[open]::backdrop { background: var(--scrim); }
 .remix li.do { display: block; background: transparent; border-style: dashed; }
 
 /* ---------- Invent your own ---------- */
-.path { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
-.path li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
-.path h3 { margin: 10px 0 6px; }
-.path p { margin: 0; color: var(--muted); }
-.path li:first-child { grid-column: 1 / -1; }
-.builder { display: grid; gap: 4px; margin-top: 12px; max-width: 40rem; }
-.builder label { margin-top: 10px; font-weight: 600; color: var(--ink); }
-.builder textarea { resize: vertical; min-height: 72px; }
-.builder-label { margin: 14px 0 0 !important; font-size: .9rem; font-weight: 600; color: var(--muted); }
-.builder-out { margin: 4px 0 10px !important; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--tint); border: 1px dashed var(--control); color: var(--ink) !important; }
-.builder-out .blank { color: var(--muted); text-decoration: underline dotted var(--accent); text-underline-offset: .25em; }
-.builder .primary { justify-self: start; }
+/* One card for the one task (describe it), the jar inside it, then what happens after you copy as a plain list */
+.step-label { margin: 0 0 4px; font: var(--type-eyebrow); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); }
+.invent-card { margin-top: var(--block); padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.invent-card > h2 { font-size: 1.5rem; }
+.invent-layout { display: grid; gap: 16px 32px; grid-template-columns: minmax(0, 1fr); margin-top: 8px; }
+@media (min-width: 960px) {
+  .invent-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+  .request { position: sticky; top: 24px; padding-top: 30px; }
+}
+.builder { display: grid; gap: 4px; }
+.builder label { margin-top: 12px; font-weight: 600; color: var(--ink); }
+.builder textarea { resize: vertical; min-height: 0; }
+.request { display: grid; gap: 4px; justify-items: start; }
+.builder-label { margin: 8px 0 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); }
+.builder-out { justify-self: stretch; margin: 4px 0 10px; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--tint); border: 1px dashed var(--control); color: var(--ink); }
+.builder-out .blank { color: var(--muted); font-style: italic; text-decoration: underline dotted var(--accent); text-underline-offset: .25em; }
+.jar-box { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+.jar-title { font-size: 1.125rem; }
+.jar-box .hint { margin: 6px 0 12px; }
 .jar { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .jar button { font-weight: 500; text-align: left; justify-content: flex-start; }
 @media (max-width: 600px) { .jar { display: grid; } .jar button { width: 100%; } }
-#wall .link-slot { display: block; margin: 18px 0 0; }
-.wall-steps { margin: 0; padding-left: 1.4em; max-width: var(--measure); }
-.wall-steps li { margin: 8px 0; }
+.step-list { list-style: none; margin: var(--block) 0 0; padding: 0; display: grid; gap: 0; }
+.step-list > li { padding: 20px 0; border-top: 1px solid var(--line); }
+.step-list > li:last-child { border-bottom: 1px solid var(--line); }
+.step-list h3 { margin: 0 0 6px; }
+.step-list p { margin: 0; }
+.step-list .copybox { max-width: var(--measure); }
+@media (min-width: 960px) {
+  .step-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
+  .step-list > li:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
 .stuck ul { margin: 10px 0 0; padding-left: 20px; }
-.stuck li { margin: 6px 0; max-width: var(--measure); }
+.stuck li { margin: 8px 0; max-width: var(--measure); }
+.stuck .copybox { margin-top: 8px; }
+.stuck > p { margin: 10px 0 0; }
+.live-note { color: var(--muted); }
+#wall .link-slot { display: block; margin: 18px 0 0; }
+.live-fold { margin-top: var(--block); padding: 4px var(--card-pad) var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.live-fold > summary { font-size: 1.125rem; }
+.live-fold p { margin: 10px 0 0; }
+.wall-steps { margin: 10px 0 0; padding-left: 1.4em; max-width: var(--measure); }
+.wall-steps li { margin: 8px 0; }
+#wall .caution { margin-top: var(--block); }
+#wall .caution p { margin: 6px 0 0; }
 
 /* ---------- Hosts ---------- */
 .hosts-intro { max-width: var(--measure); }

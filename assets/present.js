@@ -209,7 +209,7 @@ const KINDS = {
 
 // ---------- The timer, on screens that ask for one ----------
 
-const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());// A timer's length is a pace, a part's id ("wish"), "building" (all the time in breakout rooms), or minutes.
+const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());// A timer's length is a pace, a part's id ("invent"), "building" (all the time in breakout rooms), or minutes.
 // Screens that name the same timerKey share one timer, so it keeps counting from one screen to the next.
 const TIMER_LENGTHS = { ...SESSION.pace, building: 0 };
 SESSION.segments.forEach((s) => {

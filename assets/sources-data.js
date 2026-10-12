@@ -414,7 +414,7 @@ const SOURCES = [
     url: "https://doi.org/10.3102/0013189X12463051",
     who: "Shuchi Grover & Roy Pea", venue: "Educational Researcher", when: "2013", type: "research", peer: true,
     says: "A review recommending tools with a low floor and a high ceiling, plus scaffolding. It flags open questions about transfer to other subjects and how to measure what learners gain.",
-    takeLabel: "For the session", take: "The starters are the low floor; granting a wish from scratch is the high ceiling.",
+    takeLabel: "For the session", take: "The starters are the low floor; inventing your own from scratch is the high ceiling.",
     asks: ["thinking", "starting", "assessment"]
   },
   {
@@ -423,7 +423,7 @@ const SOURCES = [
     url: "https://users.soe.ucsc.edu/~linda/pubs/ACMInroads.pdf",
     who: "Lee, Martin, Denner, Coulter, Allan, Erickson, Malyn-Smith & Werner", venue: "ACM Inroads", when: "2011", type: "research",
     says: "Proposes Use-Modify-Create: learners use someone else's program, change it (first how it looks, then how it behaves) until it becomes their own, and then create their own. The authors note that learners move back and forth between stages.",
-    takeLabel: "For the session", take: "Play a starter, change it, remix it, grant a wish. That's Use-Modify-Create.",
+    takeLabel: "For the session", take: "Play a starter, change it, remix it, invent your own. That's Use-Modify-Create.",
     asks: ["starting"]
   },
   {

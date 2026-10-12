@@ -10,10 +10,11 @@ const BASE = "http://localhost:4179/";
 
 // Measures every visible text run inside `root`, against the first opaque background up the tree
 const MEASURE = (rootSel) => `(() => {
+  const norm = (c) => { const m = c.match(/^color\\(srgb ([\\d.]+) ([\\d.]+) ([\\d.]+)(?: \\/ ([\\d.]+))?\\)/); return m ? "rgba(" + [m[1], m[2], m[3]].map((v) => Math.round(v * 255)).join(",") + "," + (m[4] ?? 1) + ")" : c; };
   const lum = (c) => { const m = c.match(/[\\d.]+/g).map(Number); const [r, g, b] = m.slice(0, 3).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
   const alpha = (c) => { const m = c.match(/[\\d.]+/g).map(Number); return m.length > 3 ? m[3] : 1; };
   const mix = (fg, bg) => { const f = fg.match(/[\\d.]+/g).map(Number), b = bg.match(/[\\d.]+/g).map(Number); const a = f.length > 3 ? f[3] : 1; return "rgb(" + [0, 1, 2].map((i) => Math.round(f[i] * a + b[i] * (1 - a))).join(",") + ")"; };
-  const bgOf = (e) => { const stack = []; for (let n = e; n; n = n.parentElement) { const b = getComputedStyle(n).backgroundColor; if (alpha(b) > 0) { stack.push(b); if (alpha(b) >= 1) break; } }
+  const bgOf = (e) => { const stack = []; for (let n = e; n; n = n.parentElement) { const b = norm(getComputedStyle(n).backgroundColor); if (alpha(b) > 0) { stack.push(b); if (alpha(b) >= 1) break; } }
     let out = "rgb(255,255,255)"; if (!stack.length) { const html = getComputedStyle(document.documentElement).backgroundColor; out = alpha(html) ? html : out; }
     for (let i = stack.length - 1; i >= 0; i--) out = mix(stack[i], out); return out; };
   const rows = [];
@@ -23,7 +24,7 @@ const MEASURE = (rootSel) => `(() => {
       const t = w.currentNode, e = t.parentElement; if (!t.textContent.trim() || !e) continue;
       const r = e.getBoundingClientRect(), cs = getComputedStyle(e); if (!r.width || cs.visibility === "hidden" || cs.display === "none" || e.closest(".sr-only,[hidden]")) continue;
       let op = 1; for (let n = e; n; n = n.parentElement) op *= Number(getComputedStyle(n).opacity);
-      const bg = bgOf(e); let fg = cs.color; if (op < 1) fg = mix(fg.replace(/rgba?\\(([^)]+)\\)/, (m, v) => { const p = v.split(",").map(Number); return "rgba(" + p.slice(0, 3).join(",") + "," + ((p[3] ?? 1) * op) + ")"; }), bg); else if (alpha(fg) < 1) fg = mix(fg, bg);
+      const bg = bgOf(e); let fg = norm(cs.color); if (op < 1) fg = mix(fg.replace(/rgba?\\(([^)]+)\\)/, (m, v) => { const p = v.split(",").map(Number); return "rgba(" + p.slice(0, 3).join(",") + "," + ((p[3] ?? 1) * op) + ")"; }), bg); else if (alpha(fg) < 1) fg = mix(fg, bg);
       const L1 = lum(fg), L2 = lum(bg); const ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
       const size = parseFloat(cs.fontSize), bold = Number(cs.fontWeight) >= 600; const large = size >= 24 || (bold && size >= 18.66);
       rows.push({ text: t.textContent.trim().slice(0, 40), ratio: Math.round(ratio * 100) / 100, need: large ? 3 : 4.5, fg, bg, size, el: e.tagName.toLowerCase() + (typeof e.className === "string" && e.className ? "." + e.className.split(" ")[0] : "") });
@@ -64,6 +65,15 @@ const MEASURE = (rootSel) => `(() => {
       await report("Play window header", "#room .room-head");
       await tab.eval(`document.getElementById("toggle-code").click(); document.getElementById("run").click(); true`); await sleep(500);
       await report("Play window code pane and message", "#room .code-pane, #room .toast");
+      // Hosts' run-of-show bar and the cautions, at rest
+      await tab.go(BASE + "hosts.html"); await sleep(300);
+      await report("Hosts: the run-of-show bar", "#ros-bar");
+      await tab.go(BASE + "levels.html"); await sleep(300);
+      await tab.eval(`document.querySelectorAll("details").forEach((d) => d.open = true); true`); await sleep(200);
+      await report("Three levels: the cautions and stop notes", ".caution, .stop-note");
+      await tab.go(BASE + "invent.html"); await sleep(300);
+      await tab.eval(`document.getElementById("idea-copy").click(); true`); await sleep(300);
+      await report("Invent your own: the builder with an empty copy", ".builder");
       // The speaker notes and the stage, every visible line at rest (the stage with its controls showing)
       await tab.go(BASE + "notes.html"); await sleep(300);
       await report("Speaker notes: all text", "body");

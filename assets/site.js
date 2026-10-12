@@ -245,7 +245,7 @@ if (timeline) {
     s.state = el("span", "sr-only", "");   // "(finished)" or "(happening now)" for screen readers
     title.append(s.state);
     body.append(title, el("span", "", s.hint));
-    if (s.linkLabel) body.append(" ", linkTo(s.link, s.linkLabel));
+    if (s.linkLabel) body.append(" ", linkTo(s.link, labelFor(s)));
     li.append(el("span", "length", s.minutes + " min"), body);
     s.item = li;
     timeline.append(li);
@@ -278,14 +278,20 @@ function endWith(title) {
   return /[.?!]$/.test(title) ? title : title + ".";
 }
 
+// A part's button words. A part whose shared walls have no links yet says where they'll come from, instead of promising them.
+function labelFor(segment) {
+  const waiting = segment.linkLabelPending && (segment.shared || []).every((sh) => !SESSION.links[sh.link]);
+  return waiting ? segment.linkLabelPending : segment.linkLabel;
+}
+
 // Where a part's button should go from this page: its own page, or, when that's the page you're on, down the page
 function partLink(segment) {
   const [page, hash] = segment.link.split("#");
   const body = document.body.dataset;
   if (body.page === "hosts" && $("part-" + segment.id)) return { href: "#part-" + segment.id, label: "Go to this part" };
-  if (page === here && !hash && body.jump) return { href: body.jump, label: body.jumpLabel || segment.linkLabel };
-  if (page === here && hash) return { href: "#" + hash, label: segment.linkLabel };
-  return { href: segment.link, label: segment.linkLabel };
+  if (page === here && !hash && body.jump) return { href: body.jump, label: body.jumpLabel || labelFor(segment) };
+  if (page === here && hash) return { href: "#" + hash, label: labelFor(segment) };
+  return { href: segment.link, label: labelFor(segment) };
 }
 
 // Meet can't send one message to every breakout room, so the page does it:
@@ -378,7 +384,7 @@ function update() {
     $("nowcard-hint").textContent = current.hint;
     const go = $("nowcard-go");
     go.hidden = !current.linkLabel;
-    if (current.linkLabel) { go.href = current.link; go.textContent = current.linkLabel; }
+    if (current.linkLabel) { go.href = current.link; go.textContent = labelFor(current); }
     $("nowcard-also").replaceChildren(...(current.also || []).map((a) => { const link = linkTo(a.link, a.label); link.className = "button"; return link; }));
     $("nowcard-shared").replaceChildren(...sharedLinks(current, "button"));
     $("nowcard-next").textContent = next ? "Next: " + next.title + " · " + next.minutes + " min" : "Last part of the morning.";
@@ -746,7 +752,14 @@ document.querySelectorAll(".remix li:not(.do)").forEach((item) => {
   const button = el("button", "", "Copy");
   button.type = "button";
   button.setAttribute("aria-label", "Copy: " + text);
-  button.addEventListener("click", () => copyText(text, null, button));
+  // After a copy, one line under it says where it goes: a remix line means something only to the chat that has the starter
+  button.addEventListener("click", () => copyText(text, () => {
+    let hint = item.querySelector(".remix-hint");
+    if (!hint) { hint = el("p", "remix-hint"); hint.setAttribute("role", "status"); item.after(hint); }
+    hint.textContent = "Copied. Paste it into the same chat as your starter.";
+    clearTimeout(hint.timer);
+    hint.timer = setTimeout(() => hint.remove(), 5000);
+  }, button));
   item.appendChild(button);
 });
 
@@ -809,15 +822,28 @@ if ($("idea-out")) {
       ". Make it simple, colorful, and fun to use. Use made-up data.");
     $("idea-label").textContent = v.every(Boolean) ? "Your request, ready to paste:" : "Your request so far:";
   };
-  const clearErrors = () => { fields.forEach((f) => f.removeAttribute("aria-invalid")); $("idea-error").textContent = ""; };
-  fields.forEach((f) => f.addEventListener("input", () => { f.removeAttribute("aria-invalid"); if (!fields.some((x) => x.getAttribute("aria-invalid"))) $("idea-error").textContent = ""; render(); }));
+  // The third answer's box grows with what's in it, so a long answer is never cut off mid-line
+  const fit = () => { const box = fields[2]; box.style.height = "auto"; box.style.height = box.scrollHeight + 2 + "px"; };
+  const clearErrors = () => { fields.forEach((f) => { f.removeAttribute("aria-invalid"); f.removeAttribute("aria-describedby"); }); $("idea-error").textContent = ""; };
+  fields.forEach((f) => f.addEventListener("input", () => {
+    f.removeAttribute("aria-invalid");
+    f.removeAttribute("aria-describedby");
+    if (!fields.some((x) => x.getAttribute("aria-invalid"))) $("idea-error").textContent = "";
+    $("idea-status").textContent = "";
+    render();
+    fit();
+  }));
   render();
+  fit();
   $("idea-copy").addEventListener("click", () => {
     const empty = fields.filter((f) => !f.value.trim());
     if (empty.length) {
-      empty.forEach((f) => f.setAttribute("aria-invalid", "true"));
-      $("idea-error").textContent = empty.length === 3 ? "Answer the three questions first, or take an idea from the jar." : "Answer " + (empty.length === 1 ? "the last question" : "the other questions") + " first.";
-      empty[0].focus();
+      // The message sits at the top of the three answers, and each empty one says so beside its label
+      empty.forEach((f) => { f.setAttribute("aria-invalid", "true"); f.setAttribute("aria-describedby", "idea-error"); });
+      $("idea-status").textContent = "";
+      $("idea-error").textContent = empty.length === 3 ? "Answer the three questions first, or take an idea from the jar." : "Answer " + (empty.length === 1 ? "the question marked below" : "the questions marked below") + " first.";
+      $("builder").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      empty[0].focus({ preventScroll: true });
       return;
     }
     copyText(request(), () => nextStep("your request", $("idea-copy")), $("idea-copy"));
@@ -828,7 +854,8 @@ if ($("idea-out")) {
       button.dataset.idea.split("|").forEach((answer, i) => { fields[i].value = answer; });
       clearErrors();
       render();
-      markDone(button, "In the builder");
+      fit();
+      $("idea-status").textContent = "From the jar: " + button.textContent.trim() + ". Change anything you like.";
       $("builder").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       fields[0].focus({ preventScroll: true });
     });
@@ -850,10 +877,18 @@ if ($("room")) {
   let undoText = null;
   let statusTimer;
 
+  // The bar above the tool says what's running: the original, or your version (and Copy for my AI copies it)
+  let mine = false;   // the frame is running edited code
+  const showBar = () => {
+    $("reset").hidden = !mine;
+    $("room-bar").hidden = !mine && !status.textContent;
+    $("room-playing").textContent = mine ? "Playing your version of" : "Playing";
+  };
   const setStatus = (message, ms = 3000) => {
     clearTimeout(statusTimer);
     status.replaceChildren(message);
-    if (ms) statusTimer = setTimeout(() => status.replaceChildren(), ms);
+    showBar();
+    if (ms) statusTimer = setTimeout(() => { status.replaceChildren(mine ? "Your version is running. Copy for my AI copies it." : ""); showBar(); }, ms);
   };
 
   // Show the code beside the tool (a laptop), or as its own tab (a phone)
@@ -884,7 +919,9 @@ if ($("room")) {
       screen.title = MACHINES[id].name + ", running";
       frame.dataset.starting = "Starting " + MACHINES[id].name + "…";
       codeBox.value = code;
+      mine = false;
       status.replaceChildren();
+      showBar();
       showCode(false);
       run(code);
       room.showModal();
@@ -908,20 +945,22 @@ if ($("room")) {
 
   $("run").addEventListener("click", () => {
     run(codeBox.value);
+    mine = codeBox.value !== codeCache[currentId];
     if (matchMedia("(max-width: 760px)").matches) showCode(false);   // on a phone, show what changed
-    setStatus("Running your version.");
+    setStatus(mine ? "Your version is running. Copy for my AI copies it." : "Running the original: nothing has changed yet.", mine ? 0 : 3000);
   });
   $("reset").addEventListener("click", () => {
-    if (codeBox.value === codeCache[currentId]) { setStatus("This is the original."); return; }
     undoText = codeBox.value;
     codeBox.value = codeCache[currentId];
+    mine = false;
     run(codeBox.value);
     const undo = el("button", "sm", "Undo");
     undo.type = "button";
     undo.addEventListener("click", () => {
       codeBox.value = undoText;
+      mine = true;
       run(undoText);
-      setStatus("Your changes are back.");
+      setStatus("Your changes are back, and running. Copy for my AI copies them.", 0);
     });
     const line = el("span");
     line.append("Back to the original. ", undo);

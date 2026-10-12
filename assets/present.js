@@ -142,7 +142,7 @@ const KINDS = {
   steps(s) {
     const list = el("ol", "steps");
     s.steps.forEach((step) => list.append(el("li", "", step)));
-    return [el("h1", "heading", s.heading), list, el("p", "foot", s.foot || "")];
+    return [el("h1", "heading", s.heading), list, ...(s.url ? [urlPill()] : []), el("p", "foot", s.foot || "")];
   },
   link(s) {
     return [el("h1", "heading", s.heading), urlPill(), el("p", "body", s.body || "")];
@@ -207,7 +207,7 @@ const KINDS = {
       card.append(el("h3", "", c.heading), el("p", "", c.body));
       pair.append(card);
     });
-    return [el("h1", "heading", s.heading), pair, el("p", "foot", s.foot || "")];
+    return [el("h1", "heading", s.heading), pair, ...(s.url ? [urlPill()] : []), el("p", "foot", s.foot || "")];
   }
 };
 

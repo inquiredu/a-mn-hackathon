@@ -43,6 +43,7 @@ const SECTIONS = [
   main { max-width: 760px; margin: 0 auto; }
   h1 { margin: 0; font-size: clamp(1.5rem, 4.5vw, 2.2rem); line-height: 1.15; }
   .tagline { margin: 6px 0 16px; font-size: 1.1rem; color: var(--muted); }
+  .badges-label { margin: 0 0 6px; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; padding: 0; list-style: none; }
   /* The commitments are words on a wall, not buttons: a light tag, no edge */
   .badges li { padding: 3px 12px; border-radius: 999px; background: var(--tag); color: var(--ink); font-weight: 600; font-size: .85rem; }
@@ -70,7 +71,8 @@ const SECTIONS = [
 <main>
   <h1 id="title"></h1>
   <p class="tagline" id="tagline"></p>
-  <ul class="badges" id="badges" aria-label="Our commitments"></ul>
+  <p class="badges-label" id="badges-label">Our commitments</p>
+  <ul class="badges" id="badges" aria-labelledby="badges-label"></ul>
   <div class="cards" id="cards"></div>
   <p class="foot">Tap a card to open it. Made-up department, made-up charter.</p>
 </main>

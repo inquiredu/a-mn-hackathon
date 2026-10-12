@@ -41,6 +41,7 @@ Each segment:
 | `title`, `where` | Its name, and "Main room" or "Breakout rooms" |
 | `hint` | One line for participants |
 | `link`, `linkLabel` | The page to send people to, and the button's words |
+| `linkLabelPending` | Optional: the button's words while none of the part's `shared` links are filled in (the close says "Where your wonder and worry go" until the walls have links) |
 | `shared` | Links from `links` this part uses, shown on its timeline row and its Happening now card: `[{ link: "planner", label: "Breakout Planner" }]`. An empty link is left out |
 | `screens` | What the stage shows, in order |
 | `host` | A checklist for hosts |

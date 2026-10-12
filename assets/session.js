@@ -71,7 +71,8 @@ const SESSION = {
   //   minutes      how long it runs
   //   where        "Main room" or "Breakout rooms"
   //   hint         one line for participants
-  //   link         which page (and place) to send people to; linkLabel names the button, a verb first
+  //   link         which page (and place) to send people to; linkLabel names the button, a verb first;
+  //                linkLabelPending, if set, names it instead while none of the part's shared links are filled in
   //   also         other pages this part sends some people to, shown beside its button: { link, label }
   //   shared       links from `links` above that this part uses, shown with it: { link: "planner", label: "Breakout Planner" }
   //   screens      what the presenter view shows, in order (note: what the presenter says or does,
@@ -131,7 +132,7 @@ const SESSION = {
       shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
         { kind: "prompt", note: "Say: who has done one of these? Show it, or tell us: which level, what it does, one thing that went sideways. Builders share with Present now, then A tab. Do: stop your own share while they present. Start the timer as each builder begins, fresh for each one. Share the stage again after.", heading: "Done one of these?", body: "Show it, or tell us about it: which level, what it does, and one thing that went sideways.", timer: "showTurn" },
-        { kind: "steps", note: "Co-host: paste the Breakout Planner's link in the chat now. Say: open it and add your name under the level you want to try, and a partner's name next to yours if you have one. Any level is a good level, and the one that would stretch you a little is the best one. Co-host: make rooms of up to four from each level's list, partners together, an anchor in each where one fits, and write the room numbers in the Room column. Allow about five minutes.", heading: "Pick your level", steps: [
+        { kind: "steps", note: "Co-host: paste the Breakout Planner's link in the chat now. Say: open it and add your name under the level you want to try, and a partner's name next to yours if you have one. Any level is a good level, and the one that would stretch you a little is the best one. Co-host: make rooms of up to four from each level's list, partners together, an anchor in each where one fits, and write the room numbers in the Room column. Allow about five minutes.", heading: "Pick your level", url: true, steps: [
           "Open the Breakout Planner.",
           "Add your name under the level you want to try today: 1, 2, or 3.",
           "Want company? Put a partner's name next to yours, or two."
@@ -152,11 +153,11 @@ const SESSION = {
     {
       id: "remix", minutes: 17, title: "The Remix Arcade", where: "Breakout rooms",
       hint: "The hosts move you into a breakout room with others at your level, and you stay in it for Invent your own. Level 1 (in the chat): pick a starter and make it yours. Levels 2 (on your site) and 3 (behind the scenes): open your level on Three levels, get its example working, then make it yours.",
-      link: "starters.html", linkLabel: "Open the starters",
+      link: "starters.html#level-1", linkLabel: "Open the starters",
       also: [{ link: "levels.html#site", label: "Levels 2 and 3: open Three levels" }],
       shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
-        { kind: "steps", note: "Say the four steps on the screen: find your room number next to your name in the Breakout Planner; your anchor shares their screen and everyone builds along for {buildAlong}; level 1 picks a starter and makes it theirs, levels 2 and 3 run their level's example from Three levels; stuck means Ask for help in Meet. Co-host: open the rooms as this screen ends.", heading: "Off to your room", steps: [
+        { kind: "steps", note: "Say the four steps on the screen: find your room number next to your name in the Breakout Planner; your anchor shares their screen and everyone builds along for {buildAlong}; level 1 picks a starter and makes it theirs, levels 2 and 3 run their level's example from Three levels; stuck means Ask for help in Meet. Co-host: open the rooms as this screen ends.", heading: "Off to your room", url: true, steps: [
           "Find your room number next to your name in the Breakout Planner.",
           "Your anchor shares their screen. Build along for {buildAlong}.",
           "Level 1: pick a starter and make it yours. Levels 2 and 3: run your level's example, then make it yours.",
@@ -178,7 +179,7 @@ const SESSION = {
       hint: "Same room. Invent something from nothing at your level: your own idea, or one from the Breakout Planner.",
       link: "invent.html", linkLabel: "Start your invention",
       shared: [{ link: "gallery", label: "Gallery wall" }],
-      screens: [        { kind: "prompt", note: "Do: when the building timer shows {invent.length} left, the Remix Arcade is over: the co-host visits each room to say switch to inventing your own: your own idea, or one from the Breakout Planner (Meet can't message every room at once; the Planner's top line can carry the word too). Same timer as the last screen, still counting; don't reset it. With {nudge} left, visit each room again: pin something to the gallery wall (the walls deck you made from Hosts, linked in the chat), even half-built. Co-host: while visiting, note one build for each award: Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used. At zero, the co-host closes the rooms. Keep building in the main room meanwhile.", heading: "Invent your own", body: "Your own idea, at your level, or one from the Breakout Planner. Pin something to the gallery wall before you head back.", timer: "building", timerKey: "building" }      ],
+      screens: [        { kind: "prompt", note: "Do: when the building timer shows {invent.length} left, the Remix Arcade is over: the co-host visits each room to say switch to inventing your own: your own idea, or one from the Breakout Planner (Meet can't message every room at once; the Planner's top line can carry the word too). Same timer as the last screen, still counting; don't reset it. With {nudge} left, visit each room again: pin something to the gallery wall (the walls deck you made from Hosts, linked in the chat), even half-built. Co-host: while visiting, note one build for each award: Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used. At zero, the co-host closes the rooms. Keep building in the main room meanwhile.", heading: "Invent your own", url: true, body: "Your own idea, at your level, or one from the Breakout Planner. Pin something to the gallery wall before you head back.", timer: "building", timerKey: "building" }      ],
       host: [
         "At the switch from the Remix Arcade, visit each room to say: switch to inventing your own: your own idea, or one from the Breakout Planner. (Meet can't message every room at once; a line at the top of the Breakout Planner, which everyone has open, carries the word too.)",
         "With {nudge} left, visit each room again, or change the Planner's top line: pin something to the gallery wall, even half-built.",
@@ -214,7 +215,7 @@ const SESSION = {
     {
       id: "close", minutes: 13, title: "What did we just do?", where: "Main room",
       hint: "One wonder, one worry, one word.",
-      link: "index.html#close", linkLabel: "Add your wonder and worry",
+      link: "index.html#close", linkLabel: "Add your wonder and worry", linkLabelPending: "Where your wonder and worry go",
       shared: [{ link: "wonder", label: "Wonder wall" }, { link: "worry", label: "Worry wall" }],
       screens: [        { kind: "code", note: "Say: the Oracle didn't know anything. The screen shows its two tricks. The swaps: it turns I into you and my into your and hands your question back (a program called ELIZA did the same in 1966). The list of words: a handful it listens for, like coffee or lunch, each with a line a person wrote. Point at one swap and one word from a question asked earlier. Every machine today started with a person and came back to a person.", heading: "How did the Oracle know?", code: "SWAPS = { i: \"you\", my: \"your\", am: \"are\" }\n\nlistensFor: [\"coffee\", \"caribou\", \"lunch\", \"potluck\"],\nprophecies: [\n  \"The line at Caribou will be long, and worth it.\",\n  \"The hotdish will contain tater tots. Tot-ally.\"\n]", caption: "A few swaps and a list of words, both chosen by a person. Every machine today started with a person, passed through an AI, and came back to a person." },
         { kind: "ladder", note: "Say: the three levels from today, and a fourth we only wave at: an app where the AI works inside the files on your computer (Claude Code, Codex, Cursor). This site was built that way. Not for today; for when level three feels easy.", heading: "Where this goes", rungs: [
@@ -223,7 +224,7 @@ const SESSION = {
           { name: "Behind the scenes", why: "A script in your Drive. An afternoon." },
           { name: "With a workbench", why: "Claude Code, Codex, Cursor: the AI works inside your files. When level three feels easy.", later: true }
         ] },        { kind: "quote", note: "Say it, then let it sit for a moment.", text: "Everything you made today, a seventh grader can make tonight." },
-        { kind: "pair", note: "Do: post the wonder and worry links in the chat (the closing message on Hosts carries them). Say: one wonder, one worry, on the walls. Give it {wonder}.", heading: "Before you go", cards: [
+        { kind: "pair", note: "Do: post the wonder and worry links in the chat (the closing message on Hosts carries them). Say: one wonder, one worry, on the walls. Give it {wonder}.", heading: "Before you go", url: true, cards: [
           { heading: "I wonder...", body: "What did today make you curious about?" },
           { heading: "I worry...", body: "What did today make you uneasy about?" }
         ], foot: "Add yours to the wall. Then one word in the chat for how you're leaving.", timer: "wonder" },

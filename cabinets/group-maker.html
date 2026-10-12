@@ -75,13 +75,22 @@ const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", 
 
   .groups { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr)); margin-top: 12px; }
   .group { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; animation: land .35s ease-out both; }
-  .group h3 { margin: 0; padding: 8px 14px; font-size: 1.05rem; background: var(--accent); color: #FFFFFF; }
+  .group h3 { margin: 0; padding: 8px 14px; font-size: 1.05rem; background: #F7E6DD; color: #7A2C08; border-top: 3px solid var(--accent); }   /* a tint, so Shuffle is the one solid rust */
   .group ul { margin: 0; padding: 10px 14px 12px 32px; }
   .group li { margin: 2px 0; }
   .helper { color: var(--muted); font-size: .9rem; }
   @keyframes land { from { opacity: 0; transform: translateY(10px) scale(.97); } }
 
   .copy-box { margin-top: 12px; height: 160px; }
+
+  /* On a phone the groups come after the form, so a bar at the foot says how many and goes to them */
+  .dock { display: none; }
+  @media (max-width: 760px) {
+    .dock { position: sticky; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin: 16px -16px -32px; padding: 10px 16px; background: var(--card); border-top: 1px solid var(--line); }
+    .dock[hidden] { display: none; }
+    .dock a { color: var(--accent); font-weight: 700; }
+  }
   .copy-box[hidden] { display: none; }
 
   @media (prefers-reduced-motion: reduce) { .group { animation: none; } }
@@ -121,6 +130,7 @@ const GROUP_NAMES = ["Loons", "Otters", "Walleyes", "Moose", "Gophers", "Lynx", 
       <p class="foot">Names stay on this page, on your computer; nothing is saved or sent. The names above are made-up examples; anonymized ones of your own work the same way.</p>
     </section>
   </div>
+  <div class="dock" id="dock"><span id="dock-status" role="status"></span><a href="#results-title" aria-label="See the groups">See them ↓</a></div>
 </div>
 
 <script>
@@ -180,7 +190,9 @@ function makeGroups() {
 function describeSizes(sizes) {
   const counts = {};
   sizes.forEach((s) => { counts[s] = (counts[s] || 0) + 1; });
-  return Object.keys(counts).sort((a, b) => b - a).map((s) => counts[s] + " of " + s).join(", ");
+  const sorted = Object.keys(counts).sort((a, b) => b - a);
+  if (sorted.length === 1) return "groups of " + sorted[0];
+  return sorted.map((s) => counts[s] + (counts[s] === 1 ? " group of " : " groups of ") + s).join(" and ");
 }
 
 function show(groups, helpers) {
@@ -208,7 +220,9 @@ function show(groups, helpers) {
   }));
   const sizes = groups.map((g) => g.length);
   const total = sizes.reduce((a, b) => a + b, 0);
-  $("summary").textContent = total + " people, " + groups.length + " groups (" + describeSizes(sizes) + ").";
+  const shape = describeSizes(sizes);
+  $("summary").textContent = total + " people · " + (shape.startsWith("groups") ? groups.length + " " + shape : groups.length + " groups: " + shape) + ".";
+  $("dock-status").textContent = groups.length + " groups ready.";
   $("status").textContent = "";
   $("copy-box").hidden = true;
 }
@@ -233,6 +247,11 @@ $("copy").addEventListener("click", async () => {
 $("setup").addEventListener("submit", (event) => { event.preventDefault(); makeGroups(); });   // Enter in the size box
 $("again").addEventListener("click", makeGroups);
 $("size").addEventListener("change", makeGroups);   // a new size deals new groups right away
+
+// The bar at the foot steps aside while the groups themselves are on screen
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver(([entry]) => { $("dock").hidden = entry.isIntersecting; }).observe($("groups"));
+}
 
 // Get started
 $("names").value = SAMPLE_NAMES.join("\n");

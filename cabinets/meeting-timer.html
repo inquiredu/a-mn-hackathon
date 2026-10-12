@@ -78,8 +78,9 @@ const SOUND_ON = true;        // change to false to start with the sound off
     border: 2px solid var(--edge); border-radius: 999px; background: var(--card); color: var(--ink);
   }
   button.primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
-  #sound { flex: none; min-width: 8.2em; }
-  #sound[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }  /* filled when the chime is on */
+  #sound { flex: none; min-width: 7.6em; border-width: 1.5px; font-weight: 600; }
+  #sound[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }   /* the accent edge when the chime is on; never filled like Start */
+  .label.running { color: var(--accent); }
   button:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 
   h2 { margin: 0 0 10px; font-size: 1.1rem; }
@@ -111,7 +112,7 @@ const SOUND_ON = true;        // change to false to start with the sound off
       <h1 id="meeting-name">Meeting</h1>
       <p class="ends" id="ends"></p>
     </div>
-    <button id="sound" type="button" aria-pressed="true" aria-label="Chime"><span aria-hidden="true">🔔</span> Chime <span aria-hidden="true" id="sound-state">on</span></button>
+    <button id="sound" type="button" aria-pressed="true" aria-label="Chime">Chime: <span aria-hidden="true" id="sound-state">on</span></button>
   </header>
 
   <div class="layout">
@@ -223,6 +224,10 @@ function showClock() {
     $("progress").style.width = Math.min(100, (used / plannedSeconds) * 100) + "%";
   }
   $("start").textContent = running ? "Pause" : finished ? "Start over" : "Start";
+  // Running or paused, readable from across the table
+  const started = running || (!finished && secondsLeft < plannedSeconds);
+  $("now-label").textContent = running ? "Now · running" : started ? "Now · paused" : "Now";
+  $("now-label").classList.toggle("running", running);
 
   // When will the meeting end, at this pace?
   let remaining = finished ? 0 : Math.max(secondsLeft, 0);
@@ -317,7 +322,6 @@ $("more").addEventListener("click", () => {
 // The sound switch
 function showSound() {
   $("sound").setAttribute("aria-pressed", String(soundOn));
-  $("sound").firstElementChild.textContent = soundOn ? "🔔" : "🔕";
   $("sound-state").textContent = soundOn ? "on" : "off";
 }
 $("sound").addEventListener("click", () => { soundOn = !soundOn; showSound(); });

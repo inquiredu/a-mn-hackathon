@@ -213,7 +213,9 @@ function card(s, headingLevel, position) {
   heading.append(link);
 
   const kind = el("p", "src-kind", TYPES[s.type] + (s.peer ? " · Peer-reviewed" : ""));
-  const meta = el("p", "src-meta", [s.who, s.venue, s.when].filter(Boolean).join(" · "));
+  // Each item of the meta line stays whole, so a line never starts with a separator or splits "as of" from its date
+  const meta = el("p", "src-meta");
+  [s.who, s.venue, s.when].filter(Boolean).forEach((item, i) => { if (i) meta.append(" · "); meta.append(el("span", "nowrap", item)); });
 
   const take = el("p", "src-take");
   take.append(el("strong", "", s.takeLabel + ": "), s.take);
@@ -307,7 +309,8 @@ function render() {
   showActive();
   const on = [state.section !== "all", state.ask, state.types.size, state.q].filter(Boolean).length;
   $("finder-toggle").textContent = ($("finder-toggle").getAttribute("aria-expanded") === "true" ? "Hide search and filters" : "Search and filter") + (on ? " · " + on + " on" : "");
-  $("finder-done").textContent = "Show " + (list.length === 1 ? "1 source" : list.length + " sources");
+  $("finder-done").textContent = list.length ? "Show " + (list.length === 1 ? "1 source" : list.length + " sources") : "Close the filters";
+  $("finder-done").classList.toggle("primary", list.length > 0);   // a primary that promises nothing would be a dead end
   const banner = $("path-banner");
   banner.hidden = !state.path;
   if (state.path) {
@@ -376,4 +379,8 @@ function openSource(id) {
   return true;
 }
 window.addEventListener("hashchange", () => openSource(location.hash.slice(1)));
-if (!openSource(location.hash.slice(1))) render();
+// A shared link with a path or a filter in it opens on its list, not on the top of the page
+if (!openSource(location.hash.slice(1))) {
+  render();
+  if (state.path || anyFilter()) $("browse-title").scrollIntoView({ block: "start", behavior: "instant" });
+}

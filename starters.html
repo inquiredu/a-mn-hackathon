@@ -396,28 +396,32 @@
 <dialog id="room" aria-labelledby="room-title">
   <div class="room">
     <div class="room-head">
-      <h2 class="room-title" id="room-title">Playing <strong id="room-name">a starter</strong></h2>
+      <h2 class="room-title" id="room-title"><span id="room-playing">Playing</span> <strong id="room-name">a starter</strong></h2>
       <div class="room-tools">
         <button id="toggle-code" type="button" aria-expanded="false" aria-controls="code-pane">Show the code</button>
         <button class="primary" id="room-copy" type="button">Copy for my AI</button>
         <button id="room-close" type="button">Close</button>
       </div>
+      <div class="room-tabs" role="tablist" aria-label="What to show">
+        <button type="button" role="tab" id="tab-tool" aria-selected="true" aria-controls="room-frame">The tool</button>
+        <button type="button" role="tab" id="tab-code" aria-selected="false" aria-controls="code-pane" tabindex="-1">The code</button>
+      </div>
     </div>
-    <div class="room-tabs" role="tablist" aria-label="What to show">
-      <button type="button" role="tab" id="tab-tool" aria-selected="true" aria-controls="room-frame">The tool</button>
-      <button type="button" role="tab" id="tab-code" aria-selected="false" aria-controls="code-pane" tabindex="-1">The code</button>
+    <!-- Whatever is running and what just happened, above the tool and the code alike -->
+    <div class="room-bar" id="room-bar" hidden>
+      <p class="room-status" id="room-status" role="status" aria-live="polite"></p>
+      <button class="sm" id="reset" type="button" hidden>Back to the original</button>
     </div>
     <div class="room-body" id="room-body">
       <div class="room-frame" id="room-frame" role="tabpanel" aria-labelledby="tab-tool" data-starting="Starting…">
         <iframe id="screen" title="The starter, running" sandbox="allow-scripts allow-forms allow-modals"></iframe>
       </div>
       <div class="code-pane" id="code-pane" role="tabpanel" aria-labelledby="tab-code" hidden>
-        <label for="code">This is the whole tool. Find a word (Ctrl+F, or ⌘F on a Mac), change something, and press Run my changes. Gone blank? You lost a quote mark or a comma: press Back to the original.</label>
-        <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
+        <label for="code">This is the whole tool. Find a word (Ctrl+F, or ⌘F on a Mac), change something, and press Run my changes.</label>
+        <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
         <div class="code-actions">
           <button class="primary" id="run" type="button">Run my changes</button>
-          <p class="room-status" id="room-status" role="status" aria-live="polite"></p>
-          <button class="reset-code sm" id="reset" type="button">Back to the original</button>
+          <p class="code-recover">Gone blank? You lost a quote mark or a comma: press Back to the original, above.</p>
         </div>
       </div>
     </div>

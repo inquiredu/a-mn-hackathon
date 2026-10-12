@@ -62,7 +62,7 @@ const UNITS = [
   .units button { display: grid; grid-template-columns: 3.2em minmax(0, 1fr) auto; column-gap: 12px; align-items: baseline; }
   .units .when { font-weight: 800; color: var(--accent); }
   .units p { grid-column: 2; }
-  [aria-expanded="true"] { border-color: var(--accent); }
+  .qa button[aria-expanded="true"], .units button[aria-expanded="true"] { border-color: var(--accent); }
 
   /* Every row that opens shows a plus at its right; opening turns it into a minus */
   .qa button::after, .units button::after {
@@ -73,6 +73,14 @@ const UNITS = [
   }
   .qa button[aria-expanded="true"]::after, .units button[aria-expanded="true"]::after { transform: rotate(180deg); background-size: 14px 2px, 2px 0; }
   @media (prefers-reduced-motion: reduce) { .qa button::after, .units button::after { transition: none; } }
+  /* A phone: the month as a small label above its title, so the title has the whole width */
+  @media (max-width: 480px) {
+    .units button { grid-template-columns: minmax(0, 1fr) auto; }
+    .units .when { grid-column: 1; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+    .units .when + strong { grid-column: 1; grid-row: 2; }
+    .units button::after { grid-row: 1 / span 2; }
+    .units p { grid-column: 1; }
+  }
   .foot { margin: 22px 0 0; font-size: .9rem; color: var(--muted); }
 </style>
 </head>

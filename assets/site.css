@@ -116,7 +116,7 @@
   --border-strong: var(--cream-100);
   --border-focus: var(--sun-500);
   --status-success: var(--pine-100); --status-success-bg: var(--navy-600);
-  --status-warning: var(--sun-400);  --status-warning-bg: var(--navy-600);
+  --status-warning: var(--sun-400);  --status-warning-bg: color-mix(in srgb, var(--sun-500) 16%, var(--navy-800));   /* a caution keeps its warmth in Night */
   --status-danger: var(--rust-100);  --status-danger-bg: var(--navy-600);
   --status-info: var(--water-400);   --status-info-bg: var(--navy-600);
   --shadow-1: 0 1px 2px rgba(0,0,0,.4);
@@ -219,6 +219,7 @@ kbd {
   border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); white-space: nowrap;
 }
 .keys { white-space: nowrap; }   /* a whole shortcut, keys and plus signs, on one line */
+.nowrap { white-space: nowrap; }   /* a meta item, a date with its "as of", kept whole */
 
 /* Focus: the brand's ring drawn as an outline, so it survives Windows high-contrast mode. It never animates. */
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; box-shadow: none; }
@@ -299,7 +300,9 @@ button:disabled, button[aria-disabled="true"], .button[aria-disabled="true"] {
   min-height: 32px; padding: 4px 12px; font-size: .85rem;
 }
 /* A toggle: pressed means on */
-button[aria-pressed="true"]:not(.path-card):not(.tab):not(.theme-toggle) { background: var(--button); border-color: var(--button); color: var(--button-ink); }   /* the theme toggle shows its state by its icon */
+/* Selected and pressed: the tint with an ink edge, never the solid fill, which belongs to the one primary action in a view.
+   Tabs carry an ink bar under the selected one instead. The theme toggle shows its state by its icon. */
+button[aria-pressed="true"]:not(.path-card):not(.tab):not(.theme-toggle) { background: var(--tint); border-color: var(--ink); color: var(--ink); }
 /* Done: the button says it worked, for two seconds, without changing width */
 button.is-done, .button.is-done { background: var(--tint); border-color: var(--ink); color: var(--ink); }
 button.is-done::before { content: ""; width: 12px; height: 12px; background: currentColor; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); }
@@ -400,6 +403,8 @@ input[type="checkbox"]:checked::before, input[type="radio"]:checked::before { tr
 .copybox summary { color: var(--link); }
 .copybox details[open] summary { margin-bottom: 8px; }
 .copybox pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); font: .82rem/1.5 var(--font-mono); }
+/* A script to read before running keeps its lines whole and its indentation: it scrolls sideways, never splits a name */
+.copybox pre[data-script] { white-space: pre; overflow-wrap: normal; overflow-x: auto; max-height: 28rem; overflow-y: auto; padding-bottom: 4px; }
 .copybox details > p { margin: 0; }
 
 /* ---------- Notes and the one caution ---------- */
@@ -480,7 +485,7 @@ dialog::backdrop { background: rgba(20, 36, 52, 0); transition: background-color
 dialog[open]::backdrop { background: var(--scrim); }
 @starting-style { dialog[open]::backdrop { background: rgba(20, 36, 52, 0); } }
 
-#fallback { height: auto; width: min(640px, calc(100vw - 32px)); }
+#fallback { height: fit-content; width: min(640px, calc(100vw - 32px)); }   /* a modal dialog pinned to both edges stretches at height: auto */
 .fallback-inner { padding: 20px; display: grid; gap: 12px; }
 .fallback-inner p { margin: 0; }
 .fallback-actions { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -495,6 +500,8 @@ dialog[open]::backdrop { background: var(--scrim); }
 .room-title { margin: 0; min-width: 0; font: var(--type-eyebrow); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .room-title strong { display: block; margin-top: 2px; font-size: 1.05rem; letter-spacing: var(--tracking-heading); text-transform: none; color: var(--ink); }
 .room-tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+@media (min-width: 761px) { #room-close { margin-left: 12px; } }   /* about the window, set apart from what acts on the tool */
+#toggle-code[aria-expanded="true"] { background: var(--tint); border-color: var(--ink); }   /* on, not a second primary */
 #toggle-code { min-width: 10.5em; }
 .room-tabs { display: none; }
 .room-body { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
@@ -509,25 +516,33 @@ dialog[open]::backdrop { background: var(--scrim); }
 .code-pane { display: flex; flex-direction: column; min-height: 0; border-left: 1px solid var(--line); padding: 12px; gap: 8px; }
 .code-pane[hidden] { display: none; }
 .code-pane label { font-size: .9rem; color: var(--muted); }
+/* The code wraps, so the values people change are never past the right edge */
 .code-pane textarea {
   flex: 1; min-height: 0; width: 100%; resize: none;
-  font: 13px/1.5 var(--font-mono); tab-size: 2; white-space: pre; overflow-wrap: normal; overflow: auto;
+  font: 13px/1.6 var(--font-mono); tab-size: 2; white-space: pre-wrap; overflow-wrap: anywhere; overflow-y: auto;
 }
-.code-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.code-actions .reset-code { margin-left: auto; }
-.room-status { margin: 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); min-height: 1.3em; }
-/* In Night the starter keeps its own light look, set inside the window like a screen in a frame */
-[data-theme="dark"] .room-frame { margin: 8px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--overlay-line); }
+.code-actions { display: flex; gap: 8px 14px; flex-wrap: wrap; align-items: center; }
+.code-recover { margin: 0; flex: 1 1 16rem; font-size: .9rem; color: var(--muted); }
+/* The bar above the tool and the code: what's running, and the way back to the original */
+.room-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 8px 14px; border-bottom: 1px solid var(--line); background: var(--tint); }
+.room-bar[hidden] { display: none; }
+.room-status { margin: 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--ink); }
+.room-status:empty { display: none; }
+/* The starter keeps its own look, set inside the window like a screen in a frame, with the same edge in both themes */
+.room-frame { margin: 8px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--overlay-line); }
 /* A phone: the window fills the screen, the code is a tab, and Close sits top right */
 @media (max-width: 760px) {
   #room { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; border-radius: 0; border: 0; }
+  /* Two rows: the name and Close; then The tool / The code beside Copy for my AI */
   .room-tools { display: contents; }
+  #room-playing { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }   /* the eyebrow steps aside on a phone, for screen readers only; the bar says when it's your version */
+  .room-title strong { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #room-close { grid-column: 2; grid-row: 1; }
-  #room-copy { grid-column: 1 / -1; grid-row: 2; }
+  #room-copy { grid-column: 2; grid-row: 2; }
   #toggle-code { display: none; }
-  .room-tabs { display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid var(--control); border-radius: var(--radius-sm); overflow: hidden; margin: 10px 14px; }
-  .room-tabs button { min-height: 40px; border: 0; border-radius: 0; background: var(--surface); }
-  .room-tabs button[aria-selected="true"] { background: var(--button); color: var(--button-ink); }
+  .room-tabs { grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid var(--control); border-radius: var(--radius-sm); overflow: hidden; }
+  .room-tabs button { min-height: 40px; padding: 6px 8px; border: 0; border-radius: 0; background: var(--surface); }
+  .room-tabs button[aria-selected="true"] { background: var(--tint); color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }   /* selected, not a second primary */
   .room-body.with-code { grid-template-columns: minmax(0, 1fr); }
   .room-body.with-code .room-frame { display: none; }
   .code-pane { border-left: 0; }
@@ -857,9 +872,13 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 }
 .level-bar .num { width: 26px; height: 26px; font-size: .8rem; }
 @media (max-width: 600px) { .level-bar a { padding-right: 10px; font-size: .9rem; } }
+/* A phone: all three levels in view at once, a long name in two lines, never clipped off the edge */
+@media (max-width: 480px) {
+  .level-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
+  .level-bar a { min-width: 0; gap: 6px; padding: 4px 6px; font-size: .85rem; line-height: 1.15; border-radius: var(--radius-sm); }
+}
 @media (hover: hover) { .level-bar a:hover { background: var(--action-ghost-hover); color: var(--ink); } }
-.level-bar a[aria-current] { background: var(--button); color: var(--button-ink); }
-.level-bar a[aria-current] .num { border-color: var(--button-ink); color: var(--button-ink); }
+.level-bar a[aria-current] { background: var(--tint); color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
 .level + .level, .level-bar + .level { margin-top: var(--block); }
 .next-level { margin: 24px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
 .later-tag { display: inline-block; margin: 0 0 8px; padding: 1px 10px; border: 1px solid var(--control); border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -885,10 +904,9 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .where-tabs { display: inline-flex; max-width: 100%; margin: 4px 0 14px; border: 1.5px solid var(--control); border-radius: var(--radius-sm); overflow: hidden; }
 .where-tabs button { min-height: 40px; border: 0; border-radius: 0; border-right: 1px solid var(--line); background: var(--surface); }
 .where-tabs button:last-child { border-right: 0; }
-.where-tabs button[aria-selected="true"] { background: var(--button); color: var(--button-ink); }
+.where-tabs button[aria-selected="true"] { background: var(--tint); color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
 .where-panel p { margin: 0 0 8px; }
 @media (max-width: 600px) { .where-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; } }
-#toggle-code[aria-expanded="true"] { background: var(--button); border-color: var(--button); color: var(--button-ink); }
 .level-note h4 { margin: 0 0 8px; }
 .level-note > summary h4 { display: inline; margin: 0; }
 .level-note p { margin: 6px 0 0; }
@@ -947,15 +965,23 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .button-legend > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
 @media (min-width: 700px) { .button-legend > div { grid-template-columns: 170px minmax(0, 1fr); gap: 16px; align-items: start; } }
 .button-legend dd { margin: 0; }
-.button-look {
-  display: inline-flex; align-items: center; min-height: 32px; padding: 4px 12px; border-radius: var(--radius-sm);
-  border: 1.5px solid var(--control); background: var(--surface); font-family: var(--font-sans); font-size: .85rem; font-weight: 600;
-}
-.button-look.primary { background: var(--button); border-color: var(--button); color: var(--button-ink); }
+/* The two buttons each script card has, named as terms: words, not button shapes that do nothing */
+.button-look { font-family: var(--font-sans); font-size: .95rem; font-weight: 700; color: var(--ink); }
 
-/* The cards: two to a row on a laptop, each its own height, so an open Remix menu never stretches its neighbors */
+/* The cards: two to a row on a laptop. Each card's parts sit on rows shared with its neighbor (subgrid), so the
+   Play buttons line up across a row, and an open Remix menu grows only the last row: its neighbor's buttons stay put. */
 .machines { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
-@media (min-width: 760px) { .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 760px) {
+  .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .machines:not(.scripts) { align-items: stretch; }
+  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
+  .machines:not(.scripts) > .cabinet > .cabinet-head { grid-row: 1; }
+  .machines:not(.scripts) > .cabinet > p:not([class]) { grid-row: 2; }
+  .machines:not(.scripts) > .cabinet > .monday { grid-row: 3; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .data-note { grid-row: 4; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .actions { grid-row: 5; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .remix { grid-row: 6; align-self: start; }
+}
 @media (min-width: 960px) { .machines.scripts { grid-template-columns: minmax(0, 1fr); } .machines.scripts .cabinet { max-width: 52rem; } }
 .cabinet { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
 .cabinet-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
@@ -980,10 +1006,11 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
   display: flex; gap: 10px; align-items: flex-start; justify-content: space-between;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 8px 8px 12px; font-size: .95rem;
 }
-.remix li button { flex: none; }
+.remix li button { flex: none; min-width: 6.5rem; }   /* the same width when it says Copied, so the line beside it never re-wraps */
 .remix li .slot { white-space: nowrap; color: var(--accent-ink); font-weight: 600; letter-spacing: .05em; }
 .remix .note { display: block; margin-top: 4px; font-size: .85rem; color: var(--muted); }
 .remix li.do { display: block; background: transparent; border-style: dashed; }
+.remix-hint { margin: 0 0 2px 12px; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--muted); list-style: none; }
 
 /* ---------- Invent your own ---------- */
 /* One card for the one task (describe it), the jar inside it, then what happens after you copy as a plain list */
@@ -997,7 +1024,14 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 }
 .builder { display: grid; gap: 4px; }
 .builder label { margin-top: 12px; font-weight: 600; color: var(--ink); }
-.builder textarea { resize: vertical; min-height: 0; }
+.builder textarea { resize: vertical; min-height: 0; overflow: hidden; }
+.builder ::placeholder { font-style: italic; }   /* examples look like examples, not answers */
+/* An empty answer says so in words beside its label, not only in its copper edge */
+.builder label:has(+ [aria-invalid="true"])::after { content: " · answer this one"; font-weight: 600; color: var(--invalid); }
+.builder .field-error, .builder-status { margin: 4px 0 0; }
+.builder .field-error:empty, .builder-status:empty { display: none; }
+.builder-status { font-family: var(--font-sans); font-size: .95rem; font-weight: 600; color: var(--ink); }
+@media (max-width: 480px) { #idea-copy { justify-self: stretch; min-height: 48px; } }
 .request { display: grid; gap: 4px; justify-items: start; }
 .builder-label { margin: 8px 0 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); }
 .builder-out { justify-self: stretch; margin: 4px 0 10px; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--tint); border: 1px dashed var(--control); color: var(--ink); }
@@ -1065,10 +1099,10 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 
 /* The run of show: the two hours as one bar, then each part as a row that opens */
 .ros-bar { display: flex; gap: 2px; margin-top: 20px; border-radius: var(--radius-sm); overflow: hidden; }
-.ros-part { display: grid; gap: 2px; min-width: 0; padding: 8px; background: var(--button); color: var(--button-ink); font-family: var(--font-sans); font-size: .78rem; }
-.ros-part.rooms { background: var(--water-700); color: var(--cream-50); }
-.ros-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ros-at { opacity: .8; font-variant-numeric: tabular-nums; }
+.ros-part { display: grid; gap: 2px; min-width: 0; padding: 8px 0; background: var(--button); color: var(--button-ink); font-family: var(--font-sans); font-size: .78rem; }
+.ros-part.rooms { background: var(--water-800); color: var(--cream-50); }   /* dark enough that its small times pass AA */
+.ros-name { padding: 0 8px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* padding inside the labels, so each part's width is its minutes alone */
+.ros-at { padding: 0 8px; font-weight: 500; font-variant-numeric: tabular-nums; overflow: hidden; }
 @media (max-width: 760px) { .ros-name { display: none; } }
 .ros-key { margin: 14px 0 0; padding-left: 20px; display: grid; gap: 4px; max-width: var(--measure); color: var(--muted); }
 .runofshow { display: grid; gap: 12px; margin-top: 18px; }
@@ -1104,6 +1138,7 @@ summary.segment-head::after {
 .cue-line:not(:has(.cue-who)) { display: block; }
 @media (max-width: 600px) { .cue-line { grid-template-columns: minmax(0, 1fr); gap: 0; } .cue-who { padding-top: 4px; } }
 .cue-who { padding-top: .3em; font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-ink); }
+.cue-who.who-do, .cue-who.who-co-host { color: var(--muted); }   /* copper only for Say: the lines spoken aloud stand out */
 .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .checklist label { display: flex; gap: 10px; align-items: flex-start; min-height: 36px; padding: 6px 8px; margin: 0 -8px; border-radius: var(--radius-sm); cursor: pointer; transition: background-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out); }
 @media (hover: hover) { .checklist label:hover { background: var(--tint); } }
@@ -1154,8 +1189,7 @@ summary.segment-head::after {
 .tab { border: 0; border-radius: 0; border-right: 1px solid var(--line); min-height: 44px; }
 .tab:last-child { border-right: 0; }
 .tab .facet-count { margin-left: 8px; }
-.tab[aria-pressed="true"] { background: var(--button); color: var(--button-ink); }
-.tab[aria-pressed="true"] .facet-count { color: inherit; }
+.tab[aria-pressed="true"] { background: var(--tint); color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
 @media (max-width: 600px) {
   .tabs { display: grid; width: 100%; }
   .tab { justify-content: space-between; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -1168,7 +1202,7 @@ summary.segment-head::after {
   position: sticky; top: 16px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
 }
-@media (max-height: 820px) { .finder { position: static; max-height: none; overflow: visible; } }
+@media (max-height: 560px) { .finder { position: static; max-height: none; overflow: visible; } }   /* only a very short window lets them scroll away */
 .finder-toggle { display: none; }
 .finder-label { display: block; margin-bottom: 6px; font-weight: 600; }
 .finder input[type="search"] { width: 100%; }
@@ -1222,12 +1256,15 @@ summary.segment-head::after {
 
 @media (max-width: 900px) {
   .browse-layout { grid-template-columns: minmax(0, 1fr); }
-  .finder { position: static; max-height: none; overflow: visible; }
-  .finder-toggle { display: inline-flex; }
+  /* A phone: one button opens the search and filters. It reads as a button with a chevron, not as a field */
+  .finder { position: static; max-height: none; overflow: visible; padding: 0; background: none; border: 0; }
   .finder-panel:not(.open) { display: none; }
-  .finder-panel.open { margin-top: 12px; }
-  .finder-toggle { width: 100%; justify-content: space-between; }
-  .finder-done { display: inline-flex; }
+  .finder-panel.open { margin-top: 12px; padding: 16px 16px 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+  .finder-toggle { display: inline-flex; width: 100%; justify-content: space-between; border-color: var(--ink); font-weight: 600; }
+  .finder-toggle::after { content: ""; width: 7px; height: 7px; margin: -3px 4px 0 0; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform var(--dur-2) var(--ease-out); }
+  .finder-toggle[aria-expanded="true"]::after { margin-top: 3px; transform: rotate(-135deg); }
+  /* Show N sources stays at the foot of the screen while the panel is open, so a choice near the top applies without a scroll */
+  .finder-done { display: inline-flex; position: sticky; bottom: 0; margin: 18px -16px 0; width: calc(100% + 32px); border-radius: 0 0 var(--radius) var(--radius); box-shadow: 0 -8px 16px var(--surface); }
 }
 
 /* Reduced motion: nothing moves; color, fill, and opacity still show every state */

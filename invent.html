@@ -61,18 +61,19 @@
         <h2 id="builder-title">Describe your invention</h2>
         <div class="invent-layout">
           <div class="builder" role="group" aria-labelledby="builder-title">
+            <p class="builder-status" id="idea-status" role="status"></p>
+            <p class="field-error" id="idea-error" role="alert"></p>
             <label for="idea-what">What is it?</label>
-            <input id="idea-what" autocomplete="off" placeholder="a countdown timer">
+            <input id="idea-what" autocomplete="off" placeholder="e.g. a countdown timer">
             <label for="idea-who">Who is it for?</label>
-            <input id="idea-who" autocomplete="off" placeholder="my fourth graders">
+            <input id="idea-who" autocomplete="off" placeholder="e.g. my fourth graders">
             <label for="idea-does">What should it do?</label>
-            <textarea id="idea-does" rows="2" autocomplete="off" placeholder="count down to recess and play a sound at the end"></textarea>
+            <textarea id="idea-does" rows="3" autocomplete="off" placeholder="e.g. count down to recess and play a sound at the end"></textarea>
           </div>
           <div class="request">
             <p class="builder-label" id="idea-label">Your request so far:</p>
             <p class="builder-out" id="idea-out" aria-labelledby="idea-label" aria-live="polite"></p>
             <button class="primary" id="idea-copy" type="button">Copy my request</button>
-            <p class="field-error" id="idea-error" role="alert"></p>
           </div>
         </div>
         <div class="jar-box">

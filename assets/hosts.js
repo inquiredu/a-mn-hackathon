@@ -32,7 +32,7 @@ function cueLines(note) {
   note.split(/(?=\b(?:Say|Do|Co-host):)/).forEach((part) => {
     const m = part.match(/^(Say|Do|Co-host):\s*([\s\S]*)$/);
     const line = el("span", "cue-line");
-    if (m) line.append(el("span", "cue-who", m[1]), m[2].trim().charAt(0).toUpperCase() + m[2].trim().slice(1));
+    if (m) line.append(el("span", "cue-who who-" + m[1].toLowerCase(), m[1]), m[2].trim().charAt(0).toUpperCase() + m[2].trim().slice(1));
     else line.append(part.trim());
     if (line.textContent.trim()) box.append(line);
   });
@@ -52,7 +52,7 @@ if ($("ros-bar")) {
   let at = 0;
   SESSION.segments.forEach((segment) => {
     const part = el("span", "ros-part" + (segment.where === "Breakout rooms" ? " rooms" : ""));
-    part.style.flexGrow = segment.minutes;
+    part.style.flex = segment.minutes + " 1 0";   // the minutes alone set the width, not the length of the name
     part.append(el("span", "ros-name", segment.title), el("span", "ros-at", Math.floor(at / 60) + ":" + String(at % 60).padStart(2, "0")));
     at += segment.minutes;
     $("ros-bar").append(part);

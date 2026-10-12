@@ -1047,8 +1047,13 @@ summary.segment-head::after {
 .fold[open] > summary { margin-bottom: 14px; }
 
 /* ---------- Sources ---------- */
+.route { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 12px 0 0; }
+.reading { max-width: var(--measure); margin-top: 8px; }
+.reading ul { margin: 4px 0 12px; padding-left: 20px; }
+.reading li { margin: 6px 0; }
 .synthesis h2 { font-size: 1.25rem; letter-spacing: 0; }
-.synthesis p { margin: 8px 0 0; font-size: 1.05rem; }
+.synthesis p { margin: 10px 0 0; font-size: 1.05rem; }
+.friday-design { margin-top: var(--gap); }
 .friday-design h2 { font-size: 1.25rem; letter-spacing: 0; }
 .friday-design p { color: var(--ink); }
 .paths { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); }
@@ -1102,6 +1107,10 @@ summary.segment-head::after {
 .path-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; padding: 12px 16px; background: var(--surface); border: 2px solid var(--ink); border-radius: var(--radius); }
 .path-banner p { margin: 0; }
 
+.active-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 12px; }
+.active-label { font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); margin-right: 2px; }
+.choice input:disabled + label { color: var(--muted); cursor: default; }
+.finder-done { display: none; margin-top: 18px; width: 100%; }
 .src-section + .src-section { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); }
 .src-section > h3 { font-size: 1.5rem; }
 .src-section-blurb { margin: 6px 0 0; color: var(--muted); }
@@ -1114,15 +1123,20 @@ summary.segment-head::after {
 .src-title a::after { content: " ↗"; font-size: .85em; color: var(--muted); }
 @media (hover: hover) { .src-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; } }
 .src-step { color: var(--ink); }
+.src-kind { margin: 0 0 4px; font: var(--type-eyebrow); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .src-meta { margin: 4px 0 0; color: var(--muted); font-size: .9rem; }
-.src-meta .type { display: inline-block; padding: 0 9px; border-radius: var(--radius-pill); background: var(--tint); color: var(--ink); font-size: .76rem; font-weight: 600; white-space: nowrap; }
-.src-meta .type.peer { background: transparent; border: 1px solid var(--control); }
 .src-take { margin: 8px 0 0; }
 .src-says { margin-top: 10px; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--tint); animation: fold-in var(--dur-2) var(--ease-out); }
 .src-says p { margin: 0; }
 .src-says p + p { margin-top: 6px; }
-.src-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
-.src-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; flex-basis: 100%; order: 3; }
+.src-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin-top: 8px; }
+/* Two quiet buttons: they act on this card, so they're text, not boxes */
+.src-foot > button { min-height: 36px; padding: 4px 8px; margin-left: -8px; border-color: transparent; background: transparent; font-size: .9rem; }
+@media (hover: hover) { .src-foot > button:hover { background: var(--action-ghost-hover); border-color: transparent; } }
+.src-toggle::after { content: ""; width: 6px; height: 6px; margin-left: 4px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform var(--dur-2) var(--ease-out); }
+.src-toggle.open::after { transform: translateY(1px) rotate(-135deg); }
+.src-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 0; padding-top: 10px; border-top: 1px solid var(--line); }
+.src-tags-label { margin-right: 4px; font-family: var(--font-sans); font-size: .8rem; font-weight: 600; color: var(--muted); }
 .empty-state { padding: 24px; text-align: center; background: var(--surface); border-radius: var(--radius); }
 .empty-state p { margin: 0 auto 12px; }
 
@@ -1132,6 +1146,8 @@ summary.segment-head::after {
   .finder-toggle { display: inline-flex; }
   .finder-panel:not(.open) { display: none; }
   .finder-panel.open { margin-top: 12px; }
+  .finder-toggle { width: 100%; justify-content: space-between; }
+  .finder-done { display: inline-flex; }
 }
 
 /* Reduced motion: nothing moves; color, fill, and opacity still show every state */

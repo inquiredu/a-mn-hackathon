@@ -68,13 +68,13 @@ Object.entries(PATHS).forEach(([key, path]) => {
   const button = el("button", "path-card");
   button.type = "button";
   button.dataset.path = key;
-  button.append(el("strong", "", path.title), el("span", "", path.blurb), el("span", "path-count", path.ids.length + " sources"));
+  button.append(el("strong", "", path.title), el("span", "", path.blurb), el("span", "path-count", "Read these " + path.ids.length + " →"));
   button.addEventListener("click", () => {
     const leaving = state.path === key;
     Object.assign(state, { section: "all", ask: "", types: new Set(), q: "", path: leaving ? "" : key });
     $("q").value = "";
     render();
-    if (!leaving) $("browse-title").focus();
+    if (!leaving) showResults();
   });
   $("paths").append(button);
 });
@@ -157,18 +157,47 @@ $("expand").addEventListener("click", () => {
 });
 
 // On small screens the filters fold away behind one button
-$("finder-toggle").addEventListener("click", () => {
-  const open = $("finder-toggle").getAttribute("aria-expanded") !== "true";
+function setFinder(open) {
   $("finder-toggle").setAttribute("aria-expanded", String(open));
   $("finder-panel").classList.toggle("open", open);
-});
+  render();
+}
+$("finder-toggle").addEventListener("click", () => setFinder($("finder-toggle").getAttribute("aria-expanded") !== "true"));
+$("finder-done").addEventListener("click", () => { setFinder(false); showResults(); });
 
 
 // ---------- One source, as a card ----------
 
+// After choosing a path or a topic, the list is what changed, so go there
+function showResults() {
+  $("browse-title").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  $("browse-title").focus({ preventScroll: true });
+}
+
+// What's narrowing the list, each with its own way off
+function showActive() {
+  const box = $("active");
+  const chips = [];
+  const chip = (label, off) => {
+    const b = el("button", "tag-chip on sm", label + " ×");
+    b.type = "button";
+    b.setAttribute("aria-label", "Remove: " + label);
+    b.addEventListener("click", () => { off(); render(); });
+    chips.push(b);
+  };
+  if (state.section !== "all") chip(SOURCE_SECTIONS[state.section].title, () => { state.section = "all"; });
+  if (state.ask) chip(ASKS[state.ask], () => { state.ask = ""; });
+  state.types.forEach((t) => chip(TYPES[t], () => state.types.delete(t)));
+  if (state.q) chip("\u201c" + state.q + "\u201d", () => { state.q = ""; $("q").value = ""; });
+  box.hidden = !chips.length || state.path;
+  if (box.hidden) return box.replaceChildren();
+  box.replaceChildren(el("span", "active-label", "On:"), ...chips);
+}
+
 function setOpen(button, open) {
   button.setAttribute("aria-expanded", String(open));
   button.textContent = open ? "Hide what it says" : "What it says";
+  button.classList.toggle("open", open);
   button.panel.hidden = !open;
 }
 
@@ -183,9 +212,8 @@ function card(s, headingLevel, position) {
   link.rel = "noopener";
   heading.append(link);
 
-  const meta = el("p", "src-meta", [s.who, s.venue, s.when].filter(Boolean).join(" · ") + " ");
-  meta.append(el("span", "type", TYPES[s.type]));
-  if (s.peer) meta.append(" ", el("span", "type peer", "Peer-reviewed"));
+  const kind = el("p", "src-kind", TYPES[s.type] + (s.peer ? " · Peer-reviewed" : ""));
+  const meta = el("p", "src-meta", [s.who, s.venue, s.when].filter(Boolean).join(" · "));
 
   const take = el("p", "src-take");
   take.append(el("strong", "", s.takeLabel + ": "), s.take);
@@ -213,15 +241,15 @@ function card(s, headingLevel, position) {
   toggle.addEventListener("click", () => setOpen(toggle, toggle.getAttribute("aria-expanded") !== "true"));
 
   const tags = el("p", "src-tags");
-  tags.append(el("span", "sr-only", "Topics: "));
-  s.asks.forEach((a) => {
+  tags.append(el("span", "src-tags-label", "Topics"));
+  Object.keys(ASKS).filter((a) => s.asks.includes(a)).forEach((a) => {
     const tag = el("button", "tag-chip" + (a === state.ask ? " on" : ""), ASKS[a]);
     tag.type = "button";
     tag.setAttribute("aria-label", "Show sources on: " + ASKS[a]);
     tag.addEventListener("click", () => {
       Object.assign(state, { ask: a, path: "", section: "all" });
       render();
-      $("browse-title").focus();
+      showResults();
     });
     tags.append(tag);
   });
@@ -231,8 +259,8 @@ function card(s, headingLevel, position) {
   share.setAttribute("aria-label", "Copy a link to this entry: " + s.title);
   share.addEventListener("click", () => copyText(location.origin + location.pathname + "#" + s.id, null, share));
 
-  foot.append(toggle, tags, share);
-  article.append(heading, meta, take, more, foot);
+  foot.append(toggle, share);
+  article.append(kind, heading, meta, take, more, foot, tags);
   setOpen(toggle, expandAll);
   return article;
 }
@@ -257,10 +285,7 @@ function render() {
     const n = SOURCES.filter((s) => (!key || s.asks.includes(key)) && matches(s, "ask")).length;
     c.count.textContent = n;
     c.row.classList.toggle("empty", n === 0);
-    c.row.hidden = Boolean(key) && n === 0 && !c.input.checked;
-  });
-  document.querySelectorAll(".ask-group").forEach((set) => {
-    set.hidden = !set.querySelector(".choice:not([hidden])");
+    c.input.disabled = Boolean(key) && n === 0 && !c.input.checked;
   });
   // Kinds and their counts, the same way
   Object.entries(kindInputs).forEach(([key, c]) => {
@@ -268,9 +293,8 @@ function render() {
     const n = SOURCES.filter((s) => s.type === key && matches(s, "type")).length;
     c.count.textContent = n;
     c.row.classList.toggle("empty", n === 0);
-    c.row.hidden = n === 0 && !c.input.checked;
+    c.input.disabled = n === 0 && !c.input.checked;
   });
-  $("kinds").closest("fieldset").hidden = !$("kinds").querySelector(".choice:not([hidden])");
   // Paths
   document.querySelectorAll(".path-card").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.path === state.path)));
 
@@ -278,7 +302,12 @@ function render() {
   $("count").textContent = state.path
     ? PATHS[state.path].title + " " + list.length + " sources, in reading order."
     : (anyFilter() ? "Showing " + list.length + " of " + SOURCES.length + " sources." : "All " + SOURCES.length + " sources.");
-  $("clear").hidden = !anyFilter();
+  $("clear").hidden = !anyFilter() || !list.length;
+  $("expand").disabled = !list.length;
+  showActive();
+  const on = [state.section !== "all", state.ask, state.types.size, state.q].filter(Boolean).length;
+  $("finder-toggle").textContent = ($("finder-toggle").getAttribute("aria-expanded") === "true" ? "Hide search and filters" : "Search and filter") + (on ? " · " + on + " on" : "");
+  $("finder-done").textContent = "Show " + (list.length === 1 ? "1 source" : list.length + " sources");
   const banner = $("path-banner");
   banner.hidden = !state.path;
   if (state.path) {
@@ -293,10 +322,14 @@ function render() {
   results.replaceChildren();
   if (!list.length) {
     const empty = el("div", "empty-state");
-    empty.append(el("p", "", "Nothing matches all of that. Try fewer filters, or a different word."));
-    const reset = el("button", "primary", "Clear filters");
+    const onlySearch = state.q && !(state.section !== "all" || state.ask || state.types.size);
+    const noSearch = !state.q;
+    empty.append(el("p", "", state.q ? "No source mentions \u201c" + state.q + "\u201d" + (onlySearch ? "." : " with those filters on.") : "Nothing matches all of those filters."));
+    const reset = el("button", "primary", onlySearch ? "Clear the search" : noSearch ? "Clear filters" : "Show all " + SOURCES.length);
     reset.type = "button";
-    reset.addEventListener("click", () => $("clear").click());
+    reset.addEventListener("click", () => {
+      if (onlySearch) { state.q = ""; $("q").value = ""; render(); } else $("clear").click();
+    });
     empty.append(reset);
     results.append(empty);
   } else if (state.path) {

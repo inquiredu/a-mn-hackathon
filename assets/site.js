@@ -469,6 +469,7 @@ document.querySelectorAll(".level-bar").forEach((bar) => {
     const a = event.target.closest && event.target.closest('a[href^="#"]');
     const level = a && levelOf(a.hash);
     if (!level || !level.hidden) return;   // already open: the browser scrolls there as usual
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;   // a new tab or window
     if (!document.startViewTransition || reduced()) { show(level); return; }   // then the browser scrolls to it
     event.preventDefault();
     document.startViewTransition(() => {

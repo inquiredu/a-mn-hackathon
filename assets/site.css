@@ -752,6 +752,16 @@ summary.segment-head:hover { background: var(--tint); }
 .threads a { display: block; padding: 2px 10px; border-radius: 999px; background: var(--tint); color: var(--ink); font-size: .8rem; font-weight: 600; text-decoration: none; }
 .threads a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
 
+/* Heard in the room: quotes of every length, packed in columns, read in order down each one */
+.quotes { list-style: none; margin: 24px 0 0; padding: 0; columns: 3 280px; column-gap: 12px; }
+.quotes > li { break-inside: avoid; margin: 0 0 12px; }
+.quote { margin: 0; padding: var(--card-pad) 20px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--control); border-radius: var(--radius); }
+.quote blockquote { margin: 0; }
+.quote blockquote p { margin: 0; font-size: 1.12rem; line-height: 1.45; }
+.quote blockquote p + p { margin-top: 8px; }
+.quote .speaker { font-family: var(--font-sans); font-size: .85rem; font-weight: 600; }
+.quote figcaption { margin-top: 10px; font-family: var(--font-sans); font-size: .82rem; color: var(--muted); }
+
 /* Offers and asks */
 .asks-grid { display: grid; gap: 12px; margin-top: 24px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
 .asks-grid .card h4 { font-size: 1.1rem; }

@@ -1,104 +1,301 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Speaker notes · First Builds</title>
+<meta name="robots" content="noindex">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="assets/theme.js"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css">
+<link rel="stylesheet" href="assets/site.css">
 <style>
-  /* The speaker notes: for the presenter's eyes only. Keep this window out of the shared screen. */
-  /* North Shore on cream, from assets/brand/north-shore.css: a quiet window beside the shared screen */
-  :root { --navy: var(--navy-700); --sky: var(--sun-600); --ink: var(--fg-1); --muted: var(--fg-2); --line: var(--border-hairline); --tint: var(--surface-water-soft); }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--surface-page); color: var(--ink); font: 500 18px/1.5 var(--font-sans); }
-  .wrap { padding: 18px 20px 28px; display: grid; gap: 14px; }
-  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; color: var(--muted); font-size: .95rem; }
-  .clock { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .segment { padding: 10px 14px; border-radius: 8px; background: var(--tint); }
-  .segment strong { display: block; }
-  .left { font-weight: 600; color: var(--navy); }
-  .label { margin: 0; font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  h1 { margin: 2px 0 0; font-size: 1.6rem; line-height: 1.2; }
-  .note { margin: 0; padding: 16px 18px; border-left: 4px solid var(--sky); border-radius: 0 8px 8px 0; background: var(--surface-raised); font: 400 1.35rem/1.45 var(--font-serif); }
-  .next { color: var(--muted); }
-  .next strong { color: var(--ink); }
-  .buttons { display: flex; gap: 8px; }
-  button {
-    flex: 1; padding: 12px; font: inherit; font-weight: 600; cursor: pointer;
-    border-radius: 4px; border: 1.5px solid var(--navy); background: var(--surface-raised); color: var(--navy);
+  /* The speaker notes: for the presenter's eyes only, in a second window beside the shared stage.
+     Built from the site's own components (assets/site.css), so its buttons, links, focus, and Night match the kit.
+     What the presenter watches stays in view at any window height: the status bar and the timer at the top,
+     Back and Next at the bottom, the note between them. At 960 and wider the note takes the left column at its
+     measure and the timer, Back and Next, and the clock sit beside it. */
+  :root { --bar-h: 48px; }
+  body { font-size: 1rem; }
+  .notes-page { min-height: 100dvh; display: flex; flex-direction: column; }
+
+  /* ---------- The status bar: following or not · which screen · the session clock ---------- */
+  .bar {
+    position: sticky; top: 0; z-index: 10; height: var(--bar-h);
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px;
+    background: var(--bar-bg); color: var(--bar-ink); border-bottom: 1px solid var(--bar-line);
+    font-family: var(--font-sans); font-size: .875rem; font-weight: 600;
   }
-  button.primary { background: var(--navy); color: var(--cream-100); }
-  button:focus-visible, a:focus-visible { outline: 2px solid var(--sun-700); outline-offset: 3px; box-shadow: none; }
-  .status { margin: 0; font-size: .9rem; color: var(--muted); }
-  .intro { margin: 0; font-size: .9rem; color: var(--muted); }
-  .restart { display: flex; gap: 8px; flex-wrap: wrap; }
-  .restart button { flex: 1 1 200px; padding: 8px; font-size: .9rem; font-weight: 600; border-width: 1.5px; }
-  .clock.over { color: var(--status-danger); }
-  .timer { padding: 12px 14px; border-radius: 8px; background: var(--surface-raised); border: 1px solid var(--line); display: grid; gap: 10px; }
-  .timer[hidden] { display: none; }
-  .timer-read { display: flex; align-items: baseline; gap: 12px; }
-  .timer-display { font-size: 2rem; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .timer.done .timer-display { color: var(--status-danger); }
-  .timer-status { color: var(--muted); font-size: .95rem; }
-  .timer .buttons button { padding: 8px; }
-  .site-links { margin: -6px 0 12px; display: flex; flex-wrap: wrap; gap: 14px; font-size: .9rem; }
-  .site-links a { font-weight: 600; }
+  .bar :focus-visible { outline-color: var(--bar-focus); }
+  .bar button {
+    min-height: 36px; padding: 4px 10px; font-size: .875rem; color: var(--bar-ink);
+    background: transparent; border: 1px solid rgb(244 241 235 / .28); border-radius: 999px;
+  }
+  @media (hover: hover) { .bar button:hover { background: rgb(244 241 235 / .1); border-color: var(--bar-ink); color: var(--bar-ink); } }
+  .bar button:active { background: rgb(244 241 235 / .16); }
+  .link-state { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; white-space: nowrap; }
+  /* Following: a filled dot. Not open: a hollow one, on the button that opens it. Shape tells them apart, not color. */
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; background: var(--bar-ink); box-shadow: 0 0 0 3px rgb(244 241 235 / .18); }
+  #open-stage::before { content: ""; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--bar-ink-2); }
+  #open-stage::after { content: "↗"; font-size: .85em; }
+  .jump::after { content: ""; width: 6px; height: 6px; margin: -3px 0 0 2px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); }
+  .session { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .session-label { color: var(--bar-ink-2); font-weight: 500; }
+  .session.idle #clock { color: var(--bar-ink-2); font-weight: 500; }
+  .session.over #clock { color: var(--sun-400); }
+  .short { display: none; }
+  @media (max-width: 479px) {
+    .long { display: none; }
+    .short { display: inline; }
+    .bar { padding: 0 8px; gap: 6px; }
+  }
+
+  /* ---------- The layout ---------- */
+  .layout { flex: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 16px 0; }
+  .main-col, .side { display: contents; }
+  .timer { order: 0; }
+  .intro { order: 1; }
+  .script { order: 2; }
+  .moves { order: 3; }
+  .tools { order: 4; }
+
+  /* ---------- The timer: the stage's own, mirrored here, docked under the bar ---------- */
+  .timer {
+    position: sticky; top: var(--bar-h); z-index: 5; margin: 0 -16px;
+    display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; gap: 4px 16px;
+    padding: 10px 16px 12px; background: var(--navy-900); color: var(--cream-100); border-top: 1px solid var(--navy-700); border-bottom: 1px solid var(--bar-line);   /* a step off the page in Night too */
+  }
+  .timer :focus-visible { outline-color: var(--bar-focus); }
+  .timer-display { grid-row: span 2; margin: 0; font: 600 2.25rem/1 var(--font-sans); font-variant-numeric: tabular-nums; min-width: 3.4ch; transition: opacity var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out); }
+  .timer[data-state="Paused"] .timer-display { opacity: .6; }
+  .timer.done .timer-display { color: var(--sun-400); opacity: 1; }
+  .timer-read { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-width: 0; }
+  .timer-status { margin: 0; font: 600 .75rem/1.3 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--navy-200); }
+  .timer-buttons { display: flex; gap: 6px; }
+  .timer button { min-height: 40px; padding: 6px 12px; font-size: .9rem; color: var(--cream-100); background: transparent; border-color: var(--navy-400); }
+  @media (hover: hover) { .timer button:hover { background: var(--navy-700); border-color: var(--cream-100); color: var(--cream-100); } }
+  .timer button:active { background: var(--navy-600); }
+  .timer .timer-go { min-width: 6.5em; background: var(--cream-100); border-color: var(--cream-100); color: var(--navy-900); }
+  @media (hover: hover) { .timer .timer-go:hover { background: var(--cream-200); border-color: var(--cream-200); color: var(--navy-900); } }
+  .timer .step { min-width: 44px; padding: 6px 8px; }
+  .timer .timer-reset { min-height: 32px; padding: 2px 4px; border: 0; color: var(--navy-200); font-size: .85rem; text-decoration: underline; text-decoration-color: var(--navy-400); text-underline-offset: .25em; white-space: nowrap; }
+  @media (hover: hover) { .timer .timer-reset:hover { background: transparent; color: var(--cream-100); text-decoration-color: var(--sun-500); } }
+
+  /* ---------- Before the stage is open: what this window is, and the one button that connects it ---------- */
+  .intro { padding-top: 24px; }
+  .intro h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); line-height: 1.1; }
+  .intro .eyebrow { margin: 0 0 8px; }
+  .intro p { margin: 10px 0 0; }
+  .intro-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-top: 16px; }
+  .intro-actions a { font-family: var(--font-sans); font-weight: 600; font-size: .95rem; }
+
+  /* ---------- The script: the part, the screen, and the note ---------- */
+  .script { padding-top: 20px; display: grid; gap: 14px; align-content: start; }
+  .layout:has(.intro:not([hidden])) .script { padding-top: 4px; }
+  @media (max-width: 959px) { .layout:has(.timer:not([hidden])) .script { padding-top: 0; } }   /* the layout's gap already sets it off from the timer */
+  .part-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 10px 14px; border-radius: var(--radius); background: var(--tint); font-family: var(--font-sans); }
+  .band-part { margin: 0; font-weight: 700; }
+  .band-part span { font-weight: 500; color: var(--muted); }
+  .pace { margin: 0; padding: 3px 10px; border-radius: 999px; font: 600 .8rem/1.3 var(--font-sans); background: var(--surface); color: var(--ink); white-space: nowrap; }
+  .pace:empty { display: none; }
+  .pace.before { background: transparent; color: var(--muted); padding-inline: 0; }
+  .pace.over { background: var(--warm); color: var(--warm-ink); }
+  .on-stage .label { display: block; margin-bottom: 4px; }
+  .on-stage h2 { font-size: clamp(1.375rem, 3.6vw, 1.75rem); }
+  .note { margin: 0; padding: 14px 18px; display: grid; gap: 12px; border-left: 4px solid var(--control); border-radius: 0 var(--radius) var(--radius) 0; background: var(--surface); font: 400 1.25rem/1.5 var(--font-serif); max-width: var(--measure); }
+  .cue-row { margin: 0; display: grid; grid-template-columns: 5.2rem minmax(0, 1fr); gap: 2px 12px; align-items: baseline; }
+  /* .cue-who is the site's own Say / Do / Co-host label, the same as on Hosts */
+  .cue-row.plain { grid-template-columns: minmax(0, 1fr); }
+  .note.empty { color: var(--muted); font-style: italic; }
+  /* A new screen arrives with a short fade, so a glance can tell the script moved on */
+  .script.changed .on-stage, .script.changed .note { animation: arrive var(--dur-2) var(--ease-out); }
+  @keyframes arrive { from { opacity: 0; } }
+  .count-flash { animation: flash 700ms var(--ease-out); }
+  @keyframes flash { from { background: rgb(244 241 235 / .22); } }
+
+  /* ---------- Back and Next, each naming where it goes, docked at the foot of the window ---------- */
+  .moves {
+    position: sticky; bottom: 0; z-index: 5; margin: 0 -16px;
+    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 8px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--bg); border-top: 1px solid var(--line); box-shadow: 0 -6px 16px rgb(20 36 52 / .06);
+  }
+  .moves button { min-height: 60px; display: grid; justify-items: start; align-content: center; gap: 2px; padding: 8px 14px; text-align: left; }
+  .moves .move-label { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
+  .moves .move-to { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .95rem; }
+  .moves #forward { justify-items: end; text-align: right; }
+  .moves button:disabled { background: transparent; border-color: var(--line); color: var(--muted); }   /* the first screen's Back looks as dead as it is */
+
+  /* ---------- The session clock and the keys ---------- */
+  .tools { padding: 8px 0 24px; display: grid; gap: 8px; }
+  .tools h2 { font: var(--type-eyebrow); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .tools p { margin: 0; }
+  .clock-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  #clock-reset.confirm { border-color: var(--accent-ink); color: var(--accent-ink); }
+  #clock-reset { min-width: 13em; }
+  .clock-status { min-height: 1.5em; color: var(--muted); font-size: .95rem; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+  .clock-status button { min-height: 32px; padding: 2px 10px; font-size: .85rem; }
+  .keys-list { margin: 4px 0 8px; padding: 0; list-style: none; display: grid; gap: 6px; font-size: .95rem; }
+
+  /* ---------- The foot ---------- */
+  .notes-foot { padding: 16px; background: var(--bar-bg); color: var(--bar-ink-2); border-top: 1px solid var(--bar-line); font-family: var(--font-sans); font-size: .8rem; }
+  .notes-foot a { display: inline-block; line-height: 24px; color: var(--bar-ink); text-decoration-color: rgb(244 241 235 / .5); }
+  .notes-foot :focus-visible { outline-color: var(--bar-focus); }
+  .notes-foot-inner { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; align-items: center; }
+  .notes-foot p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+  .notes-foot img { height: 32px; width: auto; }
+  .notes-foot .partner-line img { height: 24px; }
+  /* Light or Night: the same button and the same choice as the site's header */
+  .notes-foot-end { display: flex; align-items: center; gap: 8px 12px; }
+
+  /* ---------- The screen list ---------- */
+  #jump-list { width: min(520px, calc(100vw - 24px)); height: fit-content; max-height: calc(100dvh - 48px); }
+  .jump-inner { display: grid; grid-template-rows: auto minmax(0, 1fr); max-height: inherit; }
+  .jump-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .jump-head h2 { font-size: 1.125rem; }
+  .jump-body { overflow-y: auto; padding: 8px 16px 16px; }
+  .jump-part { margin: 14px 0 6px; display: flex; justify-content: space-between; gap: 12px; font: 600 .75rem/1.3 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .jump-body ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+  .jump-body li button { width: 100%; min-height: 44px; justify-content: flex-start; gap: 12px; padding: 8px 12px; border-color: transparent; background: transparent; text-align: left; font-weight: 500; }
+  .jump-body li button .no { flex: none; min-width: 2ch; font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 600; }
+  .jump-body li button[aria-current="true"] { border-color: var(--accent); background: var(--tint); font-weight: 600; }
+  .jump-body li button[aria-current="true"]::after { content: attr(data-where); margin-left: auto; font-size: .75rem; color: var(--muted); }
+
+  /* ---------- 960 and wider: the note at its measure on the left; the instruments beside it ---------- */
+  @media (min-width: 960px) {
+    :root { --bar-h: 52px; }
+    .bar { padding: 0 24px; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 392px; gap: 48px; align-items: start; padding: 0 24px; }
+    .main-col { display: grid; gap: 20px; align-content: start; min-width: 0; }
+    .side { display: grid; gap: 16px; position: sticky; top: calc(var(--bar-h) + 24px); padding-top: 24px; }
+    .timer { position: static; margin: 0; border-radius: var(--radius); border: 1px solid var(--navy-700); grid-template-columns: auto minmax(0, 1fr); padding: 14px 16px; }
+    .moves { position: static; margin: 0; padding: 0; background: none; border: 0; box-shadow: none; grid-template-columns: 1fr; }
+    .moves #forward { order: -1; }
+    .moves #forward, .moves #prev { justify-items: start; text-align: left; }
+    .tools { padding: 8px 0 0; border-top: 1px solid var(--line); }
+    .script { padding-top: 28px; }
+    .note { font-size: 1.375rem; }
+  }
+  @media (max-width: 479px) {
+    .note { padding: 12px 14px; font-size: 1.1875rem; }
+    .cue-row { grid-template-columns: minmax(0, 1fr); }
+    .timer { gap: 4px 12px; }
+    .timer-display { font-size: 2rem; }
+    .moves { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .script.changed .on-stage, .script.changed .note, .count-flash { animation: none; }
+    .timer-display { transition: none; }
+  }
 </style>
 </head>
-<body>
-<main class="wrap">
-  <p class="intro">The presenter's notes for First Builds, one per stage screen, for a second window beside <a href="present.html" target="_blank" rel="noopener">the stage</a> (open both in the same browser and they move together). Runs in any video call with breakout rooms; the first run used Google Meet. Try the builds on <a href="index.html" target="_blank" rel="noopener">the site</a>; run it yourself from <a href="hosts.html" target="_blank" rel="noopener">Hosts</a>.</p>
-  <p class="top"><span id="count"></span><span class="clock" id="clock" title="Time into the session"></span></p>
-  <p class="site-links"><a href="index.html" target="_blank" rel="noopener">Open the site</a><a href="hosts.html" target="_blank" rel="noopener">Hosts</a><a href="present.html" target="_blank" rel="noopener">The stage</a></p>
-  <div class="segment"><strong id="segment"></strong><span class="left" id="left"></span></div>
-  <div>
-    <p class="label">On the stage</p>
-    <h1 id="heading"></h1>
+<body class="notes-page">
+
+<header class="bar" aria-label="Status">
+  <span class="link-state" id="link-state" hidden><span class="dot" aria-hidden="true"></span><span class="long">Following the stage</span><span class="short">Following</span></span>
+  <button id="open-stage" type="button" title="Opens the stage in a window of its own; the notes follow it"><span class="long">Open the stage</span><span class="short">Stage</span></button>
+  <button class="jump" id="jump" type="button" aria-haspopup="dialog" title="Go to any screen"><span><span class="long">Screen </span><span id="count-n">1</span> of <span id="count-of">21</span></span></button>
+  <span class="session idle" id="session"><span class="session-label long">Session&nbsp;·&nbsp;</span><span id="clock">not started</span></span>
+</header>
+
+<div class="layout">
+  <div class="main-col">
+    <section class="intro" id="intro" aria-labelledby="intro-title">
+      <p class="eyebrow" data-fill>{title}</p>
+      <h1 id="intro-title">Speaker notes</h1>
+      <p>One note for each screen on the stage, for a window beside it. Open the stage in this same browser and the two move together: Back and Next here move the stage, and the stage's timer shows here.</p>
+      <div class="intro-actions">
+        <button class="primary" id="intro-open" type="button">Open the stage</button>
+        <a class="away" href="index.html" target="_blank" rel="noopener">Open the site</a>
+        <a class="away" href="hosts.html" target="_blank" rel="noopener">Open Hosts</a>
+      </div>
+      <p class="small">Runs in any video call with breakout rooms; the first run used Google Meet.</p>
+    </section>
+
+    <main class="script" id="script">
+      <div class="part-band"><p class="band-part" id="band-part"></p><p class="pace" id="pace"></p></div>
+      <div class="on-stage">
+        <span class="label">On the stage</span>
+        <h2 id="heading"></h2>
+      </div>
+      <div class="note" id="note"></div>
+    </main>
   </div>
-  <p class="note" id="note"></p>
-  <div class="timer" id="timer" role="group" aria-label="Stage timer" hidden>
-    <p class="label">Timer on the stage</p>
-    <div class="timer-read"><span class="timer-display" id="timer-display"></span><span class="timer-status" id="timer-status"></span></div>
-    <div class="buttons">
-      <button class="primary" id="timer-go" type="button">Start</button>
-      <button id="timer-minus" type="button" aria-label="One minute less">−1 min</button>
-      <button id="timer-plus" type="button" aria-label="One minute more">+1 min</button>
-      <button id="timer-reset" type="button">Reset</button>
+
+  <aside class="side" aria-label="Timer and moves">
+    <div class="timer" id="timer" role="group" aria-label="The stage's timer" hidden>
+      <p class="timer-display" id="timer-display" aria-live="off"></p>
+      <div class="timer-read"><p class="timer-status" id="timer-status"></p><button class="timer-reset" id="timer-reset" type="button">Back to the start</button></div>
+      <div class="timer-buttons">
+        <button class="timer-go" id="timer-go" type="button">Start</button>
+        <button class="step" id="timer-minus" type="button" aria-label="Take a minute off">−1</button>
+        <button class="step" id="timer-plus" type="button" aria-label="Add a minute">+1</button>
+      </div>
     </div>
+
+    <nav class="moves" aria-label="Screens">
+      <button id="prev" type="button"><span class="move-label">← Back</span><span class="move-to" id="prev-to"></span></button>
+      <button class="primary" id="forward" type="button"><span class="move-label">Next →</span><span class="move-to" id="next-to"></span></button>
+    </nav>
+
+    <section class="tools" aria-labelledby="tools-title">
+      <h2 id="tools-title">Session clock</h2>
+      <p class="clock-row">
+        <button id="clock-start" type="button">Call to order</button>
+        <button id="clock-reset" type="button" hidden>Reset the session clock</button>
+      </p>
+      <p class="clock-status" id="clock-status" aria-live="polite"></p>
+      <details class="quiet-fold">
+        <summary>Keys</summary>
+        <ul class="keys-list">
+          <li><span class="keys"><kbd>←</kbd> <kbd>→</kbd></span> here: the previous or next screen, on the stage too</li>
+          <li>On the stage, once it has been clicked: <span class="keys"><kbd>T</kbd></span> starts or pauses the timer, <span class="keys"><kbd>+</kbd> <kbd>−</kbd></span> a minute, <span class="keys"><kbd>C</kbd></span> the clock large, <span class="keys"><kbd>N</kbd></span> the part that's on, <span class="keys"><kbd>F</kbd></span> full screen</li>
+        </ul>
+      </details>
+    </section>
+  </aside>
+</div>
+
+<footer class="notes-foot">
+  <div class="notes-foot-inner">
+    <p class="signature-line"><img src="assets/brand/sean-beaverson-mark-reversed.png" alt="" width="34" height="32"><span data-fill>{maker}</span><span aria-hidden="true">·</span><span class="sr-only">License:</span><a id="foot-license" href="#" target="_blank" rel="noopener" data-fill>{license}</a></p>
+    <div class="notes-foot-end"><p class="partner-line"><img src="assets/mngaia-mark.png" alt="" width="28" height="24"><span data-fill>{org}</span></p>
+    <button class="theme-toggle" type="button" aria-pressed="false" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></div>
   </div>
-  <p class="next" id="next"></p>
-  <div class="buttons">
-    <button id="prev" type="button">← Back</button>
-    <button class="primary" id="forward" type="button">Next →</button>
+</footer>
+
+<dialog id="jump-list" aria-labelledby="jump-title">
+  <div class="jump-inner">
+    <div class="jump-head"><h2 id="jump-title">Go to a screen</h2><button class="sm" id="jump-close" type="button">Close</button></div>
+    <div class="jump-body" id="jump-body"></div>
   </div>
-  <p class="status" id="status" aria-live="polite"></p>
-  <div class="restart">
-    <button id="start-now" type="button" title="Starts the two-hour clock from this moment, on this computer">Call to order now</button>
-    <button id="start-scheduled" type="button" title="Puts the clock back to waiting for the call to order">Reset the session clock</button>
-  </div>
-  <p class="status">Call to order now starts the two-hour clock from this moment, on this computer and the stage beside it. Reset puts it back to waiting. The stage's own keys: T starts or pauses a screen's timer, + and − add or take a minute; click the stage once so it hears them.</p>
-</main>
+</dialog>
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js"></script>
 <script src="assets/stage-timer.js"></script>
 <script>
-// The speaker notes follow the stage, and its buttons (or arrow keys) move the stage too.
+// The speaker notes follow the stage, and Back and Next (or the arrow keys) move the stage too.
 const screens = [];
 SESSION.segments.forEach((segment) => segment.screens.forEach((screen) => screens.push({ ...screen, segment })));
 const $ = (id) => document.getElementById(id);
 const channel = "BroadcastChannel" in window ? new BroadcastChannel("hands-on-stage") : null;
 let index = 0;
-let connected = false;
+let heardAt = 0;          // when the stage last spoke; it speaks twice a second while open
+let everConnected = false;
+const following = () => Date.now() - heardAt < 2500;
 
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
 function toSeconds(time) {
   const [h, m] = time.split(":").map(Number);
   return h * 3600 + m * 60;
 }
-
 function sessionNow() {
   const override = new URLSearchParams(location.search).get("now");
   if (override && /^\d{1,2}:\d{2}$/.test(override)) return toSeconds(override);
@@ -107,108 +304,254 @@ function sessionNow() {
     .formatToParts(new Date()).forEach((p) => { parts[p.type] = p.value; });
   return Number(parts.hour) * 3600 + Number(parts.minute) * 60 + Number(parts.second);
 }
-
 function store() { try { return localStorage; } catch { return undefined; } }
 function today() { return new Intl.DateTimeFormat("en-CA", { timeZone: SESSION.timeZone }).format(new Date()); }
+const title = (screen) => screen.heading || screen.text;
 
-// Call to order from here, or reset (the stage, in this browser, follows). Saved for today only.
-$("start-now").addEventListener("click", () => {
-  STAGE_TIMER.saveStart(store(), today(), sessionNow());
-  $("status").textContent = "Called to order: the two hours are counting down.";
-  tick();
-});
-$("start-scheduled").addEventListener("click", () => {
-  STAGE_TIMER.saveStart(store(), today(), null);
-  $("status").textContent = today() === SESSION.day
-    ? "Counting from the scheduled start, " + TIMES.clock(SESSION.start) + "."
-    : "Reset. The clock waits for the call to order.";
-  tick();
-});
+$("foot-license").href = SESSION.links.license;
+$("count-of").textContent = screens.length;
 
-function render() {
+
+// ---------- Opening the stage: one named window, so a second press brings it forward instead of opening another ----------
+
+function openStage() {
+  const stage = window.open("present.html#" + index, "hands-on-stage");
+  if (stage) stage.focus();
+}
+$("open-stage").addEventListener("click", openStage);
+$("intro-open").addEventListener("click", openStage);
+
+
+// ---------- The note: its own "Say", "Do", and "Co-host" set as rows ----------
+
+function noteRows(note) {
+  const rows = [];
+  note.split(/(?=\b(?:Say|Do|Co-host):)/).forEach((part) => {
+    const m = part.match(/^(Say|Do|Co-host):\s*([\s\S]*)$/);
+    const text = (m ? m[2] : part).trim();
+    if (!text) return;
+    const row = el("p", "cue-row" + (m ? "" : " plain"));
+    if (m) row.append(el("span", "cue-who who-" + m[1].toLowerCase(), m[1]));
+    row.append(el("span", "", text.charAt(0).toUpperCase() + text.slice(1)));   // its own line now, so its own capital
+    rows.push(row);
+  });
+  return rows;
+}
+
+function render(moved) {
   const screen = screens[index];
-  const next = screens[index + 1];
   const seg = screen.segment;
-  $("count").textContent = "Screen " + (index + 1) + " of " + screens.length;
-  $("segment").textContent = seg.title + " · " + seg.minutes + " min · " + seg.where;
-  $("heading").textContent = screen.heading || screen.text;
-  $("note").textContent = screen.note || "No note for this screen.";
-  $("next").replaceChildren();
-  if (next) {
-    const label = document.createElement("strong");
-    label.textContent = "Next: ";
-    $("next").append(label, next.heading || next.text);
-  } else {
-    $("next").textContent = "That's the last screen.";
+  const prev = screens[index - 1];
+  const next = screens[index + 1];
+  $("count-n").textContent = index + 1;
+  $("band-part").replaceChildren(seg.title + " ", el("span", "", "· " + seg.minutes + " min · " + seg.where));
+  $("heading").textContent = title(screen);
+  $("note").classList.toggle("empty", !screen.note);
+  $("note").replaceChildren(...(screen.note ? noteRows(screen.note) : [el("p", "cue-row plain", "No note for this screen.")]));
+  $("prev").disabled = !prev;
+  $("prev-to").textContent = prev ? title(prev) : "This is the first screen";
+  $("forward").disabled = !next;
+  $("next-to").textContent = next ? title(next) : "That's the last screen";
+  $("prev").setAttribute("aria-label", prev ? "Back to " + title(prev) : "Back: this is the first screen");
+  $("forward").setAttribute("aria-label", next ? "Next: " + title(next) : "Next: that's the last screen");
+  if (moved) {
+    const script = $("script");
+    script.classList.remove("changed");
+    void script.offsetWidth;   // restart the arrival fade
+    script.classList.add("changed");
+    $("jump").classList.remove("count-flash");
+    void $("jump").offsetWidth;
+    $("jump").classList.add("count-flash");
+    window.scrollTo({ top: 0, behavior: "instant" });   // the new note from its first line
   }
   tick();
 }
 
+
+// ---------- Once a second: the session clock, the part's pace, the connection, and the clock buttons ----------
+
+let lastConnection = null;
 function tick() {
   const now = sessionNow();
-  const start = STAGE_TIMER.resolveStart(STAGE_TIMER.savedStart(store(), today()), today(), SESSION.day, toSeconds(SESSION.start));
+  const saved = STAGE_TIMER.savedStart(store(), today());
+  const start = STAGE_TIMER.resolveStart(saved, today(), SESSION.day, toSeconds(SESSION.start));
   const two = STAGE_TIMER.sessionClock(now, start, toSeconds(SESSION.end) - toSeconds(SESSION.start));
-  const running = two.state !== "ready" || today() === SESSION.day;
-  $("clock").textContent = running ? two.display + " " + (two.state === "ready" ? "to go" : two.label) : "No session running";
-  $("clock").classList.toggle("over", two.over);
-  const end = toSeconds(screens[index].segment.end);
-  const partStart = toSeconds(screens[index].segment.start);
-  const left = Math.ceil((end - now) / 60);
-  $("left").textContent = !running ? ""
-    : now < partStart ? " · starts after the part before it"
-    : left > 0 ? " · " + left + " min left in this part" : " · time to move on";
+  const counting = two.state !== "ready";
+  const onTheDay = today() === SESSION.day;
+
+  // The session readout: time left once called to order, the full two hours to go on the day, otherwise not started
+  $("clock").textContent = counting ? two.display + " " + two.label : onTheDay ? two.display + " to go" : "not started";
+  $("session").classList.toggle("idle", !counting && !onTheDay);
+  $("session").classList.toggle("over", two.over);
+
+  // The part against the clock, measured from the call to order (or the advertised start on the day)
+  const seg = screens[index].segment;
+  const part = STAGE_TIMER.partClock(now, start, toSeconds(SESSION.start), toSeconds(seg.start), toSeconds(seg.end));
+  const pace = $("pace");
+  pace.className = "pace" + (part.state === "before" ? " before" : part.state === "over" ? " over" : "");
+  pace.textContent = !counting || part.state === "waiting" ? ""
+    : part.state === "before" ? "Starts after the part before it"
+    : part.state === "on" ? part.minutesLeft + " min left in this part" : "Time to move on";
+
+  // Following the stage, or a button that opens it
+  const on = following();
+  if (on !== lastConnection) {
+    lastConnection = on;
+    $("link-state").hidden = !on;
+    $("open-stage").hidden = on;
+    $("intro").hidden = on || everConnected;   // the introduction is for before the stage is open, not for a dropped window
+    if (!on) $("timer").hidden = true;
+  }
+
+  // The clock buttons: Call to order until the two hours are called; then a Reset that asks twice and can be undone.
+  // Counting from the advertised start (on the day, nothing saved), Call to order stays: it restarts the two hours from now.
+  const called = saved !== null;
+  $("clock-start").hidden = called;
+  $("clock-start").textContent = counting ? "Call to order now" : "Call to order";
+  $("clock-reset").hidden = !called;
+  if (!statusHeld) {
+    $("clock-status").textContent = called ? "Called to order. The stage beside this window counts the same two hours."
+      : counting ? "Counting from the advertised start, " + TIMES.clock(SESSION.start) + ". Starting late? Call to order now restarts the two hours from this moment."
+      : "Starts the two hours from the moment you press it, here and on the stage beside this window.";
+  }
 }
 setInterval(tick, 1000);
 
+
+// ---------- The session clock's buttons ----------
+
+let statusHeld = false;    // a message with an Undo stays until it times out
+let undoTimer;
+function holdStatus(text, undo) {
+  statusHeld = true;
+  clearTimeout(undoTimer);
+  const box = $("clock-status");
+  box.replaceChildren(el("span", "", text));
+  if (undo) {
+    const button = el("button", "", "Undo");
+    button.type = "button";
+    button.addEventListener("click", () => { undo(); release(); });
+    box.append(button);
+  }
+  undoTimer = setTimeout(release, 8000);
+}
+function release() { statusHeld = false; clearTimeout(undoTimer); tick(); }
+
+$("clock-start").addEventListener("click", () => {
+  STAGE_TIMER.saveStart(store(), today(), sessionNow());
+  holdStatus("Called to order: the two hours are counting down, here and on the stage.");
+  tick();
+  $("clock-reset").focus();
+});
+
+const reset = $("clock-reset");
+reset.addEventListener("click", () => {
+  if (!reset.classList.contains("confirm")) {
+    reset.classList.add("confirm");
+    reset.textContent = "Press again to reset";
+    reset.confirmTimer = setTimeout(() => { reset.classList.remove("confirm"); reset.textContent = "Reset the session clock"; }, 4000);
+    return;
+  }
+  clearTimeout(reset.confirmTimer);
+  reset.classList.remove("confirm");
+  reset.textContent = "Reset the session clock";
+  const before = STAGE_TIMER.savedStart(store(), today());
+  STAGE_TIMER.saveStart(store(), today(), null);
+  holdStatus(today() === SESSION.day ? "Reset: counting from the advertised start, " + TIMES.clock(SESSION.start) + "." : "Reset: the clock waits for the call to order.",
+    () => { STAGE_TIMER.saveStart(store(), today(), before); tick(); });
+  tick();
+  $("clock-start").focus();
+});
+
+
+// ---------- Moving: through the stage when it's open, or just through the notes ----------
+
 function go(i) {
   const target = Math.min(Math.max(0, i), screens.length - 1);
-  if (channel && connected) {
+  if (channel && following()) {
     channel.postMessage({ go: target });   // the stage moves, then tells us where it is
-  } else {
+  } else if (target !== index) {
     index = target;                         // no stage open: just read the notes
-    render();
+    render(true);
   }
 }
+$("prev").addEventListener("click", () => go(index - 1));
+$("forward").addEventListener("click", () => go(index + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+  if ($("jump-list").open) return;
+  if (event.target.closest && event.target.closest("button, a, summary, input") && (event.key === " " || event.key === "Enter")) return;
+  if (event.key === "ArrowRight" || event.key === "PageDown") { event.preventDefault(); go(index + 1); }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") { event.preventDefault(); go(index - 1); }
+});
 
-if (channel) {
-  channel.onmessage = (event) => {
-    const message = event.data || {};
-    if (Number.isInteger(message.index) && message.index >= 0 && message.index < screens.length) {
-      if (!connected) $("status").textContent = "Following the stage.";
-      if (!connected || message.index !== index) {
-        connected = true;
-        index = message.index;
-        render();
-      }
-      showTimer(message.timer);
-    }
-  };
-  channel.postMessage({ hello: true });
+
+// ---------- The screen list: every screen under its part, the one on the stage marked ----------
+
+function buildJumpList() {
+  const body = $("jump-body");
+  body.replaceChildren();
+  let n = 0;
+  SESSION.segments.forEach((seg) => {
+    const head = el("p", "jump-part");
+    head.append(el("span", "", seg.title), el("span", "", seg.minutes + " min"));
+    const list = el("ol");
+    seg.screens.forEach((screen) => {
+      const i = n++;
+      const button = el("button");
+      button.type = "button";
+      button.append(el("span", "no", String(i + 1)), el("span", "", title(screen)));
+      if (i === index) { button.setAttribute("aria-current", "true"); button.dataset.where = following() ? "On the stage" : "This note"; }
+      button.addEventListener("click", () => { $("jump-list").close(); go(i); });
+      const li = el("li");
+      li.append(button);
+      list.append(li);
+    });
+    body.append(head, list);
+  });
 }
-$("status").textContent = "Open the stage (present.html) in another window and these notes will follow it.";
+$("jump").addEventListener("click", () => {
+  buildJumpList();
+  $("jump-list").showModal();
+  const current = $("jump-body").querySelector('[aria-current="true"]');
+  if (current) { current.focus(); current.scrollIntoView({ block: "center" }); }
+});
+$("jump-close").addEventListener("click", () => $("jump-list").close());
+$("jump-list").addEventListener("click", (event) => { if (event.target === $("jump-list")) $("jump-list").close(); });
+$("jump-list").addEventListener("close", () => $("jump").focus());
 
-// The stage owns the timer; these buttons ask it to act, and it reports back twice a second
+
+// ---------- The stage owns the timer; these buttons ask it to act, and it reports back twice a second ----------
+
 function showTimer(state) {
   $("timer").hidden = !state;
   if (!state) return;
   $("timer").classList.toggle("done", state.done);
+  $("timer").dataset.state = state.status;
   $("timer-display").textContent = state.display;
-  $("timer-status").textContent = state.status + " · " + state.minutes + " min";
+  $("timer-status").textContent = state.label || state.status + " · " + state.minutes + " min";
   $("timer-go").textContent = state.action;
+  $("timer-reset").textContent = "Back to " + state.minutes + ":00";
 }
 [["timer-go", "toggle"], ["timer-minus", "minus"], ["timer-plus", "plus"], ["timer-reset", "reset"]].forEach(([id, action]) => {
   $(id).addEventListener("click", () => { if (channel) channel.postMessage({ timer: action }); });
 });
 
-$("prev").addEventListener("click", () => go(index - 1));
-$("forward").addEventListener("click", () => go(index + 1));
-document.addEventListener("keydown", (event) => {
-  if (event.target.tagName === "BUTTON" && (event.key === " " || event.key === "Enter")) return;
-  if (event.key === "ArrowRight" || event.key === "PageDown") { event.preventDefault(); go(index + 1); }
-  if (event.key === "ArrowLeft" || event.key === "PageUp") { event.preventDefault(); go(index - 1); }
-});
+if (channel) {
+  channel.onmessage = (event) => {
+    const message = event.data || {};
+    if (!Number.isInteger(message.index) || message.index < 0 || message.index >= screens.length) return;
+    const wasFollowing = following();
+    heardAt = Date.now();
+    everConnected = true;
+    if (message.index !== index) { index = message.index; render(true); }
+    else if (!wasFollowing) tick();
+    showTimer(message.timer);
+  };
+  channel.postMessage({ hello: true });
+}
 
-render();
+render(false);
 </script>
 </body>
 </html>

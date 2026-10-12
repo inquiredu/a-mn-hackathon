@@ -83,7 +83,7 @@ document.querySelectorAll(".res-filter").forEach((filter) => {
 });
 
 // ---------- Following a link to a view or an item ----------
-function reveal(hash) {
+function reveal(hash, onLoad) {
   let target = null;
   try { target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; } catch (error) { return; }
   const owner = target && recaps.find(({ recap }) => recap.contains(target));
@@ -93,7 +93,8 @@ function reveal(hash) {
   const block = target.closest(".res-block");
   if (block && block.hidden) block.closest('[role="tabpanel"]').querySelector(".res-filter").showKind("all");
   if (target.tagName === "DETAILS") target.open = true;
-  target.scrollIntoView({ block: "start" });
+  // On arriving, jump as the browser does: a smooth scroll begun while the page is still settling lands short
+  target.scrollIntoView({ block: "start", behavior: onLoad ? "instant" : "auto" });
   const focusable = target.tagName === "DETAILS" ? target.querySelector("summary") : target;
   if (!focusable.matches("a, button, summary, [tabindex]")) focusable.tabIndex = -1;
   focusable.focus({ preventScroll: true });
@@ -104,4 +105,4 @@ document.addEventListener("click", (event) => {
   const link = event.target.closest('a[href^="#"]');
   if (link && link.getAttribute("role") !== "tab" && link.hash === location.hash) reveal(link.hash);
 });
-reveal(location.hash);
+reveal(location.hash, true);

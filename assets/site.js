@@ -1,4 +1,4 @@
-// First Builds: the script shared by Home, Starters, Grant a wish, and Hosts.
+// First Builds: the script shared by every page but the stage and the speaker notes.
 // Times, links, and the day all come from the session file (assets/session.js),
 // read through the clock in assets/timing.js: TIMES.fill() for {braces}. The clock decides which part is on;
 // the pages show each part's length, not its clock time, so the plan reads the same if the morning runs long.
@@ -23,8 +23,8 @@ const SCRIPTS = {
   multiplier: { name: "The Doc Multiplier", file: "recipes/doc-multiplier.gs" }
 };
 
-// The AI tools people paste into: one source for the "next step" panel and for every page's
-// "Where do I paste it?" block (<div data-where></div>). tip: the one move before pasting, for the panel.
+// The AI tools people paste into: one source for the next-step sheet and for every page's
+// "Where do I paste it?" block (<div data-where></div>). tip: the one move before pasting, for the sheet.
 // where: the same, said in full. code: how to copy the finished code out, for a page that goes on a Google Site.
 const AI_TOOLS = [
   { id: "gemini", name: "Gemini", url: "https://gemini.google.com/app",
@@ -127,8 +127,11 @@ function recall(key) {
   try { return localStorage.getItem(key); } catch { return null; }
 }
 
+// The AI tool this visitor last picked, if any, remembered in this browser only
+const TOOL_KEY = "hands-on-ai";
 
-// ---------- Icons: the starters' badges and the awards (Home, Starters), from assets/icons.js ----------
+
+// ---------- Icons: the starters' badges and the awards, from assets/icons.js ----------
 
 if (typeof iconSvg === "function") {
   document.querySelectorAll("[data-icon]").forEach((spot) => {
@@ -136,6 +139,25 @@ if (typeof iconSvg === "function") {
     spot.setAttribute("aria-hidden", "true");
   });
 }
+
+
+// ---------- The menu on a phone: a button that opens the pages as rows ----------
+
+document.querySelectorAll(".menu-toggle").forEach((button) => {
+  const nav = $(button.getAttribute("aria-controls"));
+  if (!nav) return;
+  const setOpen = (open) => {
+    button.setAttribute("aria-expanded", String(open));
+    nav.classList.toggle("open", open);
+  };
+  button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && button.getAttribute("aria-expanded") === "true") { setOpen(false); button.focus(); }
+  });
+  document.addEventListener("click", (event) => {
+    if (button.getAttribute("aria-expanded") === "true" && !event.target.closest(".site-head")) setOpen(false);
+  });
+});
 
 
 // ---------- The clock ----------
@@ -167,11 +189,11 @@ function phase() {
 
 // ---------- The morning, as a list (Home) ----------
 
-// The shared spaces a part uses (the Breakout Planner, the walls), as links that open in a new tab, for the Happening now card
+// The shared spaces a part uses (the Breakout Planner, the walls), as links that open in a new tab
 function sharedLinks(segment, className) {
   return (segment.shared || []).filter((s) => LINKS[s.link]).map((s) => {
     const a = linkTo(LINKS[s.link], s.label);
-    if (className) a.className = className;
+    a.className = (className ? className + " " : "") + "away";
     a.target = "_blank";
     a.rel = "noopener";
     return a;
@@ -199,27 +221,47 @@ if (timeline) {
 
 const nowLine = $("now");
 let lastSegment = null;
+const here = location.pathname.split("/").pop() || "index.html";
 
+// The bar's line: a tag, then each piece in a span that keeps its separator with it, so a line never ends on "·"
 function setNow(tag, ...pieces) {
   if (!nowLine) return;
   nowLine.replaceChildren();
-  if (tag) nowLine.append(el("span", "tag", tag), " ");
-  pieces.forEach((piece) => nowLine.append(piece));
+  if (tag) nowLine.append(el("span", "tag", tag));
+  const text = el("span", "now-text");
+  pieces.forEach((piece, i) => {
+    const wrap = el("span", piece.className === "upnext" ? "upnext" : "");
+    if (i) wrap.append("· ");
+    wrap.append(piece.className === "upnext" ? piece.textContent : piece);
+    text.append(wrap, i < pieces.length - 1 ? " " : "");
+  });
+  nowLine.append(text);
 }
 
 function endWith(title) {
   return /[.?!]$/.test(title) ? title : title + ".";
 }
 
+// Where a part's button should go from this page: its own page, or, when that's the page you're on, down the page
+function partLink(segment) {
+  const [page, hash] = segment.link.split("#");
+  const body = document.body.dataset;
+  if (body.page === "hosts" && $("part-" + segment.id)) return { href: "#part-" + segment.id, label: "Go to this part" };
+  if (page === here && !hash && body.jump) return { href: body.jump, label: body.jumpLabel || segment.linkLabel };
+  if (page === here && hash) return { href: "#" + hash, label: segment.linkLabel };
+  return { href: segment.link, label: segment.linkLabel };
+}
+
 // Meet can't send one message to every breakout room, so the page does it:
-// when the morning moves on while this page is open, a notice slides in.
+// when the morning moves on while this page is open, a line joins the now bar.
 function showCue(segment) {
   const cue = $("cue");
   if (!cue) return;
-  const lead = el("strong", "", "Now: " + endWith(segment.title) + " ");
+  const to = partLink(segment);
   cue.hidden = false;
-  $("cue-text").replaceChildren(lead, segment.hint);
-  $("cue-go").href = segment.link;
+  $("cue-text").replaceChildren(el("strong", "", "Now: " + endWith(segment.title) + " "), segment.hint);
+  $("cue-go").href = to.href;
+  $("cue-go").textContent = to.label || "Take me there";
 }
 if ($("cue")) {
   $("cue-go").addEventListener("click", () => { $("cue").hidden = true; });
@@ -251,8 +293,9 @@ function update() {
   });
 
   if (now.mode === "before") {
-    setNow(now.today ? "Soon" : "", now.today ? TIMES.fill("We start at {start} {zone}. ") : SESSION.dateLabel);
-    if (now.today && nowLine) nowLine.append(linkTo("index.html#today", "See the plan"));
+    const pieces = [el("span", "", now.today ? TIMES.fill("We start at {start} {zone}.") : SESSION.dateLabel)];
+    if (now.today && here === "index.html") pieces.push(linkTo("#today", "See the plan"));
+    setNow(now.today ? "Soon" : "", ...pieces);
     lastSegment = "before";
     return;
   }
@@ -268,10 +311,10 @@ function update() {
 
   const current = segments[now.index];
   const next = segments[now.index + 1];
-  // Sections for a later part (Show & Cheer, the close) wait until that part starts
+  // Sections for a part that hasn't started, or has ended, wait or step away
   document.querySelectorAll("[data-from]").forEach((section) => {
     const from = segments.findIndex((s) => s.id === section.dataset.from);
-    if (from > now.index) section.hidden = true;
+    if (from !== now.index && !(section.dataset.stay && from < now.index)) section.hidden = true;
   });
   segments.forEach((s, i) => {
     if (!s.item) return;
@@ -284,10 +327,11 @@ function update() {
   }
 
   // The part's name, then its button's words as the link, so the link says where it goes
-  const pieces = current.linkLabel
-    ? [el("span", "", current.title), " · ", linkTo(current.link, current.linkLabel)]
-    : [linkTo(current.link, current.title)];
-  if (next) pieces.push(el("span", "upnext", " · Next: " + next.title));
+  const to = partLink(current);
+  const pieces = to.label
+    ? [el("span", "", current.title), linkTo(to.href, to.label)]
+    : [linkTo(to.href, current.title)];
+  if (next) pieces.push(el("span", "upnext", "Next: " + next.title));
   setNow("Now", ...pieces);
 
   // The big card on Home
@@ -299,7 +343,7 @@ function update() {
     go.hidden = !current.linkLabel;
     if (current.linkLabel) { go.href = current.link; go.textContent = current.linkLabel; }
     $("nowcard-shared").replaceChildren(...sharedLinks(current, "button"));
-    $("nowcard-next").textContent = next ? "Next: " + next.title + ", " + next.minutes + " min" : "Last part of the morning.";
+    $("nowcard-next").textContent = next ? "Next: " + next.title + " · " + next.minutes + " min" : "Last part of the morning.";
   }
 
   if (lastSegment !== null && lastSegment !== now.index) showCue(current);
@@ -316,7 +360,7 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
   const url = LINKS[slot.dataset.link];
   if (url) {
     const a = linkTo(url, TIMES.fill(slot.dataset.label));   // a label can be a {brace}: {license}
-    a.className = slot.dataset.style || "button primary";
+    a.className = (slot.dataset.style || "button primary") + (slot.dataset.link === "license" ? "" : " away");
     a.target = "_blank";
     a.rel = slot.dataset.link === "license" ? "license noopener" : "noopener";
     slot.append(a);
@@ -328,19 +372,60 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
 });
 
 
-// ---------- Where do I paste it? and the script steps, filled from the lists at the top ----------
+// ---------- Where do I paste it? One tool at a time, the visitor's own remembered ----------
 
-document.querySelectorAll("[data-where]").forEach((box) => {
-  const grid = el("div", "tips");
-  AI_TOOLS.forEach((tool) => {
-    const item = el("div");
-    item.append(el("h4", "", tool.name), el("p", "", tool.where));
-    if (box.dataset.where === "code") item.append(el("p", "", "To copy the code out: " + tool.code));
-    grid.append(item);
+document.querySelectorAll("[data-where]").forEach((box, n) => {
+  const favorite = recall(TOOL_KEY);
+  const tabs = el("div", "where-tabs");
+  tabs.setAttribute("role", "tablist");
+  tabs.setAttribute("aria-label", "Your AI tool");
+  const panels = el("div", "where-panels");
+  const buttons = [];
+  AI_TOOLS.forEach((tool, i) => {
+    const id = "where-" + n + "-" + tool.id;
+    const tab = el("button", "", tool.name);
+    tab.type = "button";
+    tab.id = id + "-tab";
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-controls", id);
+    const panel = el("div", "where-panel");
+    panel.id = id;
+    panel.setAttribute("role", "tabpanel");
+    panel.setAttribute("aria-labelledby", tab.id);
+    panel.append(el("p", "", tool.where));
+    if (box.dataset.where === "code") {
+      const code = el("p", "");
+      code.append(el("strong", "", "To copy the code out: "), tool.code);
+      panel.append(code);
+    }
+    tabs.append(tab);
+    panels.append(panel);
+    buttons.push({ tab, panel, tool });
   });
+  const select = (chosen, focus) => {
+    buttons.forEach(({ tab, panel, tool }) => {
+      const on = tool.id === chosen;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      panel.hidden = !on;
+      if (on && focus) tab.focus();
+    });
+  };
+  buttons.forEach(({ tab, tool }, i) => {
+    tab.addEventListener("click", () => { select(tool.id); remember(TOOL_KEY, tool.id); });
+    tab.addEventListener("keydown", (event) => {
+      const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+      if (!step) return;
+      event.preventDefault();
+      const nextTool = buttons[(i + step + buttons.length) % buttons.length].tool;
+      select(nextTool.id, true);
+      remember(TOOL_KEY, nextTool.id);
+    });
+  });
+  select(AI_TOOLS.some((t) => t.id === favorite) ? favorite : AI_TOOLS[0].id);
   const notes = el("ul", "where-notes");
   WHERE_NOTES.forEach((note) => notes.append(el("li", "", note)));
-  box.replaceChildren(grid, notes);
+  box.replaceChildren(tabs, panels, notes);
 });
 
 document.querySelectorAll("[data-steps]").forEach((box) => {
@@ -358,59 +443,124 @@ document.querySelectorAll("[data-steps]").forEach((box) => {
 
 
 // ---------- Messages ----------
-// Inside the machine room, messages show in the room; everywhere else, at the bottom of the page.
+// A short page-level message at the foot of the window: errors and notices, not copy confirmations
+// (a copy button says "Copied" itself). It stays long enough to read, and a tap or Esc sends it away.
 
 function say(message) {
-  const box = document.querySelector("dialog[open] .toast") || $("toast");
+  const box = $("toast");
   if (!box) return;
   clearTimeout(box.hideTimer);
+  box.classList.remove("show");
   box.textContent = "";   // clear first, so a repeated message is announced again
   setTimeout(() => {
     box.textContent = message;
     box.classList.add("show");
-    box.hideTimer = setTimeout(() => box.classList.remove("show"), 7000);
+    box.hideTimer = setTimeout(() => box.classList.remove("show"), Math.min(6000, 3000 + message.length * 50));
   }, 60);
 }
-document.querySelectorAll(".toast").forEach((box) => {
+if ($("toast")) {
+  const box = $("toast");
   box.addEventListener("mouseenter", () => clearTimeout(box.hideTimer));
-  box.addEventListener("mouseleave", () => {
-    box.hideTimer = setTimeout(() => box.classList.remove("show"), 2500);
-  });
-});
+  box.addEventListener("mouseleave", () => { box.hideTimer = setTimeout(() => box.classList.remove("show"), 2000); });
+  box.addEventListener("click", () => box.classList.remove("show"));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") box.classList.remove("show"); });
+}
+
+// A quiet announcement for screen readers, for changes a button shows on its own face
+const announcer = el("p", "sr-only");
+announcer.setAttribute("role", "status");
+announcer.setAttribute("aria-live", "polite");
+document.body.append(announcer);
+function announce(message) {
+  announcer.textContent = "";
+  setTimeout(() => { announcer.textContent = message; }, 60);
+}
+
+// The pressed button says it worked, for two seconds, at the same width
+function markDone(button, label = "Copied") {
+  if (!button) return;
+  clearTimeout(button.doneTimer);
+  if (!button.classList.contains("is-done")) {
+    button.dataset.restore = button.textContent;
+    button.style.minWidth = button.offsetWidth + "px";
+  }
+  button.classList.add("is-done");
+  button.textContent = label;
+  announce(label + ".");
+  button.doneTimer = setTimeout(() => {
+    button.classList.remove("is-done");
+    button.textContent = button.dataset.restore;
+    button.style.minWidth = "";
+  }, 2000);
+}
 
 
 // ---------- The next step, after copying something for an AI ----------
-// Offers the three AI tools, with the one setup step each needs, and remembers the one you pick.
+// A sheet at the foot of the window: what was copied, then the three AI tools, each with the one setup step it
+// needs, the visitor's last pick first. It waits for Done (people need it while they switch tabs).
 
-function nextStep(message) {
+let nextStepReturn = null;
+function closeNextStep() {
+  const panel = $("next-step");
+  if (!panel || panel.hidden) return;
+  panel.classList.add("leaving");
+  setTimeout(() => { panel.hidden = true; panel.classList.remove("leaving"); document.body.style.paddingBottom = ""; }, 160);
+  if (nextStepReturn && document.contains(nextStepReturn)) nextStepReturn.focus();
+}
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && $("next-step") && !$("next-step").hidden && !document.querySelector("dialog[open]")) closeNextStep();
+});
+
+function nextStep(what, trigger) {
   let panel = $("next-step");
+  const fresh = !panel || panel.hidden;
   if (!panel) {
     panel = el("div", "next-step");
     panel.id = "next-step";
-    panel.setAttribute("role", "status");
+    panel.setAttribute("role", "region");
+    panel.setAttribute("aria-label", "Next: paste it into your AI");
     document.body.append(panel);
   }
-  const favorite = recall("hands-on-ai");
+  nextStepReturn = trigger || nextStepReturn;
+  const favorite = recall(TOOL_KEY);
   const tools = [...AI_TOOLS].sort((a, b) => (b.id === favorite) - (a.id === favorite));
   const inner = el("div", "next-step-inner");
-  inner.append(el("p", "next-step-lead", message + " Now paste it into your AI chat. Not open yet?"));
+  const lead = el("p", "next-step-lead", "Now paste it into your AI chat. Not open yet?");
+  lead.tabIndex = -1;
+  inner.append(el("p", "next-step-status", "Copied · " + what), lead);
   const row = el("div", "next-step-tools");
   tools.forEach((tool) => {
     const a = linkTo(tool.url, "Open " + tool.name + (tool.id === favorite ? " (your pick)" : ""));
-    a.className = "button" + (tool.id === favorite ? " primary" : "");
+    a.className = "button away" + (tool.id === favorite ? " primary" : "");
     a.target = "_blank";
     a.rel = "noopener";
-    a.addEventListener("click", () => remember("hands-on-ai", tool.id));
+    a.addEventListener("click", () => remember(TOOL_KEY, tool.id));
     const item = el("div", "next-step-tool");
     item.append(a, el("span", "", tool.tip));
     row.append(item);
   });
-  const close = el("button", "next-step-close", "Done");
+  const close = el("button", "next-step-close sm", "Done");
   close.type = "button";
-  close.addEventListener("click", () => { panel.hidden = true; });
+  close.addEventListener("click", closeNextStep);
   inner.append(row, close);
   panel.replaceChildren(inner);
-  panel.hidden = false;
+  if (fresh) {
+    panel.classList.remove("leaving");
+    panel.hidden = false;
+    panel.style.animation = "none";
+    void panel.offsetWidth;   // restart the entrance
+    panel.style.animation = "";
+  }
+  announce("Copied " + what + ". Now paste it into your AI chat.");
+  lead.focus({ preventScroll: true });
+  // The sheet never covers the row you pressed: room at the page's foot, and the row scrolled above the sheet
+  document.body.style.paddingBottom = panel.offsetHeight + "px";
+  const pressed = trigger && trigger.closest(".actions, .card-actions, .copy-actions, .builder") || trigger;
+  if (pressed && document.contains(pressed)) {
+    const clear = innerHeight - panel.offsetHeight - 16;
+    const bottom = pressed.getBoundingClientRect().bottom;
+    if (bottom > clear) window.scrollBy({ top: bottom - clear, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
 }
 
 
@@ -432,15 +582,23 @@ function olderCopy(text) {
 function copyByHand(text) {
   const box = $("fallback");
   if (!box) return;
+  const touch = matchMedia("(pointer: coarse)").matches;
+  $("fallback-how").textContent = touch
+    ? "Your browser blocked the copy button. Press and hold in the box, then choose Select all, then Copy."
+    : "Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.";
   $("fallback-text").value = text;
   box.showModal();
   $("fallback-text").focus();
   $("fallback-text").select();
 }
+if ($("fallback")) {
+  $("fallback-close").addEventListener("click", () => $("fallback").close());
+  $("fallback-select").addEventListener("click", () => { $("fallback-text").focus(); $("fallback-text").select(); });
+}
 
-// done: what to do once it's copied (show a message, or the next-step panel)
-function copyText(text, done) {
-  const finish = typeof done === "function" ? done : () => say(done);
+// done: what to do once it's copied (a function, such as the next-step sheet); button: the one pressed, which says "Copied"
+function copyText(text, done, button) {
+  const finish = () => { markDone(button); if (typeof done === "function") done(); };
   const tryOlder = () => (olderCopy(text) ? finish() : copyByHand(text));
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(text).then(finish, tryOlder);
@@ -448,7 +606,6 @@ function copyText(text, done) {
     tryOlder();
   }
 }
-if ($("fallback-close")) $("fallback-close").addEventListener("click", () => $("fallback").close());
 
 
 // ---------- Starters ----------
@@ -476,18 +633,18 @@ function promptFor(id, code) {
     "```html\n" + code + "\n```";
 }
 
-async function copyMachine(id) {
-  const done = () => nextStep("Copied " + MACHINES[id].name + ".");
-  if (codeCache[id]) return copyText(promptFor(id, codeCache[id]), done);
+async function copyMachine(id, button) {
+  const done = () => nextStep(MACHINES[id].name, button);
+  if (codeCache[id]) return copyText(promptFor(id, codeCache[id]), done, button);
   try {
-    copyText(promptFor(id, await loadCode(id)), done);
+    copyText(promptFor(id, await loadCode(id)), done, button);
   } catch {
     say("Couldn't load that starter. Try opening the page from its web link.");
   }
 }
 
 document.querySelectorAll("[data-copy-machine]").forEach((button) => {
-  button.addEventListener("click", () => copyMachine(button.dataset.copyMachine));
+  button.addEventListener("click", () => copyMachine(button.dataset.copyMachine, button));
 });
 
 
@@ -498,7 +655,7 @@ document.querySelectorAll(".remix li:not(.do)").forEach((item) => {
   const button = el("button", "", "Copy");
   button.type = "button";
   button.setAttribute("aria-label", "Copy: " + text);
-  button.addEventListener("click", () => copyText(text, "Copied. Paste it into the same AI chat."));
+  button.addEventListener("click", () => copyText(text, null, button));
   item.appendChild(button);
 });
 
@@ -528,11 +685,10 @@ document.querySelectorAll("[data-copy-script], [data-ask-script]").forEach((butt
   const ask = "askScript" in button.dataset;
   const id = ask ? button.dataset.askScript : button.dataset.copyScript;
   button.addEventListener("click", async () => {
-    const panel = $("next-step");
-    if (panel) panel.hidden = true;   // a panel left open from a starter would say "paste it into your AI chat" under a script
+    closeNextStep();   // a sheet left open from a starter would say "paste it into your AI chat" under a script
     try {
       const code = await loadScript(id);
-      copyText(ask ? askFor(id, code) : code, ask ? "Copied. Paste it into your AI chat, and it will explain the script line by line." : "Copied. Now go to script.google.com, press New project, delete what's there, and paste.");
+      copyText(ask ? askFor(id, code) : code, null, button);
     } catch {
       say("Couldn't load that script. Try opening the page from its web link.");
     }
@@ -541,15 +697,15 @@ document.querySelectorAll("[data-copy-script], [data-ask-script]").forEach((butt
 
 document.querySelectorAll("[data-copy-from]").forEach((button) => {
   const source = $(button.dataset.copyFrom);
-  button.setAttribute("aria-label", "Copy: " + source.textContent.trim());
-  button.addEventListener("click", () => copyText(source.textContent.trim(), "Copied."));
+  button.setAttribute("aria-label", button.textContent.trim() + ": " + source.textContent.trim().slice(0, 80));
+  button.addEventListener("click", () => copyText(source.textContent.trim(), null, button));
 });
 
 document.querySelectorAll("[data-wish]").forEach((button) => {
   button.setAttribute("aria-describedby", "jar-hint");
   button.addEventListener("click", () => {
     const prompt = "Build me a small web app: " + button.dataset.wish + ". Make it simple, colorful, and fun to use. Use made-up data.";
-    copyText(prompt, () => nextStep("Copied the wish: " + button.textContent + "."));
+    copyText(prompt, () => nextStep(button.textContent, button), button);
   });
 });
 
@@ -569,37 +725,62 @@ if ($("wb-out")) {
       say("Fill in all three answers first, or take one from the wish jar.");
       return;
     }
-    copyText(wishText(), () => nextStep("Copied your wish."));
+    copyText(wishText(), () => nextStep("your wish", $("wb-copy")), $("wb-copy"));
   });
 }
 
 
-// ---------- The machine room: play it, look inside, change it ----------
+// ---------- The Play window: play it, look inside, change it ----------
 
 if ($("room")) {
   const room = $("room");
   const screen = $("screen");
+  const frame = $("room-frame");
   const codePane = $("code-pane");
   const codeBox = $("code");
   const toggleCode = $("toggle-code");
+  const status = $("room-status");
   let currentId = null;
+  let undoText = null;
+  let statusTimer;
 
+  const setStatus = (message, ms = 3000) => {
+    clearTimeout(statusTimer);
+    status.replaceChildren(message);
+    if (ms) statusTimer = setTimeout(() => status.replaceChildren(), ms);
+  };
+
+  // Show the code beside the tool (a laptop), or as its own tab (a phone)
   const showCode = (show) => {
     codePane.hidden = !show;
     $("room-body").classList.toggle("with-code", show);
     toggleCode.setAttribute("aria-expanded", String(show));
     toggleCode.textContent = show ? "Hide the code" : "Show the code";
+    $("tab-tool").setAttribute("aria-selected", String(!show));
+    $("tab-code").setAttribute("aria-selected", String(show));
+    $("tab-tool").tabIndex = show ? -1 : 0;
+    $("tab-code").tabIndex = show ? 0 : -1;
   };
+
+  // The frame fades in when the starter has painted, over a line that says which one is starting
+  const run = (code) => {
+    screen.classList.remove("ready");
+    screen.srcdoc = code;
+  };
+  screen.addEventListener("load", () => { if (screen.srcdoc) screen.classList.add("ready"); });
 
   const openRoom = async (id) => {
     try {
       const code = await loadCode(id);
       currentId = id;
-      $("room-title").textContent = MACHINES[id].name;
-      screen.title = MACHINES[id].name + " (running)";
+      undoText = null;
+      $("room-name").textContent = MACHINES[id].name;
+      screen.title = MACHINES[id].name + ", running";
+      frame.dataset.starting = "Starting " + MACHINES[id].name + "…";
       codeBox.value = code;
-      screen.srcdoc = code;
+      status.replaceChildren();
       showCode(false);
+      run(code);
       room.showModal();
     } catch {
       say("Couldn't load that starter. Try opening the page from its web link.");
@@ -610,18 +791,48 @@ if ($("room")) {
     button.addEventListener("click", () => openRoom(button.dataset.play));
   });
   toggleCode.addEventListener("click", () => showCode(codePane.hidden));
+  $("tab-tool").addEventListener("click", () => showCode(false));
+  $("tab-code").addEventListener("click", () => showCode(true));
+  [$("tab-tool"), $("tab-code")].forEach((tab) => tab.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+    event.preventDefault();
+    showCode(tab.id === "tab-tool");
+    (tab.id === "tab-tool" ? $("tab-code") : $("tab-tool")).focus();
+  }));
+
   $("run").addEventListener("click", () => {
-    screen.srcdoc = codeBox.value;
-    say("Running your version.");
+    run(codeBox.value);
+    if (matchMedia("(max-width: 760px)").matches) showCode(false);   // on a phone, show what changed
+    setStatus("Running your version.");
   });
   $("reset").addEventListener("click", () => {
+    if (codeBox.value === codeCache[currentId]) { setStatus("This is the original."); return; }
+    undoText = codeBox.value;
     codeBox.value = codeCache[currentId];
-    screen.srcdoc = codeBox.value;
-    say("Back to the original.");
+    run(codeBox.value);
+    const undo = el("button", "sm", "Undo");
+    undo.type = "button";
+    undo.addEventListener("click", () => {
+      codeBox.value = undoText;
+      run(undoText);
+      setStatus("Your changes are back.");
+    });
+    const line = el("span");
+    line.append("Back to the original. ", undo);
+    setStatus(line, 8000);
   });
   $("room-copy").addEventListener("click", () => {
-    copyText(promptFor(currentId, codeBox.value), () => { room.close(); nextStep("Copied your version."); });
+    const edited = codeBox.value !== codeCache[currentId];
+    copyText(promptFor(currentId, codeBox.value), () => {
+      room.close();
+      nextStep(edited ? "your version of " + MACHINES[currentId].name : MACHINES[currentId].name, document.querySelector('[data-play="' + currentId + '"]'));
+    }, $("room-copy"));
   });
   $("room-close").addEventListener("click", () => room.close());
-  room.addEventListener("close", () => { screen.srcdoc = ""; });
+  room.addEventListener("close", () => {
+    screen.srcdoc = "";
+    screen.classList.remove("ready");
+    const opener = document.querySelector('[data-play="' + currentId + '"]');
+    if (opener && !$("next-step")?.matches(":not([hidden])")) opener.focus();
+  });
 }

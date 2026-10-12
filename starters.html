@@ -11,12 +11,13 @@
 <link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body data-jump="#level-1" data-jump-label="Jump to the starters">
 <a class="skip" href="#main">Skip to the main content</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
     <a class="brand" href="index.html">First Builds</a>
-    <nav aria-label="Site">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="levels.html">Three levels</a></li>
@@ -24,8 +25,8 @@
         <li><a href="wish.html">Grant a wish</a></li>
         <li><a href="hosts.html">Hosts</a></li>
         <li><a href="sources.html">Sources</a></li>
-        <li><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
+        <li class="host-item host-first"><a href="present.html">Present</a></li>
+        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
       </ul>
     </nav>
   </div>
@@ -69,7 +70,7 @@
         <div data-where="code"></div>
       </div>
 
-      <h3 class="subhead">Level 1 · In the chat</h3>
+      <h3 class="subhead" id="level-1">Level 1 · In the chat</h3>
       <div class="machines four">
 
         <article class="cabinet" style="--c: var(--timer)">
@@ -376,35 +377,41 @@
 <dialog id="room" aria-labelledby="room-title">
   <div class="room">
     <div class="room-head">
-      <h2 id="room-title">Machine</h2>
+      <h2 class="room-title" id="room-title">Playing <strong id="room-name">a starter</strong></h2>
       <div class="room-tools">
-        <button id="toggle-code" aria-expanded="false" aria-controls="code-pane">Show the code</button>
-        <button id="room-copy">Copy for my AI</button>
-        <button id="room-close">Close</button>
+        <button id="toggle-code" type="button" aria-expanded="false" aria-controls="code-pane">Show the code</button>
+        <button class="primary" id="room-copy" type="button">Copy for my AI</button>
+        <button id="room-close" type="button">Close</button>
       </div>
     </div>
+    <div class="room-tabs" role="tablist" aria-label="What to show">
+      <button type="button" role="tab" id="tab-tool" aria-selected="true" aria-controls="room-frame">The tool</button>
+      <button type="button" role="tab" id="tab-code" aria-selected="false" aria-controls="code-pane" tabindex="-1">The code</button>
+    </div>
     <div class="room-body" id="room-body">
-      <iframe id="screen" title="The machine, running" sandbox="allow-scripts allow-forms allow-modals"></iframe>
-      <div class="code-pane" id="code-pane" hidden>
-        <label for="code">This is the whole tool. Press Ctrl+F (⌘F on a Mac) to find a word, change something, and press Run my changes. Gone blank? You lost a quote mark or a comma: press Start over.</label>
-        <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+      <div class="room-frame" id="room-frame" role="tabpanel" aria-labelledby="tab-tool" data-starting="Starting…">
+        <iframe id="screen" title="The starter, running" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+      </div>
+      <div class="code-pane" id="code-pane" role="tabpanel" aria-labelledby="tab-code" hidden>
+        <label for="code">This is the whole tool. Find a word (Ctrl+F, or ⌘F on a Mac), change something, and press Run my changes. Gone blank? You lost a quote mark or a comma: press Back to the original.</label>
+        <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
         <div class="code-actions">
-          <button class="primary" id="run">Run my changes</button>
-          <button id="reset">Start over</button>
+          <button class="primary" id="run" type="button">Run my changes</button>
+          <p class="room-status" id="room-status" role="status" aria-live="polite"></p>
+          <button class="reset-code sm" id="reset" type="button">Back to the original</button>
         </div>
       </div>
     </div>
-    <p class="toast" role="status" aria-live="polite"></p>
   </div>
 </dialog>
 
 
-<dialog id="fallback" aria-labelledby="fallback-title">
+<dialog id="fallback" aria-labelledby="fallback-title" aria-describedby="fallback-how">
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
-    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
-    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
-    <div><button class="primary" id="fallback-close">Done</button></div>
+    <p id="fallback-how">Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.</p>
+    <textarea id="fallback-text" readonly rows="10" aria-labelledby="fallback-title"></textarea>
+    <div class="fallback-actions"><button class="primary" id="fallback-select" type="button">Select all</button> <button id="fallback-close" type="button">Done</button></div>
   </div>
 </dialog>
 

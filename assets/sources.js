@@ -226,10 +226,10 @@ function card(s, headingLevel, position) {
     tags.append(tag);
   });
 
-  const share = el("button", "src-link", "Copy a link to this entry");
+  const share = el("button", "src-link", "Copy link");
   share.type = "button";
   share.setAttribute("aria-label", "Copy a link to this entry: " + s.title);
-  share.addEventListener("click", () => copyText(location.origin + location.pathname + "#" + s.id, "Copied a link to this entry on this page."));
+  share.addEventListener("click", () => copyText(location.origin + location.pathname + "#" + s.id, null, share));
 
   foot.append(toggle, tags, share);
   article.append(heading, meta, take, more, foot);

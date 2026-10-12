@@ -24,12 +24,13 @@ showPlan();
 
 // ---------- The run of show ----------
 
-// Each part folds. The part that's on stays open; before and after the morning, the first one does.
+// Each part folds. During the session the part that's on opens by itself; any other time, all start closed, so the run of show reads as a list.
 const live = phase();
 let screenNumber = 0;
 SESSION.segments.forEach((segment, s) => {
   const card = el("details", "segment" + (segment.where === "Breakout rooms" ? " rooms" : ""));
-  card.open = live.mode === "during" ? live.index === s : s === 0;
+  card.id = "part-" + segment.id;
+  card.open = live.mode === "during" && live.index === s;
 
   const head = el("summary", "segment-head");
   head.append(el("span", "length", segment.minutes + " min"), el("h3", "", segment.title), el("span", "where", segment.where));
@@ -75,7 +76,7 @@ SESSION.segments.forEach((segment, s) => {
       const copy = el("button", "", "Copy");
       copy.type = "button";
       copy.setAttribute("aria-label", "Copy the message for " + message.to);
-      copy.addEventListener("click", () => copyText(message.text, "Copied. Paste it into " + message.to.toLowerCase() + "."));
+      copy.addEventListener("click", () => copyText(message.text, null, copy));
       box.append(el("p", "to", "To: " + message.to), el("pre", "", message.text), copy);
       card.append(box);
     });
@@ -83,6 +84,9 @@ SESSION.segments.forEach((segment, s) => {
 
   $("ros").append(card);
 });
+
+// The now bar can point at the part that's on now that the parts have addresses
+if (typeof update === "function") update();
 
 
 // ---------- The parts in order, with how far into the session each one starts ----------

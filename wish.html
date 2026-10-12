@@ -11,12 +11,13 @@
 <link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body data-jump="#wish" data-jump-label="Jump to the builder">
 <a class="skip" href="#main">Skip to the main content</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
     <a class="brand" href="index.html">First Builds</a>
-    <nav aria-label="Site">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="levels.html">Three levels</a></li>
@@ -24,8 +25,8 @@
         <li><a href="wish.html" aria-current="page">Grant a wish</a></li>
         <li><a href="hosts.html">Hosts</a></li>
         <li><a href="sources.html">Sources</a></li>
-        <li><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
+        <li class="host-item host-first"><a href="present.html">Present</a></li>
+        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
       </ul>
     </nav>
   </div>
@@ -204,12 +205,12 @@
   </div>
 </footer>
 
-<dialog id="fallback" aria-labelledby="fallback-title">
+<dialog id="fallback" aria-labelledby="fallback-title" aria-describedby="fallback-how">
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
-    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
-    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
-    <div><button class="primary" id="fallback-close">Done</button></div>
+    <p id="fallback-how">Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.</p>
+    <textarea id="fallback-text" readonly rows="10" aria-labelledby="fallback-title"></textarea>
+    <div class="fallback-actions"><button class="primary" id="fallback-select" type="button">Select all</button> <button id="fallback-close" type="button">Done</button></div>
   </div>
 </dialog>
 

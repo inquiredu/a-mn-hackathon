@@ -421,7 +421,12 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
 document.querySelectorAll(".level-bar").forEach((bar) => {
   const links = [...bar.querySelectorAll("a")];
   const nowbar = document.querySelector(".nowbar");
-  const place = () => { bar.style.top = (nowbar && !nowbar.hidden && getComputedStyle(nowbar).position === "sticky" ? nowbar.offsetHeight : 0) + "px"; };
+  // Its own place, and, for anything that sticks below it (a level's side panel), where the bar ends
+  const place = () => {
+    const top = nowbar && !nowbar.hidden && getComputedStyle(nowbar).position === "sticky" ? nowbar.offsetHeight : 0;
+    bar.style.top = top + "px";
+    document.documentElement.style.setProperty("--below-level-bar", top + bar.offsetHeight + "px");
+  };
   place();
   addEventListener("resize", place);
   setInterval(place, 15000);

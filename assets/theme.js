@@ -1,6 +1,7 @@
-// Light or Night. The visitor's own choice, if they've made one in this browser; otherwise their system's,
-// followed as it changes. Loads in each page's <head>, before anything paints, so a page never flashes the
-// other theme. Every page's stylesheet keys Night to <html data-theme="dark">, which only this file sets.
+// Light or Night. The visitor's own choice, if they've made one in this browser; otherwise Night, the default.
+// Loads in each page's <head>, before anything paints, so a page never flashes the other theme. Every page's
+// stylesheet keys Night to <html data-theme="dark">, which only this file sets (the markup starts there too,
+// for anyone without scripts).
 //
 // The toggle is a button in each page's markup (<button class="theme-toggle">): the last item of the header's
 // menu, and in the speaker notes' foot. Its sun or moon comes from site.css, keyed to the theme, so nothing
@@ -8,7 +9,6 @@
 (function () {
   var KEY = "first-builds-theme";
   var root = document.documentElement;
-  var system = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
   var unsaved = null;   // a choice made in a private window, where nothing can be saved: kept for this page only
 
   function chosen() {
@@ -16,9 +16,7 @@
     try { return localStorage.getItem(KEY); } catch (e) { return null; }
   }
   function theme() {
-    var c = chosen();
-    if (c === "dark" || c === "light") return c;
-    return system && system.matches ? "dark" : "light";
+    return chosen() === "light" ? "light" : "dark";
   }
 
   function apply() {
@@ -40,8 +38,6 @@
   }
 
   apply();
-  if (system && system.addEventListener) system.addEventListener("change", apply);   // until a choice is made
-  document.addEventListener("visibilitychange", apply);   // and on coming back to the tab, where a change event went unheard
   window.addEventListener("storage", function (event) { if (event.key === KEY) apply(); });   // a choice made in another tab, like the notes window
   document.addEventListener("DOMContentLoaded", function () {
     var buttons = document.querySelectorAll(".theme-toggle");

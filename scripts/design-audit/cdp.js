@@ -64,6 +64,12 @@ class Tab {
     await this.send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: dpr, mobile });
     await this.send("Emulation.setTouchEmulationEnabled", mobile ? { enabled: true, maxTouchPoints: 5 } : { enabled: false });
     await this.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-color-scheme", value: theme }, { name: "prefers-reduced-motion", value: "no-preference" }] });
+    // The site opens in Night whatever the system says, so the theme is also saved as the visitor's choice
+    // (assets/theme.js), from the next page loaded on
+    if (this.themeScript) await this.send("Page.removeScriptToEvaluateOnNewDocument", { identifier: this.themeScript });
+    this.themeScript = (await this.send("Page.addScriptToEvaluateOnNewDocument", {
+      source: `try { localStorage.setItem("first-builds-theme", ${JSON.stringify(theme)}); } catch (e) {}`
+    })).identifier;
   }
   async go(url, settle = 600) {
     const loaded = new Promise((res) => { const h = () => { this.off("Page.loadEventFired"); res(); }; this.on("Page.loadEventFired", h); });

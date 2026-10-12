@@ -86,6 +86,10 @@ scripts.forEach(({ name, code }) => {
   }
 });
 
+// Every stylesheet and script a page loads carries a stamp of its current contents, so the page and its styles
+// arrive together (scripts/stamps.js)
+require("./stamps.js").problems(root, pages).forEach((problem) => problems.add(problem));
+
 if (problems.size) {
   console.error("session check: " + problems.size + " problem" + (problems.size === 1 ? "" : "s"));
   problems.forEach((problem) => console.error("  - " + problem));

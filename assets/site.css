@@ -193,7 +193,7 @@ main p { max-width: var(--measure); }
 .kicker-dark { margin-bottom: 8px; }
 
 /* A section inside a card: what happens, try it, before you start, hosts, ready to paste */
-.level h3, .script-steps h5, .remix h5, .segment h4, .next h3, .src-group, .finder .ask-group > legend, .message .to, .nowcard-label {
+.level h3, .script-steps h4, .remix h5, .segment h4, .next h3, .src-group, .finder .ask-group > legend, .message .to, .nowcard-label {
   margin: 0; font-family: var(--font-sans); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); line-height: 1.3;
 }
 .nowcard-label { color: inherit; }
@@ -995,7 +995,7 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .where-notes { margin: 16px 0 0; padding-left: 20px; color: var(--ink); }
 .where-notes li { margin: 6px 0; max-width: var(--measure); }
 .script-steps { margin-bottom: 14px; }
-.script-steps h5 { margin: 24px 0 6px; }
+.script-steps h4 { margin: 24px 0 6px; }
 .script-steps .kind { margin: 0; color: var(--muted); }
 .script-steps ol, .script-steps ul { margin: 4px 0 0; padding-left: 1.5rem; }
 .script-steps li { margin: 8px 0; max-width: var(--measure); }

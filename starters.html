@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="assets/theme.js?v=36ded2f9"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css?v=95a5640e">
-<link rel="stylesheet" href="assets/site.css?v=ca073682">
+<link rel="stylesheet" href="assets/site.css?v=e30c5880">
 </head>
 <body data-jump="#level-1" data-jump-label="Jump to the starters">
 <a class="skip" href="#main">Skip to the main content</a>
@@ -84,142 +84,150 @@
       </div>
       <div class="machines">
 
-        <article class="cabinet" id="meeting-timer" style="--c: var(--timer)">
-          <div class="shot" aria-hidden="true" data-shot="timer"><img src="assets/starters/meeting-timer.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="timer"></div><div><h3>The Meeting Timer</h3><p class="for">For anyone who runs a meeting</p></div></div>
+        <article class="cabinet" id="meeting-timer">
+          <div class="shot" aria-hidden="true" data-shot="timer"><img src="assets/starters/meeting-timer.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+          <div class="cabinet-head"><div><h3>The Meeting Timer</h3><p class="for">For anyone who runs a meeting</p></div></div>
           <p>Your agenda on screen with a big countdown, a gentle chime when it's time to move on, and a parking lot.</p>
-          <p class="monday"><strong>Monday:</strong> run your next PLC with it on the screen.</p>
           <div class="actions">
             <button class="primary" type="button" data-play="timer">Play</button>
             <button type="button" data-copy-machine="timer">Copy for my AI</button>
           </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Change the agenda to my meeting: ___ (10 minutes), ___ (15 minutes), ___ (5 minutes).</span></li>
-              <li><span>Show our team norms along the bottom: ___.</span></li>
-              <li><span>Use our school colors: ___ and ___.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a protocol mode: 5 minutes of silent writing, then 10 minutes of discussion, with a different chime for each.</span></li>
-              <li><span>Add a spinner that picks who takes notes and who keeps time.</span></li>
-              <li><span>Add a button that copies the parking lot as a list I can paste into our notes.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>When time runs out, play a game-show buzzer instead of the chime.</span></li>
-              <li><span>If we finish the agenda early, celebrate with confetti.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>AGENDA</code>, change the minutes for one item, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
+          <div class="cabinet-more">
+            <p class="monday"><strong>Monday:</strong> run your next PLC with it on the screen.</p>
+            <details class="remix">
+              <summary>Remix menu</summary>
+              <h5>Make it yours</h5>
+              <ul>
+                <li><span>Change the agenda to my meeting: ___ (10 minutes), ___ (15 minutes), ___ (5 minutes).</span></li>
+                <li><span>Show our team norms along the bottom: ___.</span></li>
+                <li><span>Use our school colors: ___ and ___.</span></li>
+              </ul>
+              <h5>Make it useful</h5>
+              <ul>
+                <li><span>Add a protocol mode: 5 minutes of silent writing, then 10 minutes of discussion, with a different chime for each.</span></li>
+                <li><span>Add a spinner that picks who takes notes and who keeps time.</span></li>
+                <li><span>Add a button that copies the parking lot as a list I can paste into our notes.</span></li>
+              </ul>
+              <h5>Make it fun</h5>
+              <ul>
+                <li><span>When time runs out, play a game-show buzzer instead of the chime.</span></li>
+                <li><span>If we finish the agenda early, celebrate with confetti.</span></li>
+              </ul>
+              <h5>Look inside (no AI needed)</h5>
+              <ul>
+                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>AGENDA</code>, change the minutes for one item, and press <strong>Run my changes</strong>.</li>
+              </ul>
+            </details>
+          </div>
         </article>
 
-        <article class="cabinet" id="group-maker" style="--c: var(--groups)">
-          <div class="shot" aria-hidden="true" data-shot="groups"><img src="assets/starters/group-maker.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="dices"></div><div><h3>The Group Maker</h3><p class="for">For teachers, coaches, and anyone leading a workshop</p></div></div>
+        <article class="cabinet" id="group-maker">
+          <div class="shot" aria-hidden="true" data-shot="groups"><img src="assets/starters/group-maker.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+          <div class="cabinet-head"><div><h3>The Group Maker</h3><p class="for">For teachers, coaches, and anyone leading a workshop</p></div></div>
           <p>Paste names, pick a size, and shuffle. It spreads your helpers out, one per group. Keeping two people apart is one remix away.</p>
-          <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
-          <p class="data-note"><strong>Real names stay out of the AI.</strong> Names typed into the tool here stay in this browser window; nothing is saved or sent. Once the tool runs inside your AI chat, it runs on that company's page, so keep to made-up names there.</p>
           <div class="actions">
             <button class="primary" type="button" data-play="groups">Play</button>
             <button type="button" data-copy-machine="groups">Copy for my AI</button>
           </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Use these group names instead: ___.</span></li>
-              <li><span>Make the group cards big enough to read on a projector from the back of the room.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a box where I can type pairs who should be kept apart.</span></li>
-              <li><span>Give each group roles: facilitator, recorder, timekeeper, and reporter.</span></li>
-              <li><span>Let me save a list of names in this browser so I don't paste it every time.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>Make the shuffle dramatic: names spin and land one at a time, with a drumroll.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>GROUP_NAMES</code>, change them to your school's mascots, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
+          <div class="cabinet-more">
+            <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
+            <p class="data-note"><strong>Real names stay out of the AI.</strong> Names typed into the tool here stay in this browser window; nothing is saved or sent. Once the tool runs inside your AI chat, it runs on that company's page, so keep to made-up names there.</p>
+            <details class="remix">
+              <summary>Remix menu</summary>
+              <h5>Make it yours</h5>
+              <ul>
+                <li><span>Use these group names instead: ___.</span></li>
+                <li><span>Make the group cards big enough to read on a projector from the back of the room.</span></li>
+              </ul>
+              <h5>Make it useful</h5>
+              <ul>
+                <li><span>Add a box where I can type pairs who should be kept apart.</span></li>
+                <li><span>Give each group roles: facilitator, recorder, timekeeper, and reporter.</span></li>
+                <li><span>Let me save a list of names in this browser so I don't paste it every time.</span></li>
+              </ul>
+              <h5>Make it fun</h5>
+              <ul>
+                <li><span>Make the shuffle dramatic: names spin and land one at a time, with a drumroll.</span></li>
+              </ul>
+              <h5>Look inside (no AI needed)</h5>
+              <ul>
+                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>GROUP_NAMES</code>, change them to your school's mascots, and press <strong>Run my changes</strong>.</li>
+              </ul>
+            </details>
+          </div>
         </article>
 
-        <article class="cabinet" id="feedback-builder" style="--c: var(--feedback)">
-          <div class="shot" aria-hidden="true" data-shot="feedback"><img src="assets/starters/feedback-builder.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="message-square-text"></div><div><h3>The Feedback Builder</h3><p class="for">For teachers and faculty</p></div></div>
+        <article class="cabinet" id="feedback-builder">
+          <div class="shot" aria-hidden="true" data-shot="feedback"><img src="assets/starters/feedback-builder.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+          <div class="cabinet-head"><div><h3>The Feedback Builder</h3><p class="for">For teachers and faculty</p></div></div>
           <p>Choose a level for each part of a rubric, and warm, specific feedback comes together, with one clear next step.</p>
-          <p class="monday"><strong>Monday:</strong> load your own rubric and give faster, kinder feedback.</p>
           <div class="actions">
             <button class="primary" type="button" data-play="feedback">Play</button>
             <button type="button" data-copy-machine="feedback">Copy for my AI</button>
           </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Replace the rubric with mine: ___.</span></li>
-              <li><span>Rewrite every comment in my voice: shorter, and a little funnier.</span></li>
-              <li><span>Add a button that switches the comments to Spanish.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a "glow and grow" format: one thing that's working and one thing to try.</span></li>
-              <li><span>Let me save rubrics for different assignments and switch between them.</span></li>
-            </ul>
-            <h5>Make it fun</h5>
-            <ul>
-              <li><span>Show a sticker for the strongest part of the work.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>TONES</code>, write your own opener and closer, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
+          <div class="cabinet-more">
+            <p class="monday"><strong>Monday:</strong> load your own rubric and give faster, kinder feedback.</p>
+            <details class="remix">
+              <summary>Remix menu</summary>
+              <h5>Make it yours</h5>
+              <ul>
+                <li><span>Replace the rubric with mine: ___.</span></li>
+                <li><span>Rewrite every comment in my voice: shorter, and a little funnier.</span></li>
+                <li><span>Add a button that switches the comments to Spanish.</span></li>
+              </ul>
+              <h5>Make it useful</h5>
+              <ul>
+                <li><span>Add a "glow and grow" format: one thing that's working and one thing to try.</span></li>
+                <li><span>Let me save rubrics for different assignments and switch between them.</span></li>
+              </ul>
+              <h5>Make it fun</h5>
+              <ul>
+                <li><span>Show a sticker for the strongest part of the work.</span></li>
+              </ul>
+              <h5>Look inside (no AI needed)</h5>
+              <ul>
+                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>TONES</code>, write your own opener and closer, and press <strong>Run my changes</strong>.</li>
+              </ul>
+            </details>
+          </div>
         </article>
 
-        <article class="cabinet" id="oracle" style="--c: var(--oracle)">
-          <div class="shot" aria-hidden="true" data-shot="oracle"><img src="assets/starters/oracle.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="circle-question-mark"></div><div><h3>The Teacher's Lounge Oracle</h3><p class="for">Just for fun</p></div></div>
+        <article class="cabinet" id="oracle">
+          <div class="shot" aria-hidden="true" data-shot="oracle"><img src="assets/starters/oracle.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+          <div class="cabinet-head"><div><h3>The Teacher's Lounge Oracle</h3><p class="for">Just for fun</p></div></div>
           <p>Ask a question. Get a dramatic, slightly ridiculous prophecy, with a gong.</p>
-          <p class="monday"><strong>Monday:</strong> a vocabulary oracle or a discussion-question picker, if you remix it.</p>
           <div class="actions">
             <button class="primary" type="button" data-play="oracle">Play</button>
             <button type="button" data-copy-machine="oracle">Copy for my AI</button>
           </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it silly</h5>
-            <ul>
-              <li><span>Make the Oracle talk like an over-excited game-show host.</span></li>
-              <li><span>Add a drumroll before the gong, and confetti when the prophecy appears.</span></li>
-              <li><span>Write 10 new prophecies about my school, ___. Keep them kind.</span></li>
-            </ul>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Change the colors to my school colors: ___ and ___.</span></li>
-              <li><span>Add a button that reads the prophecy out loud.</span></li>
-              <li><span>Teach the Oracle a new topic: when I ask about ___, it should answer with prophecies about ___.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Turn it into a vocabulary oracle. Each spin reveals one of these words and what it means: ___.</span></li>
-              <li><span>Turn it into a discussion-question picker for my class on ___.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>SPIN_SECONDS</code>, change the 3 to a 10, and press <strong>Run my changes</strong>.</li>
-              <li class="do">In the code, find the coffee topic under <code>TOPICS</code>. Add your own prophecy in quotes, end it with a comma, press <strong>Run my changes</strong>, and ask about coffee.</li>
-            </ul>
-          </details>
+          <div class="cabinet-more">
+            <p class="monday"><strong>Monday:</strong> a vocabulary oracle or a discussion-question picker, if you remix it.</p>
+            <details class="remix">
+              <summary>Remix menu</summary>
+              <h5>Make it silly</h5>
+              <ul>
+                <li><span>Make the Oracle talk like an over-excited game-show host.</span></li>
+                <li><span>Add a drumroll before the gong, and confetti when the prophecy appears.</span></li>
+                <li><span>Write 10 new prophecies about my school, ___. Keep them kind.</span></li>
+              </ul>
+              <h5>Make it yours</h5>
+              <ul>
+                <li><span>Change the colors to my school colors: ___ and ___.</span></li>
+                <li><span>Add a button that reads the prophecy out loud.</span></li>
+                <li><span>Teach the Oracle a new topic: when I ask about ___, it should answer with prophecies about ___.</span></li>
+              </ul>
+              <h5>Make it useful</h5>
+              <ul>
+                <li><span>Turn it into a vocabulary oracle. Each spin reveals one of these words and what it means: ___.</span></li>
+                <li><span>Turn it into a discussion-question picker for my class on ___.</span></li>
+              </ul>
+              <h5>Look inside (no AI needed)</h5>
+              <ul>
+                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>SPIN_SECONDS</code>, change the 3 to a 10, and press <strong>Run my changes</strong>.</li>
+                <li class="do">In the code, find the coffee topic under <code>TOPICS</code>. Add your own prophecy in quotes, end it with a comma, press <strong>Run my changes</strong>, and ask about coffee.</li>
+              </ul>
+            </details>
+          </div>
         </article>
 
       </div>
@@ -242,64 +250,68 @@
       </div>
       <div class="machines">
 
-        <article class="cabinet" id="charter-cards" style="--c: var(--charter)">
-          <div class="shot" aria-hidden="true" data-shot="charter"><img src="assets/starters/charter-cards.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="layout-grid"></div><div><h3>The Charter Cards</h3><p class="for">For a department, a team, or a PLC</p></div></div>
+        <article class="cabinet" id="charter-cards">
+          <div class="shot" aria-hidden="true" data-shot="charter"><img src="assets/starters/charter-cards.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+          <div class="cabinet-head"><div><h3>The Charter Cards</h3><p class="for">For a department, a team, or a PLC</p></div></div>
           <p>A made-up department charter as a page: the commitments as badges, each section a card that opens when you tap it.</p>
-          <p class="monday"><strong>Monday:</strong> your own charter or team norms on your site, readable on a phone.</p>
           <div class="actions">
             <button class="primary" type="button" data-play="charter">Play</button>
             <button type="button" data-copy-machine="charter">Copy for my AI</button>
           </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Replace the charter with this document, section by section, keeping its meaning exactly: ___</span></li>
-              <li><span>Use our school colors: ___ and ___. Put our name at the top: ___.</span></li>
-              <li><span>Make the badges these five words: ___.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a "who to call" card at the end with made-up names and extensions.</span></li>
-              <li><span>Add a search box that opens only the cards that mention what I typed.</span></li>
-              <li><span>Add a Print button that opens every card and prints the page on one sheet.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>COMMITMENTS</code>, change one word, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
+          <div class="cabinet-more">
+            <p class="monday"><strong>Monday:</strong> your own charter or team norms on your site, readable on a phone.</p>
+            <details class="remix">
+              <summary>Remix menu</summary>
+              <h5>Make it yours</h5>
+              <ul>
+                <li><span>Replace the charter with this document, section by section, keeping its meaning exactly: ___</span></li>
+                <li><span>Use our school colors: ___ and ___. Put our name at the top: ___.</span></li>
+                <li><span>Make the badges these five words: ___.</span></li>
+              </ul>
+              <h5>Make it useful</h5>
+              <ul>
+                <li><span>Add a "who to call" card at the end with made-up names and extensions.</span></li>
+                <li><span>Add a search box that opens only the cards that mention what I typed.</span></li>
+                <li><span>Add a Print button that opens every card and prints the page on one sheet.</span></li>
+              </ul>
+              <h5>Look inside (no AI needed)</h5>
+              <ul>
+                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>COMMITMENTS</code>, change one word, and press <strong>Run my changes</strong>.</li>
+              </ul>
+            </details>
+          </div>
         </article>
 
-        <article class="cabinet" id="syllabus-page" style="--c: var(--syllabus)">
-          <div class="shot" aria-hidden="true" data-shot="syllabus"><img src="assets/starters/syllabus-page.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="book-open"></div><div><h3>The Syllabus Page</h3><p class="for">For teachers and course leads</p></div></div>
+        <article class="cabinet" id="syllabus-page">
+          <div class="shot" aria-hidden="true" data-shot="syllabus"><img src="assets/starters/syllabus-page.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+          <div class="cabinet-head"><div><h3>The Syllabus Page</h3><p class="for">For teachers and course leads</p></div></div>
           <p>A made-up course as a page families actually read: the questions people ask, each with a short answer, and the year as a row per unit.</p>
-          <p class="monday"><strong>Monday:</strong> your syllabus on your class site, opening question by question.</p>
           <div class="actions">
             <button class="primary" type="button" data-play="syllabus">Play</button>
             <button type="button" data-copy-machine="syllabus">Copy for my AI</button>
           </div>
-          <details class="remix">
-            <summary>Remix menu</summary>
-            <h5>Make it yours</h5>
-            <ul>
-              <li><span>Replace the course with my syllabus, keeping every policy exactly as written: ___</span></li>
-              <li><span>Add a question: "___?" with the answer: ___.</span></li>
-              <li><span>Use our school colors: ___ and ___.</span></li>
-            </ul>
-            <h5>Make it useful</h5>
-            <ul>
-              <li><span>Add a "this week" marker that highlights the unit for today's date.</span></li>
-              <li><span>Add a Spanish version of every answer, shown with a toggle at the top.</span></li>
-              <li><span>Add a "what to bring tomorrow" line at the very top that I can change in one place.</span></li>
-            </ul>
-            <h5>Look inside (no AI needed)</h5>
-            <ul>
-              <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>QUESTIONS</code>, change one answer, and press <strong>Run my changes</strong>.</li>
-            </ul>
-          </details>
+          <div class="cabinet-more">
+            <p class="monday"><strong>Monday:</strong> your syllabus on your class site, opening question by question.</p>
+            <details class="remix">
+              <summary>Remix menu</summary>
+              <h5>Make it yours</h5>
+              <ul>
+                <li><span>Replace the course with my syllabus, keeping every policy exactly as written: ___</span></li>
+                <li><span>Add a question: "___?" with the answer: ___.</span></li>
+                <li><span>Use our school colors: ___ and ___.</span></li>
+              </ul>
+              <h5>Make it useful</h5>
+              <ul>
+                <li><span>Add a "this week" marker that highlights the unit for today's date.</span></li>
+                <li><span>Add a Spanish version of every answer, shown with a toggle at the top.</span></li>
+                <li><span>Add a "what to bring tomorrow" line at the very top that I can change in one place.</span></li>
+              </ul>
+              <h5>Look inside (no AI needed)</h5>
+              <ul>
+                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>QUESTIONS</code>, change one answer, and press <strong>Run my changes</strong>.</li>
+              </ul>
+            </details>
+          </div>
         </article>
 
       </div>
@@ -326,9 +338,9 @@
       </div>
       <div class="machines scripts">
 
-        <article class="cabinet" id="drive-inventory" style="--c: var(--script)">
-          <div class="shot" aria-hidden="true"><img src="assets/starters/drive-inventory.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="folder-tree"></div><div><h3>The Drive Inventory</h3><p class="for">For curriculum leads and anyone with a deep folder</p></div></div>
+        <article class="cabinet" id="drive-inventory">
+          <div class="shot" aria-hidden="true"><img src="assets/starters/drive-inventory.webp" alt="" width="960" height="600" loading="lazy" decoding="async"></div>
+          <div class="cabinet-head"><div><h3>The Drive Inventory</h3><p class="for">For curriculum leads and anyone with a deep folder</p></div></div>
           <p>Point it at a folder. It reads every folder inside and writes a Sheet: each document, its type, its link, and when it last changed.</p>
           <p class="monday"><strong>Monday:</strong> a whole curriculum folder, one search away.</p>
           <p class="meta">Apps Script · your Drive · about an hour the first time, fifteen minutes after</p>
@@ -352,9 +364,9 @@
           </details>
         </article>
 
-        <article class="cabinet" id="doc-multiplier" style="--c: var(--script)">
-          <div class="shot" aria-hidden="true"><img src="assets/starters/doc-multiplier.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div class="badge" data-icon="files"></div><div><h3>The Doc Multiplier</h3><p class="for">For anyone who makes the same Doc many times</p></div></div>
+        <article class="cabinet" id="doc-multiplier">
+          <div class="shot" aria-hidden="true"><img src="assets/starters/doc-multiplier.webp" alt="" width="960" height="600" loading="lazy" decoding="async"></div>
+          <div class="cabinet-head"><div><h3>The Doc Multiplier</h3><p class="for">For anyone who makes the same Doc many times</p></div></div>
           <p>One template Doc and a Sheet of names. It makes a copy for each row, named for the row, gathers them in a folder, and writes each link back into the Sheet.</p>
           <p class="monday"><strong>Monday:</strong> a planning doc for every team, made in one press.</p>
           <p class="meta">Apps Script · a Doc and a Sheet · about an hour the first time, fifteen minutes after</p>
@@ -451,7 +463,7 @@
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js?v=4f3fe60c"></script>
-<script src="assets/icons.js?v=9d1f740e"></script>
+<script src="assets/icons.js?v=f52ed3cf"></script>
 <script src="assets/site.js?v=05e929f1"></script>
 </body>
 </html>

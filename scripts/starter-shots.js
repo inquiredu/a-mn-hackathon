@@ -1,6 +1,8 @@
 // Pictures of the starters, for their cards on Starters and the tiles on Home: each of the six as it looks just after
 // its first main action, and, for the two Apps Scripts, the Sheet each one makes (drawn in scripts/starter-shots/,
-// with made-up rows). Writes assets/starters/<name>.webp at 800 by 500.
+// with made-up rows). Writes assets/starters/<name>.webp at 960 by 600: the Play window's width, so each starter
+// shows its wide layout (at 800 and narrower some switch to their phone layout). The two spreadsheets are shot
+// zoomed in, so their rows read at the size the pictures are shown.
 // node scripts/starter-shots.js      (CHROME=/path/to/chrome when Chrome isn't at its macOS path)
 // Run it again whenever a starter's look changes, and commit the pictures with the change. Like the design audit's
 // tools, it starts its own copy of scripts/serve.js on port 4179 and its own headless Chrome.
@@ -22,8 +24,8 @@ const SHOTS = [
   { name: "oracle", page: "cabinets/oracle.html", wait: 4500, act: `(() => { const q = document.querySelector("input, textarea"); q.value = "Will the copier work on Monday?"; q.dispatchEvent(new Event("input", { bubbles: true })); document.getElementById("go").click(); })()` },
   { name: "charter-cards", page: "cabinets/charter-cards.html", act: `document.querySelectorAll(".card")[1].click()` },
   { name: "syllabus-page", page: "cabinets/syllabus-page.html", act: `document.querySelectorAll(".units button")[1].click()` },
-  { name: "drive-inventory", page: "scripts/starter-shots/drive-inventory.html" },
-  { name: "doc-multiplier", page: "scripts/starter-shots/doc-multiplier.html" }
+  { name: "drive-inventory", page: "scripts/starter-shots/drive-inventory.html", zoom: 960 / 560 },
+  { name: "doc-multiplier", page: "scripts/starter-shots/doc-multiplier.html", zoom: 960 / 560 }
 ];
 
 (async () => {
@@ -35,8 +37,9 @@ const SHOTS = [
     chrome = (await launch(profile)).proc;
     for (let i = 0; i < 80; i++) { try { if ((await fetch(BASE + "index.html")).ok) break; } catch {} await sleep(250); }   // the server is up
     const tab = await Tab.open();
-    await tab.viewport(800, 500, { theme: "light" });
     for (const shot of SHOTS) {
+      const zoom = shot.zoom || 1;
+      await tab.viewport(Math.round(960 / zoom), Math.round(600 / zoom), { dpr: zoom, theme: "light" });
       await tab.go(BASE + shot.page, 900);
       if (shot.act) await tab.eval(shot.act + "; true");
       await sleep(shot.wait || 1200);

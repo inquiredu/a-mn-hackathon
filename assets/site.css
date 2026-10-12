@@ -721,13 +721,12 @@ dialog[open]::backdrop { background: var(--scrim); }
 .hero-split { display: grid; gap: 32px 56px; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 960px) { .hero-split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; } }
 /* The examples as pictures, two by two, each opening its starter's card */
-.hero-shots { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 34rem; }
+.hero-shots { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 34rem; }
 .hero-shots a { display: grid; gap: 8px; align-content: start; color: var(--ink); text-decoration: none; font-family: var(--font-sans); font-size: .95rem; font-weight: 600; }
 .hero-shots img {
   display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--tint);
   transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
 }
-.hero-shots small { display: block; margin-top: -4px; font-family: var(--font-serif); font-size: .9rem; font-weight: 400; color: var(--muted); }
 @media (hover: hover) {
   .hero-shots a:hover img { transform: var(--lift); box-shadow: var(--shadow-lift); }
   .hero-shots a:hover > span { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent); text-underline-offset: .25em; }
@@ -837,7 +836,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .award-icon { grid-row: span 2; color: var(--ink); }
 .awards strong { display: block; font-size: 1.1rem; }
 .awards span:not(.award-icon) { color: var(--muted); }
-.badge svg, .award-icon svg { width: 28px; height: 28px; }
+.award-icon svg { width: 28px; height: 28px; }
 .two-up { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 24px; }
 .card p { color: var(--muted); }
 .rungs { margin: 12px 0 0; padding-left: 24px; display: grid; gap: 8px; }
@@ -1058,36 +1057,46 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 /* The two buttons each script card has, named as terms: words, not button shapes that do nothing */
 .button-look { font-family: var(--font-sans); font-size: .95rem; font-weight: 700; color: var(--ink); }
 
-/* The cards: two to a row on a laptop. Each card's parts sit on rows shared with its neighbor (subgrid), so the
-   Play buttons line up across a row, and an open Remix menu grows only the last row: its neighbor's buttons stay put. */
+/* The cards: two to a row on a laptop. Each card's picture, title, words, and buttons sit on rows shared with its
+   neighbor (subgrid), so the Play buttons line up across a row. Monday, a note, and the Remix menu share the last
+   row, so a card with less to say ends with space at its foot, not a gap in its middle, and an open Remix menu
+   grows only that row: its neighbor's buttons stay put. */
 .machines { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
 @media (min-width: 760px) {
   .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .machines:not(.scripts) { align-items: stretch; }
-  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
+  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
   .machines:not(.scripts) > .cabinet > .shot { grid-row: 1; }
   .machines:not(.scripts) > .cabinet > .cabinet-head { grid-row: 2; }
   .machines:not(.scripts) > .cabinet > p:not([class]) { grid-row: 3; }
-  .machines:not(.scripts) > .cabinet > .monday { grid-row: 4; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .data-note { grid-row: 5; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .actions { grid-row: 6; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .remix { grid-row: 7; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .actions { grid-row: 4; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .cabinet-more { grid-row: 5; align-self: start; }
 }
 @media (min-width: 960px) { .machines.scripts { grid-template-columns: minmax(0, 1fr); } .machines.scripts .cabinet { max-width: 52rem; } }
 .cabinet { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
 /* A starter's picture (scripts/starter-shots.js): the tool just after its first press, or, for a script, what it
    leaves in your Drive. The words beside it say the same, so screen readers skip it. Pressing the picture of a
    starter that plays opens Play; the Play button stays the way in from a keyboard. */
-.shot { margin: 0 0 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--tint); }
+.shot { position: relative; margin: 0 0 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--tint); }
 .shot img { display: block; width: 100%; height: auto; }
-.shot[data-shot] { cursor: pointer; transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out); }
-@media (hover: hover) { .shot[data-shot]:hover { transform: var(--lift); box-shadow: var(--shadow-lift); } }
-.machines.scripts .shot { max-width: 32rem; }   /* a script card runs one to a row: its picture stays a picture, not a banner */
-.cabinet-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
-.badge {
-  display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--c) 12%, var(--surface)); color: var(--c);
+/* A starter that plays: its picture runs to the card's top edges, as the card's image, and says "Play" in its corner */
+.machines:not(.scripts) .shot {
+  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) 16px; border: 0; border-bottom: 1px solid var(--line);
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
 }
+.shot[data-shot] { cursor: pointer; }
+.shot-play {
+  position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px 5px 10px;
+  border-radius: var(--radius-pill); background: var(--bar-bg); color: var(--bar-ink); box-shadow: var(--shadow-1);
+  font-family: var(--font-sans); font-size: .85rem; font-weight: 600;
+  transition: background-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+}
+.shot-play svg { width: 14px; height: 14px; }
+@media (hover: hover) { .shot[data-shot]:hover .shot-play { background: var(--button); color: var(--button-ink); } }
+.machines.scripts .shot { max-width: 32rem; }   /* a script card runs one to a row: its picture stays a picture, not a banner */
+/* In Night the pictures step down a little, so a white screenshot doesn't outshine the page's own heading */
+[data-theme="dark"] :is(.shot, .hero-shots) img { filter: brightness(.9); }
+.cabinet-head { display: block; }
 .cabinet h3 { margin-top: 2px; font-size: 1.125rem; }
 .cabinet .for { margin: 2px 0 0; font-size: .95rem; color: var(--muted); }
 .cabinet > p { margin: 12px 0 0; color: var(--ink); }

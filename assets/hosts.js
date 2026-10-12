@@ -32,7 +32,7 @@ function cueLines(note) {
   note.split(/(?=\b(?:Say|Do|Co-host):)/).forEach((part) => {
     const m = part.match(/^(Say|Do|Co-host):\s*([\s\S]*)$/);
     const line = el("span", "cue-line");
-    if (m) line.append(el("span", "cue-who", m[1]), m[2].trim());
+    if (m) line.append(el("span", "cue-who", m[1]), m[2].trim().charAt(0).toUpperCase() + m[2].trim().slice(1));
     else line.append(part.trim());
     if (line.textContent.trim()) box.append(line);
   });

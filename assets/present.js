@@ -214,7 +214,9 @@ const KINDS = {
 
 // ---------- The timer, on screens that ask for one ----------
 
-const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());// A timer's length is a pace, a part's id ("invent"), "building" (all the time in breakout rooms), or minutes.
+const timers = STAGE_TIMER.createStore((() => { try { return localStorage; } catch { return undefined; } })());
+
+// A timer's length is a pace, a part's id ("invent"), "building" (all the time in breakout rooms), or minutes.
 // Screens that name the same timerKey share one timer, so it keeps counting from one screen to the next.
 const TIMER_LENGTHS = { ...SESSION.pace, building: 0 };
 SESSION.segments.forEach((s) => {
@@ -222,14 +224,15 @@ SESSION.segments.forEach((s) => {
   if (s.where === "Breakout rooms") TIMER_LENGTHS.building += s.minutes;
 });
 const timerKey = (screen) => screen.timerKey || screen.segment.id + "/" + (screen.heading || "");
-const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, TIMER_LENGTHS);let timerWasDone = false;
+const timerStart = (screen) => STAGE_TIMER.startingMinutes(screen.timer, TIMER_LENGTHS);
+let timerWasDone = false;
 
 function timerBlock() {
   const box = el("div", "timer");
   box.setAttribute("role", "group");
   box.setAttribute("aria-label", "Timer");
   const buttons = el("div", "timer-buttons presenter");
-  [["go", "Start", ""], ["minus", "−1 min", "One minute less"], ["plus", "+1 min", "One minute more"], ["reset", "Reset", ""]].forEach(([action, label, aria]) => {
+  [["go", "Start", ""], ["minus", "−1 min", "Take a minute off"], ["plus", "+1 min", "Add a minute"], ["reset", "Back to the start", ""]].forEach(([action, label, aria]) => {
     const b = el("button", "timer-" + action, label);
     b.type = "button";
     if (aria) b.setAttribute("aria-label", aria);
@@ -268,7 +271,9 @@ function timerState() {
   const screen = screens[index];
   if (!screen.timer || timerStart(screen) === null) return null;
   const v = timers.view(timerKey(screen), timerStart(screen), Date.now());
-  return { display: v.display, status: v.status, action: v.action, done: v.done, minutes: timers.minutes(timerKey(screen), timerStart(screen)) };
+  const state = { display: v.display, status: v.status, action: v.action, done: v.done, minutes: timers.minutes(timerKey(screen), timerStart(screen)) };
+  state.label = timerLabel(screen, state);   // the notes window shows the same words as the stage
+  return state;
 }
 
 
@@ -423,8 +428,9 @@ function tick() {
     box.classList.toggle("done", state.done);
     box.dataset.state = state.status;
     box.querySelector(".timer-display").textContent = state.display;
-    box.querySelector(".timer-status").textContent = timerLabel(screens[index], state);
+    box.querySelector(".timer-status").textContent = state.label;
     box.querySelector(".timer-go").textContent = state.action;
+    box.querySelector(".timer-reset").textContent = "Back to " + state.minutes + ":00";   // the same words as the notes
     if (state.done && !timerWasDone) document.getElementById("status").textContent = "Time.";
     timerWasDone = state.done;
   }

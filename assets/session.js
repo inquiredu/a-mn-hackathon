@@ -130,7 +130,7 @@ const SESSION = {
       link: "levels.html#pick", linkLabel: "Pick your level",
       shared: [{ link: "planner", label: "Breakout Planner" }],
       screens: [
-        { kind: "prompt", note: "Say: who has done one of these? Show it, or tell us: which level, what it does, one thing that went sideways. Builders share with Present now, then A tab. Do: stop your own share while they present. On the stage window, T starts the screen's timer when someone starts; + and − stretch it; the timer's own Reset between people (not Reset the session clock). Share the stage again after.", heading: "Done one of these?", body: "Show it, or tell us about it: which level, what it does, and one thing that went sideways.", timer: "showTurn" },
+        { kind: "prompt", note: "Say: who has done one of these? Show it, or tell us: which level, what it does, one thing that went sideways. Builders share with Present now, then A tab. Do: stop your own share while they present. Start the timer as each builder begins, fresh for each one. Share the stage again after.", heading: "Done one of these?", body: "Show it, or tell us about it: which level, what it does, and one thing that went sideways.", timer: "showTurn" },
         { kind: "steps", note: "Co-host: paste the Breakout Planner's link in the chat now. Say: open it and add your name under the level you want to try, and a partner's name next to yours if you have one. Any level is a good level, and the one that would stretch you a little is the best one. Co-host: make rooms of up to four from each level's list, partners together, an anchor in each where one fits, and write the room numbers in the Room column. Allow about five minutes.", heading: "Pick your level", steps: [
           "Open the Breakout Planner.",
           "Add your name under the level you want to try today: 1, 2, or 3.",
@@ -140,7 +140,7 @@ const SESSION = {
       host: [
         "Before you start: in Host controls, keep Share their screen on for everyone. No one needs to be a co-host to present.",
         "Builders share with Present now, then A tab, so their tab's sound comes through.",
-        "Start the stage timer when they start; Reset between people.",
+        "Start the stage timer as each builder begins, fresh for each one.",
         "Co-host: paste the Breakout Planner's link in the chat. As names land under the levels, open Breakout rooms and make rooms of up to four from each level's list, partners together. Rooms = names ÷ 4, rounded up, for each level.",
         "Co-host: put an anchor (a 4, a 5, or someone who said what they built) in each room where one fits, write each person's room number in the Room column, message each anchor privately (\"You're your room's anchor: share your screen first and start a starter together\"), and set the breakout timer to {building}."
       ],
@@ -162,7 +162,7 @@ const SESSION = {
           "Level 1: pick a starter and make it yours. Levels 2 and 3: run your level's example, then make it yours.",
           "Stuck? Press Ask for help in Meet."
         ], foot: "Back in the main room in {building}" },        { kind: "link", note: "Do: leave this up for a minute as the rooms open, and paste the site's address in the main chat once more for anyone still there. The Remix Arcade: each room picks a starter and changes one thing about it.", heading: "Everything is here", body: "The starters, the three levels, the Breakout Planner, and the gallery wall." },
-        { kind: "prompt", note: "Do: T starts the building timer ({building}) as the rooms open; it keeps counting on the next screen, and + and − nudge it. The session clock in the corner keeps the big picture. You stay in the main room and invent from an idea in the chat, live, with anyone who stays; the co-host visits rooms and watches for Ask for help.", heading: "Rooms are building", body: "Rather watch? Stay here. We're inventing live in the main room, from your ideas.", timer: "building", timerKey: "building" }      ],
+        { kind: "prompt", note: "Do: start the building timer ({building}) as the rooms open; it keeps counting on the next screen, and a minute off or on nudges it. The session clock in the corner keeps the big picture. You stay in the main room and invent from an idea in the chat, live, with anyone who stays; the co-host visits rooms and watches for Ask for help.", heading: "Rooms are building", body: "Rather watch? Stay here. We're inventing live in the main room, from your ideas.", timer: "building", timerKey: "building" }      ],
       host: [
         "Walk the four steps on the stage: find your room number in the Breakout Planner; your anchor shares their screen and everyone builds along for {buildAlong}; level 1 picks a starter, levels 2 and 3 run their level's example; stuck means Ask for help in Meet.",
         "Co-host: open the rooms.",
@@ -195,7 +195,7 @@ const SESSION = {
       link: "index.html#cheer", linkLabel: "See the awards",
       shared: [{ link: "gallery", label: "Gallery wall" }],
       screens: [
-        { kind: "prompt", note: "Say: welcome back; raise a hand to share. Applause first, then one question: who would you show this to? About three minutes each, so five or six builds; Reset the timer between builders. Co-host: line up the next builder from the gallery wall.", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?", timer: "share" },
+        { kind: "prompt", note: "Say: welcome back; raise a hand to share. Applause first, then one question: who would you show this to? About three minutes each, so five or six builds; start the timer fresh for each builder. Co-host: line up the next builder from the gallery wall.", heading: "Show & Cheer", body: "A few builders share their screens. Applause first, emoji welcome. One question for each builder: who would you show this to?", timer: "share" },
         { kind: "awards", note: "Say: three awards, on the screen: Most Delightfully Broken, Best Rescue, Most Likely to Actually Get Used. Read the co-host's list: the award, then the build and its builders. For fun, not ranking.", heading: "This morning's awards", awards: [
           { icon: "bug", name: "Most Delightfully Broken", why: "For the most glorious error message of the morning." },
           { icon: "life-buoy", name: "Best Rescue", why: "For the save that made the room cheer." },
@@ -203,7 +203,7 @@ const SESSION = {
         ] }
       ],
       host: [
-        "Builders share with Present now, then A tab, so their tab's sound comes through. About three minutes each; Reset the stage timer between builders.",
+        "Builders share with Present now, then A tab, so their tab's sound comes through. About three minutes each; start the stage timer fresh for each builder.",
         "If sharing fails, share the gallery wall and click their picture to open what they made.",
         "Read the awards from the co-host's list. For fun, not ranking."
       ],

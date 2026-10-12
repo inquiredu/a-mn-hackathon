@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="auto">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,25 +8,27 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="assets/theme.js"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body data-jump="#level-1" data-jump-label="Jump to the starters">
 <a class="skip" href="#main">Skip to the main content</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
     <a class="brand" href="index.html">First Builds</a>
-    <nav aria-label="Site">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="levels.html">Three levels</a></li>
         <li><a href="starters.html" aria-current="page">Starters</a></li>
-        <li><a href="wish.html">Grant a wish</a></li>
+        <li><a href="invent.html">Invent your own</a></li>
         <li><a href="hosts.html">Hosts</a></li>
-        <li><a href="from-the-room.html">From the room</a></li>
         <li><a href="sources.html">Sources</a></li>
-        <li><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
+        <li class="host-item host-first"><a href="present.html">Present</a></li>
+        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
+        <li class="theme-item"><button class="theme-toggle" type="button" aria-pressed="false" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></li>
       </ul>
     </nav>
   </div>
@@ -49,39 +51,46 @@
   <!-- THE REMIX ARCADE -->
   <section id="arcade" class="section">
     <div class="wrap">
-      <p class="kicker-dark">The Remix Arcade</p>
+      <p class="kicker-dark">Eight tools that already work</p>
       <h1 class="page-title">Starters</h1>
-      <p class="section-lede">Eight small tools that already work, each one useful on Monday. Four run inside your AI chat, two are pages for your Google Site, and two are scripts that do a job in your Google Drive (<a href="levels.html">the three levels</a>, with a starter or two for each). Play one, copy it into your AI chat, and ask for a change.</p>
+      <p class="section-lede">Eight small tools that already work, each one useful on Monday. Play one, copy it into your AI chat, and ask for a change.</p>
+      <ul class="level-index" aria-label="Starters by level">
+        <li><a href="#level-1"><span class="num">1</span>In the chat<span class="count">4 tools</span></a></li>
+        <li><a href="#level-2"><span class="num">2</span>On your site<span class="count">2 pages</span></a></li>
+        <li><a href="#level-3"><span class="num">3</span>Behind the scenes<span class="count">2 scripts</span></a></li>
+      </ul>
 
-      <div class="first">
-        <p><strong>On your own?</strong> You need only this page and an AI chat you can sign in to: Gemini with your school Google account, ChatGPT, or Claude. Open it in another tab. <strong>In a live session?</strong> Your host links the Breakout Planner in the chat; your room number is next to your name. <strong>Running it with your own group?</strong> <a href="hosts.html">Hosts</a> has what to check before the day and what each part asks of this page.</p>
-        <p class="link-slot" data-link="planner" data-label="Open the Breakout Planner" data-style="button" data-pending=""></p>
+      <div class="audience">
+        <div><p class="audience-title">On your own?</p><p>You need only this page and an AI chat you can sign in to: Gemini with your school Google account, ChatGPT, or Claude. Open it in another tab.</p></div>
+        <div><p class="audience-title">In a live session?</p><p>Your host links the Breakout Planner in the chat; your room number is next to your name.</p><p class="link-slot" data-link="planner" data-label="Open the Breakout Planner" data-style="button" data-pending=""></p></div>
+        <div><p class="audience-title">Running it with your own group?</p><p><a href="hosts.html">Hosts</a> has what to check before the day and what each part asks of this page.</p></div>
       </div>
 
-      <ol class="steps">
-        <li><span class="num hex">1</span><strong>Guess, then play.</strong> <span>Pick a starter. Before you press Play, guess what it will do. Then try it.</span></li>
-        <li><span class="num hex">2</span><strong>Hand it to your AI.</strong> <span>Press <em>Copy for my AI</em>: it copies the tool's whole code with a note asking the AI to run it. In Gemini, choose Canvas first; then paste into your chat and send. In a few seconds the same tool is running beside the chat. Where, in each tool: <a href="#where">just below</a>.</span></li>
-        <li><span class="num hex">3</span><strong>Remix it.</strong> <span>Open the Remix menu, press Copy beside a change, paste it in the same chat, replace each ___ with your own words, and send.</span></li>
-        <li><span class="num hex">4</span><strong>Keep it.</strong> <span>Changes you make in the Play window vanish when you close it. Your AI chat keeps the version you built there: give the chat a name you'll find on Monday. To hand it to someone, <a href="wish.html#wall">copy a link to your work</a>.</span></li>
+      <ol class="how-row" aria-label="How it works">
+        <li><span class="num">1</span><strong>Guess, then play</strong><span>Pick a starter. Before you press Play, guess what it will do. Then try it.</span></li>
+        <li><span class="num">2</span><strong>Hand it to your AI</strong><span>Press <em>Copy for my AI</em>: it copies the tool's code with a note asking your AI to run it. Paste it into your chat and send; in Gemini, choose Canvas first. <a href="#where">Where to paste it</a>.</span></li>
+        <li><span class="num">3</span><strong>Remix it</strong><span>Open a Remix menu, press Copy beside a change, paste it into the same chat, and replace each ___ with your own words.</span></li>
+        <li><span class="num">4</span><strong>Keep it</strong><span>The Play window forgets your changes when it closes; your AI chat keeps them. Name the chat so you find it Monday, or <a href="invent.html#wall">copy a link to your work</a>.</span></li>
       </ol>
 
-      <div class="level-note" id="where">
-        <h4>Where do I paste it, and what you'll see</h4>
-        <div data-where="code"></div>
+      <div class="level-header" id="level-1">
+        <p class="step-label">Level 1</p>
+        <h2>In the chat</h2>
+        <p class="level-summary">Small tools that run inside your AI chat. Play one here first.</p>
+        <details class="level-note" id="where">
+          <summary>Where to paste it, tool by tool</summary>
+          <div data-where="code"></div>
+        </details>
       </div>
-
-      <h3 class="subhead">Level 1 · In the chat</h3>
-      <div class="machines four">
+      <div class="machines">
 
         <article class="cabinet" style="--c: var(--timer)">
-          <div class="badge" data-icon="timer"></div>
-          <p class="for">For anyone who runs a meeting</p>
-          <h4>The Meeting Timer</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="timer"></div><div><h3>The Meeting Timer</h3><p class="for">For anyone who runs a meeting</p></div></div>
           <p>Your agenda on screen with a big countdown, a gentle chime when it's time to move on, and a parking lot.</p>
           <p class="monday"><strong>Monday:</strong> run your next PLC with it on the screen.</p>
           <div class="actions">
-            <button class="primary" data-play="timer">Play</button>
-            <button data-copy-machine="timer">Copy for my AI</button>
+            <button class="primary" type="button" data-play="timer">Play</button>
+            <button type="button" data-copy-machine="timer">Copy for my AI</button>
           </div>
           <details class="remix">
             <summary>Remix menu</summary>
@@ -110,15 +119,13 @@
         </article>
 
         <article class="cabinet" style="--c: var(--groups)">
-          <div class="badge" data-icon="dices"></div>
-          <p class="for">For teachers, coaches, and anyone leading a workshop</p>
-          <h4>The Group Maker</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="dices"></div><div><h3>The Group Maker</h3><p class="for">For teachers, coaches, and anyone leading a workshop</p></div></div>
           <p>Paste names, pick a size, and shuffle. It spreads your helpers out, one per group. Keeping two people apart is one remix away.</p>
           <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
-          <p class="names">Names typed into the tool here stay in this browser window; nothing is saved or sent. Once the tool runs inside your AI chat, it runs on that company's page, so keep to made-up names there.</p>
+          <p class="data-note"><strong>Real names stay out of the AI.</strong> Names typed into the tool here stay in this browser window; nothing is saved or sent. Once the tool runs inside your AI chat, it runs on that company's page, so keep to made-up names there.</p>
           <div class="actions">
-            <button class="primary" data-play="groups">Play</button>
-            <button data-copy-machine="groups">Copy for my AI</button>
+            <button class="primary" type="button" data-play="groups">Play</button>
+            <button type="button" data-copy-machine="groups">Copy for my AI</button>
           </div>
           <details class="remix">
             <summary>Remix menu</summary>
@@ -145,14 +152,12 @@
         </article>
 
         <article class="cabinet" style="--c: var(--feedback)">
-          <div class="badge" data-icon="message-square-text"></div>
-          <p class="for">For teachers and faculty</p>
-          <h4>The Feedback Builder</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="message-square-text"></div><div><h3>The Feedback Builder</h3><p class="for">For teachers and faculty</p></div></div>
           <p>Choose a level for each part of a rubric, and warm, specific feedback comes together, with one clear next step.</p>
           <p class="monday"><strong>Monday:</strong> load your own rubric and give faster, kinder feedback.</p>
           <div class="actions">
-            <button class="primary" data-play="feedback">Play</button>
-            <button data-copy-machine="feedback">Copy for my AI</button>
+            <button class="primary" type="button" data-play="feedback">Play</button>
+            <button type="button" data-copy-machine="feedback">Copy for my AI</button>
           </div>
           <details class="remix">
             <summary>Remix menu</summary>
@@ -179,14 +184,12 @@
         </article>
 
         <article class="cabinet" style="--c: var(--oracle)">
-          <div class="badge" data-icon="circle-question-mark"></div>
-          <p class="for">Just for fun</p>
-          <h4>The Teacher's Lounge Oracle</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="circle-question-mark"></div><div><h3>The Teacher's Lounge Oracle</h3><p class="for">Just for fun</p></div></div>
           <p>Ask a question. Get a dramatic, slightly ridiculous prophecy, with a gong.</p>
           <p class="monday"><strong>Monday:</strong> a vocabulary oracle or a discussion-question picker, if you remix it.</p>
           <div class="actions">
-            <button class="primary" data-play="oracle">Play</button>
-            <button data-copy-machine="oracle">Copy for my AI</button>
+            <button class="primary" type="button" data-play="oracle">Play</button>
+            <button type="button" data-copy-machine="oracle">Copy for my AI</button>
           </div>
           <details class="remix">
             <summary>Remix menu</summary>
@@ -217,19 +220,31 @@
 
       </div>
 
-      <h3 class="subhead" id="level-2">Level 2 · On your site</h3>
-      <p class="hint">Pages, not tools: each one ends up on a Google Site you can edit (no Site yet? sites.google.com, then Blank site). Play it, then: 1. Press Copy for my AI and paste into your AI chat (<a href="#where">where, above</a>). 2. Copy a remix line such as "Replace the charter with this document," paste it, and paste your document's text where the ___ is. 3. When it looks right, copy the finished code out (each tool's spot is listed above). 4. In your Site: <strong>Insert</strong>, <strong>Embed</strong>, the <strong>Embed code</strong> tab, paste, <strong>Next</strong>, <strong>Insert</strong>. 5. Drag the box until the whole page shows. Before you publish, read the page against your document; the AI keeps the meaning, and you check every line. You can also put a starter on a Site as it is: press Play, then Show the code, select it all, copy, and paste it into the Embed code tab. The full steps, and what to do when Sites refuses it: <a href="levels.html#site">Three levels, level 2</a>.</p>
+      <div class="level-header" id="level-2">
+        <p class="step-label">Level 2</p>
+        <h2>On your site</h2>
+        <p class="level-summary">Pages, not tools: each one ends up on a Google Site you can edit. Play it, hand it to your AI with your own document, and paste what comes back into your Site.</p>
+        <details class="level-note">
+          <summary>How to put it on your Site, in five steps</summary>
+          <ol>
+            <li>Press <strong>Copy for my AI</strong> and paste into your AI chat (<a href="#where">where, above</a>).</li>
+            <li>Copy a remix line such as "Replace the charter with this document," paste it, and paste your document's text where the ___ is.</li>
+            <li>When it looks right, copy the finished code out (each tool's spot is in <a href="#where">Where to paste it</a>).</li>
+            <li>In your Site: <strong>Insert</strong>, <strong>Embed</strong>, the <strong>Embed code</strong> tab, paste, <strong>Next</strong>, <strong>Insert</strong>.</li>
+            <li>Drag the box until the whole page shows. Before you publish, read the page against your document; the AI keeps the meaning, and you check every line.</li>
+          </ol>
+          <p>No Site yet? sites.google.com, then Blank site. You can also put a starter on a Site as it is: press Play, then Show the code, select it all, copy, and paste it into the Embed code tab. The full steps, and what to do when Sites refuses it: <a href="levels.html#site">Three levels, level 2</a>.</p>
+        </details>
+      </div>
       <div class="machines">
 
         <article class="cabinet" style="--c: var(--charter)">
-          <div class="badge" data-icon="layout-grid"></div>
-          <p class="for">For a department, a team, or a PLC</p>
-          <h4>The Charter Cards</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="layout-grid"></div><div><h3>The Charter Cards</h3><p class="for">For a department, a team, or a PLC</p></div></div>
           <p>A made-up department charter as a page: the commitments as badges, each section a card that opens when you tap it.</p>
           <p class="monday"><strong>Monday:</strong> your own charter or team norms on your site, readable on a phone.</p>
           <div class="actions">
-            <button class="primary" data-play="charter">Play</button>
-            <button data-copy-machine="charter">Copy for my AI</button>
+            <button class="primary" type="button" data-play="charter">Play</button>
+            <button type="button" data-copy-machine="charter">Copy for my AI</button>
           </div>
           <details class="remix">
             <summary>Remix menu</summary>
@@ -253,14 +268,12 @@
         </article>
 
         <article class="cabinet" style="--c: var(--syllabus)">
-          <div class="badge" data-icon="book-open"></div>
-          <p class="for">For teachers and course leads</p>
-          <h4>The Syllabus Page</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="book-open"></div><div><h3>The Syllabus Page</h3><p class="for">For teachers and course leads</p></div></div>
           <p>A made-up course as a page families actually read: the questions people ask, each with a short answer, and the year as a row per unit.</p>
           <p class="monday"><strong>Monday:</strong> your syllabus on your class site, opening question by question.</p>
           <div class="actions">
-            <button class="primary" data-play="syllabus">Play</button>
-            <button data-copy-machine="syllabus">Copy for my AI</button>
+            <button class="primary" type="button" data-play="syllabus">Play</button>
+            <button type="button" data-copy-machine="syllabus">Copy for my AI</button>
           </div>
           <details class="remix">
             <summary>Remix menu</summary>
@@ -286,30 +299,37 @@
       </div>
 
       <details class="level-note">
-        <summary><h4>What Google Sites does to pasted code</h4></summary>
+        <summary>What Google Sites does to pasted code</summary>
         <p>Google Sites shows it inside a frame on your page. That keeps your site safe, and it sets the limits: the page can't remember anything between visits, so saved settings and scores vanish; it can't reach the rest of your site or your visitors' accounts; sound and full screen wait for a tap; and a very long page may be refused or load slowly. It shows only as big as you drag the frame. Cut off, or misbehaving? Copy the request below into your AI.</p>
         <p>If what you pasted doesn't fit or doesn't behave, hand your AI this:</p>
         <div class="copybox">
           <p id="sites-stem">Make this one self-contained HTML file for a Google Sites embed box about 800 pixels wide: no outside libraries, fonts, or images; nothing saved between visits; no sound until a tap; large type that works on a phone; and as short as it can be while keeping everything it does.</p>
-          <button data-copy-from="sites-stem">Copy</button>
+          <button data-copy-from="sites-stem" type="button">Copy</button>
         </div>
       </details>
 
-      <h3 class="subhead" id="level-3">Level 3 · Behind the scenes: scripts, not pages</h3>
-      <p class="hint">Nothing to play here. A script is a few instructions Google runs for you inside your Drive, in a tool called Apps Script that's built into every Google account; you approve what it may touch before it runs. Each card has the whole path: what to make first, every step with its place, what you'll see when it worked, and what to do when it breaks. <strong>Copy the script</strong> copies the script alone, for script.google.com. <strong>Copy for my AI</strong> copies it with a note asking your AI to explain it line by line before you run it; when your AI hands back a changed script, paste the whole thing over the old one in your project, save, and run again. A remix line or an error message only makes sense to your AI once it has the script, so Copy for my AI comes first. <a href="levels.html#script">The cautions, on Three levels</a>.</p>
-      <div class="machines">
+      <div class="level-header" id="level-3">
+        <p class="step-label">Level 3</p>
+        <h2>Behind the scenes</h2>
+        <p class="level-summary">Scripts, not pages: nothing to play here. A script is a few instructions Google runs for you inside your Drive, in a tool called Apps Script that's built into every Google account; you approve what it may touch before it runs.</p>
+        <dl class="button-legend">
+          <div><dt><span class="button-look primary">Copy the script</span></dt><dd>The script alone, for script.google.com.</dd></div>
+          <div><dt><span class="button-look">Copy for my AI</span></dt><dd>The script with a note asking your AI to explain it line by line before you run it. A remix line or an error message only makes sense to your AI once it has the script, so paste this first. When your AI hands back a changed script, paste the whole thing over the old one in your project, save, and run again.</dd></div>
+        </dl>
+        <p class="more-link">Each card has the whole path: what to make first, every step with its place, what you'll see when it worked, and what to do when it breaks. <a href="levels.html#script">The cautions, on Three levels</a>.</p>
+      </div>
+      <div class="machines scripts">
 
         <article class="cabinet" style="--c: var(--script)">
-          <div class="badge" data-icon="folder-tree"></div>
-          <p class="for">For curriculum leads and anyone with a deep folder</p>
-          <h4>The Drive Inventory</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="folder-tree"></div><div><h3>The Drive Inventory</h3><p class="for">For curriculum leads and anyone with a deep folder</p></div></div>
           <p>Point it at a folder. It reads every folder inside and writes a Sheet: each document, its type, its link, and when it last changed.</p>
           <p class="monday"><strong>Monday:</strong> a whole curriculum folder, one search away.</p>
-          <div class="script-steps" data-steps="inventory"></div>
+          <p class="meta">Apps Script · your Drive · about an hour the first time, fifteen minutes after</p>
           <div class="actions">
-            <button class="primary" data-copy-script="inventory">Copy the script</button>
-            <button data-ask-script="inventory">Copy for my AI</button>
+            <button class="primary" data-copy-script="inventory" type="button">Copy the script</button>
+            <button data-ask-script="inventory" type="button">Copy for my AI</button>
           </div>
+          <div class="script-steps" data-steps="inventory"></div>
           <details class="remix">
             <summary>Remix menu</summary>
             <h5>Make it useful</h5>
@@ -326,16 +346,15 @@
         </article>
 
         <article class="cabinet" style="--c: var(--script)">
-          <div class="badge" data-icon="files"></div>
-          <p class="for">For anyone who makes the same Doc many times</p>
-          <h4>The Doc Multiplier</h4>
+          <div class="cabinet-head"><div class="badge" data-icon="files"></div><div><h3>The Doc Multiplier</h3><p class="for">For anyone who makes the same Doc many times</p></div></div>
           <p>One template Doc and a Sheet of names. It makes a copy for each row, named for the row, gathers them in a folder, and writes each link back into the Sheet.</p>
           <p class="monday"><strong>Monday:</strong> a planning doc for every team, made in one press.</p>
-          <div class="script-steps" data-steps="multiplier"></div>
+          <p class="meta">Apps Script · a Doc and a Sheet · about an hour the first time, fifteen minutes after</p>
           <div class="actions">
-            <button class="primary" data-copy-script="multiplier">Copy the script</button>
-            <button data-ask-script="multiplier">Copy for my AI</button>
+            <button class="primary" data-copy-script="multiplier" type="button">Copy the script</button>
+            <button data-ask-script="multiplier" type="button">Copy for my AI</button>
           </div>
+          <div class="script-steps" data-steps="multiplier"></div>
           <details class="remix">
             <summary>Remix menu</summary>
             <h5>Make it useful</h5>
@@ -363,7 +382,7 @@
   <div class="wrap footer-inner">
     <div class="credit">
       <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
-      <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
+      <p><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
     </div>
     <div class="footer-notes">
       <p class="small"><strong>Safe play:</strong> made-up names and made-up data, every time. Nothing about real students goes into an AI.</p>
@@ -377,35 +396,45 @@
 <dialog id="room" aria-labelledby="room-title">
   <div class="room">
     <div class="room-head">
-      <h2 id="room-title">Machine</h2>
+      <h2 class="room-title" id="room-title"><span id="room-playing">Playing</span> <strong id="room-name">a starter</strong></h2>
       <div class="room-tools">
-        <button id="toggle-code" aria-expanded="false" aria-controls="code-pane">Show the code</button>
-        <button id="room-copy">Copy for my AI</button>
-        <button id="room-close">Close</button>
+        <button id="toggle-code" type="button" aria-expanded="false" aria-controls="code-pane">Show the code</button>
+        <button class="primary" id="room-copy" type="button">Copy for my AI</button>
+        <button id="room-close" type="button">Close</button>
+      </div>
+      <div class="room-tabs" role="tablist" aria-label="What to show">
+        <button type="button" role="tab" id="tab-tool" aria-selected="true" aria-controls="room-frame">The tool</button>
+        <button type="button" role="tab" id="tab-code" aria-selected="false" aria-controls="code-pane" tabindex="-1">The code</button>
       </div>
     </div>
+    <!-- Whatever is running and what just happened, above the tool and the code alike -->
+    <div class="room-bar" id="room-bar" hidden>
+      <p class="room-status" id="room-status" role="status" aria-live="polite"></p>
+      <button class="sm" id="reset" type="button" hidden>Back to the original</button>
+    </div>
     <div class="room-body" id="room-body">
-      <iframe id="screen" title="The machine, running" sandbox="allow-scripts allow-forms allow-modals"></iframe>
-      <div class="code-pane" id="code-pane" hidden>
-        <label for="code">This is the whole tool. Press Ctrl+F (⌘F on a Mac) to find a word, change something, and press Run my changes. Gone blank? You lost a quote mark or a comma: press Start over.</label>
+      <div class="room-frame" id="room-frame" role="tabpanel" aria-labelledby="tab-tool" data-starting="Starting…">
+        <iframe id="screen" title="The starter, running" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+      </div>
+      <div class="code-pane" id="code-pane" role="tabpanel" aria-labelledby="tab-code" hidden>
+        <label for="code">This is the whole tool. Find a word (Ctrl+F, or ⌘F on a Mac), change something, and press Run my changes.</label>
         <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
         <div class="code-actions">
-          <button class="primary" id="run">Run my changes</button>
-          <button id="reset">Start over</button>
+          <button class="primary" id="run" type="button">Run my changes</button>
+          <p class="code-recover">Gone blank? You lost a quote mark or a comma: press Back to the original, above.</p>
         </div>
       </div>
     </div>
-    <p class="toast" role="status" aria-live="polite"></p>
   </div>
 </dialog>
 
 
-<dialog id="fallback" aria-labelledby="fallback-title">
+<dialog id="fallback" aria-labelledby="fallback-title" aria-describedby="fallback-how">
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
-    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
-    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
-    <div><button class="primary" id="fallback-close">Done</button></div>
+    <p id="fallback-how">Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.</p>
+    <textarea id="fallback-text" readonly rows="10" aria-labelledby="fallback-title"></textarea>
+    <div class="fallback-actions"><button class="primary" id="fallback-select" type="button">Select all</button> <button id="fallback-close" type="button">Done</button></div>
   </div>
 </dialog>
 

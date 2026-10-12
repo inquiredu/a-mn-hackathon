@@ -11,9 +11,9 @@ assert.strictEqual(T.startingMinutes("showTurn", pace), 4);
 assert.strictEqual(T.startingMinutes(5, pace), 5);
 assert.strictEqual(T.startingMinutes("nope", pace), null, "an unknown pace gives no timer");
 assert.strictEqual(T.startingMinutes(90, pace), 60, "at most an hour");
-assert.strictEqual(T.startingMinutes("wish", pace, { wish: 40, building: 57 }), 40, "a part's length by its id");
-assert.strictEqual(T.startingMinutes("building", pace, { wish: 40, building: 57 }), 57, "all the building time");
-assert.strictEqual(T.startingMinutes("wish", pace), null, "a part's id without lengths gives no timer");
+assert.strictEqual(T.startingMinutes("invent", pace, { invent: 40, building: 57 }), 40, "a part's length by its id");
+assert.strictEqual(T.startingMinutes("building", pace, { invent: 40, building: 57 }), 57, "all the building time");
+assert.strictEqual(T.startingMinutes("invent", pace), null, "a part's id without lengths gives no timer");
 
 // Untouched, running, paused, done
 assert.deepStrictEqual(
@@ -67,5 +67,16 @@ assert.strictEqual(T.sessionClock(ten + two + 312, ten, two).pct, 100);
 assert.strictEqual(T.resolveStart(ten + 240, "2026-10-09", "2026-10-09", ten), ten + 240, "a call to order wins");
 assert.strictEqual(T.resolveStart(null, "2026-10-09", "2026-10-09", ten), ten, "on the day, the advertised start");
 assert.strictEqual(T.resolveStart(null, "2026-10-08", "2026-10-09", ten), null, "a rehearsal waits for the call");
+
+// One part against the clock (the speaker notes' "min left in this part"), measured from the call to order
+const tenAm = 10 * 3600;                     // the advertised start, 10:00
+const show = [tenAm + 20 * 60, tenAm + 28 * 60]; // a part scheduled 10:20 to 10:28
+assert.deepStrictEqual(T.partClock(tenAm + 21 * 60, null, tenAm, ...show), { state: "waiting", minutesLeft: null }, "not called to order: nothing to say");
+assert.deepStrictEqual(T.partClock(tenAm + 21 * 60 + 20, tenAm, tenAm, ...show), { state: "on", minutesLeft: 7 }, "on time: minutes left, rounded up");
+assert.deepStrictEqual(T.partClock(tenAm + 21 * 60, tenAm + 15 * 60, tenAm, ...show), { state: "before", minutesLeft: null }, "a late start moves the part later");
+assert.deepStrictEqual(T.partClock(tenAm + 36 * 60, tenAm + 15 * 60, tenAm, ...show), { state: "on", minutesLeft: 7 }, "and its minutes with it");
+const evening = 17 * 3600 + 45 * 60;         // called to order at 17:45 on another day
+assert.strictEqual(T.partClock(evening + 5, evening, tenAm, ...show).state, "before", "another day: seconds in, the third part hasn't started");
+assert.deepStrictEqual(T.partClock(evening + 29 * 60, evening, tenAm, ...show), { state: "over", minutesLeft: 0 }, "past the part's end: time to move on");
 
 console.log("stage timer: all tests pass");

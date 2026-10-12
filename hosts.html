@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="auto">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,25 +8,27 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="assets/theme.js"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css">
 <link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
+<body data-page="hosts">
 <a class="skip" href="#main">Skip to the main content</a>
 <header class="site-head">
   <div class="wrap site-head-inner">
     <a class="brand" href="index.html">First Builds</a>
-    <nav aria-label="Site">
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav id="site-menu" aria-label="Site">
       <ul class="site-nav">
         <li><a href="index.html">Home</a></li>
         <li><a href="levels.html">Three levels</a></li>
         <li><a href="starters.html">Starters</a></li>
-        <li><a href="wish.html">Grant a wish</a></li>
+        <li><a href="invent.html">Invent your own</a></li>
         <li><a href="hosts.html" aria-current="page">Hosts</a></li>
-        <li><a href="from-the-room.html">From the room</a></li>
         <li><a href="sources.html">Sources</a></li>
-        <li><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
-        <li><a href="present.html" class="present-link">Present</a></li>
+        <li class="host-item host-first"><a href="present.html">Present</a></li>
+        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
+        <li class="theme-item"><button class="theme-toggle" type="button" aria-pressed="false" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></li>
       </ul>
     </nav>
   </div>
@@ -48,86 +50,154 @@
 
   <section class="section">
     <div class="wrap">
-      <p class="kicker-dark">Hosts</p>
+      <p class="kicker-dark">For whoever runs the session</p>
       <h1 class="page-title">Run it with your own group</h1>
-      <p class="section-lede hosts-intro" data-fill>{Length} over a video call, {building} of it building in breakout rooms of up to four. This page is the guide: what to set up, who does what, the run of show part by part, messages ready to paste, and what to do when something breaks. Written for people who don't code. First run live as {record.ran}; <a href="#first-run">how that went</a> is at the bottom.</p>
-
-      <h2 class="subhead-2">Two ways to run it</h2>
-      <div class="host-grid">
-        <div class="card">
-          <h3>From this site, as it is</h3>
-          <p>No code. You make your own Google Meet and your own copies of two Google files (below), and you paste their links in the chat; the pages tell people to look there. The stage and the speaker notes work on any day: the stage moves when you press next, and its clock starts when you call the session to order. What you give up: on a day other than the first run's, the participant pages show the kit, not a live schedule, so your chat says what's next. What still shows the first run's: the partner credit on every page, the "first run as" line, and the invitation on Home before the day. Nothing in the parts, the messages, or the stage names a date, and the stage's last screen says only thank you; what your group does next, you say aloud.</p>
-        </div>
-        <div class="card">
-          <h3>Your own copy of the site</h3>
-          <p>For someone comfortable with GitHub, or with a colleague who is. Copy the kit, change one text file of dates, times, names, and links, and every page, the stage, and the notes follow your session, at your own web address. About an hour. The steps are in the README's "Run your own session": <span class="link-slot" data-link="repo" data-label="the kit on GitHub" data-style="inline"></span>.</p>
-        </div>
-      </div>
-
-      <h2 class="subhead-2">Who you need</h2>
-      <ul class="checks">
-        <li><strong>A presenter.</strong> Runs the stage, talks, and demos the three levels. That's probably you.</li>
-        <li><strong>A co-host.</strong> Made a co-host in Meet beforehand (Host controls, then People). Watches the chat, lists the anchors, builds and opens the breakout rooms, writes room numbers in the Breakout Planner, answers Ask for help, lines up Show &amp; Cheer, and notes a build for each award. With more than about thirty people, a second co-host to visit rooms.</li>
-        <li><strong>Anchors.</strong> Participants, not staff: anyone who rated themselves 4 or 5 or said what they'd built. One per room where one fits. The co-host tells each one, by private chat: "You're your room's anchor: share your screen first and start a starter together."</li>
-      </ul>
-
-      <h2 class="subhead-2">Before the day</h2>
-      <ul class="checks">
-        <li><strong>Do all three levels yourself,</strong> from <a href="levels.html">Three levels</a>. Allow an hour. That page explains every word here: Canvas (Gemini's workspace beside the chat), embed, Apps Script, a folder's ID, the permission screen. Then set up the three demo tabs in one Chrome window: (1) your AI chat with <a href="starters.html">the Oracle starter</a> pasted in and running (the same Oracle is built into the stage's welcome screen; this is the same starter, shown a second way); (2) Gemini with Canvas on, with <a href="starters.html#level-2">the Charter Cards</a> prompt and a made-up charter ready to paste, and a Google Site you can edit open beside it; (3) script.google.com with <a href="levels.html#script">the Drive Inventory</a> pasted in, a practice folder's ID in place, run once already so no permission screen appears live. Participants then make the same three kinds of thing in their rooms: a tool in their chat, a page on a Site, a script in their Drive.</li>
-        <li><strong>Make your own copies of two Google files.</strong> The Breakout Planner: a Google Doc with a line at the top for the host's word to the rooms, a Wishes list, and a heading for each level with a table under it (Name, Partner, Room). The walls deck: a Google Slides deck of five slides, three empty ones for the gallery wall (people paste a picture and link it to their work; <a href="wish.html#wall">how, on Grant a wish</a>), one headed "I wonder", one "I worry". Share both so anyone with the link can edit; people from other districts will need it. Start from the first run's: <a data-record-link="planner" href="#first-run">the Breakout Planner</a> and <a data-record-link="gallery" href="#first-run">the walls deck</a>, then <strong>File</strong>, <strong>Make a copy</strong>, and clear the names.</li>
-        <li><strong>Your Meet.</strong> Breakout rooms need a Google Workspace edition that includes them: start a Meet, open <em>Activities</em> (the shapes icon at the lower right) and look for <em>Breakout rooms</em>; check a week ahead. On the day the co-host sets the number of rooms there, drags names in, and presses <em>Open rooms</em>; Meet numbers the rooms itself. Meet can't message every room at once, so hosts visit rooms. In Host controls (the shield icon), keep <em>Share their screen</em> on for everyone, so builders can present without being co-hosts, and make your co-host a co-host under People.</li>
-        <li><strong>Check a staff account like your participants'.</strong> Paste a starter into Gemini with Canvas on and see the tool run beside the chat. Make a blank Google Site and paste an embed. Run the Drive Inventory and get past the permission screen. If one is off, ask your technology office now, or plan that level's fallback: ChatGPT or Claude for level 1; skip level 2 or 3 and send those people to level 1.</li>
-        <li><strong>Send participants what they need</strong> a week before: a laptop or Chromebook, an AI chat they can sign in to, a wish, and made-up data only. The <a href="index.html#start">Start here</a> section on Home says it in their words.</li>
-        <li><strong>Rehearse</strong> with the stage in one window and the speaker notes in another, and walk the session with <code>?now=10:50</code> on the end of any page's address to see it at that moment on the first run's day.</li>
-      </ul>
-      <div class="message">
-        <p class="to">To: your group, a week before</p>
-        <pre id="invite" data-fill>You're invited to {title}: {length} over video to build small, useful tools with AI, no coding background needed, and leave with something worth showing a colleague. Bring a laptop or Chromebook, an AI chat you can sign in to (Gemini with your school Google account, ChatGPT, or Claude), and a wish: something small you wish existed for your work. Everything is here: https://{url}
-Made-up names and data only, every time.</pre>
-        <button type="button" data-copy-from="invite">Copy</button>
-      </div>
-
-      <h2 class="subhead-2">Materials</h2>
-      <p class="materials">
-        <a class="button primary" href="present.html">Present the stage</a>
-        <a class="button" href="notes.html">Speaker notes</a>
-        <a class="button" href="index.html">The participant page</a>
-        <span class="link-slot" data-link="meet" data-label="Your Google Meet" data-style="button" data-pending="Your Meet: paste its link in your invitation, or add it to the session file"></span>
-        <span class="link-slot" data-link="planner" data-label="Your Breakout Planner" data-style="button" data-pending="Your Breakout Planner: paste its link in the chat, or add it to the session file"></span>
-        <span class="link-slot" data-link="gallery" data-label="Your gallery wall" data-style="button" data-pending="Your walls deck: paste its link in the chat, or add it to the session file"></span>
-        <span class="link-slot" data-link="backup" data-label="Session slides" data-style="button"></span>
-        <span class="link-slot" data-link="companion" data-label="Starter code" data-style="button"></span>
-      </p>
-      <p class="hint">The two slide decks hold the same session and the same starters, for when this site is blocked at a school, or if you'd rather present from slides: open one and choose <strong>File</strong>, then <strong>Make a copy</strong>.</p>
-
-      <h2 class="subhead-2">Using the stage</h2>
-      <ul class="checks">
-        <li>Open <a href="present.html">the stage</a> and <a href="notes.html">the speaker notes</a> as two windows of the same browser on the same computer; moving one moves the other. In Meet, share the stage's tab only (<em>Present now</em>, then <em>A tab</em>, with <em>Also share tab audio</em> on for the Oracle). For the three-level demo, switch to sharing the Chrome window that holds the three tabs, so the tab switches come through, then back to the stage's tab. Keep the notes off the shared screen.</li>
-        <li>Arrow keys move between screens. On screens with a timer, <strong>T</strong> starts or pauses it, <strong>+</strong> and <strong>−</strong> add or take a minute, and the notes window has the same buttons. The timers are yours to stretch; nothing counts down to a clock time.</li>
-        <li>The session clock sits large on the first screen until you press <strong>Call to order</strong> (or T there); then it counts the two hours down in the rail's corner. <strong>C</strong> opens it large again, with wait-time buttons for think time. <strong>Jump to now</strong> (N) goes to the screen the clock says is on.</li>
-        <li>Stop sharing before a builder presents, and share the stage again after.</li>
-      </ul>
-
-      <ul class="shape">
+      <p class="section-lede hosts-intro" data-fill>{Length} over a video call, {building} of it building in breakout rooms of up to four. Written for people who don't code.</p>
+      <ul class="shape shape-row" aria-label="The session at a glance">
         <li data-fill><strong>{length:number}</strong><span>{length:unit}, start to finish</span></li>
         <li data-fill><strong>{building:number}</strong><span>{building:unit} of building in breakout rooms</span></li>
         <li><strong>4</strong><span>people at most in each room, same level together</span></li>
         <li data-fill><strong>{parts}</strong><span>parts, each with a stage, a checklist, and messages</span></li>
       </ul>
+      <p class="hero-actions"><a class="button primary" href="present.html">Present the stage</a> <a class="button" href="notes.html">Speaker notes</a> <a class="action-link" href="#before">Start with Before the day</a></p>
+      <nav class="on-page" aria-label="On this page">
+        <p class="label">On this page</p>
+        <ul>
+          <li><a href="#ways">Two ways to run it</a></li>
+          <li><a href="#people">Who you need</a></li>
+          <li><a href="#before">Before the day</a></li>
+          <li><a href="#materials">Materials</a></li>
+          <li><a href="#stage">Using the stage</a></li>
+          <li><a href="#teams">Forming teams</a></li>
+          <li><a href="#runofshow">Run of show</a></li>
+          <li><a href="#rooms">In the rooms</a></li>
+          <li><a href="#breaks">When it breaks</a></li>
+          <li><a href="#first-run">How the first run went</a></li>
+        </ul>
+      </nav>
+
+      <h2 class="subhead-2" id="ways">Two ways to run it</h2>
+      <div class="host-grid">
+        <div class="card way">
+          <p class="label">Most hosts</p>
+          <h3>From this site, as it is</h3>
+          <p>No code. You make your own Google Meet and your own copies of two Google files (below), and paste their links in the chat; the pages tell people to look there.</p>
+          <dl class="rows">
+            <div><dt>How it works</dt><dd>The stage and the speaker notes work on any day: the stage moves when you press next, and its clock starts when you call the session to order.</dd></div>
+            <div><dt>What you give up</dt><dd>On a day other than the first run's, the participant pages show the kit, not a live schedule, so your chat says what's next.</dd></div>
+            <div><dt>What still shows the first run's</dt><dd>The partner credit on every page, the "first run as" line, and the invitation on Home before the day. Nothing in the parts, the messages, or the stage names a date, and the stage's last screen says only thank you; what your group does next, you say aloud.</dd></div>
+          </dl>
+          <p class="card-actions"><a class="action-link" href="#before">Start with Before the day</a></p>
+        </div>
+        <div class="card way">
+          <p class="label">With someone who knows GitHub</p>
+          <h3>Your own copy of the site</h3>
+          <p>Copy the kit, change one text file of dates, times, names, and links, and every page, the stage, and the notes follow your session, at your own web address. About an hour. The steps are in the README's "Run your own session."</p>
+          <p>The kit is free to reuse and adapt for non-commercial sessions under its license (at the foot of every page): keep the maker's credit, share your changes the same way, and replace the partner credit with your own host's name in your own copy.</p>
+          <p class="card-actions"><span class="link-slot" data-link="repo" data-label="The kit on GitHub" data-style="button"></span></p>
+        </div>
+      </div>
+
+      <h2 class="subhead-2" id="people">Who you need</h2>
+      <ul class="checks">
+        <li><strong>A presenter.</strong> Runs the stage, talks, and demos the three levels. That's probably you.</li>
+        <li><strong>A co-host.</strong> Made a co-host in Meet beforehand (Host controls, then People).
+          <ul>
+            <li>Before the rooms: watches the chat, lists the anchors, builds and opens the breakout rooms, and writes room numbers in the Breakout Planner.</li>
+            <li>During: answers Ask for help, lines up Show &amp; Cheer, and notes a build for each award.</li>
+            <li>With more than about thirty people, a second co-host to visit rooms.</li>
+          </ul>
+        </li>
+        <li><strong>Anchors.</strong> Participants, not staff: anyone who rated themselves 4 or 5 or said what they'd built. One per room where one fits. The co-host tells each one, by private chat: "You're your room's anchor: share your screen first and start a starter together."</li>
+      </ul>
+
+      <h2 class="subhead-2" id="before">Before the day</h2>
+      <ol class="checks before-list">
+        <li><strong>Do all three levels yourself,</strong> from <a href="levels.html">Three levels</a>. Allow an hour. That page explains every word here: Canvas (Gemini's workspace beside the chat), embed, Apps Script, a folder's ID, the permission screen.</li>
+        <li><strong>Set up the three demo tabs</strong> in one Chrome window:
+          <ol class="sub-steps">
+            <li>Your AI chat with <a href="starters.html#level-1">the Oracle starter</a> pasted in and running. (The same Oracle is built into the stage's welcome screen; this is the same starter, shown a second way.)</li>
+            <li>Gemini with Canvas on, with <a href="starters.html#level-2">the Charter Cards</a> prompt and a made-up charter ready to paste, and a Google Site you can edit open beside it.</li>
+            <li>script.google.com with <a href="levels.html#script">the Drive Inventory</a> pasted in, a practice folder's ID in place, run once already so no permission screen appears live.</li>
+          </ol>
+          Participants then make the same three kinds of thing in their rooms: a tool in their chat, a page on a Site, a script in their Drive.
+        </li>
+        <li><strong>Make your own copies of two Google files.</strong> Start from the first run's, <a data-record-link="planner" href="#first-run">the Breakout Planner</a> and <a data-record-link="gallery" href="#first-run">the walls deck</a>, then <strong>File</strong>, <strong>Make a copy</strong>, and clear the names. Share both so anyone with the link can edit; people from other districts will need it.
+          <ul>
+            <li><strong>The Breakout Planner:</strong> a Google Doc with a line at the top for the host's word to the rooms, an Ideas list, and a heading for each level with a table under it (Name, Partner, Room).</li>
+            <li><strong>The walls deck:</strong> a Google Slides deck of five slides: three empty ones for the gallery wall (people paste a picture and link it to their work; <a href="invent.html#wall">how, on Invent your own</a>), one headed "I wonder", one "I worry".</li>
+          </ul>
+        </li>
+        <li><strong>Your Meet.</strong> Meet can't message every room at once, so hosts visit rooms.
+          <ul>
+            <li>A week ahead: breakout rooms need a Google Workspace edition that includes them. Start a Meet, open <em>Activities</em> (the shapes icon at the lower right), and look for <em>Breakout rooms</em>.</li>
+            <li>In Host controls (the shield icon): keep <em>Share their screen</em> on for everyone, so builders can present without being co-hosts, and make your co-host a co-host under People.</li>
+            <li>On the day: the co-host sets the number of rooms in Breakout rooms, drags names in, and presses <em>Open rooms</em>; Meet numbers the rooms itself.</li>
+          </ul>
+        </li>
+        <li><strong>Check a staff account like your participants'.</strong> Paste a starter into Gemini with Canvas on and see the tool run beside the chat. Make a blank Google Site and paste an embed. Run the Drive Inventory and get past the permission screen. If one is off, ask your technology office now, or plan that level's fallback: ChatGPT or Claude for level 1; skip level 2 or 3 and send those people to level 1.</li>
+        <li><strong>Send participants what they need</strong> a week before: a laptop or Chromebook, an AI chat they can sign in to, an idea, and made-up data only. The <a href="index.html#start">Start here</a> section on Home says it in their words.
+          <div class="message">
+            <p class="to">To: your group, a week before</p>
+            <pre id="invite" data-fill>You're invited to {title}: {length} over video to build small, useful tools with AI, no coding background needed, and leave with something worth showing a colleague. Bring a laptop or Chromebook, an AI chat you can sign in to (Gemini with your school Google account, ChatGPT, or Claude), and an idea: something small you'd want for your work. Everything is here: https://{url}
+Made-up names and data only, every time.</pre>
+            <button type="button" data-copy-from="invite">Copy</button>
+          </div>
+        </li>
+        <li><strong>Rehearse</strong> with the stage in one window and the speaker notes in another, and walk the session with <code>?now=10:50</code> on the end of any page's address to see it at that moment on the first run's day.</li>
+      </ol>
+
+      <h2 class="subhead-2" id="materials">Materials</h2>
+      <div class="materials-groups">
+        <div>
+          <p class="label">Open on the day</p>
+          <p class="materials"><a class="button primary" href="present.html">Present the stage</a> <a class="button" href="notes.html">Speaker notes</a> <a class="button" href="index.html">The participant page</a></p>
+        </div>
+        <div>
+          <p class="label">Your links</p>
+          <ul class="slot-list">
+            <li><strong>Your Google Meet</strong><span class="link-slot" data-link="meet" data-label="Open" data-style="button" data-pending="Paste its link in your invitation, or add it to the session file."></span></li>
+            <li><strong>Your Breakout Planner</strong><span class="link-slot" data-link="planner" data-label="Open" data-style="button" data-pending="Paste its link in the chat, or add it to the session file."></span></li>
+            <li><strong>Your walls deck</strong><span class="link-slot" data-link="gallery" data-label="Open" data-style="button" data-pending="Paste its link in the chat, or add it to the session file."></span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label">If the site is blocked</p>
+          <p class="materials"><span class="link-slot" data-link="backup" data-label="Session slides" data-style="button"></span> <span class="link-slot" data-link="companion" data-label="Starter code" data-style="button"></span></p>
+          <p class="hint">The same session and the same starters as two slide decks, for when this site is blocked at a school, or if you'd rather present from slides: open one and choose <strong>File</strong>, then <strong>Make a copy</strong>.</p>
+        </div>
+      </div>
+
+      <h2 class="subhead-2" id="stage">Using the stage</h2>
+      <ul class="checks">
+        <li>Open <a href="present.html">the stage</a> and <a href="notes.html">the speaker notes</a> as two windows of the same browser on the same computer; moving one moves the other. In Meet, share the stage's tab only (<em>Present now</em>, then <em>A tab</em>, with <em>Also share tab audio</em> on for the Oracle). For the three-level demo, switch to sharing the Chrome window that holds the three tabs, so the tab switches come through, then back to the stage's tab. Keep the notes off the shared screen.</li>
+        <li>The session clock sits large on the first screen until you press <strong>Call to order</strong>; then it counts the two hours down in the rail's corner. Timers are yours to stretch; nothing counts down to a clock time.</li>
+        <li>Stop sharing before a builder presents, and share the stage again after.</li>
+      </ul>
+      <dl class="key-table">
+        <div><dt><span class="keys"><kbd>←</kbd> <kbd>→</kbd></span></dt><dd>Back and next screen</dd></div>
+        <div><dt><kbd>T</kbd></dt><dd>Start or pause a screen's timer (on the first screen, call to order)</dd></div>
+        <div><dt><span class="keys"><kbd>+</kbd> <kbd>−</kbd></span></dt><dd>A minute more or less on a timer</dd></div>
+        <div><dt><kbd>C</kbd></dt><dd>The session clock large, with wait-time buttons</dd></div>
+        <div><dt><kbd>N</kbd></dt><dd>Jump to the screen the clock says is on</dd></div>
+        <div><dt><kbd>S</kbd></dt><dd>Open the speaker notes</dd></div>
+        <div><dt><kbd>F</kbd></dt><dd>Full screen</dd></div>
+      </dl>
     </div>
   </section>
 
-  <section class="section band" aria-labelledby="teams-title">
+  <!-- DURING THE SESSION: teams, the run of show, the rooms, and when it breaks -->
+  <section class="section band" aria-labelledby="teams">
     <div class="wrap">
-      <h2 id="teams-title">Forming teams of four, by level</h2>
+      <h2 id="teams">Forming teams of four, by level</h2>
       <ol class="checks">
         <li data-fill><strong>During Welcome ({welcome.length}), main room.</strong> In the chat, everyone rates how much they've built with AI, 1 to 5, and builders say what they made. The co-host lists the 4s, the 5s, and the builders: the anchors.</li>
         <li data-fill><strong>During Three levels ({levels.length}).</strong> The presenter shows the three levels live. Nobody is sorted; the levels are for choosing.</li>
         <li data-fill><strong>During Show &amp; Tell ({show.length}).</strong> The co-host pastes the Breakout Planner's link in the chat. Everyone adds their name under the level they want to try, with a partner's name beside it if they have one. The co-host opens Breakout rooms and makes rooms of up to four from each level's list, partners together, an anchor in each room where one fits, then writes the room numbers in the Room column and messages each anchor.</li>
-        <li><strong>When the Remix Arcade starts.</strong> Open the rooms. Everyone finds their room number next to their name. Level 1 rooms start with <a href="starters.html">a starter</a>; level 2 and 3 rooms start with their level's example on <a href="levels.html">Three levels</a>.</li>
+        <li><strong>When the Remix Arcade starts.</strong> Open the rooms. Everyone finds their room number next to their name. Level 1 rooms start with <a href="starters.html#level-1">a starter</a>; level 2 and 3 rooms start with their level's example on <a href="levels.html">Three levels</a>.</li>
         <li><strong>Latecomers.</strong> Ask which level, add them to that level's smallest room, and write the room number next to their name.</li>
       </ol>
-      <div class="card">
+      <div class="card calc-card">
         <h3>How many rooms?</h3>
         <div class="calc">
           <label for="builders">People on one level's list (run it once per level)</label>
@@ -135,21 +205,18 @@ Made-up names and data only, every time.</pre>
         </div>
         <p class="calc-out" id="calc-out" aria-live="polite"></p>
       </div>
-    </div>
-  </section>
 
-  <section class="section" id="runofshow" aria-labelledby="ros-title">
-    <div class="wrap">
-      <h2 id="ros-title">Run of show</h2>
-      <p class="section-lede" data-fill>The {parts} parts run end to end, {length} in all; the breakout rooms run without a break through the Remix Arcade and Grant a wish, {building}. Each part lists what's on the stage (with links that open the presenter view at that screen), a checklist for hosts, and messages ready to paste. Where a message says "(your planner link)", paste your own link over it before you send. Checklist ticks are saved in this browser only. On the first run's day the part the clock says is on opens by itself; any other day, open the part you're in.</p>
-      <p class="hint" id="parts-in-order"></p>
+      <h2 class="subhead-2" id="runofshow">Run of show</h2>
+      <p class="section-lede" data-fill>The {parts} parts run end to end, {length} in all; the breakout rooms run without a break through the Remix Arcade and Invent your own, {building}.</p>
+      <div class="ros-bar" id="ros-bar" aria-hidden="true"></div>
+      <ul class="ros-key">
+        <li><strong>Each part:</strong> what's on the stage (each screen opens the stage there), a checklist for hosts, and messages ready to paste.</li>
+        <li>Where a message has a blank like "(your planner link)", paste your own link over it after copying.</li>
+        <li>Checklist ticks are saved in this browser only. On the first run's day the part the clock says is on opens by itself; any other day, open the part you're in.</li>
+      </ul>
       <div class="runofshow" id="ros"></div>
-    </div>
-  </section>
 
-  <section class="section band" aria-labelledby="guide-title">
-    <div class="wrap">
-      <h2 id="guide-title">In the rooms, and after</h2>
+      <h2 class="subhead-2" id="rooms">In the rooms, and after</h2>
       <div class="host-grid">
         <div class="card">
           <h3>In the rooms</h3>
@@ -157,7 +224,7 @@ Made-up names and data only, every time.</pre>
             <li data-fill>The anchor shares their screen for the first {buildAlong}. Everyone builds along, then builds their own.</li>
             <li>Breakout chats start empty: paste the page link when you visit a room.</li>
             <li>People press <em>Ask for help</em> in Meet to call a host; the co-host watches for it.</li>
-            <li data-fill>Meet can't message every room at once. At the switch from the Remix Arcade to Grant a wish, the co-host visits each room to say "switch to granting a wish: your own, or one from the Planner," and changes the Planner's top line, which everyone has open. With {nudge} left, around again: pin something to the gallery wall, even half-built (<a href="wish.html#wall">how, on Grant a wish</a>). At zero, the co-host closes the rooms; Meet gives everyone a short countdown.</li>
+            <li data-fill>Meet can't message every room at once. At the switch from the Remix Arcade to Invent your own, the co-host visits each room to say "switch to inventing your own: your own idea, or one from the Planner," and changes the Planner's top line, which everyone has open. With {nudge} left, around again: pin something to the gallery wall, even half-built (<a href="invent.html#wall">how, on Invent your own</a>). At zero, the co-host closes the rooms; Meet gives everyone a short countdown.</li>
           </ul>
         </div>
         <div class="card">
@@ -180,31 +247,29 @@ Made-up names and data only, every time.</pre>
             <li>The follow-up points to this site, its Sources page, and whatever your group does next.</li>
           </ul>
         </div>
-        <div class="card">
-          <h3>When it breaks</h3>
-          <ul>
-            <li><strong>Canvas missing in Gemini:</strong> level 1 works in ChatGPT or Claude; say so in the chat.</li>
-            <li><strong>Apps Script blocked:</strong> level 3 becomes a demo you show, not a thing they run; send those people to level 1 or 2.</li>
-            <li><strong>An AI refuses or errors:</strong> start a new chat and paste again; that counts.</li>
-            <li><strong>A room with no anchor:</strong> they open a starter together and press Play; the co-host visits first.</li>
-            <li><strong>One person alone in a room:</strong> merge them into the smallest room at their level.</li>
-            <li><strong>No breakout rooms on your Workspace edition:</strong> everyone builds in the main room with mics off, and the chat is the room.</li>
-            <li><strong>Running long:</strong> the stage timers are yours; shorten Show &amp; Cheer before you shorten the building.</li>
-            <li><strong>Site blocked at a school:</strong> the two slide decks above hold the same session and starters.</li>
-          </ul>
-        </div>
       </div>
+
+      <h2 class="subhead-2" id="breaks">When it breaks</h2>
+      <dl class="breaks">
+        <div><dt>Canvas missing in Gemini</dt><dd>Level 1 works in ChatGPT or Claude; say so in the chat.</dd></div>
+        <div><dt>Apps Script blocked</dt><dd>Level 3 becomes a demo you show, not a thing they run; send those people to level 1 or 2.</dd></div>
+        <div><dt>An AI refuses or errors</dt><dd>Start a new chat and paste again; that counts.</dd></div>
+        <div><dt>A room with no anchor</dt><dd>They open a starter together and press Play; the co-host visits first.</dd></div>
+        <div><dt>One person alone in a room</dt><dd>Merge them into the smallest room at their level.</dd></div>
+        <div><dt>No breakout rooms on your Workspace edition</dt><dd>Everyone builds in the main room with mics off, and the chat is the room.</dd></div>
+        <div><dt>Running long</dt><dd>The stage timers are yours; shorten Show &amp; Cheer before you shorten the building.</dd></div>
+        <div><dt>Site blocked at a school</dt><dd>The two slide decks in <a href="#materials">Materials</a> hold the same session and starters.</dd></div>
+      </dl>
     </div>
   </section>
 
   <section class="section" id="first-run" aria-labelledby="first-run-title">
     <div class="wrap">
-      <details class="fold">
+      <details class="fold record-fold">
         <summary id="first-run-title">How the first run went</summary>
         <div data-record></div>
         <p>What people asked, showed, and offered that morning, and how it went against the plan: <a href="from-the-room.html#oct-9">From the room</a>.</p>
       </details>
-      <p class="hint">This kit is free to reuse and adapt for non-commercial sessions under its license (at the foot of every page): keep the maker's credit, share your changes the same way, and replace the partner credit with your own host's name in your own copy.</p>
     </div>
   </section>
 
@@ -214,7 +279,7 @@ Made-up names and data only, every time.</pre>
   <div class="wrap footer-inner">
     <div class="credit">
       <img src="assets/mngaia-mark.png" alt="" width="60" height="52">
-      <p><span class="label">Prepared for and presented with</span><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
+      <p><strong data-fill>{org}</strong> · Boldly advancing education, grounded in deep humanity.</p>
     </div>
     <div class="footer-notes">
       <p class="small"><strong>Safe play:</strong> made-up names and made-up data, every time. Nothing about real students goes into an AI.</p>
@@ -224,12 +289,12 @@ Made-up names and data only, every time.</pre>
   </div>
 </footer>
 
-<dialog id="fallback" aria-labelledby="fallback-title">
+<dialog id="fallback" aria-labelledby="fallback-title" aria-describedby="fallback-how">
   <div class="fallback-inner">
     <h2 id="fallback-title">Copy this by hand</h2>
-    <p>Your browser blocked the copy button. Click in the box, select everything (Ctrl+A, or ⌘A on a Mac), and copy it.</p>
-    <textarea id="fallback-text" readonly aria-labelledby="fallback-title"></textarea>
-    <div><button class="primary" id="fallback-close">Done</button></div>
+    <p id="fallback-how">Your browser blocked the copy button. The text below is selected: press Ctrl+C (⌘C on a Mac) to copy it.</p>
+    <textarea id="fallback-text" readonly rows="10" aria-labelledby="fallback-title"></textarea>
+    <div class="fallback-actions"><button class="primary" id="fallback-select" type="button">Select all</button> <button id="fallback-close" type="button">Done</button></div>
   </div>
 </dialog>
 <p id="toast" class="toast" role="status" aria-live="polite"></p>

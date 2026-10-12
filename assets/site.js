@@ -933,6 +933,11 @@ if ($("room")) {
   document.querySelectorAll("[data-play]").forEach((button) => {
     button.addEventListener("click", () => openRoom(button.dataset.play));
   });
+  // A starter's picture opens it too, for a mouse or a finger. It presses the card's Play button, so closing the
+  // window returns focus there, the way in from a keyboard.
+  document.querySelectorAll("[data-shot]").forEach((shot) => {
+    shot.addEventListener("click", () => document.querySelector('[data-play="' + shot.dataset.shot + '"]').click());
+  });
   toggleCode.addEventListener("click", () => showCode(codePane.hidden));
   $("tab-tool").addEventListener("click", () => showCode(false));
   $("tab-code").addEventListener("click", () => showCode(true));

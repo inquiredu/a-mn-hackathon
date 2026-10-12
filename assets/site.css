@@ -720,8 +720,18 @@ dialog[open]::backdrop { background: var(--scrim); }
 /* The front door: the kit on the left, the first twenty minutes on the right */
 .hero-split { display: grid; gap: 32px 56px; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 960px) { .hero-split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; } }
-.hero-list { margin: 16px 0 0; padding-left: 1.2em; display: grid; gap: 4px; max-width: 34rem; font-size: 1.05rem; }
-.hero-list li::marker { color: var(--accent); }
+/* The examples as pictures, two by two, each opening its starter's card */
+.hero-shots { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 34rem; }
+.hero-shots a { display: grid; gap: 8px; align-content: start; color: var(--ink); text-decoration: none; font-family: var(--font-sans); font-size: .95rem; font-weight: 600; }
+.hero-shots img {
+  display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--tint);
+  transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+}
+.hero-shots small { display: block; margin-top: -4px; font-family: var(--font-serif); font-size: .9rem; font-weight: 400; color: var(--muted); }
+@media (hover: hover) {
+  .hero-shots a:hover img { transform: var(--lift); box-shadow: var(--shadow-lift); }
+  .hero-shots a:hover > span { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent); text-underline-offset: .25em; }
+}
 .hero-note { margin: 14px 0 0; font-family: var(--font-sans); font-size: .95rem; font-weight: 600; color: var(--muted); }
 .first-steps { padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .first-steps h2 { font-size: 1.375rem; }
@@ -975,16 +985,25 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 @media (min-width: 760px) {
   .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .machines:not(.scripts) { align-items: stretch; }
-  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
-  .machines:not(.scripts) > .cabinet > .cabinet-head { grid-row: 1; }
-  .machines:not(.scripts) > .cabinet > p:not([class]) { grid-row: 2; }
-  .machines:not(.scripts) > .cabinet > .monday { grid-row: 3; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .data-note { grid-row: 4; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .actions { grid-row: 5; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .remix { grid-row: 6; align-self: start; }
+  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
+  .machines:not(.scripts) > .cabinet > .shot { grid-row: 1; }
+  .machines:not(.scripts) > .cabinet > .cabinet-head { grid-row: 2; }
+  .machines:not(.scripts) > .cabinet > p:not([class]) { grid-row: 3; }
+  .machines:not(.scripts) > .cabinet > .monday { grid-row: 4; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .data-note { grid-row: 5; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .actions { grid-row: 6; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .remix { grid-row: 7; align-self: start; }
 }
 @media (min-width: 960px) { .machines.scripts { grid-template-columns: minmax(0, 1fr); } .machines.scripts .cabinet { max-width: 52rem; } }
 .cabinet { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
+/* A starter's picture (scripts/starter-shots.js): the tool just after its first press, or, for a script, what it
+   leaves in your Drive. The words beside it say the same, so screen readers skip it. Pressing the picture of a
+   starter that plays opens Play; the Play button stays the way in from a keyboard. */
+.shot { margin: 0 0 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--tint); }
+.shot img { display: block; width: 100%; height: auto; }
+.shot[data-shot] { cursor: pointer; transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out); }
+@media (hover: hover) { .shot[data-shot]:hover { transform: var(--lift); box-shadow: var(--shadow-lift); } }
+.machines.scripts .shot { max-width: 32rem; }   /* a script card runs one to a row: its picture stays a picture, not a banner */
 .cabinet-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
 .badge {
   display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm);

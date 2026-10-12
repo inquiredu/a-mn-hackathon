@@ -65,6 +65,7 @@ The Session slides deck matches the site as of the evening of October 8: lengths
 ## Working on it
 
 - Preview locally with `node scripts/serve.js`, then open http://localhost:4178. Add `?now=10:50` to any page to see it at that moment on the day.
+- The starters' pictures (`assets/starters/`, on each Starters card and Home's front door) are screenshots, so they go stale when a starter's look changes: `node scripts/starter-shots.js` makes all eight again. The two script cards show what each script leaves behind, drawn with made-up rows in `scripts/starter-shots/`. A mock-up from October 12, waiting on Sean's call.
 - Run every check with `node scripts/check-all.js`. The git hooks run the same checks on every commit and push once you turn them on per clone (`git config core.hooksPath .githooks`), and GitHub Actions runs them on every pull request.
 - Work on a branch and open a pull request; the live site updates about a minute after it merges to `main`. `CLAUDE.md` has the rules for changing the site, and `docs/DECISIONS.md` logs each decision with its date and reason.
 - The working folder is used from two computers. Pull before working, so the two don't drift.

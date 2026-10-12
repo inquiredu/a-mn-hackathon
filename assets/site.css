@@ -2,8 +2,8 @@
    Made by Sean Beaverson, so it wears his North Shore look: assets/brand/north-shore.css loads first with the palette,
    the type (Montserrat for headings and anything you press, Newsreader for reading), the spacing scale, and the motion
    tokens. This file names the site's roles in those tokens, so a color here is a role, not a hex value. inquiredu.org is
-   where the site lives, not its look. MNGAIA · AI4MN appear as the partner the session was prepared for and presented
-   with: their mark, in its own colors, beside their name. Never as the interface's palette.
+   where the site lives, not its look. MNGAIA · AI4MN appear as the partner: their mark, in its own colors,
+   beside their name, with no label phrase. Never as the interface's palette.
 
    How this file is built (the design audit, docs/DESIGN-AUDIT.md, "The system pass"):
    1. Tokens: roles, surfaces, spacing, motion, and Night.
@@ -631,10 +631,8 @@ dialog[open]::backdrop { background: var(--scrim); }
 .credit { display: flex; align-items: center; gap: 14px; margin: 0; }
 .credit img { width: auto; height: 52px; flex: none; }
 .credit p { margin: 0; font-family: var(--font-sans); font-size: .95rem; line-height: 1.45; }
-.credit .label { display: block; margin-bottom: 3px; }
 .credit .host { display: block; margin-top: 2px; font-size: .85rem; }
 .footer .credit p { max-width: 40rem; text-wrap: balance; }
-.footer .credit .label { color: var(--bar-ink-2); }
 .footer-notes { display: grid; gap: 12px; max-width: var(--measure); }
 .footer p { margin: 0; }
 .footer .small { color: var(--bar-ink-2); }

@@ -67,7 +67,7 @@ body.chrome-on .presenter { opacity: 1; visibility: visible; transition: opacity
   background: var(--white); color: var(--deep); border-radius: 999px;
 }
 
-/* Title: the partner the session was prepared for and presented with, their mark in its own colors, above the name.
+/* Title: the partner, their mark in its own colors beside their name, above the session's name.
    The words take the left; the session clock waits on the right, so they never meet. */
 .kind-title { padding-top: 9vh; padding-right: 36vw; }
 .kind-title .heading { font-size: clamp(3.5rem, 10vw, 10rem); line-height: 1.02; }
@@ -75,7 +75,6 @@ body.chrome-on .presenter { opacity: 1; visibility: visible; transition: opacity
 .credit { display: flex; align-items: center; gap: 1.6vw; margin: 0 0 2vh; }
 .credit img { width: auto; height: clamp(64px, 8vw, 140px); flex: none; }
 .credit span { display: grid; gap: .25em; font-size: clamp(1.1rem, 2.2vw, 2.4rem); font-weight: 600; line-height: 1.2; }
-.credit small { font-size: .62em; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ice); }
 /* For whoever finds the stage cold: a line under the title, gone once the session is called to order */
 .stage-note { margin: 1vh 0 0; max-width: 40em; font-size: clamp(1rem, 1.25vw, 1.25rem); line-height: 1.45; color: var(--ice); }
 .stage-note a { color: inherit; text-underline-offset: .2em; }

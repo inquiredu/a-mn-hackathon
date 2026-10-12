@@ -11,7 +11,7 @@ Read `docs/HANDOFF.md` first: what's decided, what exists, what's left. `docs/SE
 - **Braces fill only inside `data-fill`** on a page (anywhere in the session file). A brace the clock doesn't know shows on the page as typed.
 - **Figures come from tested functions.** The stage timer and session clock live in `assets/stage-timer.js`; change them with `node scripts/test-stage-timer.js` green.
 - **Made-up data only**, in starters, examples, and wishes. Real names belong only in the Teams doc and the walls, which participants fill on the day.
-- **Voice and look:** plain, warm, exact copy. The site is Sean Beaverson's work, so it wears his North Shore look (`assets/brand/`, from `BrandID/North Shore Design System`); inquiredu.org is only where it lives. MNGAIA · AI4MN lead the credits: "Prepared for and presented with", their mark in its own colors, never their palette for the interface. Sean's identity appears only at the lower left: his mark, "s.beaverson", and the CC BY-NC-SA 4.0 license, at the foot of every page and in the stage's rail. WCAG 2.1 AA, checked at 375px in light and dark.
+- **Voice and look:** plain, warm, exact copy. The site is Sean Beaverson's work, so it wears his North Shore look (`assets/brand/`, from `BrandID/North Shore Design System`); inquiredu.org is only where it lives. MNGAIA · AI4MN lead the credits: their mark in its own colors beside their name, with no label phrase ("Prepared for and presented with" was dropped October 11), never their palette for the interface. Sean's identity appears only at the lower left: his mark, "s.beaverson", and the CC BY-NC-SA 4.0 license, at the foot of every page and in the stage's rail. WCAG 2.1 AA, checked at 375px in light and dark.
 
 ## Checks
 

@@ -109,14 +109,14 @@ document.getElementById("rail-sign").textContent = SESSION.maker + " · " + SESS
 
 // One function per kind of screen. Each returns the elements to put on the stage.
 const KINDS = {
-  // The opening: the partner the session was prepared for and presented with, their mark in its own colors.
+  // The opening: the partner, their mark in its own colors beside their name.
   // The author signs in the rail, at the lower left, not here.
   title(s) {
     const mark = el("img");
     mark.src = "assets/mngaia-mark.png";
     mark.alt = "";
     const words = el("span");
-    words.append(el("small", "", "Prepared for and presented with"), SESSION.org);
+    words.append(SESSION.org);
     const credit = el("p", "credit");
     credit.append(mark, words);
     const parts = [credit];

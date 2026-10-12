@@ -9,7 +9,7 @@
 const SESSION = {
   title: "First Builds",              // first run as Hands On, October 9, 2026
   subtitle: "A {weekday} Hackathon",
-  org: "MNGAIA · AI4MN",            // the partner: "Prepared for and presented with {org}" on Home, every footer, and the stage
+  org: "MNGAIA · AI4MN",            // the partner: their name beside their mark on Home, every footer, and the stage
   maker: "s.beaverson",              // who made the kit: signed at the lower left of every page and the stage, with the license
   license: "CC BY-NC-SA 4.0",        // the words, pages, and slides; the code is MIT (see README). Its deed is links.license
   day: "2026-10-09",                 // the clock-driven parts only run on this day

@@ -153,7 +153,7 @@
   --calendar: var(--navy-300);
 }
 /* Night's notes and cautions sit on navy-600, where sun-400 is 4.4:1; a link hovered there steps up to sun-200 (6.6:1) */
-[data-theme="dark"] :is(.note-box, .level-note, .stuck, .pick, .synthesis, .next, .caution, .audience, .message, .src-says, .builder-out, .monday) {
+[data-theme="dark"] :is(.note-box, .level-note, .stuck, .pick, .synthesis, .next, .caution, .audience, .message, .src-says, .builder-out, .monday, .learn) {
   --fg-link-hover: var(--sun-200);
 }
 /* While the theme switches, one frame without transitions, so every color changes together (assets/theme.js) */
@@ -173,7 +173,7 @@ body {
   font: var(--type-body);   /* Newsreader for reading; Montserrat for headings and anything you press */
 }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
-[hidden] { display: none !important; }
+[hidden]:not([hidden="until-found"]) { display: none !important; }   /* until-found: hidden, but find-in-page still looks inside (Three levels) */
 img { max-width: 100%; }
 
 /* The type scale. Each level means one thing:
@@ -720,8 +720,18 @@ dialog[open]::backdrop { background: var(--scrim); }
 /* The front door: the kit on the left, the first twenty minutes on the right */
 .hero-split { display: grid; gap: 32px 56px; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 960px) { .hero-split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; } }
-.hero-list { margin: 16px 0 0; padding-left: 1.2em; display: grid; gap: 4px; max-width: 34rem; font-size: 1.05rem; }
-.hero-list li::marker { color: var(--accent); }
+/* The examples as pictures, two by two, each opening its starter's card */
+.hero-shots { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 34rem; }
+.hero-shots a { display: grid; gap: 8px; align-content: start; color: var(--ink); text-decoration: none; font-family: var(--font-sans); font-size: .95rem; font-weight: 600; }
+.hero-shots img {
+  display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--tint);
+  transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+}
+.hero-shots small { display: block; margin-top: -4px; font-family: var(--font-serif); font-size: .9rem; font-weight: 400; color: var(--muted); }
+@media (hover: hover) {
+  .hero-shots a:hover img { transform: var(--lift); box-shadow: var(--shadow-lift); }
+  .hero-shots a:hover > span { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent); text-underline-offset: .25em; }
+}
 .hero-note { margin: 14px 0 0; font-family: var(--font-sans); font-size: .95rem; font-weight: 600; color: var(--muted); }
 .first-steps { padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .first-steps h2 { font-size: 1.375rem; }
@@ -848,40 +858,106 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .quiet-fold p { margin: 4px 0 10px; }
 
 /* ---------- Three levels ---------- */
-.chooser-lead { margin: 24px 0 0; font-family: var(--font-sans); font-weight: 600; }
-.chooser { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
-.chooser .card-link { height: 100%; }
-.chooser .card-link strong { margin-top: 6px; font-family: var(--font-sans); font-size: 1.125rem; }
-.chooser .card-link span:not(.num):not(.meta) { color: var(--muted); }
+.levels-part { margin-top: var(--section); font-size: clamp(1.375rem, 3vw, 1.625rem); }
+.chooser-lead { margin: 8px 0 0; font-family: var(--font-sans); font-weight: 600; }
 .meta { margin: 6px 0 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--muted); }
-.chooser .meta { margin-top: auto; padding-top: 8px; }
 .first-run { margin: 14px 0 0; }
-@media (max-width: 600px) {
-  .chooser .card-link { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 2px 12px; }
-  .chooser .card-link .num { grid-row: span 3; }
-  .chooser .card-link strong { margin-top: 2px; }
+/* How the three differ: a card per level with the same five rows, and where there's room, each row lines up across
+   the three (subgrid), so the page reads as a comparison as well as a way in */
+.compare { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); }
+.compare > li { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
+.compare h3 { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 1.125rem; }
+.compare dl { margin: 14px 0 0; }
+.compare dl > div { padding: 8px 0; border-top: 1px solid var(--line); }
+.compare dt { font-family: var(--font-sans); font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.compare dd { margin: 2px 0 0; }
+.compare-foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+.compare-foot .meta { margin: 0; }
+.compare > li:has(a[aria-current]) { border-color: var(--ink); box-shadow: inset 0 3px 0 var(--ink); }
+.compare-foot a[aria-current]::after { content: "↓"; }   /* it's the one open below */
+/* One card to a row but room to spare: each row's label sits beside it, which keeps the cards short */
+@media (min-width: 480px) and (max-width: 879px) {
+  .compare dl > div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+  .compare dd { margin: 0; }
 }
+@media (min-width: 880px) {
+  .compare { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .compare > li { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
+  .compare dl { grid-row: span 5; display: grid; grid-template-rows: subgrid; }
+}
+.habits { margin-top: 16px; }
+.habits h3 { margin: 0; font-size: 1.05rem; }
+.habits p { margin: 6px 0 0; }
+
+/* A level: on a wide screen, what it is and the steps at reading width on the left, and what it teaches you about
+   code beside them, staying in view while you work down the steps. Narrower, the same parts stack in reading order. */
+.level-body { display: grid; grid-template-columns: minmax(0, 1fr); }
+.learn { margin-top: 24px; padding: 18px 20px; background: var(--tint); border-radius: var(--radius); }
+.level .learn h3 { margin: 0; }
+.level .learn ul { list-style: none; margin: 10px 0 0; padding: 0; }
+.level .learn li { margin: 0; padding: 10px 0; border-top: 1px solid var(--line); font-size: .97rem; }
+.level .learn li:first-child { border-top: 0; padding-top: 4px; }
+.learn li > strong:first-child { display: block; font-family: var(--font-sans); font-size: .95rem; }
+@media (min-width: 1024px) {
+  .level-body { grid-template-columns: minmax(0, 1fr) minmax(260px, 320px); column-gap: 40px; }
+  .level-intro, .level-steps { grid-column: 1; }
+  .level-side { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
+  .level-side .learn { margin-top: 6px; }
+}
+/* Tall enough to keep it all in view: the panel stays beside the steps, just under the level bar */
+@media (min-width: 1024px) and (min-height: 760px) {
+  .level-side { position: sticky; top: calc(var(--below-level-bar, 64px) + 16px); }
+}
+/* The level bar: the three levels as rungs, a line leading from each to the next, each with its length. It sticks under
+   the now bar; the level that's open is the tinted one, and the line up to it is drawn in ink. */
 .level-bar {
-  position: sticky; top: 0; z-index: 15; display: flex; gap: 4px; margin: var(--block) -16px 0; padding: 8px 16px;
-  background: var(--bg); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none;
+  position: sticky; top: 0; z-index: 15; display: flex; gap: 0; margin: var(--block) -16px 0; padding: 6px 16px;
+  background: var(--bg); border-bottom: 1px solid var(--line);
 }
-.level-bar::-webkit-scrollbar { display: none; }
 .level-bar a {
-  display: inline-flex; align-items: center; gap: 8px; flex: none; min-height: 40px; padding: 4px 12px 4px 6px;
-  border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: .95rem; font-weight: 600; text-decoration: none; color: var(--ink);
+  display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 52px; padding: 6px 14px 6px 8px;
+  border-radius: var(--radius-sm); font-family: var(--font-sans); text-decoration: none; color: var(--ink);
   transition: background-color var(--dur-1) var(--ease-out);
 }
-.level-bar .num { width: 26px; height: 26px; font-size: .8rem; }
-@media (max-width: 600px) { .level-bar a { padding-right: 10px; font-size: .9rem; } }
-/* A phone: all three levels in view at once, a long name in two lines, never clipped off the edge */
-@media (max-width: 480px) {
-  .level-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
-  .level-bar a { min-width: 0; gap: 6px; padding: 4px 6px; font-size: .85rem; line-height: 1.15; border-radius: var(--radius-sm); }
-}
+.level-bar a { flex: none; }
+.lb-line { flex: 1 1 24px; min-width: 16px; height: 2px; margin: 0 6px; align-self: center; border-radius: 1px; background: var(--line); }
+.lb-line:has(~ a[aria-current]) { background: var(--ink); }
+.level-bar .num { width: 28px; height: 28px; font-size: .8rem; }
+.level-bar .lb-text { display: grid; min-width: 0; line-height: 1.2; }
+.level-bar .lb-name { font-size: .95rem; font-weight: 600; }
+.level-bar .lb-time { font-size: .8rem; font-weight: 500; color: var(--muted); }
 @media (hover: hover) { .level-bar a:hover { background: var(--action-ghost-hover); color: var(--ink); } }
-.level-bar a[aria-current] { background: var(--tint); color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
+.level-bar a[aria-current] { background: var(--tint); box-shadow: inset 0 -3px 0 var(--ink); }
+/* A phone: three equal rungs, short enough to stay out of the way; each level's length is on its card above */
+@media (max-width: 600px) {
+  .level-bar { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 4px; padding: 4px 12px; margin-inline: -16px; }   /* the longest name gets the most room */
+  .level-bar a { gap: 6px; min-height: 44px; padding: 4px 6px; }
+  .lb-line, .level-bar .lb-time { display: none; }
+  .level-bar .num { width: 24px; height: 24px; font-size: .75rem; }
+  .level-bar .lb-name { font-size: .85rem; line-height: 1.15; }
+}
 .level + .level, .level-bar + .level { margin-top: var(--block); }
-.next-level { margin: 24px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+/* A level waiting its turn has no box at all until it's opened; on paper, every level prints */
+.level[hidden="until-found"] { margin: 0; padding: 0; border: 0; }
+@media print { .level[hidden] { display: block !important; content-visibility: visible; margin-top: var(--block); padding: var(--card-pad); border: 1px solid var(--line); } }
+/* On Three levels an anchor jump lands below the level bar (and the now bar, when it sticks) */
+html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px) + 12px); }
+/* Back and next at the foot of a level */
+.level-pager { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); }
+.level-pager a {
+  display: grid; gap: 4px; min-width: min(100%, 15rem); padding: 10px 14px; border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  font-family: var(--font-sans); color: var(--ink); text-decoration: none;
+  transition: border-color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out);
+}
+.level-pager .pager-next { margin-left: auto; justify-items: end; text-align: right; }
+.pager-dir { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.pager-prev .pager-dir::before { content: "← "; }
+.pager-next .pager-dir::after { content: " →"; }
+.pager-name { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.pager-name .num { width: 26px; height: 26px; font-size: .8rem; }
+@media (hover: hover) { .level-pager a:hover { border-color: var(--control); background: var(--action-ghost-hover); color: var(--ink); } }
+/* Opening another level crossfades, briefly (assets/site.js skips it for anyone who asks for less motion) */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--dur-3); }
 .later-tag { display: inline-block; margin: 0 0 8px; padding: 1px 10px; border: 1px solid var(--control); border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .copy-note { margin: 0; font-size: .95rem; color: var(--muted); }
 .sub-steps { margin: 8px 0 0; padding-left: 1.5rem; }
@@ -960,7 +1036,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .level-header { margin-top: calc(var(--section) - 8px); padding-top: 24px; border-top: 1px solid var(--line); }
 .level-header h2 { font-size: clamp(1.5rem, 3.4vw, 1.875rem); }
 .level-summary { margin: 8px 0 0; color: var(--ink); }
-.level-header .level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
+.level-header .level-note, .level details.level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
 .level-header + .machines { margin-top: 20px; }
 .button-legend { margin: 16px 0 0; display: grid; gap: 10px; max-width: var(--measure); }
 .button-legend > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
@@ -975,16 +1051,25 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 @media (min-width: 760px) {
   .machines { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .machines:not(.scripts) { align-items: stretch; }
-  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
-  .machines:not(.scripts) > .cabinet > .cabinet-head { grid-row: 1; }
-  .machines:not(.scripts) > .cabinet > p:not([class]) { grid-row: 2; }
-  .machines:not(.scripts) > .cabinet > .monday { grid-row: 3; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .data-note { grid-row: 4; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .actions { grid-row: 5; align-self: start; }
-  .machines:not(.scripts) > .cabinet > .remix { grid-row: 6; align-self: start; }
+  .machines:not(.scripts) > .cabinet { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
+  .machines:not(.scripts) > .cabinet > .shot { grid-row: 1; }
+  .machines:not(.scripts) > .cabinet > .cabinet-head { grid-row: 2; }
+  .machines:not(.scripts) > .cabinet > p:not([class]) { grid-row: 3; }
+  .machines:not(.scripts) > .cabinet > .monday { grid-row: 4; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .data-note { grid-row: 5; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .actions { grid-row: 6; align-self: start; }
+  .machines:not(.scripts) > .cabinet > .remix { grid-row: 7; align-self: start; }
 }
 @media (min-width: 960px) { .machines.scripts { grid-template-columns: minmax(0, 1fr); } .machines.scripts .cabinet { max-width: 52rem; } }
 .cabinet { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
+/* A starter's picture (scripts/starter-shots.js): the tool just after its first press, or, for a script, what it
+   leaves in your Drive. The words beside it say the same, so screen readers skip it. Pressing the picture of a
+   starter that plays opens Play; the Play button stays the way in from a keyboard. */
+.shot { margin: 0 0 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--tint); }
+.shot img { display: block; width: 100%; height: auto; }
+.shot[data-shot] { cursor: pointer; transition: transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out); }
+@media (hover: hover) { .shot[data-shot]:hover { transform: var(--lift); box-shadow: var(--shadow-lift); } }
+.machines.scripts .shot { max-width: 32rem; }   /* a script card runs one to a row: its picture stays a picture, not a banner */
 .cabinet-head { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; }
 .badge {
   display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius-sm);
@@ -997,7 +1082,7 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .cabinet .meta { margin-top: 12px; }
 .data-note { margin: 12px 0 0; padding: 4px 0 4px 12px; border-left: 3px solid var(--control); font-size: .95rem; color: var(--ink); }
 .cabinet .script-steps { margin-top: 8px; font-size: .97rem; }
-.cabinet .script-steps .kind { display: none; }
+.cabinet .script-steps .kind, .level .script-steps .kind { display: none; }   /* the card or the level already says what a script is */
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .remix { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 2px; }
 .remix > summary .count { margin-left: 4px; font-weight: 500; color: var(--muted); }
@@ -1057,6 +1142,11 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .stuck li { margin: 8px 0; max-width: var(--measure); }
 .stuck .copybox { margin-top: 8px; }
 .stuck > p { margin: 10px 0 0; }
+/* Invent your own's two helps, where to paste and what to do when stuck: side by side on a wide screen */
+@media (min-width: 1024px) {
+  .help-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); align-items: start; margin-top: var(--block); }
+  .help-pair > * { margin-top: 0; }
+}
 .live-note { color: var(--muted); }
 #wall .link-slot { display: block; margin: 18px 0 0; }
 .live-fold { margin-top: var(--block); padding: 4px var(--card-pad) var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
@@ -1077,6 +1167,24 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
   transition: border-color var(--dur-1) var(--ease-out);
 }
 @media (hover: hover) { .on-page a:hover { border-color: var(--control); color: var(--ink); } }
+/* The contents rail (assets/site.js builds it from the list above): on a screen with room beside the reading column,
+   the page's sections stay in view in the right margin, the one you're in marked in ink, and the list up top steps
+   aside. The content gives up the rail's width; the bands' colors still run edge to edge. */
+.page-rail { display: none; }
+@media (min-width: 1200px) {
+  body.has-rail .on-page { display: none; }
+  body.has-rail main .wrap { padding-right: calc(16px + 248px); }
+  .page-rail { display: block; position: sticky; top: 0; z-index: 5; height: 0; max-width: 1080px; margin: 0 auto; }
+  .page-rail-inner { position: absolute; top: 112px; right: 16px; width: 216px; max-height: calc(100vh - 136px); overflow-y: auto; }
+  .page-rail ul { list-style: none; margin: 10px 0 0; padding: 0; border-left: 2px solid var(--line); }
+  .page-rail a {
+    display: block; margin-left: -2px; padding: 6px 0 6px 14px; border-left: 2px solid transparent;
+    font-family: var(--font-sans); font-size: .9rem; font-weight: 600; line-height: 1.3; text-decoration: none; color: var(--muted);
+    transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
+  }
+  @media (hover: hover) { .page-rail a:hover { color: var(--ink); } }
+  .page-rail a[aria-current] { color: var(--ink); border-left-color: var(--ink); }
+}
 .host-grid { display: grid; gap: var(--gap); margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
 .host-grid .card ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 .way .label { margin-bottom: 6px; }

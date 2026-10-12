@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="assets/theme.js?v=36ded2f9"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css?v=95a5640e">
-<link rel="stylesheet" href="assets/site.css?v=96d34c96">
+<link rel="stylesheet" href="assets/site.css?v=ca073682">
 </head>
 <body data-jump="#chat" data-jump-label="Jump to level 1">
 <a class="skip" href="#main">Skip to the main content</a>
@@ -66,7 +66,7 @@
             <div><dt>It can reach</dt><dd>Not your files or accounts</dd></div>
             <div><dt>It teaches you</dt><dd>Code is text you can read and change</dd></div>
           </dl>
-          <div class="compare-foot"><p class="meta">Twenty minutes · an AI chat</p><a class="action-link" href="#chat">Open level 1</a></div>
+          <div class="compare-foot"><p class="meta"><span class="nowrap">Twenty minutes</span> · <span class="nowrap">an AI chat</span></p><a class="action-link" href="#chat">Open level 1</a></div>
         </li>
         <li>
           <h3><span class="num">2</span>On your site</h3>
@@ -77,7 +77,7 @@
             <div><dt>It can reach</dt><dd>Not the rest of your Site, or your visitors' accounts</dd></div>
             <div><dt>It teaches you</dt><dd>Code lives somewhere, and the place sets the rules</dd></div>
           </dl>
-          <div class="compare-foot"><p class="meta">An hour · a Google Site you can edit</p><a class="action-link" href="#site">Open level 2</a></div>
+          <div class="compare-foot"><p class="meta"><span class="nowrap">An hour</span> · <span class="nowrap">a Google Site you can edit</span></p><a class="action-link" href="#site">Open level 2</a></div>
         </li>
         <li>
           <h3><span class="num">3</span>Behind the scenes</h3>
@@ -88,7 +88,7 @@
             <div><dt>It can reach</dt><dd>What you allow the first time it runs</dd></div>
             <div><dt>It teaches you</dt><dd>Code can act as you, so Google asks first</dd></div>
           </dl>
-          <div class="compare-foot"><p class="meta">An hour the first time · your Google Drive</p><a class="action-link" href="#script">Open level 3</a></div>
+          <div class="compare-foot"><p class="meta"><span class="nowrap">An hour the first time</span> · <span class="nowrap">your Google Drive</span></p><a class="action-link" href="#script">Open level 3</a></div>
         </li>
       </ul>
       <p class="small first-run" data-fill>First run live as {record.ran}; everything here works on your own, any day.</p>
@@ -99,21 +99,17 @@
         <p>Your host links the Breakout Planner in the chat: a shared Google Doc with a list under each level. Add your name under 1, 2, or 3. Working with someone? Put their name next to yours. Your host makes breakout rooms from the lists, and your room number appears next to your name.</p>
         <p class="link-slot" data-link="planner" data-label="Open the Breakout Planner" data-pending=""></p>
       </div>
-      <p class="hint" data-show="before after">Running this with your own group? <a href="hosts.html">Hosts</a> has the Breakout Planner to copy and the steps for making rooms from it.</p>
+      <p class="hint small" data-show="before after">Running this with your own group? <a href="hosts.html">Hosts</a> has the Breakout Planner to copy and the steps for making rooms from it.</p>
 
-      <h2 class="levels-part">At any level: three habits</h2>
-      <div class="tips habits">
-        <div><h3>Guess first</h3><p>Before you press Play or Run, say what you think will happen, then check. Guessing first is the P in <a href="sources.html#primm">PRIMM</a> (predict, run, investigate, modify, make), a way of teaching programming with research behind it.</p></div>
-        <div><h3>Look inside</h3><p>Open the code and find one thing you recognize: a word you saw on the screen, a number you could change. The rest can stay a mystery for now.</p></div>
-        <div><h3>Change one thing</h3><p>One request at a time. After each, say what changed, or ask the AI which lines it changed. When it breaks, describe what's on the screen in plain words; programmers do that too.</p></div>
-      </div>
 
+      <!-- The level bar and the levels, together: the bar sticks only while a level is on screen -->
+      <div class="levels-stage">
       <nav class="level-bar" aria-label="Levels">
         <a href="#chat"><span class="num">1</span><span class="lb-text"><span class="lb-name">In the chat</span><span class="lb-time">20 min</span></span></a>
         <span class="lb-line" aria-hidden="true"></span>
         <a href="#site"><span class="num">2</span><span class="lb-text"><span class="lb-name">On your site</span><span class="lb-time">1 hour</span></span></a>
         <span class="lb-line" aria-hidden="true"></span>
-        <a href="#script"><span class="num">3</span><span class="lb-text"><span class="lb-name">Behind the scenes</span><span class="lb-time">1 hour</span></span></a>
+        <a href="#script"><span class="num">3</span><span class="lb-text"><span class="lb-name">Behind the scenes</span><span class="lb-time">1 hour, first time</span></span></a>
       </nav>
 
       <!-- LEVEL 1 -->
@@ -124,13 +120,19 @@
         <div class="level-intro">
         <p class="level-what">A small tool that runs right inside your AI chat: a timer, a picker, a quiz, a fortune-teller. You describe it, the AI writes it, and it appears in a panel beside the conversation, working, with buttons you can press. Nothing to install and nothing to publish.</p>
         <h3>How it works</h3>
-        <p>A starter is a small web page: one file of code. Ask for a new tool and the AI usually writes the same kind of file. Three kinds of code share it. HTML says what's on the page: a heading, a button, a list. CSS says how it looks: colors, sizes, spacing. JavaScript says what happens when you press something: the countdown, the shuffle, the answer. Gemini's Canvas and Claude's artifacts run that file in a panel beside the conversation; ChatGPT's Preview runs it in place of the code. Either way the conversation keeps it: open the chat again and it's still there, as long as your chat history is on.</p>
+        <p>A starter is a small web page: one file of code. Ask for a new tool and the AI usually writes the same kind of file. Three kinds of code share it:</p>
+        <dl class="code-kinds">
+          <div><dt>HTML</dt><dd>what's on the page: a heading, a button, a list</dd></div>
+          <div><dt>CSS</dt><dd>how it looks: colors, sizes, spacing</dd></div>
+          <div><dt>JavaScript</dt><dd>what happens when you press something: the countdown, the shuffle, the answer</dd></div>
+        </dl>
+        <p>Gemini's Canvas and Claude's artifacts run the file in a panel beside the conversation; ChatGPT's Preview runs it in place of the code. Either way the conversation keeps it: open the chat again and it's still there, as long as your chat history is on.</p>
         <h3>Why start here</h3>
         <p>It's the shortest loop there is: ask, look, change, look again, in seconds.</p>
         </div>
         <aside class="level-side" aria-labelledby="learn-1">
           <div class="learn">
-            <h3 id="learn-1">What it teaches you about code</h3>
+            <h3 id="learn-1">What this level teaches</h3>
             <ul>
               <li><strong>Code is text.</strong> A whole working tool is one file you can scroll from top to bottom. Ask your AI to show you the code, and scroll it once.</li>
               <li><strong>Find what you can see.</strong> On <a href="starters.html#level-1">Starters</a>, press <strong>Play</strong>, then <strong>Show the code</strong>. Find a word that's on the screen, change it, and press <strong>Run my changes</strong>.</li>
@@ -174,7 +176,7 @@
         </div>
         <aside class="level-side" aria-labelledby="learn-2">
           <div class="learn">
-            <h3 id="learn-2">What it teaches you about code</h3>
+            <h3 id="learn-2">What this level teaches</h3>
             <ul>
               <li><strong>The place sets the rules.</strong> The same code runs in a chat and on your Site, but on a Site the page can't remember anything between visits, and sound waits for a tap. When something works in the chat and not on the Site, the place is usually why.</li>
               <li><strong>Words and looks are separate.</strong> Ask for a change to the look only ("larger type, navy cards") and watch your words stay put. Then change only the words.</li>
@@ -240,7 +242,7 @@
         </div>
         <aside class="level-side" aria-labelledby="learn-3">
           <div class="learn">
-            <h3 id="learn-3">What it teaches you about code</h3>
+            <h3 id="learn-3">What this level teaches</h3>
             <ul>
               <li><strong>A function is a named set of steps.</strong> Ours is called <code>inventory</code>: it's the name you choose before you press Run.</li>
               <li><strong>Settings sit at the top.</strong> <code>FOLDER_ID</code> is the one line you change, so nothing else needs touching. Ask your AI why scripts are written that way.</li>
@@ -285,8 +287,17 @@
         </div>
         <nav class="level-pager" aria-label="More levels">
           <a class="pager-prev" href="#site"><span class="pager-dir">Back</span><span class="pager-name"><span class="num">2</span>On your site</span></a>
+          <a class="pager-next" href="#workbench"><span class="pager-dir">Next</span><span class="pager-name">Later: with a workbench</span></a>
         </nav>
       </article>
+      </div>
+
+      <h2 class="levels-part">At any level: three habits</h2>
+      <div class="tips habits">
+        <div><h3>Guess first</h3><p>Before you press Play or Run, say what you think will happen, then check. Guessing first is the P in <a href="sources.html#primm">PRIMM</a> (predict, run, investigate, modify, make), a way of teaching programming with research behind it.</p></div>
+        <div><h3>Look inside</h3><p>Open the code and find one thing you recognize: a word you saw on the screen, a number you could change. The rest can stay a mystery for now.</p></div>
+        <div><h3>Change one thing</h3><p>One request at a time. After each, say what changed, or ask the AI which lines it changed. When it breaks, describe what's on the screen in plain words; programmers do that too.</p></div>
+      </div>
 
       <!-- LATER, A GLIMPSE -->
       <article class="level later" id="workbench" aria-labelledby="level-4">
@@ -327,6 +338,6 @@
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js?v=4f3fe60c"></script>
-<script src="assets/site.js?v=69abcf8b"></script>
+<script src="assets/site.js?v=05e929f1"></script>
 </body>
 </html>

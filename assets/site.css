@@ -873,21 +873,30 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .compare dd { margin: 2px 0 0; }
 .compare-foot { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
 .compare-foot .meta { margin: 0; }
+.compare-foot .action-link::after { content: "↓"; }   /* the level opens below, on this page */
 .compare > li:has(a[aria-current]) { border-color: var(--ink); box-shadow: inset 0 3px 0 var(--ink); }
-.compare-foot a[aria-current]::after { content: "↓"; }   /* it's the one open below */
-/* One card to a row but room to spare: each row's label sits beside it, which keeps the cards short */
-@media (min-width: 480px) and (max-width: 879px) {
-  .compare dl > div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+/* A card with a row to itself: each row's label sits beside its value, which keeps the cards short */
+@media (max-width: 879px) {
+  .compare dl > div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 2px 12px; align-items: baseline; }
   .compare dd { margin: 0; }
 }
+@media (min-width: 480px) and (max-width: 879px) { .compare dl > div { grid-template-columns: 8.5rem minmax(0, 1fr); } }
 @media (min-width: 880px) {
   .compare { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .compare > li { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; }
   .compare dl { grid-row: span 5; display: grid; grid-template-rows: subgrid; }
+  .compare-foot { margin-top: 0; align-self: start; }   /* its divider on one line across the three */
 }
-.habits { margin-top: 16px; }
-.habits h3 { margin: 0; font-size: 1.05rem; }
-.habits p { margin: 6px 0 0; }
+.tips.habits { margin-top: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 880px) { .tips.habits { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.tips.habits > div { padding: var(--card-pad); }
+.habits h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.habits p { margin: 0; }
+/* Level 1's three kinds of code, each named beside what it does */
+.code-kinds { display: grid; gap: 6px; max-width: var(--measure); margin: 10px 0 0; }
+.code-kinds > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.code-kinds dt { font-family: var(--font-sans); font-weight: 600; }
+.code-kinds dd { margin: 0; }
 
 /* A level: on a wide screen, what it is and the steps at reading width on the left, and what it teaches you about
    code beside them, staying in view while you work down the steps. Narrower, the same parts stack in reading order. */
@@ -895,9 +904,11 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
 .learn { margin-top: 24px; padding: 18px 20px; background: var(--tint); border-radius: var(--radius); }
 .level .learn h3 { margin: 0; }
 .level .learn ul { list-style: none; margin: 10px 0 0; padding: 0; }
-.level .learn li { margin: 0; padding: 10px 0; border-top: 1px solid var(--line); font-size: .97rem; }
+.level .learn li { margin: 0; padding: 10px 0; border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent); font-size: .97rem; }
 .level .learn li:first-child { border-top: 0; padding-top: 4px; }
 .learn li > strong:first-child { display: block; font-family: var(--font-sans); font-size: .95rem; }
+.learn code { background: var(--surface); }
+.level .caution h3 { margin: 0; }   /* the caution's own padding is its top space */
 @media (min-width: 1024px) {
   .level-body { grid-template-columns: minmax(0, 1fr) minmax(260px, 320px); column-gap: 40px; }
   .level-intro, .level-steps { grid-column: 1; }
@@ -909,32 +920,33 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
   .level-side { position: sticky; top: calc(var(--below-level-bar, 64px) + 16px); }
 }
 /* The level bar: the three levels as rungs, a line leading from each to the next, each with its length. It sticks under
-   the now bar; the level that's open is the tinted one, and the line up to it is drawn in ink. */
+   the now bar while a level is on screen (.levels-stage holds both); the open level is tinted and marked on the bar's line. */
 .level-bar {
-  position: sticky; top: 0; z-index: 15; display: flex; gap: 0; margin: var(--block) -16px 0; padding: 6px 16px;
+  position: sticky; top: 0; z-index: 15; display: flex; gap: 0; margin: var(--block) 0 0; padding: 6px 0 0;
   background: var(--bg); border-bottom: 1px solid var(--line);
 }
 .level-bar a {
-  display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 52px; padding: 6px 14px 6px 8px;
-  border-radius: var(--radius-sm); font-family: var(--font-sans); text-decoration: none; color: var(--ink);
+  position: relative; display: flex; flex: none; align-items: center; gap: 10px; min-width: 0; min-height: 52px; margin-bottom: -1px; padding: 6px 14px 6px 8px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0; font-family: var(--font-sans); text-decoration: none; color: var(--ink);
   transition: background-color var(--dur-1) var(--ease-out);
 }
-.level-bar a { flex: none; }
-.lb-line { flex: 1 1 24px; min-width: 16px; height: 2px; margin: 0 6px; align-self: center; border-radius: 1px; background: var(--line); }
-.lb-line:has(~ a[aria-current]) { background: var(--ink); }
+.lb-line { flex: 1 1 24px; min-width: 12px; height: 2px; margin: 0 6px; align-self: center; border-radius: 1px; background: var(--line); }
 .level-bar .num { width: 28px; height: 28px; font-size: .8rem; }
 .level-bar .lb-text { display: grid; min-width: 0; line-height: 1.2; }
 .level-bar .lb-name { font-size: .95rem; font-weight: 600; }
 .level-bar .lb-time { font-size: .8rem; font-weight: 500; color: var(--muted); }
 @media (hover: hover) { .level-bar a:hover { background: var(--action-ghost-hover); color: var(--ink); } }
 .level-bar a[aria-current] { background: var(--tint); box-shadow: inset 0 -3px 0 var(--ink); }
-/* A phone: three equal rungs, short enough to stay out of the way; each level's length is on its card above */
+/* A phone: still three rungs joined by lines, each a number; the open one says its name (the lengths are on the cards).
+   The other names stay for screen readers. */
 @media (max-width: 600px) {
-  .level-bar { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 4px; padding: 4px 12px; margin-inline: -16px; }   /* the longest name gets the most room */
-  .level-bar a { gap: 6px; min-height: 44px; padding: 4px 6px; }
-  .lb-line, .level-bar .lb-time { display: none; }
-  .level-bar .num { width: 24px; height: 24px; font-size: .75rem; }
-  .level-bar .lb-name { font-size: .85rem; line-height: 1.15; }
+  .level-bar { padding-top: 4px; }
+  .level-bar a { gap: 8px; min-height: 44px; padding: 4px 6px; }
+  .lb-line { flex-basis: 16px; margin: 0 4px; }
+  .level-bar a:not([aria-current]) .lb-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .level-bar a[aria-current] { flex: 0 1 auto; }   /* the open name may wrap on the narrowest screens, never push past the edge */
+  .level-bar .lb-time { display: none; }
+  .level-bar .lb-name { font-size: .9rem; line-height: 1.15; }
 }
 .level + .level, .level-bar + .level { margin-top: var(--block); }
 /* A level waiting its turn has no box at all until it's opened; on paper, every level prints */
@@ -956,6 +968,7 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .pager-name { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
 .pager-name .num { width: 26px; height: 26px; font-size: .8rem; }
 @media (hover: hover) { .level-pager a:hover { border-color: var(--control); background: var(--action-ghost-hover); color: var(--ink); } }
+@media (max-width: 600px) { .level-pager a { flex: 1 1 100%; } .level-pager .pager-next { margin-left: 0; } }
 /* Opening another level crossfades, briefly (assets/site.js skips it for anyone who asks for less motion) */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: var(--dur-3); }
 .later-tag { display: inline-block; margin: 0 0 8px; padding: 1px 10px; border: 1px solid var(--control); border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }

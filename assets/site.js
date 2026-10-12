@@ -463,6 +463,11 @@ document.querySelectorAll(".level-bar").forEach((bar) => {
       if (!levels.some((l) => a.hash === "#" + l.id)) return;
       if (a.hash === "#" + level.id) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
     });
+    // The comparison's card for the open level says so, instead of offering to open it again
+    document.querySelectorAll(".compare-foot a").forEach((a) => {
+      a.dataset.label = a.dataset.label || a.textContent;
+      a.textContent = a.hasAttribute("aria-current") ? "Showing below" : a.dataset.label;
+    });
     remember(LEVEL_KEY, level.id);
   };
   const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -208,7 +208,8 @@ main p { max-width: var(--measure); }
 button, .button, input, select, textarea, summary, kbd, .site-nav, .nowbar, .cue, .toast, .num, .length, .tag, .type, .tag-chip,
 .facet-count, .count, .path-count, .go, .soon-tag, .where, .calc-out, .finder-label, .finder legend, .builder label, .builder-label,
 .timeline strong, .steps strong, .awards strong, .also-card strong, .path-card strong, .shape strong, .glance strong, .card-title,
-.choice label, .action-link, .menu-toggle {
+.choice label, .action-link, .menu-toggle,
+.recap-sessions, .recap-tabs, .recap-glance strong, .at, .qa-who, .qa-group, .qa-tag, .threads, .res-name, .res-meta {
   font-family: var(--font-sans);
 }
 
@@ -1266,6 +1267,133 @@ summary.segment-head::after {
   /* Show N sources stays at the foot of the screen while the panel is open, so a choice near the top applies without a scroll */
   .finder-done { display: inline-flex; position: sticky; bottom: 0; margin: 18px -16px 0; width: calc(100% + 32px); border-radius: 0 0 var(--radius) var(--radius); box-shadow: 0 -8px 16px var(--surface); }
 }
+
+/* ---------- From the room: each session's record, newest first ---------- */
+/* Each session is an article: a short header, a row of tabs (Overview, Questions, Themes, Offers and asks, Index),
+   and one view at a time. assets/recap.js runs the tabs; without it, the views follow one another down the page.
+   Built from the components above: the tabs look like Sources' tabs, the index filter is that same group, the tiles are
+   link cards, and every fold is the one disclosure. */
+.recap-intro { padding: 40px 0 22px; }
+.recap-sessions ul { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.recap-sessions a {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 3px 12px; border-radius: var(--radius-pill);
+  border: 1px solid var(--control); background: var(--surface); color: var(--ink); font-size: .85rem; text-decoration: none;
+}
+@media (hover: hover) { .recap-sessions a:hover { border-color: var(--ink); background: var(--action-ghost-hover); color: var(--ink); } }
+.recap-sessions a[aria-current] { background: var(--tint); border-color: var(--ink); }   /* selected: the tint with an ink edge */
+.recap-about { padding: 0 0 var(--section); }
+.recap-how { max-width: var(--measure); }
+.recap-how > summary { font-size: 1rem; }
+.recap-how p { margin: 0; color: var(--muted); }
+.recap-head { padding: 28px 0 22px; }
+.recap-head h2 { font-size: clamp(1.9rem, 4.5vw, 2.4rem); line-height: 1.1; }
+
+/* The tabs. After the session they stay in reach as you read; during it, the now bar has the top of the window.
+   On a phone they keep to one row that scrolls sideways, so the view starts within the first screen. */
+.recap-tabs { background: var(--bg); border-bottom: 1px solid var(--line); }
+body[data-mode="after"] .recap-tabs { position: sticky; top: 0; z-index: 15; }
+.recap-tabs [role="tablist"] {
+  display: flex; width: fit-content; max-width: 100%; margin: 10px 0; overflow-x: auto; scrollbar-width: none;
+  border: 1.5px solid var(--control); border-radius: var(--radius-sm);
+}
+.recap-tabs [role="tablist"]::-webkit-scrollbar { display: none; }
+.recap-tabs [role="tab"] {
+  flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 16px;
+  border-right: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font-size: .95rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+.recap-tabs [role="tab"]:last-child { border-right: 0; }
+.recap-tabs [role="tab"]:focus-visible { outline-offset: -3px; }   /* inside the group, so the scroll edge can't clip it */
+@media (hover: hover) { .recap-tabs [role="tab"]:hover { background: var(--action-ghost-hover); color: var(--ink); } }
+.recap-tabs [role="tab"][aria-selected="true"] { background: var(--tint); box-shadow: inset 0 -3px 0 var(--ink); }
+.recap-panel { padding: 30px 0 var(--section); }
+.recap-panel + .recap-panel { border-top: 1px solid var(--line); }   /* without the script, the views follow one another */
+.tabs-on .recap-panel + .recap-panel { border-top: 0; }
+.panel-title { margin-bottom: 8px; }
+.tabs-on .panel-title {   /* the selected tab already names the view */
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.recap-panel > .wrap > .section-lede, .panel-bar .section-lede { margin-top: 0; }
+/* Whatever a link opens lands under the tabs, and wears the copper ring for a moment's notice */
+.recap-panel, .qa, .res, .theme { scroll-margin-top: 56px; }   /* with the page's own 24px after the session: just under the tabs */
+.qa:target, .res:target, .theme:target { box-shadow: 0 0 0 2px var(--accent); }
+.at { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Overview */
+.recap-glance { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+.recap-glance .card-link { height: 100%; padding: 16px var(--card-pad); }
+.recap-glance strong { display: block; font-size: 2.6rem; line-height: 1; color: var(--link); font-variant-numeric: tabular-nums; }
+.recap-glance span { color: var(--muted); }
+.recap-start .card h4 { font-size: 1.125rem; }
+.recap-start .card p { color: var(--ink); }
+.recap .fold { margin-top: var(--block); }
+.morning { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; max-width: var(--measure); }
+
+/* Questions: grouped, folded, so the questions can be scanned and the answers opened one at a time */
+.panel-bar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 24px; }
+.panel-bar .section-lede { flex: 1 1 28rem; }
+.qa-group { margin: 28px 0 10px; font-family: var(--font-sans); font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); line-height: 1.3; }
+.qa-list { display: grid; gap: 8px; max-width: 52rem; }
+.qa { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.qa > summary { padding: 10px 18px 10px 12px; font-size: 1.05rem; line-height: 1.35; }
+.qa[open] > summary { border-bottom: 1px solid var(--line); }
+.qa-body { padding: 2px 18px 16px; }
+.qa-body > p { margin: 10px 0 0; max-width: 48rem; }
+.qa-who { font-size: .85rem; color: var(--muted); }
+.qa .qa-see { color: var(--muted); font-size: .95rem; }
+/* Researched after the session: marked as ours, not the room's, with what each answer rests on */
+.qa-group-note { max-width: 52rem; margin: -4px 0 12px; color: var(--muted); }
+.qa > summary .qa-q { flex: 1; }
+.qa-tag {   /* a static tag: a pill that doesn't look pressable */
+  flex: none; padding: 2px 10px; border: 1px solid var(--control); border-radius: var(--radius-pill);
+  color: var(--ink); font-size: .72rem; font-weight: 600; letter-spacing: var(--tracking-badge); text-transform: uppercase;
+}
+@media (max-width: 600px) {   /* on a phone the tag rides on a line of its own above the question, so the question keeps the width */
+  .qa.researched > summary { flex-wrap: wrap; row-gap: 6px; }
+  .qa.researched .qa-tag { order: -2; }
+  .qa.researched > summary::after { content: ""; order: -1; flex-basis: 100%; }
+}
+.qa-sources { margin-top: 12px; padding: 10px 14px; border-radius: var(--radius-sm); background: var(--tint); }
+.qa-sources p { margin: 0; font-family: var(--font-sans); font-size: .8rem; font-weight: 600; color: var(--ink); }
+.qa-sources ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: .95rem; }
+
+/* Themes: what kept coming up, in our words, with the room's words beside them */
+.themes { display: grid; gap: var(--gap); margin-top: 20px; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); }
+.theme { display: flex; flex-direction: column; padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.theme h4 { font-size: 1.125rem; line-height: 1.3; }
+.theme > p { margin: 8px 0 0; }
+.theme-quote { margin: 14px 0 0; padding-left: 14px; border-left: 3px solid var(--accent); }
+.theme-quote blockquote { margin: 0; }
+.theme-quote p { margin: 0; font-style: italic; font-size: 1.05rem; line-height: 1.45; }
+.theme-quote figcaption { margin-top: 4px; font-family: var(--font-sans); font-size: .8rem; color: var(--muted); }
+.threads { list-style: none; margin: auto 0 0; padding: 16px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.threads a {   /* where to read more: links, so navy and underlined, set small as a row */
+  display: inline-flex; align-items: center; min-height: 32px; padding: 3px 12px; border-radius: var(--radius-pill);
+  border: 1px solid var(--line); background: var(--surface); font-size: .8rem; font-weight: 600; text-decoration: none;
+}
+@media (hover: hover) { .threads a:hover { border-color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; } }
+
+/* Offers and asks */
+.asks-grid { display: grid; gap: var(--gap); margin-top: 20px; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); align-items: start; }
+.asks-grid .card h4 { font-size: 1.125rem; }
+.offer-list { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 10px; }
+.offer-list .at, .offer-list .pending { font-size: .85rem; color: var(--muted); }
+.ideas-fold { margin-top: 14px; padding-top: 6px; border-top: 1px solid var(--line); }
+.ideas-fold p { margin: 6px 0 0; }
+.idea-list { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+
+/* The index: one line each, filtered by kind with the Sources tabs group */
+.res-filter { margin: 16px 0 0; }
+.res-group { margin: 26px 0 0; font-size: 1.125rem; }
+.res-group-blurb { max-width: 48rem; margin: 6px 0 0; color: var(--muted); }
+.res-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+.res { padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.res-name { margin: 0; font-weight: 600; font-size: 1rem; line-height: 1.3; }
+.res-meta { margin: 2px 0 0; font-size: .8rem; color: var(--muted); }
+.res-what { margin: 6px 0 0; font-size: .98rem; line-height: 1.45; }
+.res-link { margin: 6px 0 0; font-size: .92rem; }
 
 /* Reduced motion: nothing moves; color, fill, and opacity still show every state */
 @media (prefers-reduced-motion: reduce) {

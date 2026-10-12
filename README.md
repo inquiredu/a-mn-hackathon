@@ -13,6 +13,7 @@ Small tools you can build with AI in an afternoon or less, for people who run cl
 | [Starters](starters.html) | Builders | Eight starters across the three levels, to play, copy into an AI tool, and remix |
 | [Invent your own](invent.html) | Builders | Build something from nothing: describe it in three answers and get a request to paste, a jar of ideas, three moves for when you're stuck (`wish.html`, its old address, forwards here) |
 | [Hosts](hosts.html) | Hosts and anchors | Forming teams, a room calculator, the run of show, before, during, and after |
+| [From the room](from-the-room.html) | Anyone, after a session | Each session's record, newest first, in tabs: an overview, questions answered (some researched afterward, with sources), themes, offers and asks, and an index of everything shown and shared |
 | [Sources](sources.html) | Anyone curious | How-tos, cautions, and research on learning to code |
 | [Present](present.html) | The presenter | The main-room stage, with a session clock to call the morning to order and live timers; its controls appear when you move the mouse. S opens the [speaker notes](notes.html) in a second window, which follow the stage and drive it |
 
@@ -54,6 +55,8 @@ Two ways. **Without any code:** run it from the live site as it is. Make your ow
 **To add a starter:** put one self-contained HTML file in `cabinets/` (styles and scripts inline, made-up data only, so it pastes whole into an AI tool), add it to the `MACHINES` list at the top of `assets/site.js`, and add its card to `starters.html`. Level 3 scripts go in `recipes/` and the `SCRIPTS` list, with their steps in `SCRIPT_STEPS`.
 
 **To add a source:** add one entry to `assets/sources-data.js`. The Sources page's tabs, filters, search, and start-here paths pick it up.
+
+**To add a session's record:** in `from-the-room.html`, copy the October 9 `<article>` above itself, give every id and in-page link in it a new prefix (`oct-9-` becomes, say, `nov-13-`, the tabs' and views' ids included), and add a chip for it to the Sessions list at the top. `assets/recap.js` runs the tabs for every article marked `data-recap` and counts what's in each view. Write it from the recording's transcript, check every line against it, and name people by first name only, for what they showed or said to the whole room.
 
 ## Docs
 

@@ -494,6 +494,42 @@ document.querySelectorAll(".level-bar").forEach((bar) => {
 });
 
 
+// ---------- A contents rail: a long page's "On this page" list, kept in view beside the content ----------
+// On a screen wide enough to have room beside the reading column (site.css), the list also stands in the margin
+// and marks the section you're in. It's built from the page's own list, so the two can't disagree; without
+// scripts, or on a narrower screen, the list stays where it is.
+
+document.querySelectorAll("nav.on-page").forEach((index) => {
+  const main = document.querySelector("main");
+  const source = index.querySelector("ul");
+  if (!main || !source) return;
+  const rail = el("nav", "page-rail");
+  rail.setAttribute("aria-label", "On this page");
+  const inner = el("div", "page-rail-inner");
+  const list = source.cloneNode(true);
+  inner.append(el("p", "label", "On this page"), list);
+  rail.append(inner);
+  main.prepend(rail);
+  document.body.classList.add("has-rail");
+
+  const links = [...list.querySelectorAll('a[href^="#"]')];
+  const targets = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter(Boolean);
+  let queued = false;
+  const mark = () => {
+    queued = false;
+    const line = (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) + 96;
+    let current = targets[0];
+    targets.forEach((t) => { if (t.getBoundingClientRect().top <= line) current = t; });
+    // At the very bottom, the last section is the one you're in, however short it is
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) current = targets[targets.length - 1];
+    links.forEach((a) => { if (current && a.hash === "#" + current.id) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+  };
+  addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(mark); } }, { passive: true });
+  addEventListener("resize", mark);
+  mark();
+});
+
+
 // ---------- Where do I paste it? One tool at a time, the visitor's own remembered ----------
 
 document.querySelectorAll("[data-where]").forEach((box, n) => {

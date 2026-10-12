@@ -1,6 +1,6 @@
 # Design audit tools
 
-Screenshots and measurements of every surface, for the design audit in `docs/DESIGN-AUDIT.md`. Node 22 or later (it uses Node's built-in WebSocket), Google Chrome at its usual macOS path, no dependencies. Output goes to a folder you name outside the repo: about 820 screenshots.
+Screenshots and measurements of every surface, for the design audit in `docs/DESIGN-AUDIT.md`. Node 22 or later (it uses Node's built-in WebSocket), Google Chrome at its usual macOS path (or wherever `CHROME` points), no dependencies. Output goes to a folder you name outside the repo: about 820 screenshots.
 
 ```
 node scripts/design-audit/capture.js . ~/fb-audit/shots

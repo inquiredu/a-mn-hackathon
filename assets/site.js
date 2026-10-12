@@ -606,10 +606,10 @@ document.querySelectorAll("[data-steps]").forEach((box) => {
   end.append(richText(plan.end));
   box.replaceChildren(
     el("p", "kind", plan.kind),
-    el("h5", "", "Before you start"), list(plan.before, "ul"),
-    el("h5", "", "Steps"), list(plan.steps, "ol"),
-    el("h5", "", "You'll know it worked"), end,
-    el("h5", "", "If it breaks"), list(plan.breaking, "ul")
+    el("h4", "", "Before you start"), list(plan.before, "ul"),
+    el("h4", "", "Steps"), list(plan.steps, "ol"),
+    el("h4", "", "You'll know it worked"), end,
+    el("h4", "", "If it breaks"), list(plan.breaking, "ul")
   );
 });
 

@@ -407,6 +407,88 @@ input[type="checkbox"]:checked::before, input[type="radio"]:checked::before { tr
 /* A script to read before running keeps its lines whole and its indentation: it scrolls sideways, never splits a name */
 .copybox pre[data-script] { white-space: pre; overflow-wrap: normal; overflow-x: auto; max-height: 28rem; overflow-y: auto; padding-bottom: 4px; }
 .copybox details > p { margin: 0; }
+/* A copy well's first line: what it holds (Prompt, Script, Message) and where it goes, with an icon for each kind.
+   A prompt is words for an AI chat; a script is code for the place that runs it. The two never look alike. */
+.copy-kind {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0; max-width: none;
+  font-family: var(--font-sans); font-size: .9rem; color: var(--muted);
+}
+.copy-kind > span:first-child { display: inline-flex; color: var(--ink); }
+.copy-kind svg { width: 18px; height: 18px; }
+.copy-kind strong { font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+.copybox > .copy-kind { flex: 1 0 100%; }
+/* A prompt: the reading face, at reading size, in the dashed copy well */
+.promptwell { display: grid; gap: 10px; padding: 12px 14px; background: var(--tint); border: 1px dashed var(--control); border-radius: var(--radius-sm); }
+.prompt-text { margin: 0; font-size: 1.02rem; color: var(--ink); }
+/* A script: monospaced lines under a file's name, on the darkest surface, in the same dashed copy well */
+.codewell { min-width: 0; background: var(--control-bg); border: 1px dashed var(--control); border-radius: var(--radius-sm); overflow: hidden; }
+.codewell > .copy-kind { padding: 10px 14px 8px; }
+.code-file { display: flex; justify-content: space-between; gap: 12px; margin: 0; max-width: none; padding: 6px 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: .8rem var(--font-mono); color: var(--muted); }
+.codewell pre { margin: 0; padding: 10px 14px; overflow-x: auto; white-space: pre; font: .8rem/1.55 var(--font-mono); color: var(--ink); tab-size: 2; }
+.code-top { color: var(--muted) !important; }   /* the comments at the top: the script saying what it is */
+/* The settings line, as a box to paste into: the one line you change, so nothing else needs touching */
+.code-setting { display: grid; gap: 6px; padding: 12px 14px; background: var(--tint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.code-setting label { font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--ink); }
+.setting-line { display: flex; align-items: center; gap: 2px; min-width: 0; }
+.setting-line code { flex: none; padding: 0; background: none; font-size: .82rem; }
+.setting-line input { flex: 1 1 auto; min-width: 0; min-height: 40px; padding: 6px 10px; font: .85rem var(--font-mono); }
+@media (max-width: 600px) { .setting-line { flex-wrap: wrap; row-gap: 6px; } .setting-line input { flex-basis: 100%; order: 2; } .setting-line code:last-child { order: 3; } }
+.setting-status { margin: 0; font-family: var(--font-sans); font-size: .85rem; color: var(--muted); }
+.setting-status.is-found { color: var(--ink); font-weight: 600; }
+.setting-status.is-found::before { content: ""; display: inline-block; width: 11px; height: 11px; margin-right: 6px; background: currentColor; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); }
+.code-rest > summary { min-height: 40px; padding: 0 14px; font-size: .9rem; color: var(--link); }
+.code-rest[open] > summary { border-bottom: 1px solid var(--line); }
+
+/* ---------- A script kit (site.js draws it): get the script, paste it, run it, open what it made ---------- */
+.kit-fold { margin-top: 16px; }
+.kit-fold > summary {
+  flex-wrap: wrap; gap: 4px 10px; padding: 8px 14px 8px 10px; border: 1.5px solid var(--control); border-radius: var(--radius-sm); background: var(--surface);
+}
+@media (hover: hover) { .kit-fold > summary:hover { border-color: var(--ink); background: var(--action-ghost-hover); text-decoration: none; } }
+.kit-fold[open] > summary { border-color: var(--ink); }
+.kit-open { font-weight: 600; }
+.kit-fold > summary .count { font-weight: 500; font-size: .9rem; color: var(--muted); }
+.kit-before { margin-top: 20px; }
+.script-kit h4 { margin: 0; font-family: var(--font-sans); }
+.kit-before h4 { font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.kit-before ul { margin: 6px 0 0; padding-left: 1.4rem; }
+.kit-before li { margin: 6px 0; max-width: var(--measure); }
+/* The steps: a numbered rail, each step a title and what to do */
+.stages { list-style: none; counter-reset: stage; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.stage { counter-increment: stage; position: relative; min-width: 0; padding: 16px 0 18px 46px; border-top: 1px solid var(--line); }
+.way { min-width: 0; }   /* a long line of code scrolls inside its well; it never widens the page */
+@media (max-width: 600px) {
+  .stage { padding-left: 0; }
+  .stage::before { position: static; float: left; margin: 0 10px 0 0; }
+  .stage-title { display: flex; align-items: center; min-height: 30px; overflow: hidden; }
+  .stage > :not(.stage-title) { clear: left; }
+}
+.stage::before {
+  content: counter(stage); position: absolute; left: 0; top: 14px;
+  display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--ink);
+  font-family: var(--font-sans); font-weight: 700; font-size: .9rem;
+}
+.stage-title { font-size: 1.05rem; font-weight: 600; line-height: 1.3; letter-spacing: 0; text-transform: none; }
+.stage > p { margin: 8px 0 0; max-width: var(--measure); }
+.stage > p.small { font-size: .92rem; }
+.run-list { margin: 8px 0 0; padding-left: 1.2rem; }
+.run-list > li { margin: 6px 0; max-width: var(--measure); }
+.stage .copy-actions { margin-top: 12px; }
+.stage .copy-note { margin-top: 8px; max-width: var(--measure); }
+.kit-explain { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+.kit-explain .copy-note { flex: 1 1 18rem; margin: 0; }
+/* Where the script comes from: ours, or your AI's. One or the other, so they're tabs, never a pair to copy in turn */
+.ways { display: inline-flex; flex-wrap: wrap; max-width: 100%; margin: 12px 0 12px; border: 1.5px solid var(--control); border-radius: var(--radius-sm); overflow: hidden; }
+.ways button { gap: 8px; min-height: 42px; border: 0; border-radius: 0; border-right: 1px solid var(--line); background: var(--surface); }
+.ways button:last-child { border-right: 0; }
+.ways button[aria-selected="true"] { background: var(--tint); color: var(--ink); box-shadow: inset 0 -3px 0 var(--ink); }
+.way-note { font-weight: 500; font-size: .82rem; color: var(--muted); }
+@media (max-width: 600px) { .ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; } .way-note { display: block; } .ways button { flex-direction: column; gap: 0; } }
+.kit-breaks { margin-top: 4px; border-top: 1px solid var(--line); }
+.kit-breaks ul { margin: 0 0 12px; padding-left: 1.4rem; }
+.kit-breaks li { margin: 8px 0; max-width: var(--measure); }
+.script-kit code { white-space: normal; overflow-wrap: anywhere; }
+.script-kit .setting-line code, .script-kit pre code { white-space: pre; overflow-wrap: normal; }
 
 /* ---------- Notes and the one caution ---------- */
 .note-box, .level-note, .stuck, .pick, .synthesis, .next {
@@ -948,11 +1030,11 @@ body[data-mode="after"] .timeline li.done > div > span, body[data-mode="after"] 
   .level-bar .lb-time { display: none; }
   .level-bar .lb-name { font-size: .9rem; line-height: 1.15; }
 }
-.level + .level, .level-bar + .level { margin-top: var(--block); }
+.level-panel + .level-panel, .level-bar + .level-panel { margin-top: var(--block); }
 /* A level waiting its turn has no box at all until it's opened; on paper, every level prints */
-.level[hidden="until-found"] { margin: 0; padding: 0; border: 0; }
-@media print { .level[hidden] { display: block !important; content-visibility: visible; margin-top: var(--block); padding: var(--card-pad); border: 1px solid var(--line); } }
-/* On Three levels an anchor jump lands below the level bar (and the now bar, when it sticks) */
+.level-panel[hidden="until-found"] { margin: 0; padding: 0; border: 0; }
+@media print { .level-panel[hidden] { display: block !important; content-visibility: visible; margin-top: var(--block); } .level[hidden] { padding: var(--card-pad); border: 1px solid var(--line); } }
+/* On Three levels and Starters an anchor jump lands below the level bar (and the now bar, when it sticks) */
 html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px) + 12px); }
 /* Back and next at the foot of a level */
 .level-pager { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); }
@@ -978,6 +1060,25 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .stop-note { margin: 10px 0 0; padding: 8px 12px; border-left: 3px solid var(--accent); background: var(--status-warning-bg); font-size: .95rem; }
 .script-steps code { white-space: normal; overflow-wrap: anywhere; }
 .level .quiet-fold { margin-top: 20px; }
+/* Level 3's field guide: four folds, each saying its question and its answer in a line, opening to the detail */
+.guide-fold { margin-top: 10px; border: 1px solid var(--line); border-radius: var(--radius); }
+.guide-fold > summary { flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 8px 16px 10px 10px; }
+.guide-q { font-weight: 600; }
+.guide-a { flex: 1 0 100%; padding-left: 23px; font-weight: 500; font-size: .92rem; color: var(--muted); }
+.guide-fold[open] > summary { border-bottom: 1px solid var(--line); }
+.guide-body { padding: 4px 18px 18px; }
+.level .guide-body h4 { margin: 20px 0 4px; font-size: 1rem; }
+.guide-body ul { padding-left: 1.3rem; }
+.homes-table { margin-top: 12px; }
+.homes-table > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px 16px; padding: 10px 0; border-top: 1px solid var(--line); }
+.homes-table [role="rowheader"], .homes-head [role="columnheader"] { font-family: var(--font-sans); font-weight: 600; }
+.homes-head { display: none !important; }
+.homes-table [role="cell"]::before { content: attr(data-col) ": "; font-family: var(--font-sans); font-weight: 600; font-size: .9rem; }
+@media (min-width: 700px) {
+  .homes-table > div { grid-template-columns: 8.5rem minmax(0, 1fr) minmax(0, 1fr); }
+  .homes-head { display: grid !important; }
+  .homes-table [role="cell"]::before { content: none; }
+}
 .level { margin-top: var(--block); padding: var(--card-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .level-head { display: flex; align-items: center; gap: 12px; }
 .level-head h2 { margin: 0; }
@@ -1015,7 +1116,29 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 .script-steps p { margin: 4px 0 0; }
 
 /* ---------- Starters ---------- */
-/* The top: which level, who you are, how it works in four short steps; then each level shaped the same */
+/* One level at a time, under the same level bar as Three levels. Each level is a shelf, shaped the same: its name and
+   what it is, a link to what it teaches, how it works in four steps in its own verbs, the help it needs, its starters. */
+.shelf-head { display: grid; gap: 4px 24px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+.shelf-head .level-head h2 { margin: 0; font-size: clamp(1.5rem, 3.4vw, 1.875rem); }
+.shelf-teach { justify-self: start; }
+.shelf-teach::after { content: "→"; }
+@media (min-width: 900px) {
+  .shelf-head { grid-template-columns: minmax(0, 1fr) auto; }
+  .shelf-head .level-head, .shelf-head .level-summary { grid-column: 1; }
+  .shelf-teach { grid-column: 2; grid-row: 1; align-self: center; }
+}
+.shelf .how-row { margin-top: 20px; }
+.shelf > .level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
+.shelf > .machines { margin-top: 20px; }
+.shelf > .level-note + .level-note { margin-top: 8px; }
+.shelf .pick + * { margin-top: 0; }
+/* Level 3's two places a script can live, side by side */
+.script-homes { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); margin-top: 20px; }
+@media (min-width: 760px) { .script-homes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.script-homes > div { padding: 14px 18px; background: var(--tint); border-radius: var(--radius); }
+.script-homes h3 { margin: 0; font-size: 1.05rem; }
+.script-homes h3 span { margin-left: 4px; font-weight: 500; font-size: .9rem; color: var(--muted); }
+.script-homes p { margin: 6px 0 0; font-size: .97rem; }
 .level-index { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .level-index a {
   display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 14px 6px 6px;
@@ -1047,17 +1170,8 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
   .how-row li { border-bottom: 0; grid-template-columns: minmax(0, 1fr); }
   .how-row .num { grid-row: auto; margin-bottom: 6px; }
 }
-.level-header { margin-top: calc(var(--section) - 8px); padding-top: 24px; border-top: 1px solid var(--line); }
-.level-header h2 { font-size: clamp(1.5rem, 3.4vw, 1.875rem); }
 .level-summary { margin: 8px 0 0; color: var(--ink); }
-.level-header .level-note, .level details.level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
-.level-header + .machines { margin-top: 20px; }
-.button-legend { margin: 16px 0 0; display: grid; gap: 10px; max-width: var(--measure); }
-.button-legend > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
-@media (min-width: 700px) { .button-legend > div { grid-template-columns: 170px minmax(0, 1fr); gap: 16px; align-items: start; } }
-.button-legend dd { margin: 0; }
-/* The two buttons each script card has, named as terms: words, not button shapes that do nothing */
-.button-look { font-family: var(--font-sans); font-size: .95rem; font-weight: 700; color: var(--ink); }
+.level details.level-note { margin-top: 16px; padding: 4px var(--card-pad) 8px; }
 
 /* The cards: two to a row on a laptop. Each card's picture, title, words, and buttons sit on rows shared with its
    neighbor (subgrid), so the Play buttons line up across a row. Monday, a note, and the Remix menu share the last
@@ -1074,7 +1188,13 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
   .machines:not(.scripts) > .cabinet > .actions { grid-row: 4; align-self: start; }
   .machines:not(.scripts) > .cabinet > .cabinet-more { grid-row: 5; align-self: start; }
 }
-@media (min-width: 960px) { .machines.scripts { grid-template-columns: minmax(0, 1fr); } .machines.scripts .cabinet { max-width: 52rem; } }
+.machines.scripts { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 760px) {
+  .machines.scripts > .cabinet { display: grid; grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); column-gap: 24px; align-items: start; }
+  .machines.scripts > .cabinet > .shot { grid-column: 1; margin: 0; }
+  .machines.scripts > .cabinet > .cabinet-text { grid-column: 2; }
+  .machines.scripts > .cabinet > :is(.script-kit, .remix) { grid-column: 1 / -1; }
+}
 .cabinet { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--card-pad); }
 /* A starter's picture (scripts/starter-shots.js): the tool just after its first press, or, for a script, what it
    leaves in your Drive. The words beside it say the same, so screen readers skip it. Pressing the picture of a
@@ -1095,31 +1215,32 @@ html:root:has(.level-bar) { scroll-padding-top: calc(var(--below-level-bar, 64px
 }
 .shot-play svg { width: 14px; height: 14px; }
 @media (hover: hover) { .shot[data-shot]:hover .shot-play { background: var(--button); color: var(--button-ink); } }
-.machines.scripts .shot { max-width: 32rem; }   /* a script card runs one to a row: its picture stays a picture, not a banner */
 /* In Night the pictures step down a little, so a white screenshot doesn't outshine the page's own heading */
 [data-theme="dark"] :is(.shot, .hero-shots) img { filter: brightness(.9); }
 .cabinet-head { display: block; }
 .cabinet h3 { margin-top: 2px; font-size: 1.125rem; }
 .cabinet .for { margin: 2px 0 0; font-size: .95rem; color: var(--muted); }
-.cabinet > p { margin: 12px 0 0; color: var(--ink); }
+.cabinet > p, .cabinet-text > p { margin: 12px 0 0; color: var(--ink); }
+.cabinet-text > .cabinet-head h3 { margin-top: 0; }
 .cabinet .monday { margin: 12px 0 0; padding: 8px 12px; border-radius: var(--radius-sm); background: var(--tint); font-size: .95rem; }
 .cabinet .meta { margin-top: 12px; }
 .data-note { margin: 12px 0 0; padding: 4px 0 4px 12px; border-left: 3px solid var(--control); font-size: .95rem; color: var(--ink); }
-.cabinet .script-steps { margin-top: 8px; font-size: .97rem; }
-.cabinet .script-steps .kind, .level .script-steps .kind { display: none; }   /* the card or the level already says what a script is */
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .remix { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 2px; }
 .remix > summary .count { margin-left: 4px; font-weight: 500; color: var(--muted); }
 .remix h5 { margin: 16px 0 6px; }
 .remix ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .remix li {
-  display: flex; gap: 10px; align-items: flex-start; justify-content: space-between;
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; justify-content: space-between;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 8px 8px 8px 12px; font-size: .95rem;
 }
+.remix li > span:first-child { flex: 1 1 14rem; }
 .remix li button { flex: none; min-width: 6.5rem; }   /* the same width when it says Copied, so the line beside it never re-wraps */
+.remix li > .remix-hint { flex: 1 0 100%; margin: -4px 0 0; }   /* where it goes, under the line just copied */
 .remix li .slot { white-space: nowrap; color: var(--accent-ink); font-weight: 600; letter-spacing: .05em; }
 .remix .note { display: block; margin-top: 4px; font-size: .85rem; color: var(--muted); }
 .remix li.do { display: block; background: transparent; border-style: dashed; }
+.remix-lead { margin: 4px 0 0; font-size: .92rem; color: var(--muted); }
 .remix-hint { margin: 0 0 2px 12px; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--muted); list-style: none; }
 
 /* ---------- Invent your own ---------- */

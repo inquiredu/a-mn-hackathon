@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="assets/theme.js?v=36ded2f9"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css?v=95a5640e">
-<link rel="stylesheet" href="assets/site.css?v=9b073a83">
+<link rel="stylesheet" href="assets/site.css?v=da6501aa">
 </head>
 <body data-jump="#chat" data-jump-label="Jump to level 1">
 <a class="skip" href="#main">Skip to the main content</a>
@@ -113,7 +113,7 @@
       </nav>
 
       <!-- LEVEL 1 -->
-      <article class="level" id="chat" aria-labelledby="level-1">
+      <article class="level level-panel" id="chat" aria-labelledby="level-1">
         <div class="level-head"><span class="num">1</span><h2 id="level-1">In the chat</h2></div>
         <p class="meta">Twenty minutes · an AI chat</p>
         <div class="level-body">
@@ -163,7 +163,7 @@
       </article>
 
       <!-- LEVEL 2 -->
-      <article class="level" id="site" aria-labelledby="level-2">
+      <article class="level level-panel" id="site" aria-labelledby="level-2">
         <div class="level-head"><span class="num">2</span><h2 id="level-2">On your site</h2></div>
         <p class="meta">An hour · a Google Site you can edit</p>
         <div class="level-body">
@@ -200,6 +200,7 @@
         <ol>
           <li>Copy the prompt. In your AI chat, switch on Canvas (Gemini) or get ready to press Preview (ChatGPT), as in <a href="#where-site">Where do I paste it</a>, then paste the prompt. Don't send yet.
             <div class="copybox fold">
+              <p class="copy-kind"><span data-icon="message-square-text"></span><strong>Prompt</strong><span>words: paste them into your AI chat</span></p>
               <div class="copy-actions"><button class="primary" data-copy-from="site-prompt" type="button">Copy the prompt</button></div>
               <details><summary>Read the prompt</summary>
               <p id="site-prompt">Here is a document my team already uses. Turn it into an interactive infographic as a single HTML page: each section becomes a card that opens when clicked or tapped, the key commitments become a row of badges, in plain language and large type, and it works on a phone. Keep the document's meaning exactly; don't add anything it doesn't say. No outside libraries, images, or fonts. The document is below.</p>
@@ -229,12 +230,12 @@
       </article>
 
       <!-- LEVEL 3 -->
-      <article class="level" id="script" aria-labelledby="level-3">
+      <article class="level level-panel" id="script" aria-labelledby="level-3">
         <div class="level-head"><span class="num">3</span><h2 id="level-3">Behind the scenes</h2></div>
         <p class="meta">An hour the first time, fifteen minutes after that · your Google Drive</p>
         <div class="level-body">
         <div class="level-intro">
-        <p class="level-what">A short script does a job for you inside Google Workspace. A script is a few instructions Google runs for you, in a tool called Apps Script that's built into every Google account; you approve what it may touch before it runs. No screen to look at, just work that gets done. The AI writes it, you paste it, you press Run.</p>
+        <p class="level-what">A short script does a job for you inside Google Workspace. A script is a few lines of code Google runs for you, in a tool called Apps Script that's built into every Google account; you approve what it may touch before it runs. No screen to look at, just work that gets done. The AI writes it, you paste it, you press Run.</p>
         <h3>How it works</h3>
         <p>Apps Script is JavaScript, the same language that makes level 1's buttons work, but it runs on Google's computers instead of in your browser, signed in as you. Instead of showing you a page, it can open a folder, list every file in it, and make a Sheet. You paste the script into a project and press Run. Below the code, the Execution log is where the script tells you what it did, or what went wrong.</p>
         <h3>Why this level</h3>
@@ -258,29 +259,130 @@
         <div class="caution">
           <h3>A script acts with your account</h3>
           <ul>
-            <li><strong>Whatever you can open, it can open.</strong> So read it before you run it, or have it read to you: <strong>Copy for my AI</strong>, below, hands it to your AI with a note asking for a line-by-line explanation. Ours is short enough to read on this page. A line nobody can explain doesn't run.</li>
-            <li><strong>The permission screen is the gate.</strong> It names exactly what the script may touch. Read it like a permission slip. Ours asks for Drive and Sheets, because that's its whole job; a script that asks for Gmail to list a folder is asking for too much.</li>
-            <li><strong>Practice files while you're learning.</strong> Point it at a folder of made-up documents. Nothing about real students goes into a script you can't yet explain.</li>
+            <li><strong>Whatever you can open, it can open.</strong> So read it before you run it, or have it read to you: <strong>Copy for my AI to explain</strong>, below, hands it to your AI with a note asking for a line-by-line explanation. Ours is short enough to read on this page. A line nobody can explain doesn't run.</li>
+            <li><strong>The permission screen is the gate.</strong> It names exactly what the script may touch. Read it like a permission slip. Ours asks for Drive and Sheets, because that's its whole job; a script that asks for Gmail to list a folder is asking for too much. <a href="#permissions">What you're allowing</a>.</li>
+            <li><strong>Practice files while you're learning.</strong> Point it at a folder of made-up documents. Nothing about real students goes into a script you can't yet explain. <a href="#student-data">Student data</a>.</li>
             <li><strong>A script that arrives with no explanation stays unrun,</strong> and never share one that touches student data. If script.google.com won't open, your district turned it off, and that's a conversation with your technology director, not a workaround.</li>
           </ul>
         </div>
         <h3>Our script: the Drive Inventory</h3>
-        <div class="copybox fold">
-          <div class="copy-actions"><button class="primary" data-copy-script="inventory" type="button">Copy the script</button> <button data-ask-script="inventory" type="button">Copy for my AI</button></div>
-          <p class="copy-note">Copy for my AI adds a note asking your AI to explain each line, and what the first run will ask permission for, before you run it.</p>
-          <details><summary>Read the script</summary>
-          <pre id="inventory-script" data-script="inventory"></pre>
-          </details>
-        </div>
-        <div class="script-steps" data-steps="inventory"></div>
-        <details class="quiet-fold">
-          <summary>Rather have your AI write one?</summary>
-          <p>Ask for one with this prompt, then follow the same steps. It asks the AI to name the main function <strong>inventory</strong>, so the steps match; if your AI chose another name, choose that one.</p>
-          <div class="copybox">
-            <p id="script-prompt">Write a Google Apps Script that lists every file in one Google Drive folder and all of its subfolders in a new Google Sheet: one row per file, with the folder path, the file's title, its type in plain words (Doc, Sheet, Slides, PDF), its link, and when it last changed. Use only DriveApp and SpreadsheetApp. Put the folder ID in one clearly marked line at the top, and name the main function inventory. Then tell me, in plain language, what the first run will ask permission for and why.</p>
-            <button data-copy-from="script-prompt" type="button">Copy the prompt</button>
+        <p>A standalone script: a project of its own in Apps Script. Its one setting is the folder it reads.</p>
+        <div class="script-kit" data-script-kit="inventory" data-open></div>
+
+        <h3 id="further">Before you build further</h3>
+        <p>Four things worth knowing once the inventory has run, and before a script goes near real work. Each opens on its own.</p>
+
+        <details class="guide-fold" id="where-it-lives">
+          <summary><span class="guide-q">Where a script lives</span><span class="guide-a">On its own, or inside a file, and why it matters</span></summary>
+          <div class="guide-body">
+          <p>Every script lives in one of two places. Google calls them standalone and container-bound; the Starters page has one of each.</p>
+          <div class="homes-table" role="table" aria-label="Standalone and bound scripts">
+            <div role="row" class="homes-head"><span role="columnheader"></span><span role="columnheader">Standalone: on its own</span><span role="columnheader">Bound: inside a file</span></div>
+            <div role="row"><span role="rowheader">Start one</span><span role="cell" data-col="Standalone">At script.google.com, <strong>New project</strong>. Or in Drive: <strong>New</strong>, <strong>More</strong>, <strong>Google Apps Script</strong>.</span><span role="cell" data-col="Bound">From inside a Sheet, Doc, or Slides file: <strong>Extensions</strong>, <strong>Apps Script</strong>. In a Form: <strong>More</strong> (⋮), <strong>Apps Script</strong>.</span></div>
+            <div role="row"><span role="rowheader">Find it again</span><span role="cell" data-col="Standalone">Among your files in Drive.</span><span role="cell" data-col="Bound">Inside its file. It never shows in Drive as a file of its own and can't be taken out of its file.</span></div>
+            <div role="row"><span role="rowheader">What it can reach easily</span><span role="cell" data-col="Standalone">Any file you can open, by its ID.</span><span role="cell" data-col="Bound">The file it lives in, with no ID. It can also add a menu, a dialog, or a sidebar to that file, and run when the file opens.</span></div>
+            <div role="row"><span role="rowheader">Who can see it</span><span role="cell" data-col="Standalone">You, and whoever you share the project with.</span><span role="cell" data-col="Bound">Everyone who can edit the file can edit and run the script. Everyone who can only view the file can still read the script.</span></div>
+            <div role="row"><span role="rowheader">When it's copied</span><span role="cell" data-col="Standalone">You can share it with collaborators, like a Doc.</span><span role="cell" data-col="Bound">Whoever copies the file owns the copy and gets their own copy of the script: the way a district passes a tool along.</span></div>
+            <div role="row"><span role="rowheader">Ours</span><span role="cell" data-col="Standalone"><a href="starters.html#drive-inventory">The Drive Inventory</a></span><span role="cell" data-col="Bound"><a href="starters.html#doc-multiplier">The Doc Multiplier</a></span></div>
+          </div>
+          <p><strong>Read before you share a bound file.</strong> Anyone who can view the Sheet can read its script, so a key, a password, or a student's name typed into the code is shared along with it.</p>
           </div>
         </details>
+
+        <details class="guide-fold" id="permissions">
+          <summary><span class="guide-q">What you're allowing</span><span class="guide-a">The permission screen, line by line, and how to take it back</span></summary>
+          <div class="guide-body">
+          <h4>It runs as you</h4>
+          <p>A script does its work signed in as you. Whatever you can open, it can open, within the permissions you give it on the first run.</p>
+          <h4>Google reads the code to decide what to ask</h4>
+          <p>Apps Script scans the script for the services it calls: <code>DriveApp</code> means your Drive, <code>SpreadsheetApp</code> your Sheets. Even a line turned into a comment can still prompt a request, and when a changed script calls a new service, the next run asks again. That's why the screen can look broader than the job: Google's wording for Drive is see, edit, create, and delete, even for a script that only reads. Ask your AI which lines, if any, change a file.</p>
+          <h4>The screen</h4>
+          <ul>
+            <li><strong>Review permissions</strong>, then your account.</li>
+            <li>Maybe <strong>“This app isn't verified”</strong>. Google shows it for scripts it hasn't reviewed that ask for sensitive permissions; on a personal Gmail account it shows even for a script you wrote yourself. <strong>Advanced</strong>, then <strong>Go to</strong> your project's name <strong>(unsafe)</strong>, goes on.</li>
+            <li>A box for each permission. Since January 2025 you can tick some and leave others. A script that asks for only one permission shows no box. Leave one unticked, and the script stops with an authorization error when it reaches a line that needs it.</li>
+          </ul>
+          <h4>Ask for less</h4>
+          <p>Ask your AI to use only the services the job needs. In a bound script, a comment line reading <code>/** @OnlyCurrentDoc */</code> narrows the Sheets, Docs, Slides, or Forms permission to the one file the script lives in, instead of all of yours; Google's pages describe it for those four services only. Ask your AI whether your script can use it.</p>
+          <h4>Take it back</h4>
+          <p>At <a class="away" href="https://myaccount.google.com/linkedapps" target="_blank" rel="noopener">myaccount.google.com/linkedapps</a>: <strong>Access to your Google Account</strong>, your project, <strong>See details</strong>, <strong>Remove access</strong>. The next run asks again.</p>
+          <h4>What your district decides</h4>
+          <p>Apps Script is on for everyone unless an administrator turns it off, and off stops web apps and scheduled runs too. An administrator can block permissions Google counts as high-risk for apps it hasn't trusted, and on some editions can limit which outside addresses a script may reach. “Blocked by your administrator” means one of these: a conversation with your technology office, not a workaround.</p>
+          <div class="qa-sources"><p>What this rests on, checked October 20, 2026:</p><ul>
+            <li><a class="away" href="https://developers.google.com/apps-script/guides/services/authorization" target="_blank" rel="noopener">Authorization for Google services (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/concepts/scopes" target="_blank" rel="noopener">Authorization scopes, including granular consent (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/guides/client-verification" target="_blank" rel="noopener">OAuth client verification (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/release-notes" target="_blank" rel="noopener">Release notes: granular permissions in the editor, January 8, 2025 (Apps Script)</a></li>
+            <li><a class="away" href="https://support.google.com/accounts/answer/13533235" target="_blank" rel="noopener">Manage links between your Google Account and apps (Google Account Help)</a></li>
+            <li><a class="away" href="https://support.google.com/a/answer/15100049" target="_blank" rel="noopener">Turn Apps Script on or off for users (Workspace Admin Help)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/guides/admin/monitor-restrict-oauth-scopes" target="_blank" rel="noopener">Monitor and restrict data access (Apps Script)</a></li>
+            <li><a class="away" href="https://support.google.com/a/answer/13686736" target="_blank" rel="noopener">Allow only certain external connections for Apps Script and Sheets (Workspace Admin Help)</a></li>
+          </ul></div>
+          </div>
+        </details>
+
+        <details class="guide-fold" id="student-data">
+          <summary><span class="guide-q">Student data</span><span class="guide-a">Whose rules come first, and what changes when a script reaches outside Google</span></summary>
+          <div class="guide-body">
+          <p>Practice with made-up data, every time. When a script is ready for real records, these are the rules it meets, in our reading of the sources below. They're not a ruling for your district: your district decides, and answers for it.</p>
+          <h4>Reach only what your work needs</h4>
+          <p>FERPA lets a district share student records with its own staff, teachers included, who have a legitimate educational interest, by criteria the district publishes in its annual notice. It asks the district to use reasonable methods so each person reaches only the records they need. Minnesota treats educational data as private, and keeps data that isn't public to the people whose work assignment reasonably requires it. A script runs as you, so it reaches everything you can; what it makes, a new Sheet of students, should go only to people who could already see those records.</p>
+          <h4>Inside Google, and outside it</h4>
+          <p>For a district on Google Workspace for Education, Google's contract says Google acts as a school official for FERPA records in the district's data, and doesn't use that data for ads. Apps Script, Drive, and Sheets are among the Core Services the contract covers, so a script that uses only <code>DriveApp</code> and <code>SpreadsheetApp</code> works on data held under it. A script that calls <code>UrlFetchApp</code> sends data to other servers on the internet, and Google's promise doesn't speak for them. The Department of Education's guidance is that an online service, an AI service included, gets student information under FERPA's rules for outsourcing: the company does work the district would otherwise use its own staff for, under the district's direct control over how the records are used. That's a district decision, made before the script runs.</p>
+          <h4>Free tools count too</h4>
+          <p>The U.S. Department of Education recommends that free online services go through the same approval as paid ones, warns that clicking “I agree” can bind the school to a company's terms, and asks teachers to check whether a tool is approved before using it with students. It restated the rules for outside services in August 2026.</p>
+          <h4>Who to ask</h4>
+          <p>Your technology office, and your district's data practices compliance official: the person Minnesota law names for questions about data. The responsible authority for a district's data is the superintendent unless the school board names someone else.</p>
+          <p>More on Minnesota's rules for technology providers and the notice families get each fall: <a href="from-the-room.html#oct-9-q-r-mnlaw">From the room</a>.</p>
+          <div class="qa-sources"><p>What this rests on, checked October 20, 2026:</p><ul>
+            <li><a class="away" href="https://www.ecfr.gov/current/title-34/subtitle-A/part-99/subpart-D/section-99.31" target="_blank" rel="noopener">34 CFR 99.31: school officials, legitimate educational interest, reasonable methods, and outside parties</a></li>
+            <li><a class="away" href="https://www.ecfr.gov/current/title-34/subtitle-A/part-99/subpart-A/section-99.7" target="_blank" rel="noopener">34 CFR 99.7: the annual notice</a></li>
+            <li><a class="away" href="https://studentprivacy.ed.gov/resources/protecting-student-privacy-while-using-online-educational-services-requirements-and-best" target="_blank" rel="noopener">Protecting student privacy while using online educational services (U.S. Department of Education, 2014)</a></li>
+            <li><a class="away" href="https://studentprivacy.ed.gov/faq/i-want-use-online-tool-or-application-part-my-course-however-i-am-worried-it-violation-ferpa" target="_blank" rel="noopener">FAQ: using an online tool in my course (U.S. Department of Education)</a></li>
+            <li><a class="away" href="https://studentprivacy.ed.gov/sites/default/files/resource_document/file/SPPO%20Back%20to%20School%20DCL_August2026_Final508.pdf" target="_blank" rel="noopener">Letter to superintendents, August 26, 2026 (Student Privacy Policy Office)</a></li>
+            <li><a class="away" href="https://www.revisor.mn.gov/statutes/cite/13.32" target="_blank" rel="noopener">Minnesota Statutes 13.32, subdivision 3: educational data is private</a></li>
+            <li><a class="away" href="https://www.revisor.mn.gov/statutes/cite/13.05" target="_blank" rel="noopener">Minnesota Statutes 13.05, subdivisions 5 and 13: access by work assignment; the compliance official</a></li>
+            <li><a class="away" href="https://www.revisor.mn.gov/statutes/cite/13.02" target="_blank" rel="noopener">Minnesota Statutes 13.02, subdivision 16: the responsible authority</a></li>
+            <li><a class="away" href="https://workspace.google.com/terms/education_terms/" target="_blank" rel="noopener">Google Workspace for Education Terms of Service, sections 5.2 and 7.3 (modified October 12, 2026)</a></li>
+            <li><a class="away" href="https://workspace.google.com/terms/user_features.html" target="_blank" rel="noopener">Google Workspace Services Summary: Core Services (modified August 31, 2026)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/reference/url-fetch/url-fetch-app" target="_blank" rel="noopener">UrlFetchApp (Apps Script)</a></li>
+          </ul></div>
+          </div>
+        </details>
+
+        <details class="guide-fold" id="web-app">
+          <summary><span class="guide-q">Later: a web app</span><span class="guide-a">When other people use what you built, two settings decide what they reach</span></summary>
+          <div class="guide-body">
+          <p>A web app is a script with a page: other people open its address in a browser and use it, without ever seeing Apps Script. It needs a function named <code>doGet</code>, which your AI writes when you ask for a web app. You publish it with <strong>Deploy</strong>, <strong>New deployment</strong>, and <strong>Web app</strong> as the type (the gear beside “Select type”), then <strong>Deploy</strong>, and Google gives it an address ending in <code>/exec</code>.</p>
+          <h4>The two settings</h4>
+          <dl class="rows">
+            <div><dt>Execute as</dt><dd>As you, the person who deployed it: it works with your access, whoever opens it. Or <strong>User accessing the web app</strong>: it runs as each visitor, who approves its permissions and reaches only what they can already open.</dd></div>
+            <div><dt>Who has access</dt><dd>Only you; anyone in your district's Google Workspace (Google's label: “Anyone within your Workspace organization”); anyone signed in to any Google account; or anyone at all, signed in or not.</dd></div>
+          </dl>
+          <h4>Together</h4>
+          <ul>
+            <li><strong>Each visitor as themselves, your district only:</strong> everyone reaches only what they could already open. The calmest place to start.</li>
+            <li><strong>As you, your district only:</strong> staff use your access through the app, so the app's own code is the gate that decides what each person sees. Hidden or protected tabs don't lock anything (<a href="from-the-room.html#oct-9-q-r-hidden">why</a>).</li>
+            <li><strong>As you, open to anyone:</strong> anyone with the address uses your access through the app. Never with student data.</li>
+          </ul>
+          <h4>Good to know</h4>
+          <ul>
+            <li>To change a live web app without changing its address: <strong>Deploy</strong>, <strong>Manage deployments</strong>, the pencil, <strong>New version</strong> under Version, <strong>Deploy</strong>. Until then visitors get the old version.</li>
+            <li>A bound script that becomes a web app loses its file: the line that meant “the Sheet I'm in” stops working there, so the app opens its Sheet by ID instead.</li>
+            <li>Running as you, the app can usually tell who's visiting from inside your district's Workspace; for anyone outside it, their email comes back blank.</li>
+            <li>Each run gets six minutes, and one person can run at most 30 at once. Where scripts slow down: <a href="from-the-room.html#oct-9-q-r-limits">From the room</a>.</li>
+          </ul>
+          <div class="qa-sources"><p>What this rests on, checked October 20, 2026:</p><ul>
+            <li><a class="away" href="https://developers.google.com/apps-script/guides/web" target="_blank" rel="noopener">Web apps (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/manifest/web-app-api-executable" target="_blank" rel="noopener">Web app settings: who it runs as and who can open it (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/guides/versions" target="_blank" rel="noopener">Versions (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/guides/bound" target="_blank" rel="noopener">Container-bound scripts (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/reference/base/session" target="_blank" rel="noopener">Session: when a script can tell who is visiting (Apps Script)</a></li>
+            <li><a class="away" href="https://developers.google.com/apps-script/guides/services/quotas" target="_blank" rel="noopener">Quotas for Google services (Apps Script)</a></li>
+          </ul></div>
+          </div>
+        </details>
+
         <h3>Monday</h3>
         <p>An inventory of a curriculum folder, so the right lesson is one search away. A Sheet that fills in a Doc for every row. A reminder that writes itself on Friday afternoon. Anything you do by hand in Workspace, again and again. The Starters page has a second script, <a href="starters.html#level-3">the Doc Multiplier</a>, which makes one Doc for every row of a Sheet: try it after this one.</p>
         </div>
@@ -338,6 +440,8 @@
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js?v=4f3fe60c"></script>
-<script src="assets/site.js?v=05e929f1"></script>
+<script src="assets/drive-ids.js?v=b30d9171"></script>
+<script src="assets/icons.js?v=30e30865"></script>
+<script src="assets/site.js?v=6f13d4bd"></script>
 </body>
 </html>

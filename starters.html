@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Starters · First Builds</title>
-<meta name="description" content="Five small tools that already work. Play one, hand it to your AI, and make it yours.">
+<meta name="description" content="Eight small tools, pages, and scripts that already work, at three levels. Try one, hand it to your AI, and make it yours.">
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="assets/theme.js?v=36ded2f9"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css?v=95a5640e">
-<link rel="stylesheet" href="assets/site.css?v=9b073a83">
+<link rel="stylesheet" href="assets/site.css?v=da6501aa">
 </head>
 <body data-jump="#level-1" data-jump-label="Jump to the starters">
 <a class="skip" href="#main">Skip to the main content</a>
@@ -48,309 +48,339 @@
 
 <main id="main">
 
-  <!-- THE REMIX ARCADE -->
   <section id="arcade" class="section">
     <div class="wrap">
-      <p class="kicker-dark">Eight tools that already work</p>
+      <p class="kicker-dark">Three levels, eight starters</p>
       <h1 class="page-title">Starters</h1>
-      <p class="section-lede">Eight small tools that already work, each one useful on Monday. Play one, copy it into your AI chat, and ask for a change.</p>
-      <ul class="level-index" aria-label="Starters by level">
-        <li><a href="#level-1"><span class="num">1</span>In the chat<span class="count">4 tools</span></a></li>
-        <li><a href="#level-2"><span class="num">2</span>On your site<span class="count">2 pages</span></a></li>
-        <li><a href="#level-3"><span class="num">3</span>Behind the scenes<span class="count">2 scripts</span></a></li>
-      </ul>
+      <p class="section-lede">Small things that already work, each one useful on Monday. Pick a level, try a starter, and make it yours with your AI.</p>
+      <p class="hint">You need this page and an AI chat you can sign in to, open in another tab: Gemini with your school Google account, ChatGPT, or Claude. Running it for a group? <a href="hosts.html">Hosts</a> has what to check first.</p>
 
-      <div class="audience">
-        <div><p class="audience-title">On your own?</p><p>You need only this page and an AI chat you can sign in to: Gemini with your school Google account, ChatGPT, or Claude. Open it in another tab.</p></div>
-        <div><p class="audience-title">In a live session?</p><p>Your host links the Breakout Planner in the chat; your room number is next to your name.</p><p class="link-slot" data-link="planner" data-label="Open the Breakout Planner" data-style="button" data-pending=""></p></div>
-        <div><p class="audience-title">Running it with your own group?</p><p><a href="hosts.html">Hosts</a> has what to check before the day and what each part asks of this page.</p></div>
+      <!-- IN A LIVE SESSION: where your room is -->
+      <div class="pick" data-show="during">
+        <h2>In a live session?</h2>
+        <p>Your host links the Breakout Planner in the chat; your room number is next to your name.</p>
+        <p class="link-slot" data-link="planner" data-label="Open the Breakout Planner" data-style="button" data-pending=""></p>
       </div>
 
-      <ol class="how-row" aria-label="How it works">
-        <li><span class="num">1</span><strong>Guess, then play</strong><span>Pick a starter. Before you press Play, guess what it will do. Then try it.</span></li>
-        <li><span class="num">2</span><strong>Hand it to your AI</strong><span>Press <em>Copy for my AI</em>: it copies the tool's code with a note asking your AI to run it. Paste it into your chat and send; in Gemini, choose Canvas first. <a href="#where">Where to paste it</a>.</span></li>
-        <li><span class="num">3</span><strong>Remix it</strong><span>Open a Remix menu, press Copy beside a change, paste it into the same chat, and replace each ___ with your own words.</span></li>
-        <li><span class="num">4</span><strong>Keep it</strong><span>The Play window forgets your changes when it closes; your AI chat keeps them. Name the chat so you find it Monday, or <a href="invent.html#wall">copy a link to your work</a>.</span></li>
-      </ol>
+      <!-- The level bar and the levels: the same bar, the same three levels, and the same addresses as Three levels -->
+      <div class="levels-stage">
+      <nav class="level-bar" aria-label="Levels">
+        <a href="#chat"><span class="num">1</span><span class="lb-text"><span class="lb-name">In the chat</span><span class="lb-time">4 tools</span></span></a>
+        <span class="lb-line" aria-hidden="true"></span>
+        <a href="#site"><span class="num">2</span><span class="lb-text"><span class="lb-name">On your site</span><span class="lb-time">2 pages</span></span></a>
+        <span class="lb-line" aria-hidden="true"></span>
+        <a href="#script"><span class="num">3</span><span class="lb-text"><span class="lb-name">Behind the scenes</span><span class="lb-time">2 scripts</span></span></a>
+      </nav>
 
-      <div class="level-header" id="level-1">
-        <p class="step-label">Level 1</p>
-        <h2>In the chat</h2>
-        <p class="level-summary">Small tools that run inside your AI chat. Play one here first.</p>
+      <!-- LEVEL 1 -->
+      <article class="level-panel shelf" id="chat" aria-labelledby="level-1">
+        <div class="shelf-head">
+          <div class="level-head"><span class="num">1</span><h2 id="level-1">In the chat</h2></div>
+          <p class="level-summary">Small tools that run inside your AI chat. Play one here first, then hand it to your AI and ask for changes.</p>
+          <a class="action-link shelf-teach" href="levels.html#chat">What level 1 teaches</a>
+        </div>
+        <ol class="how-row" aria-label="How level 1 works">
+          <li><span class="num">1</span><strong>Guess, then play</strong><span>Pick a starter. Before you press Play, guess what it will do. Then try it.</span></li>
+          <li><span class="num">2</span><strong>Hand it to your AI</strong><span><em>Copy for my AI</em> copies a prompt with the tool's code inside. Paste it into your AI chat and send; in Gemini, choose Canvas first.</span></li>
+          <li><span class="num">3</span><strong>Remix it</strong><span>Open a Remix menu, copy a change, paste it into the same chat, and replace each ___ with your own words.</span></li>
+          <li><span class="num">4</span><strong>Keep it</strong><span>The Play window forgets your changes; your AI chat keeps them. Name the chat so you find it Monday, or <a href="invent.html#wall">copy a link to your work</a>.</span></li>
+        </ol>
         <details class="level-note" id="where">
           <summary>Where to paste it, tool by tool</summary>
+          <div data-where></div>
+        </details>
+        <div class="machines">
+
+          <article class="cabinet" id="meeting-timer">
+            <div class="shot" aria-hidden="true" data-shot="timer"><img src="assets/starters/meeting-timer.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+            <div class="cabinet-head"><div><h3>The Meeting Timer</h3><p class="for">For anyone who runs a meeting</p></div></div>
+            <p>Your agenda on screen with a big countdown, a gentle chime when it's time to move on, and a parking lot.</p>
+            <div class="actions">
+              <button class="primary" type="button" data-play="timer">Play</button>
+              <button type="button" data-copy-machine="timer">Copy for my AI</button>
+            </div>
+            <div class="cabinet-more">
+              <p class="monday"><strong>Monday:</strong> run your next PLC with it on the screen.</p>
+              <details class="remix">
+                <summary>Remix menu</summary>
+                <h5>Make it yours</h5>
+                <ul>
+                  <li><span>Change the agenda to my meeting: ___ (10 minutes), ___ (15 minutes), ___ (5 minutes).</span></li>
+                  <li><span>Show our team norms along the bottom: ___.</span></li>
+                  <li><span>Use our school colors: ___ and ___.</span></li>
+                </ul>
+                <h5>Make it useful</h5>
+                <ul>
+                  <li><span>Add a protocol mode: 5 minutes of silent writing, then 10 minutes of discussion, with a different chime for each.</span></li>
+                  <li><span>Add a spinner that picks who takes notes and who keeps time.</span></li>
+                  <li><span>Add a button that copies the parking lot as a list I can paste into our notes.</span></li>
+                </ul>
+                <h5>Make it fun</h5>
+                <ul>
+                  <li><span>When time runs out, play a game-show buzzer instead of the chime.</span></li>
+                  <li><span>If we finish the agenda early, celebrate with confetti.</span></li>
+                </ul>
+                <h5>Look inside (no AI needed)</h5>
+                <ul>
+                  <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>AGENDA</code>, change the minutes for one item, and press <strong>Run my changes</strong>.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+          <article class="cabinet" id="group-maker">
+            <div class="shot" aria-hidden="true" data-shot="groups"><img src="assets/starters/group-maker.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+            <div class="cabinet-head"><div><h3>The Group Maker</h3><p class="for">For teachers, coaches, and anyone leading a workshop</p></div></div>
+            <p>Paste names, pick a size, and shuffle. It spreads your helpers out, one per group. Keeping two people apart is one remix away.</p>
+            <div class="actions">
+              <button class="primary" type="button" data-play="groups">Play</button>
+              <button type="button" data-copy-machine="groups">Copy for my AI</button>
+            </div>
+            <div class="cabinet-more">
+              <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
+              <p class="data-note"><strong>Real names stay out of the AI.</strong> Names typed into the tool here stay in this browser window; nothing is saved or sent. Once the tool runs inside your AI chat, it runs on that company's page, so keep to made-up names there.</p>
+              <details class="remix">
+                <summary>Remix menu</summary>
+                <h5>Make it yours</h5>
+                <ul>
+                  <li><span>Use these group names instead: ___.</span></li>
+                  <li><span>Make the group cards big enough to read on a projector from the back of the room.</span></li>
+                </ul>
+                <h5>Make it useful</h5>
+                <ul>
+                  <li><span>Add a box where I can type pairs who should be kept apart.</span></li>
+                  <li><span>Give each group roles: facilitator, recorder, timekeeper, and reporter.</span></li>
+                  <li><span>Let me save a list of names in this browser so I don't paste it every time.</span></li>
+                </ul>
+                <h5>Make it fun</h5>
+                <ul>
+                  <li><span>Make the shuffle dramatic: names spin and land one at a time, with a drumroll.</span></li>
+                </ul>
+                <h5>Look inside (no AI needed)</h5>
+                <ul>
+                  <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>GROUP_NAMES</code>, change them to your school's mascots, and press <strong>Run my changes</strong>.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+          <article class="cabinet" id="feedback-builder">
+            <div class="shot" aria-hidden="true" data-shot="feedback"><img src="assets/starters/feedback-builder.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+            <div class="cabinet-head"><div><h3>The Feedback Builder</h3><p class="for">For teachers and faculty</p></div></div>
+            <p>Choose a level for each part of a rubric, and warm, specific feedback comes together, with one clear next step.</p>
+            <div class="actions">
+              <button class="primary" type="button" data-play="feedback">Play</button>
+              <button type="button" data-copy-machine="feedback">Copy for my AI</button>
+            </div>
+            <div class="cabinet-more">
+              <p class="monday"><strong>Monday:</strong> load your own rubric and give faster, kinder feedback.</p>
+              <details class="remix">
+                <summary>Remix menu</summary>
+                <h5>Make it yours</h5>
+                <ul>
+                  <li><span>Replace the rubric with mine: ___.</span></li>
+                  <li><span>Rewrite every comment in my voice: shorter, and a little funnier.</span></li>
+                  <li><span>Add a button that switches the comments to Spanish.</span></li>
+                </ul>
+                <h5>Make it useful</h5>
+                <ul>
+                  <li><span>Add a "glow and grow" format: one thing that's working and one thing to try.</span></li>
+                  <li><span>Let me save rubrics for different assignments and switch between them.</span></li>
+                </ul>
+                <h5>Make it fun</h5>
+                <ul>
+                  <li><span>Show a sticker for the strongest part of the work.</span></li>
+                </ul>
+                <h5>Look inside (no AI needed)</h5>
+                <ul>
+                  <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>TONES</code>, write your own opener and closer, and press <strong>Run my changes</strong>.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+          <article class="cabinet" id="oracle">
+            <div class="shot" aria-hidden="true" data-shot="oracle"><img src="assets/starters/oracle.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+            <div class="cabinet-head"><div><h3>The Teacher's Lounge Oracle</h3><p class="for">Just for fun</p></div></div>
+            <p>Ask a question. Get a dramatic, slightly ridiculous prophecy, with a gong.</p>
+            <div class="actions">
+              <button class="primary" type="button" data-play="oracle">Play</button>
+              <button type="button" data-copy-machine="oracle">Copy for my AI</button>
+            </div>
+            <div class="cabinet-more">
+              <p class="monday"><strong>Monday:</strong> a vocabulary oracle or a discussion-question picker, if you remix it.</p>
+              <details class="remix">
+                <summary>Remix menu</summary>
+                <h5>Make it silly</h5>
+                <ul>
+                  <li><span>Make the Oracle talk like an over-excited game-show host.</span></li>
+                  <li><span>Add a drumroll before the gong, and confetti when the prophecy appears.</span></li>
+                  <li><span>Write 10 new prophecies about my school, ___. Keep them kind.</span></li>
+                </ul>
+                <h5>Make it yours</h5>
+                <ul>
+                  <li><span>Change the colors to my school colors: ___ and ___.</span></li>
+                  <li><span>Add a button that reads the prophecy out loud.</span></li>
+                  <li><span>Teach the Oracle a new topic: when I ask about ___, it should answer with prophecies about ___.</span></li>
+                </ul>
+                <h5>Make it useful</h5>
+                <ul>
+                  <li><span>Turn it into a vocabulary oracle. Each spin reveals one of these words and what it means: ___.</span></li>
+                  <li><span>Turn it into a discussion-question picker for my class on ___.</span></li>
+                </ul>
+                <h5>Look inside (no AI needed)</h5>
+                <ul>
+                  <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>SPIN_SECONDS</code>, change the 3 to a 10, and press <strong>Run my changes</strong>.</li>
+                  <li class="do">In the code, find the coffee topic under <code>TOPICS</code>. Add your own prophecy in quotes, end it with a comma, press <strong>Run my changes</strong>, and ask about coffee.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
+
+        </div>
+        <nav class="level-pager" aria-label="More levels">
+          <a class="pager-next" href="#site"><span class="pager-dir">Next</span><span class="pager-name"><span class="num">2</span>On your site</span></a>
+        </nav>
+      </article>
+
+      <!-- LEVEL 2 -->
+      <article class="level-panel shelf" id="site" aria-labelledby="level-2">
+        <div class="shelf-head">
+          <div class="level-head"><span class="num">2</span><h2 id="level-2">On your site</h2></div>
+          <p class="level-summary">Pages, not tools: each one ends up on a Google Site you can edit. Play it, hand it to your AI with your own document, and put what comes back on your Site.</p>
+          <a class="action-link shelf-teach" href="levels.html#site">What level 2 teaches</a>
+        </div>
+        <ol class="how-row" aria-label="How level 2 works">
+          <li><span class="num">1</span><strong>Play it</strong><span>See the page working, with made-up words.</span></li>
+          <li><span class="num">2</span><strong>Add your document</strong><span><em>Copy for my AI</em>, paste, and send. Then copy the remix line that starts “Replace”, paste it, and paste your document's text where the ___ is.</span></li>
+          <li><span class="num">3</span><strong>Copy the code out</strong><span>When it looks right, copy the finished code from your AI tool. Each tool's spot is in <a href="#where-site">Where to paste it</a>, below.</span></li>
+          <li><span class="num">4</span><strong>Embed it in your Site</strong><span><strong>Insert</strong>, <strong>Embed</strong>, the <strong>Embed code</strong> tab, paste, <strong>Next</strong>, <strong>Insert</strong>. Drag the box until it all shows, and read it against your document before you publish.</span></li>
+        </ol>
+        <details class="level-note" id="where-site">
+          <summary>Where to paste it, and where to copy the code out</summary>
           <div data-where="code"></div>
         </details>
-      </div>
-      <div class="machines">
+        <div class="machines">
 
-        <article class="cabinet" id="meeting-timer">
-          <div class="shot" aria-hidden="true" data-shot="timer"><img src="assets/starters/meeting-timer.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
-          <div class="cabinet-head"><div><h3>The Meeting Timer</h3><p class="for">For anyone who runs a meeting</p></div></div>
-          <p>Your agenda on screen with a big countdown, a gentle chime when it's time to move on, and a parking lot.</p>
-          <div class="actions">
-            <button class="primary" type="button" data-play="timer">Play</button>
-            <button type="button" data-copy-machine="timer">Copy for my AI</button>
-          </div>
-          <div class="cabinet-more">
-            <p class="monday"><strong>Monday:</strong> run your next PLC with it on the screen.</p>
-            <details class="remix">
-              <summary>Remix menu</summary>
-              <h5>Make it yours</h5>
-              <ul>
-                <li><span>Change the agenda to my meeting: ___ (10 minutes), ___ (15 minutes), ___ (5 minutes).</span></li>
-                <li><span>Show our team norms along the bottom: ___.</span></li>
-                <li><span>Use our school colors: ___ and ___.</span></li>
-              </ul>
-              <h5>Make it useful</h5>
-              <ul>
-                <li><span>Add a protocol mode: 5 minutes of silent writing, then 10 minutes of discussion, with a different chime for each.</span></li>
-                <li><span>Add a spinner that picks who takes notes and who keeps time.</span></li>
-                <li><span>Add a button that copies the parking lot as a list I can paste into our notes.</span></li>
-              </ul>
-              <h5>Make it fun</h5>
-              <ul>
-                <li><span>When time runs out, play a game-show buzzer instead of the chime.</span></li>
-                <li><span>If we finish the agenda early, celebrate with confetti.</span></li>
-              </ul>
-              <h5>Look inside (no AI needed)</h5>
-              <ul>
-                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>AGENDA</code>, change the minutes for one item, and press <strong>Run my changes</strong>.</li>
-              </ul>
-            </details>
-          </div>
-        </article>
+          <article class="cabinet" id="charter-cards">
+            <div class="shot" aria-hidden="true" data-shot="charter"><img src="assets/starters/charter-cards.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+            <div class="cabinet-head"><div><h3>The Charter Cards</h3><p class="for">For a department, a team, or a PLC</p></div></div>
+            <p>A made-up department charter as a page: the commitments as badges, each section a card that opens when you tap it.</p>
+            <div class="actions">
+              <button class="primary" type="button" data-play="charter">Play</button>
+              <button type="button" data-copy-machine="charter">Copy for my AI</button>
+            </div>
+            <div class="cabinet-more">
+              <p class="monday"><strong>Monday:</strong> your own charter or team norms on your site, readable on a phone.</p>
+              <details class="remix">
+                <summary>Remix menu</summary>
+                <h5>Make it yours</h5>
+                <ul>
+                  <li><span>Replace the charter with this document, section by section, keeping its meaning exactly: ___</span></li>
+                  <li><span>Use our school colors: ___ and ___. Put our name at the top: ___.</span></li>
+                  <li><span>Make the badges these five words: ___.</span></li>
+                </ul>
+                <h5>Make it useful</h5>
+                <ul>
+                  <li><span>Add a "who to call" card at the end with made-up names and extensions.</span></li>
+                  <li><span>Add a search box that opens only the cards that mention what I typed.</span></li>
+                  <li><span>Add a Print button that opens every card and prints the page on one sheet.</span></li>
+                </ul>
+                <h5>Look inside (no AI needed)</h5>
+                <ul>
+                  <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>COMMITMENTS</code>, change one word, and press <strong>Run my changes</strong>.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
 
-        <article class="cabinet" id="group-maker">
-          <div class="shot" aria-hidden="true" data-shot="groups"><img src="assets/starters/group-maker.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
-          <div class="cabinet-head"><div><h3>The Group Maker</h3><p class="for">For teachers, coaches, and anyone leading a workshop</p></div></div>
-          <p>Paste names, pick a size, and shuffle. It spreads your helpers out, one per group. Keeping two people apart is one remix away.</p>
-          <div class="actions">
-            <button class="primary" type="button" data-play="groups">Play</button>
-            <button type="button" data-copy-machine="groups">Copy for my AI</button>
-          </div>
-          <div class="cabinet-more">
-            <p class="monday"><strong>Monday:</strong> tomorrow's lab groups, made in a second.</p>
-            <p class="data-note"><strong>Real names stay out of the AI.</strong> Names typed into the tool here stay in this browser window; nothing is saved or sent. Once the tool runs inside your AI chat, it runs on that company's page, so keep to made-up names there.</p>
-            <details class="remix">
-              <summary>Remix menu</summary>
-              <h5>Make it yours</h5>
-              <ul>
-                <li><span>Use these group names instead: ___.</span></li>
-                <li><span>Make the group cards big enough to read on a projector from the back of the room.</span></li>
-              </ul>
-              <h5>Make it useful</h5>
-              <ul>
-                <li><span>Add a box where I can type pairs who should be kept apart.</span></li>
-                <li><span>Give each group roles: facilitator, recorder, timekeeper, and reporter.</span></li>
-                <li><span>Let me save a list of names in this browser so I don't paste it every time.</span></li>
-              </ul>
-              <h5>Make it fun</h5>
-              <ul>
-                <li><span>Make the shuffle dramatic: names spin and land one at a time, with a drumroll.</span></li>
-              </ul>
-              <h5>Look inside (no AI needed)</h5>
-              <ul>
-                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>GROUP_NAMES</code>, change them to your school's mascots, and press <strong>Run my changes</strong>.</li>
-              </ul>
-            </details>
-          </div>
-        </article>
+          <article class="cabinet" id="syllabus-page">
+            <div class="shot" aria-hidden="true" data-shot="syllabus"><img src="assets/starters/syllabus-page.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
+            <div class="cabinet-head"><div><h3>The Syllabus Page</h3><p class="for">For teachers and course leads</p></div></div>
+            <p>A made-up course as a page families actually read: the questions people ask, each with a short answer, and the year as a row per unit.</p>
+            <div class="actions">
+              <button class="primary" type="button" data-play="syllabus">Play</button>
+              <button type="button" data-copy-machine="syllabus">Copy for my AI</button>
+            </div>
+            <div class="cabinet-more">
+              <p class="monday"><strong>Monday:</strong> your syllabus on your class site, opening question by question.</p>
+              <details class="remix">
+                <summary>Remix menu</summary>
+                <h5>Make it yours</h5>
+                <ul>
+                  <li><span>Replace the course with my syllabus, keeping every policy exactly as written: ___</span></li>
+                  <li><span>Add a question: "___?" with the answer: ___.</span></li>
+                  <li><span>Use our school colors: ___ and ___.</span></li>
+                </ul>
+                <h5>Make it useful</h5>
+                <ul>
+                  <li><span>Add a "this week" marker that highlights the unit for today's date.</span></li>
+                  <li><span>Add a Spanish version of every answer, shown with a toggle at the top.</span></li>
+                  <li><span>Add a "what to bring tomorrow" line at the very top that I can change in one place.</span></li>
+                </ul>
+                <h5>Look inside (no AI needed)</h5>
+                <ul>
+                  <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>QUESTIONS</code>, change one answer, and press <strong>Run my changes</strong>.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
 
-        <article class="cabinet" id="feedback-builder">
-          <div class="shot" aria-hidden="true" data-shot="feedback"><img src="assets/starters/feedback-builder.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
-          <div class="cabinet-head"><div><h3>The Feedback Builder</h3><p class="for">For teachers and faculty</p></div></div>
-          <p>Choose a level for each part of a rubric, and warm, specific feedback comes together, with one clear next step.</p>
-          <div class="actions">
-            <button class="primary" type="button" data-play="feedback">Play</button>
-            <button type="button" data-copy-machine="feedback">Copy for my AI</button>
-          </div>
-          <div class="cabinet-more">
-            <p class="monday"><strong>Monday:</strong> load your own rubric and give faster, kinder feedback.</p>
-            <details class="remix">
-              <summary>Remix menu</summary>
-              <h5>Make it yours</h5>
-              <ul>
-                <li><span>Replace the rubric with mine: ___.</span></li>
-                <li><span>Rewrite every comment in my voice: shorter, and a little funnier.</span></li>
-                <li><span>Add a button that switches the comments to Spanish.</span></li>
-              </ul>
-              <h5>Make it useful</h5>
-              <ul>
-                <li><span>Add a "glow and grow" format: one thing that's working and one thing to try.</span></li>
-                <li><span>Let me save rubrics for different assignments and switch between them.</span></li>
-              </ul>
-              <h5>Make it fun</h5>
-              <ul>
-                <li><span>Show a sticker for the strongest part of the work.</span></li>
-              </ul>
-              <h5>Look inside (no AI needed)</h5>
-              <ul>
-                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>TONES</code>, write your own opener and closer, and press <strong>Run my changes</strong>.</li>
-              </ul>
-            </details>
-          </div>
-        </article>
-
-        <article class="cabinet" id="oracle">
-          <div class="shot" aria-hidden="true" data-shot="oracle"><img src="assets/starters/oracle.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
-          <div class="cabinet-head"><div><h3>The Teacher's Lounge Oracle</h3><p class="for">Just for fun</p></div></div>
-          <p>Ask a question. Get a dramatic, slightly ridiculous prophecy, with a gong.</p>
-          <div class="actions">
-            <button class="primary" type="button" data-play="oracle">Play</button>
-            <button type="button" data-copy-machine="oracle">Copy for my AI</button>
-          </div>
-          <div class="cabinet-more">
-            <p class="monday"><strong>Monday:</strong> a vocabulary oracle or a discussion-question picker, if you remix it.</p>
-            <details class="remix">
-              <summary>Remix menu</summary>
-              <h5>Make it silly</h5>
-              <ul>
-                <li><span>Make the Oracle talk like an over-excited game-show host.</span></li>
-                <li><span>Add a drumroll before the gong, and confetti when the prophecy appears.</span></li>
-                <li><span>Write 10 new prophecies about my school, ___. Keep them kind.</span></li>
-              </ul>
-              <h5>Make it yours</h5>
-              <ul>
-                <li><span>Change the colors to my school colors: ___ and ___.</span></li>
-                <li><span>Add a button that reads the prophecy out loud.</span></li>
-                <li><span>Teach the Oracle a new topic: when I ask about ___, it should answer with prophecies about ___.</span></li>
-              </ul>
-              <h5>Make it useful</h5>
-              <ul>
-                <li><span>Turn it into a vocabulary oracle. Each spin reveals one of these words and what it means: ___.</span></li>
-                <li><span>Turn it into a discussion-question picker for my class on ___.</span></li>
-              </ul>
-              <h5>Look inside (no AI needed)</h5>
-              <ul>
-                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>SPIN_SECONDS</code>, change the 3 to a 10, and press <strong>Run my changes</strong>.</li>
-                <li class="do">In the code, find the coffee topic under <code>TOPICS</code>. Add your own prophecy in quotes, end it with a comma, press <strong>Run my changes</strong>, and ask about coffee.</li>
-              </ul>
-            </details>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="level-header" id="level-2">
-        <p class="step-label">Level 2</p>
-        <h2>On your site</h2>
-        <p class="level-summary">Pages, not tools: each one ends up on a Google Site you can edit. Play it, hand it to your AI with your own document, and paste what comes back into your Site.</p>
-        <details class="level-note">
-          <summary>How to put it on your Site, in five steps</summary>
-          <ol>
-            <li>Press <strong>Copy for my AI</strong> and paste into your AI chat (<a href="#where">where, above</a>).</li>
-            <li>Copy a remix line such as "Replace the charter with this document," paste it, and paste your document's text where the ___ is.</li>
-            <li>When it looks right, copy the finished code out (each tool's spot is in <a href="#where">Where to paste it</a>).</li>
-            <li>In your Site: <strong>Insert</strong>, <strong>Embed</strong>, the <strong>Embed code</strong> tab, paste, <strong>Next</strong>, <strong>Insert</strong>.</li>
-            <li>Drag the box until the whole page shows. Before you publish, read the page against your document; the AI keeps the meaning, and you check every line.</li>
-          </ol>
-          <p>No Site yet? sites.google.com, then Blank site. You can also put a starter on a Site as it is: press Play, then Show the code, select it all, copy, and paste it into the Embed code tab. The full steps, and what to do when Sites refuses it: <a href="levels.html#site">Three levels, level 2</a>.</p>
-        </details>
-      </div>
-      <div class="machines">
-
-        <article class="cabinet" id="charter-cards">
-          <div class="shot" aria-hidden="true" data-shot="charter"><img src="assets/starters/charter-cards.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
-          <div class="cabinet-head"><div><h3>The Charter Cards</h3><p class="for">For a department, a team, or a PLC</p></div></div>
-          <p>A made-up department charter as a page: the commitments as badges, each section a card that opens when you tap it.</p>
-          <div class="actions">
-            <button class="primary" type="button" data-play="charter">Play</button>
-            <button type="button" data-copy-machine="charter">Copy for my AI</button>
-          </div>
-          <div class="cabinet-more">
-            <p class="monday"><strong>Monday:</strong> your own charter or team norms on your site, readable on a phone.</p>
-            <details class="remix">
-              <summary>Remix menu</summary>
-              <h5>Make it yours</h5>
-              <ul>
-                <li><span>Replace the charter with this document, section by section, keeping its meaning exactly: ___</span></li>
-                <li><span>Use our school colors: ___ and ___. Put our name at the top: ___.</span></li>
-                <li><span>Make the badges these five words: ___.</span></li>
-              </ul>
-              <h5>Make it useful</h5>
-              <ul>
-                <li><span>Add a "who to call" card at the end with made-up names and extensions.</span></li>
-                <li><span>Add a search box that opens only the cards that mention what I typed.</span></li>
-                <li><span>Add a Print button that opens every card and prints the page on one sheet.</span></li>
-              </ul>
-              <h5>Look inside (no AI needed)</h5>
-              <ul>
-                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>COMMITMENTS</code>, change one word, and press <strong>Run my changes</strong>.</li>
-              </ul>
-            </details>
-          </div>
-        </article>
-
-        <article class="cabinet" id="syllabus-page">
-          <div class="shot" aria-hidden="true" data-shot="syllabus"><img src="assets/starters/syllabus-page.webp" alt="" width="960" height="600" loading="lazy" decoding="async"><span class="shot-play"><span data-icon="play"></span>Play</span></div>
-          <div class="cabinet-head"><div><h3>The Syllabus Page</h3><p class="for">For teachers and course leads</p></div></div>
-          <p>A made-up course as a page families actually read: the questions people ask, each with a short answer, and the year as a row per unit.</p>
-          <div class="actions">
-            <button class="primary" type="button" data-play="syllabus">Play</button>
-            <button type="button" data-copy-machine="syllabus">Copy for my AI</button>
-          </div>
-          <div class="cabinet-more">
-            <p class="monday"><strong>Monday:</strong> your syllabus on your class site, opening question by question.</p>
-            <details class="remix">
-              <summary>Remix menu</summary>
-              <h5>Make it yours</h5>
-              <ul>
-                <li><span>Replace the course with my syllabus, keeping every policy exactly as written: ___</span></li>
-                <li><span>Add a question: "___?" with the answer: ___.</span></li>
-                <li><span>Use our school colors: ___ and ___.</span></li>
-              </ul>
-              <h5>Make it useful</h5>
-              <ul>
-                <li><span>Add a "this week" marker that highlights the unit for today's date.</span></li>
-                <li><span>Add a Spanish version of every answer, shown with a toggle at the top.</span></li>
-                <li><span>Add a "what to bring tomorrow" line at the very top that I can change in one place.</span></li>
-              </ul>
-              <h5>Look inside (no AI needed)</h5>
-              <ul>
-                <li class="do">Press <strong>Play</strong>, then <strong>Show the code</strong>. Find <code>QUESTIONS</code>, change one answer, and press <strong>Run my changes</strong>.</li>
-              </ul>
-            </details>
-          </div>
-        </article>
-
-      </div>
-
-      <details class="level-note">
-        <summary>What Google Sites does to pasted code</summary>
-        <p>Google Sites shows it inside a frame on your page. That keeps your site safe, and it sets the limits: the page can't remember anything between visits, so saved settings and scores vanish; it can't reach the rest of your site or your visitors' accounts; sound and full screen wait for a tap; and a very long page may be refused or load slowly. It shows only as big as you drag the frame. Cut off, or misbehaving? Copy the request below into your AI.</p>
-        <p>If what you pasted doesn't fit or doesn't behave, hand your AI this:</p>
-        <div class="copybox">
-          <p id="sites-stem">Make this one self-contained HTML file for a Google Sites embed box about 800 pixels wide: no outside libraries, fonts, or images; nothing saved between visits; no sound until a tap; large type that works on a phone; and as short as it can be while keeping everything it does.</p>
-          <button data-copy-from="sites-stem" type="button">Copy</button>
         </div>
-      </details>
-
-      <div class="level-header" id="level-3">
-        <p class="step-label">Level 3</p>
-        <h2>Behind the scenes</h2>
-        <p class="level-summary">Scripts, not pages: nothing to play here. A script is a few instructions Google runs for you inside your Drive, in a tool called Apps Script that's built into every Google account; you approve what it may touch before it runs.</p>
-        <dl class="button-legend">
-          <div><dt><span class="button-look">Copy the script</span></dt><dd>The script alone, for script.google.com.</dd></div>
-          <div><dt><span class="button-look">Copy for my AI</span></dt><dd>The script with a note asking your AI to explain it line by line before you run it. A remix line or an error message only makes sense to your AI once it has the script, so paste this first. When your AI hands back a changed script, paste the whole thing over the old one in your project, save, and run again.</dd></div>
-        </dl>
-        <p class="more-link">Each card has the whole path: what to make first, every step with its place, what you'll see when it worked, and what to do when it breaks. <a href="levels.html#script">The cautions, on Three levels</a>.</p>
-      </div>
-      <div class="machines scripts">
-
-        <article class="cabinet" id="drive-inventory">
-          <div class="shot" aria-hidden="true"><img src="assets/starters/drive-inventory.webp" alt="" width="960" height="600" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div><h3>The Drive Inventory</h3><p class="for">For curriculum leads and anyone with a deep folder</p></div></div>
-          <p>Point it at a folder. It reads every folder inside and writes a Sheet: each document, its type, its link, and when it last changed.</p>
-          <p class="monday"><strong>Monday:</strong> a whole curriculum folder, one search away.</p>
-          <p class="meta">Apps Script · your Drive · about an hour the first time, fifteen minutes after</p>
-          <div class="actions">
-            <button class="primary" data-copy-script="inventory" type="button">Copy the script</button>
-            <button data-ask-script="inventory" type="button">Copy for my AI</button>
+        <details class="level-note">
+          <summary>What Google Sites does to pasted code</summary>
+          <p>Google Sites shows it inside a frame on your page. That keeps your site safe, and it sets the limits: the page can't remember anything between visits, so saved settings and scores vanish; it can't reach the rest of your site or your visitors' accounts; sound and full screen wait for a tap; and a very long page may be refused or load slowly. It shows only as big as you drag the frame.</p>
+          <p>Cut off, or misbehaving? Hand your AI this, in the same chat:</p>
+          <div class="copybox">
+            <p class="copy-kind" data-kind="prompt"><span data-icon="message-square-text"></span><strong>Prompt</strong><span>words: paste them into the same chat</span></p>
+            <p id="sites-stem">Make this one self-contained HTML file for a Google Sites embed box about 800 pixels wide: no outside libraries, fonts, or images; nothing saved between visits; no sound until a tap; large type that works on a phone; and as short as it can be while keeping everything it does.</p>
+            <button data-copy-from="sites-stem" type="button">Copy</button>
           </div>
-          <div class="script-steps" data-steps="inventory"></div>
+          <p>No Site yet? Go to sites.google.com and choose Blank site. You can also put a starter on a Site as it is: press Play, then Show the code, select it all, copy, and paste it into the Embed code tab. The full steps, and what to do when Sites refuses it: <a href="levels.html#site">Three levels, level 2</a>.</p>
+        </details>
+        <nav class="level-pager" aria-label="More levels">
+          <a class="pager-prev" href="#chat"><span class="pager-dir">Back</span><span class="pager-name"><span class="num">1</span>In the chat</span></a>
+          <a class="pager-next" href="#script"><span class="pager-dir">Next</span><span class="pager-name"><span class="num">3</span>Behind the scenes</span></a>
+        </nav>
+      </article>
+
+      <!-- LEVEL 3 -->
+      <article class="level-panel shelf" id="script" aria-labelledby="level-3">
+        <div class="shelf-head">
+          <div class="level-head"><span class="num">3</span><h2 id="level-3">Behind the scenes</h2></div>
+          <p class="level-summary">Scripts: code that does a job in your Google Drive. Nothing to play. You paste a script into Apps Script, a tool built into every Google account, press Run, and approve what it may touch.</p>
+          <a class="action-link shelf-teach" href="levels.html#script">What level 3 teaches</a>
+        </div>
+        <ol class="how-row" aria-label="How level 3 works">
+          <li><span class="num">1</span><strong>Copy the script</strong><span>It's code, not a prompt. Paste your folder's or Doc's address into its settings line first, and the script carries it.</span></li>
+          <li><span class="num">2</span><strong>Paste it into Apps Script</strong><span>A new project at script.google.com, or inside your Sheet with <strong>Extensions</strong>, <strong>Apps Script</strong>. Not your AI chat.</span></li>
+          <li><span class="num">3</span><strong>Run it, and allow</strong><span>Choose its name beside <strong>Run</strong>, press Run, read what it asks to touch, and allow.</span></li>
+          <li><span class="num">4</span><strong>Open what it made</strong><span>The Execution log's last line links the Sheet or folder it made.</span></li>
+        </ol>
+        <div class="script-homes">
+          <div>
+            <h3>Standalone <span>on its own</span></h3>
+            <p>A project of its own, started at script.google.com, that shows up among your files in Drive. It reaches a file by its ID, and it's yours alone until you share it. <a href="#drive-inventory">The Drive Inventory</a> is one.</p>
+          </div>
+          <div>
+            <h3>Bound <span>inside a file</span></h3>
+            <p>Started from inside a Sheet, Doc, or Slides file with <strong>Extensions</strong>, <strong>Apps Script</strong>, and saved in it, not as a file of its own. It can use the file it lives in without an ID, everyone who can edit the file can edit the script, and a copy of the file carries a copy of the script. <a href="#doc-multiplier">The Doc Multiplier</a> is one.</p>
+          </div>
+        </div>
+        <div class="machines scripts">
+
+        <article class="cabinet" id="drive-inventory" data-kit="inventory">
+          <div class="shot" aria-hidden="true"><img src="assets/starters/drive-inventory.webp" alt="" width="960" height="600" loading="lazy" decoding="async"></div>
+          <div class="cabinet-text">
+            <div class="cabinet-head"><div><h3>The Drive Inventory</h3><p class="for">For curriculum leads and anyone with a deep folder</p></div></div>
+            <p>Point it at a folder. It reads every folder inside and writes a Sheet: each document, its type, its link, and when it last changed.</p>
+            <p class="monday"><strong>Monday:</strong> a whole curriculum folder, one search away.</p>
+            <p class="meta"><span class="nowrap">Standalone script</span> · <span class="nowrap">reads one folder</span> · <span class="nowrap">about an hour</span> <span class="nowrap">the first time</span></p>
+          </div>
+          <div class="script-kit" data-script-kit="inventory"></div>
           <details class="remix">
             <summary>Remix menu</summary>
+            <p class="remix-lead">Each line copies with the script, as a request for your AI to change it.</p>
             <h5>Make it useful</h5>
             <ul>
               <li><span>Add a column for who owns each file.</span></li>
@@ -364,24 +394,23 @@
           </details>
         </article>
 
-        <article class="cabinet" id="doc-multiplier">
+        <article class="cabinet" id="doc-multiplier" data-kit="multiplier">
           <div class="shot" aria-hidden="true"><img src="assets/starters/doc-multiplier.webp" alt="" width="960" height="600" loading="lazy" decoding="async"></div>
-          <div class="cabinet-head"><div><h3>The Doc Multiplier</h3><p class="for">For anyone who makes the same Doc many times</p></div></div>
-          <p>One template Doc and a Sheet of names. It makes a copy for each row, named for the row, gathers them in a folder, and writes each link back into the Sheet.</p>
-          <p class="monday"><strong>Monday:</strong> a planning doc for every team, made in one press.</p>
-          <p class="meta">Apps Script · a Doc and a Sheet · about an hour the first time, fifteen minutes after</p>
-          <div class="actions">
-            <button class="primary" data-copy-script="multiplier" type="button">Copy the script</button>
-            <button data-ask-script="multiplier" type="button">Copy for my AI</button>
+          <div class="cabinet-text">
+            <div class="cabinet-head"><div><h3>The Doc Multiplier</h3><p class="for">For anyone who makes the same Doc many times</p></div></div>
+            <p>One template Doc and a Sheet of names. From inside the Sheet, it makes a copy of the Doc for each row, named for the row, gathers them in a folder, and writes each link back into the Sheet.</p>
+            <p class="monday"><strong>Monday:</strong> a planning doc for every team, made in one press.</p>
+            <p class="meta"><span class="nowrap">Bound script</span>, <span class="nowrap">inside your Sheet</span> · <span class="nowrap">a Doc and a Sheet</span> · <span class="nowrap">about an hour</span> <span class="nowrap">the first time</span></p>
           </div>
-          <div class="script-steps" data-steps="multiplier"></div>
+          <div class="script-kit" data-script-kit="multiplier"></div>
           <details class="remix">
             <summary>Remix menu</summary>
+            <p class="remix-lead">Each line copies with the script, as a request for your AI to change it.</p>
             <h5>Make it useful</h5>
             <ul>
               <li><span>Replace the words TEAM and DATE inside each copy with the row's name and today's date.</span></li>
               <li><span>Skip a row if column B already has a link, so I can run it again safely.</span></li>
-              <li><span>Share each copy with the email address in column C, as an editor.</span></li>
+              <li><span>Add a menu to this Sheet called Multiplier, with one item that runs multiply, so I can run it from the Sheet without opening Apps Script.</span></li>
             </ul>
             <h5>Make it careful</h5>
             <ul>
@@ -390,11 +419,17 @@
           </details>
         </article>
 
+        </div>
+        <p class="more-link">Before a script goes near real work: what you're allowing, student data, and when others can use it as a web app, on <a href="levels.html#permissions">Three levels, level 3</a>.</p>
+        <nav class="level-pager" aria-label="More levels">
+          <a class="pager-prev" href="#site"><span class="pager-dir">Back</span><span class="pager-name"><span class="num">2</span>On your site</span></a>
+          <a class="pager-next" href="invent.html"><span class="pager-dir">Next</span><span class="pager-name">Invent your own</span></a>
+        </nav>
+      </article>
       </div>
 
     </div>
   </section>
-
 
 </main>
 
@@ -463,7 +498,8 @@
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js?v=4f3fe60c"></script>
-<script src="assets/icons.js?v=f52ed3cf"></script>
-<script src="assets/site.js?v=05e929f1"></script>
+<script src="assets/icons.js?v=30e30865"></script>
+<script src="assets/drive-ids.js?v=b30d9171"></script>
+<script src="assets/site.js?v=6f13d4bd"></script>
 </body>
 </html>

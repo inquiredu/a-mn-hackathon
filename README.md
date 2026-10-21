@@ -36,7 +36,7 @@ Everything about the morning lives in one session file, `assets/session.js`: the
 | `scripts/serve.js` | A small local server for previewing |
 | `scripts/check-all.js` | Every check in one go: `node scripts/check-all.js` |
 | `scripts/check-session.js` | Checks the session file and every page the way the browser reads them |
-| `scripts/test-stage-timer.js`, `scripts/test-oracle.js` | Tests for the timers and for how the Oracle reads a question |
+| `scripts/test-stage-timer.js`, `scripts/test-oracle.js`, `scripts/test-drive-ids.js` | Tests for the timers, for how the Oracle reads a question, and for how a level 3 script's settings line reads a pasted address |
 | `.githooks/` | Run the checks, and keep credentials out, on every commit and push. Turn on once per clone: `git config core.hooksPath .githooks` |
 | `.github/workflows/checks.yml` | GitHub Actions runs the same checks on every pull request |
 
@@ -52,7 +52,7 @@ Two ways. **Without any code:** run it from the live site as it is. Make your ow
 6. Optional checks, for anyone with git and Node.js on their computer: turn on the hooks (`git config core.hooksPath .githooks`) and run `node scripts/check-all.js`. It tells you about a link the pages name that the session file doesn't have, a brace that nothing fills, a typed site address in a message, and parts that don't add up to the advertised length. Preview with `node scripts/serve.js`, and walk the session with `?now=10:50` on the end of any page's address (that time, on your `day`, in your `timeZone`). If you edit on github.com instead, skip this step and open your live site: check every link and the time on each page yourself.
 7. Open your site's Hosts page: it now shows your links, and its run of show is yours.
 
-**To add a starter:** put one self-contained HTML file in `cabinets/` (styles and scripts inline, made-up data only, so it pastes whole into an AI tool), add it to the `MACHINES` list at the top of `assets/site.js`, and add its card to `starters.html`. Level 3 scripts go in `recipes/` and the `SCRIPTS` list, with their steps in `SCRIPT_STEPS`.
+**To add a starter:** put one self-contained HTML file in `cabinets/` (styles and scripts inline, made-up data only, so it pastes whole into an AI tool), add it to the `MACHINES` list at the top of `assets/site.js`, and add its card to `starters.html`. A level 3 script goes in `recipes/` and in the `SCRIPT_KITS` list in `assets/site.js` (its name and file, standalone or bound, the function to run, its settings line, the prompt that asks an AI for one like it, and what to do when it breaks); a page shows its kit with `<div data-script-kit="…"></div>`. The checks make sure the script has the settings line and the function its steps name.
 
 **To add a source:** add one entry to `assets/sources-data.js`. The Sources page's tabs, filters, search, and start-here paths pick it up.
 

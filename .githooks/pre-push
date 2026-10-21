@@ -12,6 +12,7 @@ while read -r local_ref local_sha remote_ref remote_sha; do
   node "$pushed/scripts/check-session.js" || fail=1
   node "$pushed/scripts/test-stage-timer.js" > /dev/null || fail=1
   node "$pushed/scripts/test-oracle.js" > /dev/null || fail=1
+  node "$pushed/scripts/test-drive-ids.js" > /dev/null || fail=1
   rm -rf "$pushed"; pushed=
 done
 [ $fail -eq 0 ] || echo "pre-push: push stopped. Fix the above, or skip once with --no-verify." >&2

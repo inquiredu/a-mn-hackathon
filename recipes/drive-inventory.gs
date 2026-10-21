@@ -1,4 +1,6 @@
+// Google Apps Script: code to paste into Apps Script, not a prompt for an AI chat.
 // Drive inventory: every file in a folder and its subfolders, in a new Google Sheet.
+// It lives on its own (a standalone script): at script.google.com, press New project and paste it there.
 // 1. Paste the folder's ID between the quotes. (Open the folder in Drive: the ID is the long string after folders/ in the address.)
 // 2. Choose "inventory" and press Run. The first run asks to see your Drive and make a Sheet. Read it, then allow.
 // 3. Open the Execution log for the link to the Sheet.

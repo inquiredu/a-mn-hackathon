@@ -231,6 +231,35 @@ document.querySelectorAll(".menu-toggle").forEach((button) => {
 });
 
 
+// ---------- More: the pages for reading and for hosts, under one button ----------
+// A disclosure, not an application menu: Tab moves through its links, Escape or a click elsewhere closes it, and
+// leaving it with the keyboard closes it too. On a page it holds, the button says that page's name. On a phone the
+// Menu button above opens every page, More's among them, and this button steps aside (site.css).
+
+document.querySelectorAll(".nav-more").forEach((item) => {
+  const button = item.querySelector(".more-toggle");
+  const list = item.querySelector(".more-menu");
+  if (!button || !list) return;
+  item.classList.add("enhanced");
+  const current = list.querySelector('a[aria-current="page"]');
+  if (current) {
+    button.classList.add("is-current");
+    button.querySelector(".more-current").textContent = current.textContent;
+    button.setAttribute("aria-label", current.textContent + ", and more pages");
+  }
+  const setOpen = (open) => {
+    button.setAttribute("aria-expanded", String(open));
+    list.classList.toggle("open", open);
+  };
+  button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && button.getAttribute("aria-expanded") === "true") { setOpen(false); button.focus(); }
+  });
+  document.addEventListener("click", (event) => { if (!item.contains(event.target)) setOpen(false); });
+  item.addEventListener("focusout", (event) => { if (event.relatedTarget && !item.contains(event.relatedTarget)) setOpen(false); });
+});
+
+
 // ---------- A link to a place inside a closed fold opens the fold ----------
 
 function openTo(hash) {

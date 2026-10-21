@@ -103,6 +103,33 @@ Object.entries(kits).forEach(([id, kit]) => {
   if (kit.lives === "bound" && !/getActive(Spreadsheet|Document|Presentation|Form)\(\)/.test(code)) problems.add(kit.file + ": a bound script that never uses the file it lives in");
 });
 
+// Type stays on its scale (site.css, "The type scale"): every font size is a token, a clamp() for a heading that
+// grows with the screen, an em of the sentence it sits in, or 1rem for a text box (anything smaller makes a phone zoom
+// in). A one-off size is how the site drifted to 69 different text styles before October 21.
+{
+  const css = read("assets/site.css").replace(/\/\*[\s\S]*?\*\//g, "");
+  const allowed = /^(var\(--fs-[a-z0-9-]+\)|clamp\(.*\)|[.\d]+em|1rem|106\.25%|1\.75rem|2\.5rem)$/;
+  [...css.matchAll(/font-size:\s*([^;}!]+?)\s*(?:!important)?\s*[;}]/g)].forEach(([, size]) => {
+    if (!allowed.test(size.trim())) problems.add("assets/site.css: font-size " + size.trim() + " isn't on the type scale; use a --fs- token");
+  });
+  [...css.matchAll(/\bfont:\s*([^;}]+)[;}]/g)].forEach(([, value]) => {
+    const size = value.trim().split(/\s+/).find((part) => /^[.\d]+(px|rem)(\/|$)/.test(part));
+    if (size) problems.add("assets/site.css: font: " + value.trim() + " sets a size off the type scale; use a --fs- token");
+  });
+}
+
+// Every page loads the fonts itself, with the same address the brand file imports, so the font request starts with
+// the page instead of after north-shore.css arrives, and both ask for the same file
+{
+  const imported = (read("assets/brand/north-shore.css").match(/@import url\("([^"]+)"\)/) || [])[1];
+  pages.forEach((page) => {
+    const html = read(page);
+    if (!html.includes("north-shore.css")) return;
+    const linked = (html.match(/<link rel="stylesheet" href="(https:\/\/fonts\.googleapis\.com\/[^"]+)">/) || [])[1];
+    if (!linked || linked.replace(/&amp;/g, "&") !== imported) problems.add(page + ": its Google Fonts link should match the @import in assets/brand/north-shore.css");
+  });
+}
+
 // Every script parses: one syntax error stops a whole file, and the page goes quiet without saying why
 const scripts = ["assets", "scripts", "recipes"].flatMap((dir) => fs.readdirSync(path.join(root, dir))
   .filter((file) => file.endsWith(".js") || file.endsWith(".gs")).map((file) => ({ name: dir + "/" + file, code: read(dir + "/" + file) })));

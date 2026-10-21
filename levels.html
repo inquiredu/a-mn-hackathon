@@ -9,8 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="assets/theme.js?v=36ded2f9"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="assets/brand/north-shore.css?v=95a5640e">
-<link rel="stylesheet" href="assets/site.css?v=da6501aa">
+<link rel="stylesheet" href="assets/site.css?v=f8db002d">
 </head>
 <body data-jump="#chat" data-jump-label="Jump to level 1">
 <a class="skip" href="#main">Skip to the main content</a>
@@ -20,14 +21,20 @@
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
     <nav id="site-menu" aria-label="Site">
       <ul class="site-nav">
-        <li><a href="index.html">Home</a></li>
+        <li class="nav-home"><a href="index.html">Home</a></li>
         <li><a href="levels.html" aria-current="page">Three levels</a></li>
         <li><a href="starters.html">Starters</a></li>
         <li><a href="invent.html">Invent your own</a></li>
-        <li><a href="hosts.html">Hosts</a></li>
-        <li><a href="sources.html">Sources</a></li>
-        <li class="host-item host-first"><a href="present.html">Present</a></li>
-        <li class="host-item"><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
+        <li class="nav-more">
+          <button class="more-toggle" type="button" aria-expanded="false" aria-controls="more-menu"><span class="more-label">More</span><span class="more-current"></span></button>
+          <ul class="more-menu" id="more-menu">
+            <li><a href="from-the-room.html">From the room</a></li>
+            <li><a href="sources.html">Sources</a></li>
+            <li class="more-group"><a href="hosts.html">Hosts</a></li>
+            <li><a href="present.html">Present</a></li>
+            <li><span class="link-slot" data-link="repo" data-label="GitHub" data-style="nav"></span></li>
+          </ul>
+        </li>
         <li class="theme-item"><button class="theme-toggle" type="button" aria-pressed="true" title="Night theme"><span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Night theme</span><span class="theme-state" aria-hidden="true"></span></button></li>
       </ul>
     </nav>
@@ -114,7 +121,7 @@
 
       <!-- LEVEL 1 -->
       <article class="level level-panel" id="chat" aria-labelledby="level-1">
-        <div class="level-head"><span class="num">1</span><h2 id="level-1">In the chat</h2></div>
+        <div class="level-head"><span class="num">1</span><h2 id="level-1">In the chat</h2><a class="action-link level-try" href="starters.html#chat">The level 1 starters</a></div>
         <p class="meta">Twenty minutes · an AI chat</p>
         <div class="level-body">
         <div class="level-intro">
@@ -164,7 +171,7 @@
 
       <!-- LEVEL 2 -->
       <article class="level level-panel" id="site" aria-labelledby="level-2">
-        <div class="level-head"><span class="num">2</span><h2 id="level-2">On your site</h2></div>
+        <div class="level-head"><span class="num">2</span><h2 id="level-2">On your site</h2><a class="action-link level-try" href="starters.html#site">The level 2 starters</a></div>
         <p class="meta">An hour · a Google Site you can edit</p>
         <div class="level-body">
         <div class="level-intro">
@@ -231,7 +238,7 @@
 
       <!-- LEVEL 3 -->
       <article class="level level-panel" id="script" aria-labelledby="level-3">
-        <div class="level-head"><span class="num">3</span><h2 id="level-3">Behind the scenes</h2></div>
+        <div class="level-head"><span class="num">3</span><h2 id="level-3">Behind the scenes</h2><a class="action-link level-try" href="starters.html#script">The level 3 starters</a></div>
         <p class="meta">An hour the first time, fifteen minutes after that · your Google Drive</p>
         <div class="level-body">
         <div class="level-intro">
@@ -442,6 +449,6 @@
 <script src="assets/timing.js?v=4f3fe60c"></script>
 <script src="assets/drive-ids.js?v=b30d9171"></script>
 <script src="assets/icons.js?v=30e30865"></script>
-<script src="assets/site.js?v=6f13d4bd"></script>
+<script src="assets/site.js?v=28cd138f"></script>
 </body>
 </html>

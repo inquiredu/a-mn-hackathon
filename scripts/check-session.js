@@ -70,6 +70,39 @@ pages.forEach((page) => {
   });
 });
 
+// Every copy well says what it holds and where it goes, in its first line: a prompt is words for an AI chat, a script
+// is code for the place that runs it, a message is for a person. The one time people pasted code where a prompt goes
+// (October 9), nothing near the button said which was which.
+pages.forEach((page) => {
+  const html = read(page).replace(/<!--[\s\S]*?-->/g, "");
+  [...html.matchAll(/<div\b[^>]*\bclass="(?:[^"]*\s)?copybox(?:\s[^"]*)?"[^>]*>\s*(<[^>]+>)/g)].forEach(([, first]) => {
+    if (!/class="copy-kind"/.test(first)) problems.add(page + ": a copy well doesn't start with its copy-kind line (Prompt, Script, or Message, and where it goes)");
+  });
+  [...html.matchAll(/<p class="copy-kind"[^>]*>[\s\S]*?<strong>([^<]*)<\/strong>\s*<span>([^<]*)<\/span>/g)].forEach(([, kind, where]) => {
+    if (!["Prompt", "Script", "Message"].includes(kind)) problems.add(page + ": a copy-kind line names \"" + kind + "\"; it should be Prompt, Script, or Message");
+    if (!where.trim()) problems.add(page + ": a copy-kind line for " + kind + " doesn't say where it goes");
+  });
+});
+
+// Every script kit a page asks for is written in site.js, and each kit's script has the settings line and the function
+// its steps name, so the box that fills the ID and the step that says "choose inventory" both meet the real file
+const kitSource = read("assets/site.js").match(/const SCRIPT_KITS = (\{[\s\S]*?\n\});/);
+const kits = kitSource ? vm.runInNewContext("(" + kitSource[1] + ")") : {};
+if (!kitSource) problems.add("assets/site.js: can't find SCRIPT_KITS");
+pages.forEach((page) => {
+  [...read(page).matchAll(/data-script-kit="([^"]*)"/g)].forEach(([, id]) => {
+    if (!kits[id]) problems.add(page + ": asks for a script kit site.js doesn't have: " + id);
+  });
+});
+Object.entries(kits).forEach(([id, kit]) => {
+  if (!fs.existsSync(path.join(root, kit.file))) { problems.add("The " + id + " kit's script doesn't exist: " + kit.file); return; }
+  const code = read(kit.file);
+  if (!new RegExp("^const " + kit.setting.name + ' = "', "m").test(code)) problems.add(kit.file + ": has no settings line const " + kit.setting.name + ' = "…" for the kit\'s address box');
+  if (!new RegExp("^function " + kit.fn + "\\(", "m").test(code)) problems.add(kit.file + ": has no function " + kit.fn + "(), which the kit's steps tell people to choose");
+  if (!["standalone", "bound"].includes(kit.lives)) problems.add("The " + id + " kit says it lives \"" + kit.lives + "\"; it's standalone or bound");
+  if (kit.lives === "bound" && !/getActive(Spreadsheet|Document|Presentation|Form)\(\)/.test(code)) problems.add(kit.file + ": a bound script that never uses the file it lives in");
+});
+
 // Every script parses: one syntax error stops a whole file, and the page goes quiet without saying why
 const scripts = ["assets", "scripts", "recipes"].flatMap((dir) => fs.readdirSync(path.join(root, dir))
   .filter((file) => file.endsWith(".js") || file.endsWith(".gs")).map((file) => ({ name: dir + "/" + file, code: read(dir + "/" + file) })));

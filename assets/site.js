@@ -17,12 +17,6 @@ const MACHINES = {
   syllabus: { name: "The Syllabus Page", file: "cabinets/syllabus-page.html" }
 };
 
-// Level 3: scripts for Apps Script, shown and copied from one file each
-const SCRIPTS = {
-  inventory: { name: "The Drive Inventory", file: "recipes/drive-inventory.gs" },
-  multiplier: { name: "The Doc Multiplier", file: "recipes/doc-multiplier.gs" }
-};
-
 // The AI tools people paste into: one source for the next-step sheet and for every page's
 // "Where do I paste it?" block (<div data-where></div>). tip: the one move before pasting, for the sheet.
 // where: the same, said in full. code: how to copy the finished code out, for a page that goes on a Google Site.
@@ -50,71 +44,125 @@ const WHERE_NOTES = [
 ];
 
 
-// Level 3: the scripts' steps, written once for Starters and Three levels (<div data-steps="inventory"></div>).
-// Every step names its place; the permission screen is described as Google shows it.
-// In the text, `backticks` mark exact words to find or type (shown as code), and *asterisks* the name of a button or menu.
+// Level 3: the scripts. Each kit is written once here and drawn wherever a page asks for it
+// (<div data-script-kit="inventory"></div>), on Starters and Three levels alike, so the two can't disagree.
+// A kit says what the script is (code, for Apps Script) and where it lives (standalone: a project of its own at
+// script.google.com; bound: inside a Sheet, made with Extensions › Apps Script), then four steps.
+// In the text, `backticks` mark exact words to find or type (shown as code), *asterisks* the name of a button or
+// menu, and [words](address) a link.
 const permission = (job) => ({
   text: "The first run asks permission:",
   sub: [
     "A box says the project needs your permission: press *Review permissions* and choose your school account.",
-    "Google may say it hasn't verified this app, because you just wrote it: press *Advanced*, then the link that starts “Go to”. It may end in “(unsafe)”: that's Google's word for any script it hasn't reviewed, including your own.",
-    "It lists what the script may do, each with a box to tick: see, edit, create, and delete your Google Drive files, and your Sheets. That's Google's standard wording for any script that touches Drive. " + job + " Tick every box (or *Select all*), then press the button at the bottom (*Continue* or *Allow*)."
+    "Google may warn “This app isn't verified”, because it hasn't reviewed a script you just wrote; on a personal Gmail account it always does. Press *Advanced*, then the link that starts “Go to”. It ends in “(unsafe)”: that's Google's word for any script it hasn't reviewed, including your own.",
+    "It lists what the script may do, each with a box to tick: see, edit, create, and delete your Google Drive files, and your Sheets. That's Google's standard wording for any script that touches Drive. " + job + " Tick every box, then press the button at the bottom (*Continue* or *Allow*)."
   ],
   stop: "Stop here if you see “blocked by your administrator”: your district doesn't allow scripts. Ask your technology office."
 });
-const SCRIPT_STEPS = {
+const SCRIPT_KITS = {
   inventory: {
-    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and does a job in your Drive. Nothing to play.",
+    name: "The Drive Inventory",
+    file: "recipes/drive-inventory.gs",
+    lives: "standalone",
+    fn: "inventory",
+    setting: { name: "FOLDER_ID", want: "folder", label: "Your practice folder's address",
+      placeholder: "https://drive.google.com/drive/folders/…",
+      manual: "Left the address box empty? Find the line `const FOLDER_ID = \"PASTE_THE_FOLDER_ID_HERE\"` and paste your folder's ID over the capital letters, keeping the quote marks. The ID is the long code after `folders/` in the folder's address; stop before any `?`." },
     before: [
       "A practice folder in Drive with two or three made-up Docs and one folder inside it. Point it at a real folder once you've seen it work."
     ],
-    steps: [
-      "Press *Copy the script*.",
-      "Go to `script.google.com` and press *New project*. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
-      "Open your practice folder in Drive and look at the address bar: `drive.google.com/drive/folders/1AbC…xyz`. Copy the letters and numbers after `folders/`, and stop before any `?`.",
-      "In the script, find the line `const FOLDER_ID = \"PASTE_THE_FOLDER_ID_HERE\"` and paste over the capital letters, keeping the quote marks.",
-      "Press the *Save* icon. In the toolbar, the menu beside *Run* and *Debug* shows a name: choose `inventory`. Press *Run*.",
-      permission("This script only reads files and makes one new Sheet; it never deletes."),
-      "When it finishes, a panel called *Execution log* opens below the code. Its last line is “N files listed. Open the inventory:” with a link. Click it."
-    ],
+    prompt: "Write a Google Apps Script that lists every file in one Google Drive folder and all of its subfolders in a new Google Sheet: one row per file, with the folder path, the file's title, its type in plain words (Doc, Sheet, Slides, PDF), its link, and when it last changed. Use only DriveApp and SpreadsheetApp. Put the folder ID in one clearly marked line at the top, and name the main function inventory. Then tell me, in plain language, what the first run will ask permission for and why.",
+    allow: "This script only reads files and makes one new Sheet; it never deletes.",
+    log: "N files listed. Open the inventory:",
     end: "A new Sheet in My Drive named “Inventory:” plus your folder's name, one row per file: its folder, title, type, link, and when it last changed.",
     breaking: [
       "Red text in the *Execution log*: copy it and paste it into your AI chat with “What went wrong?”",
       "Red text about permission or authorization: a box was probably left unticked on the permission screen. Press *Run* again and tick every box if it asks; if it doesn't ask, paste the red text into your AI chat with “What went wrong?”",
-      "“Unexpected error” or “not found”: the folder ID is wrong or incomplete. Copy it again, stopping before any `?`.",
-      "A folder with thousands of files can take minutes and may stop before the end. Try a small folder first."
+      "“Syntax error” on line 1: what you pasted is words, not code (the request to explain it, or the prompt). Copy the script itself, select everything in the editor, and paste again.",
+      "“Unexpected error” or “not found”: the folder ID is wrong or incomplete. Paste the folder's address into the box in step 1 again, copy the script again, and paste it over the old one.",
+      "A folder with thousands of files can take minutes and may stop before the end. Try a small folder first.",
+      "“Not found” after pasting a script your AI changed: its settings line has the placeholder again. Put your ID back between the quotes, as in step 2."
     ]
   },
   multiplier: {
-    kind: "A script, not a page: it runs in Google Apps Script, inside your Google account, and makes Docs in your Drive. Nothing to play.",
+    name: "The Doc Multiplier",
+    file: "recipes/doc-multiplier.gs",
+    lives: "bound",
+    fn: "multiply",
+    setting: { name: "TEMPLATE_ID", want: "doc", label: "Your template Doc's address",
+      placeholder: "https://docs.google.com/document/d/…/edit",
+      manual: "Left the address box empty? Find the line `const TEMPLATE_ID = \"PASTE_THE_DOC_ID_HERE\"` and paste your Doc's ID over the capital letters, keeping the quote marks. The ID is the long code between `/d/` and `/edit` in the Doc's address." },
     before: [
       "A Doc to copy. Whatever is in it gets copied; a made-up team planning doc is fine.",
-      "A Sheet whose first tab has one made-up name per row in column A, starting in row 2, with a heading like “Team” in row 1. Leave column B empty: the script writes each copy's link there, replacing anything in it."
+      "A Sheet whose first tab has a heading like “Team” in row 1 and one made-up name per row in column A, from row 2. Leave column B empty: the script writes each copy's link there, replacing anything in it. The script will live inside this Sheet."
     ],
-    steps: [
-      "Press *Copy the script*.",
-      "Go to `script.google.com` and press *New project*. A project is a file in your Drive that holds a script. Select everything in the editing area, delete it, and paste.",
-      "Open your Doc and look at the address bar: `docs.google.com/document/d/1AbC…xyz/edit`. Copy the letters and numbers between `/d/` and `/edit`. In the script, find `const TEMPLATE_ID = \"PASTE_THE_DOC_ID_HERE\"` and paste over the capital letters, keeping the quote marks.",
-      "Do the same for your Sheet on the `SHEET_ID` line; its ID sits between `/d/` and `/edit` in the same way.",
-      "Press the *Save* icon. In the toolbar, the menu beside *Run* and *Debug* shows a name: choose `multiply`. Press *Run*.",
-      permission("This script reads your Doc and Sheet and makes copies in one new folder; it never deletes."),
-      "When it finishes, a panel called *Execution log* opens below the code. Its last line is “N copies made. Open the folder:” with a link. Click it."
-    ],
+    prompt: "Write a Google Apps Script that lives inside a Google Sheet (a bound script) and makes one copy of a template Google Doc for every row of the Sheet's first tab: row 1 is a heading, column A holds a name, each copy is named for its row and saved in one new folder, and each copy's link goes into column B of its row. Use only DriveApp and SpreadsheetApp, with getActiveSpreadsheet for the Sheet it lives in. Put the template Doc's ID in one clearly marked line at the top, and name the main function multiply. Then tell me, in plain language, what the first run will ask permission for and why.",
+    allow: "This script reads your Doc and this Sheet, makes copies in one new folder, and writes their links into column B; it never deletes.",
+    log: "N copies made. Open the folder:",
     end: "A new folder in My Drive named “Copies of” plus your Doc's name, one copy per row, each named for its row; and column B of your Sheet now holds a link to each copy. Run it again only if you want a second set.",
     breaking: [
       "Red text in the *Execution log*: copy it and paste it into your AI chat with “What went wrong?”",
       "Red text about permission or authorization: a box was probably left unticked on the permission screen. Press *Run* again and tick every box if it asks; if it doesn't ask, paste the red text into your AI chat with “What went wrong?”",
-      "“Unexpected error” or “not found”: an ID is wrong or incomplete. Copy it again, stopping before `/edit`.",
-      "Blank Docs with the right names: the Doc you pointed at is empty, or you pasted the Sheet's ID on the Doc's line."
+      "“Syntax error” on line 1: what you pasted is words, not code (the request to explain it, or the prompt). Copy the script itself, select everything in the editor, and paste again.",
+      "“Cannot read properties of null”: the script isn't inside your Sheet. Open the Sheet, choose *Extensions*, then *Apps Script*, and paste it there.",
+      "“Unexpected error” or “not found”: the Doc's ID is wrong or incomplete. Paste the Doc's address into the box in step 1 again, copy the script again, and paste it over the old one.",
+      "Blank Docs with the right names: the Doc you pointed at is empty.",
+      "“Not found” after pasting a script your AI changed: its settings line has the placeholder again. Put your ID back between the quotes, as in step 2."
     ]
   }
 };
+// In an AI chat, a script is something to read or copy, not a tool to run, so none of the three needs its setup step
+const CODE_TIP = "Paste it and send. No Canvas or Preview needed: a script comes back as code to read and copy.";
+// Where each kind of script goes in, said the same way in a kit's step 2 and in the sheet that opens after a copy
+const SCRIPT_HOMES = {
+  standalone: {
+    paste: "Open [script.google.com](https://script.google.com/) and press *New project*. The project that opens is a file of its own in your Drive: a standalone script. Select everything in the editor, delete it, paste, and press the *Save* icon.",
+    lead: "Now paste it into Apps Script, not your AI chat. It's code, and Apps Script is where it runs.",
+    tool: { name: "Open script.google.com", url: "https://script.google.com/", tip: "Press New project, select everything in the editor, delete it, and paste." }
+  },
+  bound: {
+    paste: "Open your Sheet and choose *Extensions*, then *Apps Script*. The project that opens lives inside the Sheet: a bound script. Select everything in the editor, delete it, paste, and press the *Save* icon.",
+    lead: "Now paste it into Apps Script inside your Sheet, not your AI chat. It's code, and Apps Script is where it runs.",
+    tool: { name: "Open Google Sheets", url: "https://sheets.google.com/", tip: "Open your Sheet, then Extensions › Apps Script. Select everything there, delete it, and paste." }
+  }
+};
 
-// The steps' small markup, drawn as text nodes, code, and strong: never parsed as HTML
+// The level 3 scripts, each loaded once from its file (and up front, so a Copy click never waits:
+// Safari refuses to copy after a wait)
+const scriptCache = {};
+async function loadKitScript(kit) {
+  if (!scriptCache[kit.file]) {
+    const response = await fetch(kit.file);
+    if (!response.ok) throw new Error("Could not load " + kit.file);
+    scriptCache[kit.file] = await response.text();
+  }
+  return scriptCache[kit.file];
+}
+document.querySelectorAll("[data-script-kit]").forEach((box) => { const kit = SCRIPT_KITS[box.dataset.scriptKit]; if (kit) loadKitScript(kit).catch(() => {}); });
+function askFor(kit, code) {
+  return 'Here is a Google Apps Script called "' + kit.name + '". ' +
+    "First, explain what it does in plain language, line by line, and tell me exactly what permission the first run will ask for and why. " +
+    "Then wait: I'll tell you what to change.\n\n```javascript\n" + code + "\n```";
+}
+// A remix line on a script card asks for a change to that script, so it carries the script with it: it works in any
+// chat, whether or not the script was pasted there first
+function changeFor(kit, change, code) {
+  return 'Here is a Google Apps Script called "' + kit.name + '". Change it so that it does this: ' + change + "\n\n" +
+    "Keep the line that starts with const " + kit.setting.name + " exactly as it is: I'll put my own value back in. " +
+    "Give me the whole script back, ready to paste over the old one, then tell me which lines changed and whether the first run will ask for any new permission.\n\n```javascript\n" + code + "\n```";
+}
+
+// The steps' small markup, drawn as text nodes, code, strong, and links: never parsed as HTML
 function richText(text) {
   const frag = document.createDocumentFragment();
-  text.split(/(`[^`]+`|\*[^*]+\*)/).forEach((part) => {
-    if (/^`.+`$/.test(part)) frag.append(el("code", "", part.slice(1, -1)));
+  text.split(/(`[^`]+`|\*[^*]+\*|\[[^\]]+\]\([^)\s]+\))/).forEach((part) => {
+    const link = part.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
+    if (link) {
+      const a = linkTo(link[2], link[1]);
+      if (/^https:/.test(link[2])) { a.className = "away"; a.target = "_blank"; a.rel = "noopener"; }
+      frag.append(a);
+    }
+    else if (/^`.+`$/.test(part)) frag.append(el("code", "", part.slice(1, -1)));
     else if (/^\*.+\*$/.test(part)) frag.append(el("strong", "", part.slice(1, -1)));
     else if (part) frag.append(part);
   });
@@ -429,7 +477,9 @@ document.querySelectorAll(".link-slot").forEach((slot) => {
 });
 
 
-// ---------- Three levels: one level at a time ----------
+// ---------- Three levels and Starters: one level at a time ----------
+// Both pages carry the same level bar over the same three levels (#chat, #site, #script), and remember the last one
+// opened in one place, so a level chosen on one page is the level the other opens on.
 // The level bar sticks under the now bar. One level shows at a time; the others wait as hidden="until-found", so the
 // browser's find-in-page still finds their words and opens the level they're in. A link to a level, or to a place
 // inside one (a fold, a step), opens that level first, with a short crossfade where the browser has view transitions
@@ -450,7 +500,7 @@ document.querySelectorAll(".level-bar").forEach((bar) => {
   addEventListener("resize", place);
   setInterval(place, 15000);
 
-  const levels = [...document.querySelectorAll("article.level:not(.later)")];
+  const levels = [...document.querySelectorAll(".level-panel")];
   if (!levels.length) return;
   const levelOf = (hash) => {
     const target = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1)));
@@ -594,30 +644,215 @@ document.querySelectorAll("[data-where]").forEach((box, n) => {
   box.replaceChildren(tabs, panels, notes);
 });
 
-document.querySelectorAll("[data-steps]").forEach((box) => {
-  const plan = SCRIPT_STEPS[box.dataset.steps];
-  if (!plan) return;
-  const item = (step) => {
-    const li = el("li");
-    if (typeof step === "string") { li.append(richText(step)); return li; }
-    li.append(richText(step.text));
-    const sub = el("ol", "sub-steps");
-    sub.type = "a";
-    step.sub.forEach((text) => { const s2 = el("li"); s2.append(richText(text)); sub.append(s2); });
-    li.append(sub);
-    if (step.stop) { const stop = el("p", "stop-note"); stop.append(richText(step.stop)); li.append(stop); }
+// A step with lettered sub-steps and a stop note, or a plain one, as a list item
+function stepItem(step) {
+  const li = el("li");
+  if (typeof step === "string") { li.append(richText(step)); return li; }
+  li.append(richText(step.text));
+  const sub = el("ol", "sub-steps");
+  sub.type = "a";
+  step.sub.forEach((text) => { const s2 = el("li"); s2.append(richText(text)); sub.append(s2); });
+  li.append(sub);
+  if (step.stop) { const stop = el("p", "stop-note"); stop.append(richText(step.stop)); li.append(stop); }
+  return li;
+}
+
+// A copy well's first line: what the text is, and where it goes (the same line every copy well on the site starts with)
+function copyKind(kind, where) {
+  const icons = { Prompt: "message-square-text", Script: "code-xml", Message: "send" };
+  const line = el("p", "copy-kind");
+  const icon = el("span");
+  if (typeof iconSvg === "function") { icon.innerHTML = iconSvg(icons[kind]); icon.setAttribute("aria-hidden", "true"); }
+  line.append(icon, el("strong", "", kind), el("span", "", where));
+  return line;
+}
+
+// The script kits: get the script (ours, with its settings line filled from an address; or a prompt for your AI to
+// write one), paste it into Apps Script, run it and allow, and open what it made. Nothing typed in a kit is saved,
+// and the address never goes to an AI: Copy for my AI to explain sends the script as written.
+let kitCount = 0;
+document.querySelectorAll("[data-script-kit]").forEach((box) => {
+  const id = box.dataset.scriptKit;
+  const kit = SCRIPT_KITS[id];
+  if (!kit || typeof DRIVE_IDS === "undefined") return;
+  const n = ++kitCount;
+  const home = SCRIPT_HOMES[kit.lives];
+  const guide = (here === "levels.html" ? "" : "levels.html") + "#permissions";
+  let value = "";   // the ID read from the address box, when it holds one
+
+  // 1. Get the script: ours, or a prompt for your AI, as two tabs (the choice is one or the other, never both)
+  const ways = el("div", "ways");
+  ways.setAttribute("role", "tablist");
+  ways.setAttribute("aria-label", "Where the script comes from");
+  const panels = [];
+  const tabs = [["ours", "Use ours", "tested"], ["yours", "Have your AI write one", "a prompt"]].map(([key, label, note], i) => {
+    const tab = el("button");
+    tab.type = "button";
+    tab.id = "kit-" + n + "-" + key + "-tab";
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-controls", "kit-" + n + "-" + key);
+    tab.append(label, el("span", "way-note", note));
+    ways.append(tab);
+    const panel = el("div", "way");
+    panel.id = "kit-" + n + "-" + key;
+    panel.setAttribute("role", "tabpanel");
+    panel.setAttribute("aria-labelledby", tab.id);
+    panels.push(panel);
+    return tab;
+  });
+  const choose = (i, focus) => {
+    tabs.forEach((tab, j) => { tab.setAttribute("aria-selected", String(i === j)); tab.tabIndex = i === j ? 0 : -1; panels[j].hidden = i !== j; });
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => choose(i));
+    tab.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      event.preventDefault();
+      choose(1 - i, true);
+    });
+  });
+
+  // Ours: the script itself, as code, with its settings line taking an address
+  const well = el("div", "codewell");
+  well.append(copyKind("Script", "code: paste it into Apps Script, not your AI chat"));
+  const fileBar = el("p", "code-file");
+  fileBar.append(el("span", "", kit.file.split("/").pop()), el("span", "code-lines", ""));
+  const top = el("pre", "code-top");
+  const setting = el("div", "code-setting");
+  const field = el("input");
+  field.type = "text";
+  field.id = "kit-" + n + "-address";
+  field.placeholder = kit.setting.placeholder;
+  field.spellcheck = false;
+  field.autocomplete = "off";
+  field.setAttribute("autocapitalize", "off");
+  const label = el("label", "", kit.setting.label);
+  label.htmlFor = field.id;
+  const line = el("div", "setting-line");
+  line.append(el("code", "", "const " + kit.setting.name + " = \""), field, el("code", "", "\";"));
+  const status = el("p", "setting-status");
+  status.id = field.id + "-status";
+  status.setAttribute("aria-live", "polite");
+  field.setAttribute("aria-describedby", status.id);
+  const idle = "Paste it here and the script carries its ID. Nothing you paste is saved or sent anywhere.";
+  status.textContent = idle;
+  setting.append(label, line, status);
+  const rest = el("details", "code-rest");
+  const restSummary = el("summary", "", "The rest of the script");
+  const restCode = el("pre");
+  rest.append(restSummary, restCode);
+  well.append(fileBar, top, setting, rest);
+  // A pasted address shrinks to the ID inside it, so the line shows exactly what the script will hold
+  const whose = { folder: "the folder's", doc: "the Doc's", sheet: "the Sheet's" }[kit.setting.want];
+  field.addEventListener("input", () => {
+    const read = DRIVE_IDS.read(field.value, kit.setting.want);
+    value = read.id || "";
+    field.removeAttribute("aria-invalid");
+    status.classList.toggle("is-found", !!read.id);
+    if (read.assumed) {
+      // Typed alone, or from an open?id= link, it can't say what it points at: taken, and said to be a guess
+      status.classList.remove("is-found");
+      status.textContent = "Taken as " + whose + " ID, but a long name can look like one too. Pasting the whole address from the bar at the top is surer.";
+    } else if (read.id && field.value.trim() !== read.id) {
+      field.value = read.id;
+      status.textContent = "Found " + whose + " ID in that address: the part the script needs. It's in the script now, ready to copy.";
+    } else {
+      status.textContent = read.id ? "That's " + whose + " ID. It's in the script now, ready to copy." : read.problem || idle;
+    }
+  });
+  // The script, cut at its settings line: what comes before it, the line itself (the box), and the rest, folded
+  loadKitScript(kit).then((code) => {
+    const lines = code.replace(/\n$/, "").split("\n");
+    const at = lines.findIndex((l) => l.startsWith("const " + kit.setting.name));
+    const after = lines.slice(at + 1);
+    while (after.length && !after[0].trim()) after.shift();   // the blank line under the setting
+    top.textContent = lines.slice(0, at).join("\n");
+    restCode.textContent = after.join("\n");
+    fileBar.lastChild.textContent = lines.length + " lines";
+    restSummary.textContent = "The rest of the script: " + after.length + " more lines";
+  }).catch(() => { top.textContent = "Couldn't load the script. Try opening the page from its web link."; });
+
+  const copyScript = el("button", "primary", "Copy the script");
+  copyScript.type = "button";
+  copyScript.addEventListener("click", async () => {
+    if (field.value.trim() && !value) {
+      field.setAttribute("aria-invalid", "true");
+      field.focus();
+      return;
+    }
+    try {
+      const code = DRIVE_IDS.fill(await loadKitScript(kit), { [kit.setting.name]: value });
+      copyText(code, () => nextStep(kit.name + " script", copyScript, { lead: home.lead, tools: [home.tool] }), copyScript);
+    } catch { say("Couldn't load that script. Try opening the page from its web link."); }
+  });
+  const askAI = el("button", "sm", "Copy for my AI to explain");
+  askAI.type = "button";
+  askAI.addEventListener("click", async () => {
+    try {
+      copyText(askFor(kit, await loadKitScript(kit)), () => nextStep(kit.name + " script, with a request to explain it", askAI, { aiTip: CODE_TIP }), askAI);
+    } catch { say("Couldn't load that script. Try opening the page from its web link."); }
+  });
+  // The script, and the script with a request to explain it, go to different places, so their buttons stand apart
+  const oursActions = el("div", "copy-actions");
+  oursActions.append(copyScript);
+  const explain = el("div", "kit-explain");
+  explain.append(askAI, el("p", "copy-note", "Not sure what it does? This copies the script with a request to explain each line in plain words, and what the first run will ask permission for. It goes into your AI chat, not Apps Script, and your address stays here."));
+  panels[0].append(well, oursActions, explain);
+
+  // Yours: the prompt, as words for your AI, and what to do with the script that comes back
+  const promptWell = el("div", "promptwell");
+  promptWell.append(copyKind("Prompt", "words: paste them into your AI chat"), el("p", "prompt-text", kit.prompt));
+  const copyPrompt = el("button", "primary", "Copy the prompt");
+  copyPrompt.type = "button";
+  copyPrompt.addEventListener("click", () => copyText(kit.prompt, () => nextStep("the prompt for " + kit.name, copyPrompt, {
+    lead: "Now paste it into your AI chat. It answers with a script: copy that code, and go on to step 2.", aiTip: CODE_TIP
+  }), copyPrompt));
+  const yoursActions = el("div", "copy-actions");
+  yoursActions.append(copyPrompt);
+  const yoursNote = el("p", "copy-note");
+  yoursNote.append(richText("Your AI answers with a script, which is code. Copy only the code, which comes in a box of its own with a copy button, not the words around it, and go on to step 2. Its script won't match ours line for line; the steps still fit, and its settings line wants the same ID. Ask it to explain anything you can't."));
+  panels[1].append(promptWell, yoursActions, yoursNote);
+  choose(0);
+
+  // The four steps
+  const stage = (title, ...parts) => {
+    const li = el("li", "stage");
+    li.append(el("h4", "stage-title", title), ...parts);
     return li;
   };
-  const list = (items, tag) => { const l = el(tag); items.forEach((step) => l.append(item(step))); return l; };
-  const end = el("p");
-  end.append(richText(plan.end));
-  box.replaceChildren(
-    el("p", "kind", plan.kind),
-    el("h4", "", "Before you start"), list(plan.before, "ul"),
-    el("h4", "", "Steps"), list(plan.steps, "ol"),
-    el("h4", "", "You'll know it worked"), end,
-    el("h4", "", "If it breaks"), list(plan.breaking, "ul")
+  const para = (text, className) => { const p = el("p", className || ""); p.append(richText(text)); return p; };
+  const allow = permission(kit.allow);
+  const runList = el("ul", "run-list");
+  [ "In the toolbar, the menu beside *Run* and *Debug* shows a name: choose `" + kit.fn + "`. Press *Run*.", allow ]
+    .forEach((step) => runList.append(stepItem(step)));
+  const stages = el("ol", "stages");
+  stages.append(
+    stage("Get the script", ways, ...panels),
+    stage("Paste it into Apps Script", para(home.paste), para(kit.setting.manual, "small")),
+    stage("Run it, and allow", runList, para("[What you're allowing, and why](" + guide + ")", "small")),
+    stage("Open what it made",
+      para("When it finishes, a panel called *Execution log* opens below the code. Its last line is “" + kit.log + "” with a link. Click it."),
+      para("*You'll know it worked:* " + kit.end))
   );
+
+  const before = el("div", "kit-before");
+  before.append(el("h4", "", "Before you start"));
+  const beforeList = el("ul");
+  kit.before.forEach((text) => beforeList.append(stepItem(text)));
+  before.append(beforeList);
+
+  const breaks = el("details", "kit-breaks");
+  const breakList = el("ul");
+  kit.breaking.forEach((text) => breakList.append(stepItem(text)));
+  breaks.append(el("summary", "", "If it breaks"), breakList);
+
+  const fold = el("details", "kit-fold");
+  fold.open = "open" in box.dataset;
+  const summary = el("summary");
+  summary.append(el("span", "kit-open", "Set it up, step by step"), el("span", "count", "4 steps, from copying it to what it makes"));
+  fold.append(summary, before, stages, breaks);
+  box.replaceChildren(fold);
 });
 
 
@@ -690,32 +925,38 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && $("next-step") && !$("next-step").hidden && !document.querySelector("dialog[open]")) closeNextStep();
 });
 
-function nextStep(what, trigger) {
+// options.lead: the sentence that says where it goes, when that isn't an AI chat (or says more than "paste it");
+// options.tools: the places to open instead of the three AI tools (a script goes to Apps Script);
+// options.aiTip: one tip for all three AI tools, when their usual setup step (Canvas, Preview) doesn't apply
+function nextStep(what, trigger, options = {}) {
   let panel = $("next-step");
   const fresh = !panel || panel.hidden;
   if (!panel) {
     panel = el("div", "next-step");
     panel.id = "next-step";
     panel.setAttribute("role", "region");
-    panel.setAttribute("aria-label", "Next: paste it into your AI");
     document.body.append(panel);
   }
+  panel.dataset.dest = options.tools ? "elsewhere" : "ai";
+  panel.setAttribute("aria-label", options.tools ? "Next: where to paste it" : "Next: paste it into your AI chat");
   nextStepReturn = trigger || nextStepReturn;
   const favorite = recall(TOOL_KEY);
-  const tools = [...AI_TOOLS].sort((a, b) => (b.id === favorite) - (a.id === favorite));
+  const tools = options.tools || [...AI_TOOLS].sort((a, b) => (b.id === favorite) - (a.id === favorite));
+  const leadText = options.lead || "Now paste it into your AI chat.";
   const inner = el("div", "next-step-inner");
-  const lead = el("p", "next-step-lead", "Now paste it into your AI chat. Not open yet?");
+  const lead = el("p", "next-step-lead", leadText + (options.tools ? "" : " Not open yet?"));
   lead.tabIndex = -1;
   inner.append(el("p", "next-step-status", "Copied · " + what), lead);
   const row = el("div", "next-step-tools");
   tools.forEach((tool) => {
-    const a = linkTo(tool.url, "Open " + tool.name + (tool.id === favorite ? " (your pick)" : ""));
-    a.className = "button away" + (tool.id === favorite ? " primary" : "");
+    const ai = !options.tools;
+    const a = linkTo(tool.url, ai ? "Open " + tool.name + (tool.id === favorite ? " (your pick)" : "") : tool.name);
+    a.className = "button away" + ((ai ? tool.id === favorite : tools.length === 1) ? " primary" : "");
     a.target = "_blank";
     a.rel = "noopener";
-    a.addEventListener("click", () => remember(TOOL_KEY, tool.id));
+    if (ai) a.addEventListener("click", () => remember(TOOL_KEY, tool.id));
     const item = el("div", "next-step-tool");
-    item.append(a, el("span", "", tool.tip));
+    item.append(a, el("span", "", (ai && options.aiTip) || tool.tip));
     row.append(item);
   });
   const close = el("button", "next-step-close sm", "Done");
@@ -730,7 +971,7 @@ function nextStep(what, trigger) {
     void panel.offsetWidth;   // restart the entrance
     panel.style.animation = "";
   }
-  announce("Copied " + what + ". Now paste it into your AI chat.");
+  announce("Copied " + what + ". " + leadText);
   lead.focus({ preventScroll: true });
   // The sheet never covers the row you pressed: room at the page's foot, and the row scrolled above the sheet
   document.body.style.paddingBottom = panel.offsetHeight + "px";
@@ -851,50 +1092,28 @@ document.querySelectorAll(".remix li:not(.do)").forEach((item) => {
   button.type = "button";
   button.setAttribute("aria-label", "Copy: " + text);
   // After a copy, one line under it says where it goes: a remix line means something only to the chat that has the starter
-  button.addEventListener("click", () => copyText(text, () => {
+  const kit = SCRIPT_KITS[item.closest("[data-kit]")?.dataset.kit];
+  const copied = (said) => () => {
     let hint = item.querySelector(".remix-hint");
-    if (!hint) { hint = el("p", "remix-hint"); hint.setAttribute("role", "status"); item.after(hint); }
-    hint.textContent = "Copied. Paste it into the same chat as your starter.";
+    if (!hint) { hint = el("span", "remix-hint"); item.append(hint); }
+    hint.textContent = said;
+    announce(said);
     clearTimeout(hint.timer);
-    hint.timer = setTimeout(() => hint.remove(), 5000);
-  }, button));
-  item.appendChild(button);
-});
-
-// A script box: <pre data-script="inventory"> fills from its file; data-copy-script and
-// data-ask-script copy the script, or the script with a question for the AI
-const scriptCache = {};
-async function loadScript(id) {
-  if (!scriptCache[id]) {
-    const response = await fetch(SCRIPTS[id].file);
-    if (!response.ok) throw new Error("Could not load " + SCRIPTS[id].file);
-    scriptCache[id] = await response.text();
-  }
-  return scriptCache[id];
-}
-function askFor(id, code) {
-  return 'Here is a Google Apps Script called "' + SCRIPTS[id].name + '". ' +
-    "First, explain what it does in plain language, line by line, and tell me exactly what permission the first run will ask for and why. " +
-    "Then wait: I'll tell you what to change.\n\n```javascript\n" + code + "\n```";
-}
-document.querySelectorAll("[data-script]").forEach((box) => {
-  loadScript(box.dataset.script).then((code) => { box.textContent = code; }).catch(() => { box.textContent = "Couldn't load the script. Try opening the page from its web link."; });
-});
-if (document.querySelector("[data-copy-script], [data-ask-script]")) {
-  Object.keys(SCRIPTS).forEach((id) => loadScript(id).catch(() => {}));
-}
-document.querySelectorAll("[data-copy-script], [data-ask-script]").forEach((button) => {
-  const ask = "askScript" in button.dataset;
-  const id = ask ? button.dataset.askScript : button.dataset.copyScript;
+    hint.timer = setTimeout(() => hint.remove(), 6000);
+  };
   button.addEventListener("click", async () => {
-    closeNextStep();   // a sheet left open from a starter would say "paste it into your AI chat" under a script
-    try {
-      const code = await loadScript(id);
-      copyText(ask ? askFor(id, code) : code, null, button);
-    } catch {
-      say("Couldn't load that script. Try opening the page from its web link.");
+    if (!kit) {
+      if ($("next-step") && !$("next-step").hidden && $("next-step").dataset.dest !== "ai") closeNextStep();   // a script's sheet would say the opposite
+      return copyText(text, copied("Copied. Paste it into the same chat as your starter."), button);
     }
+    try {
+      copyText(changeFor(kit, text, await loadKitScript(kit)), () => nextStep("a change to " + kit.name + ", with the script", button, {
+        lead: "Now paste it into your AI chat. Paste the script it gives back over the old one in Apps Script, and put your ID back on its settings line.",
+        aiTip: CODE_TIP
+      }), button);
+    } catch { say("Couldn't load that script. Try opening the page from its web link."); }
   });
+  item.appendChild(button);
 });
 
 document.querySelectorAll("[data-copy-from]").forEach((button) => {

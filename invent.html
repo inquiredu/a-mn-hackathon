@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="assets/theme.js?v=36ded2f9"></script>
 <link rel="stylesheet" href="assets/brand/north-shore.css?v=95a5640e">
-<link rel="stylesheet" href="assets/site.css?v=9b073a83">
+<link rel="stylesheet" href="assets/site.css?v=da6501aa">
 </head>
 <body data-jump="#builder" data-jump-label="Jump to the builder">
 <a class="skip" href="#main">Skip to the main content</a>
@@ -116,8 +116,9 @@
         <li>
           <p class="step-label">Step 5</p>
           <h3>Peek under the hood</h3>
-          <p>Ask the AI to show you how it works. Paste this into the same chat:</p>
+          <p>Ask the AI to show you how it works.</p>
           <div class="copybox">
+            <p class="copy-kind"><span data-icon="message-square-text"></span><strong>Prompt</strong><span>words: paste them into the same chat</span></p>
             <p id="peek-prompt">Explain three lines of this code to me like I've never coded before. Pick the three most interesting ones.</p>
             <button data-copy-from="peek-prompt" type="button">Copy</button>
           </div>
@@ -143,6 +144,7 @@
             <li><strong>Rewind.</strong> "Go back to the version before that one."</li>
             <li><strong>Ask for help.</strong> On your own, ask the AI itself, in plain words:
               <div class="copybox">
+                <p class="copy-kind"><span data-icon="message-square-text"></span><strong>Prompt</strong><span>words: paste them into your AI chat</span></p>
                 <p id="help-prompt">I'm a teacher who has never coded. Here is what I see: … What should I do?</p>
                 <button data-copy-from="help-prompt" type="button">Copy</button>
               </div>
@@ -250,6 +252,7 @@
 
 <script src="assets/session.js"></script>
 <script src="assets/timing.js?v=4f3fe60c"></script>
-<script src="assets/site.js?v=05e929f1"></script>
+<script src="assets/icons.js?v=30e30865"></script>
+<script src="assets/site.js?v=6f13d4bd"></script>
 </body>
 </html>
